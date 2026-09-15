@@ -39,7 +39,7 @@ d'autres chapitres seront ajoutés au fur et à mesure.
 ::: {.grid}
 
 ::: {.g-col-12 .g-col-md-6 .manuel-card}
-### 📊 Économie & Gestion — 3ème année
+### 📊 Économie & Gestion — 3ème année {.unnumbered .unlisted}
 Chapitre 1 : **Statistiques** (séries simples, séries doubles, nuages de
 points, utilisation des TIC).
 
@@ -47,7 +47,7 @@ points, utilisation des TIC).
 :::
 
 ::: {.g-col-12 .g-col-md-6 .manuel-card}
-### 📐 1ère année secondaire
+### 📐 1ère année secondaire {.unnumbered .unlisted}
 Chapitre 1 : **Angles** (angles et figures de base, droites parallèles,
 angles inscrits et angles au centre) — 12 figures **GeoGebra**
 interactives.
@@ -56,7 +56,7 @@ interactives.
 :::
 
 ::: {.g-col-12 .g-col-md-6 .manuel-card}
-### 📈 3ème Sciences Techniques
+### 📈 3ème Sciences Techniques {.unnumbered .unlisted}
 Chapitre 1 : **Généralités sur les fonctions** (domaine de définition,
 variations, parité, périodicité, fonctions affines par intervalles) —
 figures **GeoGebra** interactives pour chaque courbe.

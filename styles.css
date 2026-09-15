@@ -140,11 +140,12 @@
   border-radius: 6px;
   padding: 1.4rem 1.6rem;
   background: #fff;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .manuel-card:hover {
-  border-color: #c3d4de;
-  box-shadow: 0 4px 16px -6px rgba(20, 35, 50, 0.12);
+  background: #eef6fa;
+  border-color: var(--mc-blue);
+  box-shadow: 0 4px 16px -6px rgba(11, 110, 153, 0.22);
 }
 .manuel-card h3 {
   margin-top: 0;

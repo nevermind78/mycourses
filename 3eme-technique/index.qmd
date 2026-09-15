@@ -1,0 +1,26 @@
+---
+title: "3ème année secondaire — Sciences Techniques"
+subtitle: "Mathématiques — Manuel scolaire (Centre National Pédagogique, Tunisie)"
+---
+
+## Sommaire — Première partie
+
+| Chapitre | Titre | Statut |
+|:--:|---|:--:|
+| 1 | [Généralités sur les fonctions](chapitre-01-generalites-fonctions.qmd) | ✅ en ligne |
+| 2 | Notion de limite | à venir |
+| 3 | Continuité | à venir |
+| 4 | Dérivabilité | à venir |
+| 5 | Étude de fonctions | à venir |
+| 6 | Fonctions circulaires | à venir |
+| 7 | Suites réelles | à venir |
+| 8 | Dénombrement | à venir |
+| 9 | Probabilités | à venir |
+| 10 | Statistiques | à venir |
+
+::: {.callout-note}
+## Géométrie dynamique
+Le chapitre 1 (Généralités sur les fonctions) utilise des constructions
+**GeoGebra** interactives pour illustrer les courbes représentatives et les
+propriétés des fonctions (parité, périodicité, variations, extremums...).
+:::

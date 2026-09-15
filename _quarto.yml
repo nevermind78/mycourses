@@ -1,0 +1,84 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+    - "**/*.qmd"
+    - "!sources/**"
+
+engine: markdown
+
+lang: fr
+
+website:
+  title: "Mycourses — Mathématiques"
+  description: >-
+    Cours de mathématiques du secondaire (Tunisie), avec exercices
+    interactifs Python (Pyodide) et constructions GeoGebra.
+  site-url: "https://nevermind78.github.io/mycourses/"
+  page-navigation: true
+  back-to-top-navigation: true
+  navbar:
+    background: primary
+    search: true
+    left:
+      - href: index.qmd
+        text: Accueil
+      - text: "Économie & Gestion — 3ème"
+        href: economie-gestion-3eme/index.qmd
+      - text: "1ère année secondaire"
+        href: 1ere-annee/index.qmd
+      - text: "3ème Sciences Techniques"
+        href: 3eme-technique/index.qmd
+    tools:
+      - icon: github
+        href: https://github.com/nevermind78/mycourses
+        text: GitHub
+  sidebar:
+    - title: "Économie & Gestion — 3ème"
+      style: docked
+      collapse-level: 1
+      contents:
+        - economie-gestion-3eme/index.qmd
+        - section: "Partie I"
+          contents:
+            - economie-gestion-3eme/chapitre-01-statistiques.qmd
+    - title: "1ère année secondaire"
+      style: docked
+      collapse-level: 1
+      contents:
+        - 1ere-annee/index.qmd
+        - section: "Travaux géométriques"
+          contents:
+            - 1ere-annee/chapitre-01-angles.qmd
+    - title: "3ème Sciences Techniques"
+      style: docked
+      collapse-level: 1
+      contents:
+        - 3eme-technique/index.qmd
+        - section: "Première partie"
+          contents:
+            - 3eme-technique/chapitre-01-generalites-fonctions.qmd
+  page-footer:
+    center: "Mycourses — ressources pédagogiques de mathématiques"
+    border: false
+
+filters:
+  - filters/table-scroll.lua
+
+format:
+  live-html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    smooth-scroll: true
+    code-fold: false
+    fig-responsive: true
+    linkcolor: "#0b6e99"
+    highlight-style: github
+
+live:
+  show-hints: true
+  show-solutions: true

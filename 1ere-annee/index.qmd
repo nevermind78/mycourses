@@ -1,0 +1,37 @@
+---
+title: "1ère année secondaire"
+subtitle: "Mathématiques — Manuel scolaire (Centre National Pédagogique, Tunisie)"
+---
+
+## Sommaire — Travaux géométriques
+
+| Chapitre | Titre | Statut |
+|:--:|---|:--:|
+| 1 | [Angles](chapitre-01-angles.qmd) | ✅ en ligne |
+| 2 | Théorème de Thalès et sa réciproque | à venir |
+| 3 | Rapports trigonométriques d'un angle aigu — Relations métriques dans un triangle rectangle | à venir |
+| 4 | Vecteurs et translations | à venir |
+| 5 | Somme de deux vecteurs — Vecteurs colinéaires | à venir |
+| 6 | Activités dans un repère | à venir |
+| 7 | Quart de tour | à venir |
+| 8 | Sections planes d'un solide | à venir |
+
+## Sommaire — Travaux numériques
+
+| Chapitre | Titre | Statut |
+|:--:|---|:--:|
+| 9 | Activités numériques I | à venir |
+| 10 | Activités numériques II | à venir |
+| 11 | Activités algébriques | à venir |
+| 12 | Fonctions linéaires | à venir |
+| 13 | Équations et inéquations du premier degré à une inconnue | à venir |
+| 14 | Fonctions affines | à venir |
+| 15 | Systèmes de deux équations à deux inconnues | à venir |
+| 16 | Exploitation de l'information | à venir |
+
+::: {.callout-note}
+## Géométrie dynamique
+Ce manuel est très riche en figures géométriques : le chapitre 1 (Angles)
+utilise des constructions **GeoGebra** interactives pour chaque activité —
+les figures sont manipulables (points déplaçables), pas de simples images.
+:::

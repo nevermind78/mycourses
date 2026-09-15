@@ -1,0 +1,12 @@
+/.quarto/
+/_site/
+/*_files/
+/**/*_files/
+*.quarto_ipynb
+.DS_Store
+Thumbs.db
+
+**/*.quarto_ipynb
+
+# Manuels scolaires scannés (contenu protégé, non nécessaire au site généré)
+/sources/

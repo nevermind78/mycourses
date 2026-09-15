@@ -1,0 +1,77 @@
+---
+title: "Mathématiques du secondaire"
+subtitle: "Cours interactifs, exercices Python (Pyodide) et constructions GeoGebra"
+page-layout: full
+---
+
+::: {.profile}
+![](img/me2026.png){.profile-photo}
+
+::: {.profile-divider}
+:::
+
+::: {.profile-info}
+## Khemais Abdallah {.unnumbered .unlisted}
+<p class="profile-role">Enseignant de mathématiques</p>
+<p class="profile-tagline">Mathématicien &amp; chercheur en systèmes d'IA ·
+Créateur de NeuroDSL · Recherche sur les graphes de calcul réactifs et
+la programmation différentiable</p>
+
+<p class="profile-bio">Consultant indépendant en Data Science,
+Machine Learning, Data Engineering et Data Analyse. Master Mathématiques
+approfondie (Université de Franche-Comté). Master Datascicence et Mobiquité ( ENICARTHAGE)</p>
+
+<p class="profile-links">[LinkedIn ↗](https://www.linkedin.com/in/khemais-abdallah/)</p>
+:::
+:::
+
+Bienvenue. Ce site rassemble, manuel par manuel, des supports de cours de
+mathématiques du secondaire, adaptés pour le web : le cours tel qu'il est
+présenté dans le manuel, des exercices que l'on peut exécuter directement
+dans le navigateur (Python via **Pyodide**, sans rien installer), et des
+figures dynamiques **GeoGebra** pour la géométrie.
+
+Pour l'instant, seul le **premier chapitre** de chaque manuel est en ligne ;
+d'autres chapitres seront ajoutés au fur et à mesure.
+
+## Manuels disponibles
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6 .manuel-card}
+### 📊 Économie & Gestion — 3ème année
+Chapitre 1 : **Statistiques** (séries simples, séries doubles, nuages de
+points, utilisation des TIC).
+
+[Ouvrir le manuel →](economie-gestion-3eme/index.qmd)
+:::
+
+::: {.g-col-12 .g-col-md-6 .manuel-card}
+### 📐 1ère année secondaire
+Chapitre 1 : **Angles** (angles et figures de base, droites parallèles,
+angles inscrits et angles au centre) — 12 figures **GeoGebra**
+interactives.
+
+[Ouvrir le manuel →](1ere-annee/index.qmd)
+:::
+
+::: {.g-col-12 .g-col-md-6 .manuel-card}
+### 📈 3ème Sciences Techniques
+Chapitre 1 : **Généralités sur les fonctions** (domaine de définition,
+variations, parité, périodicité, fonctions affines par intervalles) —
+figures **GeoGebra** interactives pour chaque courbe.
+
+[Ouvrir le manuel →](3eme-technique/index.qmd)
+:::
+
+:::
+
+## À propos de ce site
+
+- Généré avec [Quarto](https://quarto.org).
+- Les exercices de code utilisent l'extension
+  [`quarto-live`](https://github.com/r-wasm/quarto-live) (Pyodide/WebR) :
+  le code Python s'exécute **dans le navigateur de l'élève**, aucun serveur
+  n'est nécessaire.
+- Les figures de géométrie utilisent l'API d'intégration
+  [GeoGebra](https://www.geogebra.org/apps).

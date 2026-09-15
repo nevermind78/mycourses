@@ -1,0 +1,57 @@
+---
+title: "Économie & Gestion — 3ème année"
+subtitle: "Mathématiques — Manuel scolaire (Centre National Pédagogique, Tunisie)"
+---
+
+## Sommaire — Partie I
+
+| Chapitre | Titre | Statut |
+|:--:|---|:--:|
+| 1 | [Statistiques](chapitre-01-statistiques.qmd) | ✅ en ligne |
+| 2 | Suites réelles | à venir |
+| 3 | Dénombrement | à venir |
+| 4 | Probabilité | à venir |
+| 5 | Initiation aux graphes | à venir |
+| 6 | Système d'équations linéaires | à venir |
+
+## Sommaire — Partie II
+
+| Chapitre | Titre | Statut |
+|:--:|---|:--:|
+| 7 | Généralités sur les fonctions | à venir |
+| 8 | Limite finie en un point & continuité | à venir |
+| 9 | Extension de la notion de limite & branches infinies | à venir |
+| 10 | Dérivation | à venir |
+| 11 | Exemples d'études de fonctions | à venir |
+| 12 | Fonctions trigonométriques | à venir |
+
+::: {.callout-note}
+## À propos des chapitres de géométrie
+
+Certains chapitres à venir (graphes, repérage, fonctions) bénéficient d'une
+figure dynamique. Le site est déjà équipé pour intégrer des applets
+**GeoGebra** interactifs — voici une démonstration : un canevas GeoGebra
+Classic entièrement fonctionnel, prêt à recevoir une construction.
+:::
+
+```{=html}
+<div class="geogebra-wrap">
+  <div id="ggb-demo-eg3"></div>
+</div>
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<script>
+  var ggbDemoParams = {
+    appName: "classic",
+    width: 700,
+    height: 420,
+    showToolBar: true,
+    showAlgebraInput: true,
+    showMenuBar: false,
+    language: "fr"
+  };
+  var ggbDemoApp = new GGBApplet(ggbDemoParams, true);
+  window.addEventListener("load", function() {
+    ggbDemoApp.inject("ggb-demo-eg3");
+  });
+</script>
+```

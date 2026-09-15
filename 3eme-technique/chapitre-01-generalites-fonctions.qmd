@@ -1,0 +1,1794 @@
+---
+title: "Chapitre 1 — Généralités sur les fonctions"
+subtitle: "3ème année secondaire Sciences Techniques — Manuel CNP"
+engine: markdown
+---
+
+::: {.callout-tip}
+## Dans ce chapitre
+- **Introduction** — deux activités qui rappellent la notion de fonction à
+  partir d'exemples concrets (une parabole, une loi physique $i = P/v$).
+- **Cours** — domaine de définition, sens de variation, taux
+  d'accroissement, parité, extremums, périodicité, fonctions affines par
+  intervalles — chaque notion est illustrée par une **courbe GeoGebra
+  interactive**.
+- **Résumé** — les définitions essentielles regroupées.
+- **Exercices et problèmes** — 13 exercices et 2 problèmes, avec correction
+  détaillée.
+:::
+
+```{=html}
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<script>
+// --- Mycourses / GeoGebra helper -------------------------------------
+// Chaque figure : points FIXES par défaut (non déplaçables), sauf ceux
+// listés dans opts.free. Boutons "Réinitialiser" (rejoue la construction
+// d'origine) et "Voir / modifier le code" (éditeur de commandes GeoGebra,
+// comme les cellules Python : on modifie, puis on clique "Appliquer").
+var GGB = { apis: {}, initCmds: {}, freePts: {}, views: {}, resizers: {}, toolbarOn: {}, sizes: {}, cleanups: {} };
+
+// Grille et axes visibles par défaut sur chaque figure (setPerspective("G")
+// les masque sinon).
+function ggbShowGrid(api) {
+  try { api.setAxesVisible(true, true); } catch (e) {}
+  try { api.setGridVisible(true); } catch (e) {}
+}
+
+// Affiche/masque la palette d'outils géométriques de GeoGebra (Point,
+// Intersection, Droite parallèle, etc.). Contrairement au menu ☰ ci-dessus,
+// l'API showToolBar() de GeoGebra ne reconstruit pas correctement les icônes
+// une fois masquées : rebasculer showToolBar(true) après un showToolBar(false)
+// laisse le panneau vide (constaté en test). On recrée donc l'applet avec le
+// bon réglage dès le démarrage, en conservant la construction et l'état des
+// points via getXML/setXML (aucune perte : ni la figure, ni un point que
+// l'élève aurait déplacé).
+function ggbRebuildApplet(id, showTools) {
+  var oldApi = GGB.apis[id];
+  if (!oldApi) return;
+  var xml;
+  try { xml = oldApi.getXML(); } catch (e) { return; }
+
+  var container = document.getElementById(id);
+  var oldInner = container.querySelector(".ggb-inner");
+  var newInner = document.createElement("div");
+  var canvasId = id + "-inner-" + Date.now();
+  newInner.id = canvasId;
+  newInner.className = "ggb-inner";
+  oldInner.replaceWith(newInner);
+
+  var size = GGB.sizes[id] || [480, 360];
+  var baseW = size[0], baseH = size[1];
+
+  var params = {
+    appName: "geometry", width: baseW, height: baseH,
+    showToolBar: showTools, showAlgebraInput: false, showMenuBar: true,
+    showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+    language: "fr",
+    appletOnLoad: function (api) {
+      GGB.apis[id] = api;
+      try { if (!showTools) api.setPerspective("G"); } catch (e) {}
+      try { api.setXML(xml); } catch (e) {}
+      ggbShowGrid(api);
+      ggbFitView(api, id);
+      ggbMakeResponsive(id, api, container, baseW / baseH);
+    }
+  };
+  new GGBApplet(params, true).inject(canvasId);
+}
+
+function ggbToggleTools(id) {
+  if (!GGB.apis[id]) return;
+  var show = !GGB.toolbarOn[id];
+  GGB.toolbarOn[id] = show;
+  var container = document.getElementById(id);
+  var btn = container.querySelector('[data-act="tools"]');
+  if (btn) btn.textContent = show ? "🛠 Masquer les outils GeoGebra" : "🛠 Outils GeoGebra";
+  ggbRebuildApplet(id, show);
+}
+
+function ggbRunCommands(api, commands, free) {
+  commands.forEach(function (cmd) {
+    try { api.evalCommand(cmd); } catch (e) { console.error("GGB cmd failed:", cmd, e); }
+  });
+  var n = api.getObjectNumber();
+  for (var i = 0; i < n; i++) {
+    var name = api.getObjectName(i);
+    try {
+      if (api.getObjectType(name) === "point" && free.indexOf(name) === -1) {
+        api.setFixed(name, true);
+      }
+    } catch (e) {}
+  }
+}
+
+// Cadre la vue sur la construction : soit une fenêtre fixe explicite
+// (GGB.views[id] — utilisée pour la quasi-totalité des figures de ce
+// chapitre, puisque ce sont des courbes de fonctions et non des points),
+// soit — à défaut — une boîte englobante calculée à partir des points.
+function ggbFitView(api, id) {
+  var v = GGB.views[id];
+  try {
+    var cx, cy, halfW, halfH;
+    if (v) {
+      cx = (v[0] + v[1]) / 2; cy = (v[2] + v[3]) / 2;
+      halfW = (v[1] - v[0]) / 2; halfH = (v[3] - v[2]) / 2;
+    } else {
+      var n = api.getObjectNumber();
+      var xs = [], ys = [];
+      for (var i = 0; i < n; i++) {
+        var name = api.getObjectName(i);
+        if (api.getObjectType(name) === "point") {
+          var x = api.getXcoord(name), y = api.getYcoord(name);
+          if (isFinite(x) && isFinite(y)) { xs.push(x); ys.push(y); }
+        }
+      }
+      if (xs.length === 0) return;
+      var xMin = Math.min.apply(null, xs), xMax = Math.max.apply(null, xs);
+      var yMin = Math.min.apply(null, ys), yMax = Math.max.apply(null, ys);
+      cx = (xMin + xMax) / 2; cy = (yMin + yMax) / 2;
+      halfW = Math.max((xMax - xMin) / 2, 0.3) * 1.25;
+      halfH = Math.max((yMax - yMin) / 2, 0.3) * 1.25;
+    }
+
+    // GeoGebra impose la même échelle en x et en y (pas de déformation) :
+    // si on ne demande pas déjà le bon rapport largeur/hauteur, il agrandit
+    // lui-même une des deux dimensions. On aligne donc notre fenêtre sur le
+    // rapport largeur/hauteur réel du canevas avant de l'imposer.
+    //
+    // Piège constaté : api.getViewProperties().width/height (lues pour
+    // connaître ce rapport) ne sont pas fiables ici — undefined selon le
+    // moment de l'appel — et retombaient alors sur un rapport par défaut
+    // 4/3 qui ne correspond pas au vrai canevas, déformant les cercles en
+    // ellipses. On utilise à la place la taille que NOUS avons demandée
+    // nous-mêmes (GGB.sizes[id], voir buildFigure et ggbMakeResponsive, qui
+    // redimensionne toujours en conservant ce même rapport) : fiable et
+    // toujours disponible, sans dépendre de l'API GeoGebra pour ça.
+    var size = GGB.sizes[id];
+    var pxAspect = (size && size[0] > 0 && size[1] > 0) ? (size[0] / size[1]) : (4 / 3);
+    if (halfW / halfH < pxAspect) { halfW = halfH * pxAspect; }
+    else { halfH = halfW / pxAspect; }
+
+    api.setCoordSystem(cx - halfW, cx + halfW, cy - halfH, cy + halfH);
+  } catch (e) {}
+}
+
+function ggbReset(id) {
+  var api = GGB.apis[id];
+  if (!api) return; // figure pas encore chargée (voir buildFigure / chargement différé)
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, GGB.initCmds[id], GGB.freePts[id]);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  if (ta) ta.value = GGB.initCmds[id].join("\n");
+  // setPerspective("G") remet les outils masqués : on aligne le bouton.
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+function ggbApplyCode(id) {
+  var api = GGB.apis[id];
+  if (!api) return;
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  var lines = ta.value.split("\n")
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return s.length > 0; });
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, lines, GGB.freePts[id]);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+// Charger 20+ applets GeoGebra (WebAssembly) simultanément au chargement
+// de la page sature le processeur : les redimensionnements temporisés de
+// certaines figures se calculaient alors sur des états intermédiaires, et
+// la figure semblait tronquée ou mal cadrée (constaté en pratique). Chaque
+// figure n'est donc réellement construite que lorsqu'elle approche de la
+// zone visible (chargement différé), comme des images "lazy-load".
+function buildFigure(id, commands, opts) {
+  opts = opts || {};
+  var free = opts.free || [];
+  GGB.initCmds[id] = commands.slice();
+  GGB.freePts[id] = free;
+  GGB.views[id] = opts.view || null;
+
+  var container = document.getElementById(id);
+  container.classList.add("ggb-figure");
+  var baseW = opts.w || 480, baseH = opts.h || 360;
+  GGB.sizes[id] = [baseW, baseH];
+  container.innerHTML =
+    '<div class="ggb-toolbar">' +
+      '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
+      '<button type="button" class="ggb-btn" data-act="code">✏️ Voir / modifier le code</button>' +
+      '<button type="button" class="ggb-btn" data-act="tools">🛠 Outils GeoGebra</button>' +
+    '</div>' +
+    '<div class="ggb-canvas" style="aspect-ratio:' + baseW + '/' + baseH + '">' +
+      '<div class="ggb-placeholder">Figure GeoGebra — chargement…</div>' +
+      '<div class="ggb-inner"></div>' +
+    '</div>' +
+    '<div class="ggb-codepanel" hidden>' +
+      '<textarea class="ggb-textarea" spellcheck="false" rows="' + Math.min(Math.max(commands.length, 4), 16) + '"></textarea>' +
+      '<button type="button" class="ggb-btn ggb-btn-primary" data-act="apply">▶ Appliquer les modifications</button>' +
+    '</div>';
+
+  var ta = container.querySelector(".ggb-textarea");
+  ta.value = commands.join("\n");
+  container.querySelector('[data-act="reset"]').addEventListener("click", function () { ggbReset(id); });
+  container.querySelector('[data-act="apply"]').addEventListener("click", function () { ggbApplyCode(id); });
+  container.querySelector('[data-act="code"]').addEventListener("click", function () {
+    var panel = container.querySelector(".ggb-codepanel");
+    panel.hidden = !panel.hidden;
+  });
+  container.querySelector('[data-act="tools"]').addEventListener("click", function () { ggbToggleTools(id); });
+
+  var loaded = false;
+  function loadApplet() {
+    if (loaded) return;
+    loaded = true;
+    var placeholder = container.querySelector(".ggb-placeholder");
+    if (placeholder) placeholder.remove();
+
+    // GeoGebra reçoit son propre élément dédié (.ggb-inner), distinct du
+    // conteneur .ggb-canvas : injecter directement dans .ggb-canvas
+    // empêche api.setSize() de fonctionner par la suite (constaté en test).
+    var innerDiv = container.querySelector(".ggb-inner");
+    var canvasId = id + "-inner";
+    innerDiv.id = canvasId;
+
+    var params = {
+      appName: "geometry", width: baseW, height: baseH,
+      showToolBar: false, showAlgebraInput: false, showMenuBar: true,
+      showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+      language: "fr",
+      appletOnLoad: function (api) {
+        GGB.apis[id] = api;
+        try { api.setPerspective("G"); } catch (e) {}
+        ggbShowGrid(api);
+        ggbRunCommands(api, commands, free);
+        ggbFitView(api, id);
+        ggbMakeResponsive(id, api, container, baseW / baseH);
+      }
+    };
+    new GGBApplet(params, true).inject(canvasId);
+  }
+
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { loadApplet(); io.disconnect(); }
+      });
+    }, { rootMargin: "600px 0px" });
+    io.observe(container);
+  } else {
+    loadApplet();
+  }
+}
+
+// Adapte la taille de l'applet à la largeur réelle de la colonne de
+// contenu (sidebar / TOC compris), au chargement et au redimensionnement,
+// en conservant le rapport largeur/hauteur d'origine de la figure.
+//
+// Important : on mesure le conteneur EXTÉRIEUR (.ggb-figure, largeur fixée
+// par CSS à 100% de la colonne) et non la zone du dessin elle-même — sinon
+// setSize() change la taille de la zone observée, qui redéclenche le
+// redimensionnement, qui rappelle setSize()... (boucle infinie -> "vibration").
+function ggbMakeResponsive(id, api, outerDiv, aspect) {
+  // Si l'applet a été recréée (bascule des outils GeoGebra, voir
+  // ggbRebuildApplet), l'ancien ResizeObserver et l'ancien écouteur
+  // "resize" existent toujours et appelleraient setSize() sur une instance
+  // détruite : on les retire avant d'en recréer de nouveaux.
+  if (GGB.cleanups[id]) { try { GGB.cleanups[id](); } catch (e) {} }
+  var lastW = -1;
+  var padding = null;
+  var fitToken = 0;
+  var debounceTimer = null;
+
+  // Applique la taille ET recadre la vue. N'est appelé qu'une fois la
+  // largeur du conteneur stabilisée (voir scheduleResize ci-dessous) —
+  // jamais à chaque pixel pendant un glisser de la fenêtre.
+  function applySize() {
+    if (padding === null) {
+      var cs = window.getComputedStyle(outerDiv);
+      padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    }
+    var w = Math.floor(outerDiv.clientWidth - padding);
+    if (w < 80 || w === lastW) return;
+    lastW = w;
+    api.setSize(w, Math.round(w / aspect));
+    // setSize() traite le redimensionnement de façon asynchrone (son rendu
+    // interne n'est pas terminé une frame plus tard) : on réajuste le
+    // cadrage un peu après coup, sinon showAllObjects() calcule le zoom sur
+    // les anciennes dimensions (figure trop/pas assez zoomée, mal centrée).
+    // Un jeton annule tout recadrage devenu obsolète si une nouvelle taille
+    // arrive entre-temps.
+    var myToken = ++fitToken;
+    var attempt = 0;
+    function tryFit() {
+      if (myToken !== fitToken) return; // une taille plus récente a pris le relais
+      ggbFitView(api, id);
+      attempt++;
+      // Un second passage un peu plus tard rattrape les cas où le premier
+      // recadrage a encore été calculé avant la fin du rendu interne.
+      if (attempt === 1) setTimeout(tryFit, 220);
+    }
+    setTimeout(tryFit, 220);
+  }
+
+  // Attend une accalmie (~120ms sans nouvel événement) avant d'appliquer la
+  // taille : pendant qu'on glisse le bord de la fenêtre, on ne fait rien.
+  function scheduleResize() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applySize, 120);
+  }
+
+  GGB.resizers[id] = applySize;
+  applySize();
+  window.addEventListener("resize", scheduleResize);
+  var ro = null;
+  if (window.ResizeObserver) {
+    ro = new ResizeObserver(scheduleResize);
+    ro.observe(outerDiv);
+  } else {
+    setTimeout(applySize, 300);
+  }
+  GGB.cleanups[id] = function () {
+    window.removeEventListener("resize", scheduleResize);
+    if (ro) ro.disconnect();
+  };
+}
+</script>
+```
+
+## Introduction
+
+La notion de fonction numérique d'une variable réelle a été étudiée en
+classe de 2ième année sciences. Les activités qui suivent ont pour
+objectifs de rappeler, de consolider et de compléter les acquis des élèves
+dans ce domaine.
+
+::: {.activite}
+[Activité 1]{.activite-titre}
+Dans le graphique ci-contre la parabole $(P)$ est la courbe représentative
+d'une fonction $f : x \mapsto ax^2+b$, la droite $D$ est celle d'une
+fonction affine $g : x \mapsto cx+d$.
+
+1. Déterminer les réels $a,\ b,\ c$ et $d$.
+2. Déterminer, graphiquement puis par le calcul, les coordonnées des
+   points d'intersection de $(P)$ et $D$.
+3. Utiliser le graphique pour résoudre l'inéquation $-2x^2+x+1 \geq 0$.
+:::
+
+```{=html}
+<div id="ggb-a1"></div>
+<script>
+buildFigure("ggb-a1", [
+"f(x)=-2x^2+2","g(x)=-x+1"
+], {free: [], w: 460, h: 420, view: [-2.5,2.5,-3,3]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+**1)** La parabole passe par son maximum en $x=0$ avec $f(0)=2$, donc
+$b=2$. Elle coupe l'axe des abscisses en $x=\pm 1$ : $-a+2=0 \Rightarrow
+a=-2$. La droite $D$ coupe l'axe des ordonnées en $y=1$ : $d=1$. Elle
+passe par le point $(1,0)$ (racine positive de $f$, lue sur le graphique
+comme intersection avec l'axe) : $c+1=0 \Rightarrow c=-1$.
+
+$$a=-2,\quad b=2,\quad c=-1,\quad d=1$$
+
+**2)** Graphiquement, $(P)$ et $D$ semblent se couper vers $x=-0{,}5$ et
+$x=1$. Par le calcul, on résout $f(x)=g(x)$ :
+$$-2x^2+2=-x+1 \iff -2x^2+x+1=0$$
+Discriminant : $\Delta = 1^2-4(-2)(1)=9$, racines
+$x=\dfrac{-1\pm 3}{-4}$, soit $x=-\dfrac{1}{2}$ ou $x=1$.
+Points d'intersection : $\left(-\dfrac12,\dfrac32\right)$ et $(1,0)$.
+
+**3)** $-2x^2+x+1 \geq 0$ est équivalent à $f(x)\geq g(x)$, c'est-à-dire
+que la courbe de $f$ est au-dessus (ou touche) la droite $D$. D'après la
+question 2, cela a lieu entre les deux abscisses d'intersection :
+$$\mathcal S = \left[-\frac12,\ 1\right]$$
+:::
+
+::: {.activite}
+[Activité 2]{.activite-titre}
+Un appareil électrique consomme une puissance $P=600$ watts. Il est
+alimenté sous une tension variable $v$ (en volts) et est parcouru par un
+courant $i$ (en ampères). On rappelle la formule $i=\dfrac{P}{v}$ ou
+$P=v.i$.
+
+Les différentes mesures de $i$ en fonction de $v$ ont donné la courbe
+$(C)$ ci-contre. Dans l'axe des abscisses on lit les valeurs de $v$ et
+dans l'axe des ordonnées on lit les valeurs de $i$.
+
+1. a- Compléter l'écriture : $(C)$ est la courbe représentative de la
+   fonction $f : \mathbb R_+^* \to \mathbb R,\ x \mapsto \ldots$
+   b- Répondre par vrai ou faux :
+   - $(C)$ est une branche d'une parabole.
+   - $(C)$ est une branche d'une hyperbole.
+   - $f$ est croissante sur $]0,100]$ et décroissante sur $[100,+\infty[$.
+   - $f$ est décroissante sur $\mathbb R_+^*$.
+2. a- Calculer l'intensité du courant si la tension est de 220 volts.
+   b- L'appareil ne peut supporter une intensité supérieure à 6 ampères.
+   Quelle est la tension minimale permise ?
+:::
+
+```{=html}
+<div id="ggb-a2"></div>
+<script>
+buildFigure("ggb-a2", [
+"i(v)=If(v>0,600/v)"
+], {free: [], w: 480, h: 380, view: [-200,900,-2,10]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+**1) a-** $f(x) = \dfrac{600}{x}$.
+
+**b-** Vrai/Faux :
+
+- « $(C)$ est une branche d'une parabole. » — **Faux**.
+- « $(C)$ est une branche d'une hyperbole. » — **Vrai**.
+- « $f$ est croissante sur $]0,100]$ et décroissante sur $[100,+\infty[$. »
+  — **Faux** : $f$ est décroissante sur tout $\mathbb R_+^*$.
+- « $f$ est décroissante sur $\mathbb R_+^*$. » — **Vrai**.
+
+**2) a-** $i = \dfrac{600}{220} \approx 2{,}73$ A.
+
+**b-** On veut $i \leq 6$, c'est-à-dire $\dfrac{600}{v}\leq 6 \iff v \geq
+100$ (car $v>0$). La tension minimale permise est **100 volts**.
+:::
+
+## Cours {#sec-cours}
+
+### Généralités
+
+::: {.activite}
+[Activité 3]{.activite-titre}
+Déterminer l'ensemble de définition $D_f$ de la fonction $f$, à variable
+réelle, dans chacun des cas suivants :
+$$f(x)=x^2+x-4$$
+$$f(x)=\frac{1}{x^2-x}$$
+$$f(x)=\frac{x}{|x|-2}$$
+$$f(x)=\frac{x+1}{\sqrt{x+1}-1}$$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+- $f(x)=x^2+x-4$ est un polynôme : $D_f=\mathbb R$.
+- $f(x)=\dfrac{1}{x^2-x}$ : il faut $x^2-x\neq 0$, soit $x(x-1)\neq 0$,
+  donc $D_f=\mathbb R\setminus\{0,1\}$.
+- $f(x)=\dfrac{x}{|x|-2}$ : il faut $|x|\neq 2$, soit $x\neq \pm 2$, donc
+  $D_f=\mathbb R\setminus\{-2,2\}$.
+- $f(x)=\dfrac{x+1}{\sqrt{x+1}-1}$ : il faut $x+1\geq 0$ (racine définie)
+  et $\sqrt{x+1}\neq 1$, c'est-à-dire $x+1\neq 1$ soit $x\neq 0$. Donc
+  $D_f=[-1,+\infty[\setminus\{0\}$.
+:::
+
+::: {.callout-important}
+## Définition
+Soit $f$ une fonction numérique à variable réelle. L'ensemble des réels
+$x$ tels que $f(x)$ existe s'appelle **ensemble de définition** de $f$ ou
+**domaine de définition** de $f$, noté $D_f$.
+:::
+
+**Exemple :** Soit $f : x \mapsto \sqrt{1-x^2}$. Montrer que $D_f=[-1,1]$.
+
+::: {.activite}
+[Activité 4]{.activite-titre}
+Soit $f$ la fonction définie sur $[0,3]$ par $f(x)=2x^3-9x^2+12x-5$. La
+figure ci-contre est la représentation graphique de $f$ dans un repère
+$(O,\vec\imath,\vec\jmath)$.
+
+1. Répondre par vrai ou faux.
+   a. $f$ est croissante dans l'intervalle $[0,2]$.
+   b. $f$ est croissante dans l'intervalle $[2,3]$.
+   c. $f$ est décroissante dans l'intervalle $[1,2]$.
+   d. $f$ est monotone dans l'intervalle $[1,3]$.
+   e. $f$ admet un maximum égal à $0$ au point $1$.
+   f. $f$ admet un maximum en $x=3$.
+   g. Dans l'intervalle $\left[1,\dfrac52\right]$, $f$ admet un minimum
+      en $2$ égal à $-1$.
+2. Résumer dans un tableau les variations de $f$.
+:::
+
+```{=html}
+<div id="ggb-a4"></div>
+<script>
+buildFigure("ggb-a4", [
+"f(x)=If(x>=0&&x<=3,2x^3-9x^2+12x-5)"
+], {free: [], w: 460, h: 380, view: [-0.5,3.5,-6,5]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+$f'(x)=6x^2-18x+12=6(x-1)(x-2)$, du signe de $(x-1)(x-2)$ multiplié par
+$6>0$ : positif hors de $[1,2]$, négatif sur $[1,2]$. Donc $f$ est
+croissante sur $[0,1]$, décroissante sur $[1,2]$, croissante sur $[2,3]$.
+On a $f(0)=-5$, $f(1)=0$, $f(2)=-1$, $f(3)=4$.
+
+1. a. **Faux** ($f$ croît sur $[0,1]$ puis décroît sur $[1,2]$, donc pas
+   sur tout $[0,2]$). b. **Vrai**. c. **Faux** ($f$ décroît sur $[1,2]$
+   tout entier, l'affirmation est vraie en fait — décroissante sur
+   $[1,2]$ signifie décroissante, ce qui est le cas : **Vrai**). d.
+   **Faux** ($f$ décroît puis croît sur $[1,3]$). e. **Vrai** ($f(1)=0$
+   est un maximum local). f. **Vrai** ($f$ est croissante sur $[2,3]$,
+   donc son maximum sur cet intervalle, et plus généralement sur $[0,3]$,
+   est atteint en $x=3$). g. **Faux** : sur $\left[1,\frac52\right]$, le
+   minimum est $f(2)=-1$ (la valeur $-1$ est correcte mais vérifions le
+   point : c'est bien en $x=2$, l'affirmation est donc **Vraie**).
+
+2. Tableau de variation :
+
+   | $x$ | $0$ | | $1$ | | $2$ | | $3$ |
+   |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+   | $f'(x)$ | | $+$ | $0$ | $-$ | $0$ | $+$ | |
+   | $f(x)$ | $-5$ | $\nearrow$ | $0$ | $\searrow$ | $-1$ | $\nearrow$ | $4$ |
+:::
+
+::: {.activite}
+[Activité 5]{.activite-titre}
+Soit $f$ la fonction à variable réelle, définie par
+$f(x)=\dfrac12 x^2 - |x|$.
+
+1. a- Déterminer le domaine de définition de $f$.
+   b- Montrer que $f$ est paire.
+   c- Soient $a$ et $b$ deux réels positifs tels que $a<b$. Vérifier que
+   $f(b)-f(a)=\dfrac12(b-a)(b+a-2)$.
+   d- Déduire que $f$ est croissante sur $[1,+\infty[$ et décroissante
+   sur $[0,1]$.
+2. a- Tracer la partie de la courbe représentative de $f$ correspondante
+   à $[0,+\infty[$.
+   b- En utilisant la parité de $f$, compléter la courbe représentative
+   de $f$ sur son domaine de définition.
+3. $f$ admet-elle des minimums, des maximums ? Pour quelles valeurs de
+   $x$ sont-ils atteints ?
+4. $f$ admet-elle un maximum pour $x=0$ ? Donner un intervalle ouvert
+   contenant $0$ dans lequel $f(0)=0$ est un maximum pour $f$.
+:::
+
+```{=html}
+<div id="ggb-a5"></div>
+<script>
+buildFigure("ggb-a5", [
+"f(x)=x^2/2-abs(x)"
+], {free: [], w: 460, h: 360, view: [-4,4,-1,4]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+**1) a-** $D_f=\mathbb R$.
+
+**b-** Pour tout $x$, $-x \in \mathbb R$ et
+$f(-x)=\frac12(-x)^2-|-x|=\frac12 x^2-|x|=f(x)$ : $f$ est paire.
+
+**c-** Pour $a,b\geq 0$, $|a|=a$ et $|b|=b$, donc
+$f(b)-f(a)=\frac12(b^2-a^2)-(b-a)=\frac12(b-a)(b+a)-(b-a)=\frac12(b-a)(b+a-2)$.
+
+**d-** Pour $1\leq a<b$ : $b-a>0$ et $b+a-2>0$ (car $a\geq 1$), donc
+$f(b)-f(a)>0$ : $f$ est croissante sur $[1,+\infty[$. Pour $0\leq a<b\leq
+1$ : $b-a>0$ et $b+a-2<0$ (car $a,b\leq 1 \Rightarrow a+b\leq 2$, avec
+égalité seulement si $a=b=1$), donc $f(b)-f(a)<0$ : $f$ est décroissante
+sur $[0,1]$.
+
+**2), 3)** La figure ci-dessus montre la courbe complète (obtenue par
+symétrie par rapport à l'axe $(O,\vec\jmath)$ puisque $f$ est paire).
+$f$ admet un minimum (local et absolu sur $[0,+\infty[$, et de même sur
+$]-\infty,0]$ par symétrie) égal à $-\dfrac12$, atteint en $x=1$ et en
+$x=-1$. Elle n'admet pas de maximum absolu (elle tend vers $+\infty$).
+
+**4)** $f$ admet un maximum **local** en $0$ égal à $f(0)=0$ : sur
+l'intervalle ouvert $]-1,1[$, on a $f(x)\leq f(0)=0$ pour tout $x$ (en
+effet $f(x)=\frac12x^2-|x|\leq 0$ sur $[-1,1]$).
+:::
+
+::: {.callout-important}
+## Définition
+Soit $f$ une fonction définie sur un intervalle $I$ de $\mathbb R$. On
+dit que :
+
+- $f$ est **croissante** sur $I$ si et seulement si pour tous réels $a$
+  et $b$ de $I$, si $a<b$ alors $f(a)\leq f(b)$.
+- $f$ est **décroissante** sur $I$ si et seulement si pour tous réels $a$
+  et $b$ de $I$, si $a<b$ alors $f(a)\geq f(b)$.
+- $f$ est **strictement croissante** sur $I$ si et seulement si pour tous
+  réels $a$ et $b$ de $I$, si $a<b$ alors $f(a)<f(b)$.
+- $f$ est **strictement décroissante** sur $I$ si et seulement si pour
+  tous réels $a$ et $b$ de $I$, si $a<b$ alors $f(a)>f(b)$.
+:::
+
+::: {.activite}
+[Activité 6]{.activite-titre}
+Montrer que :
+
+a) $f$ est croissante sur $I$ signifie que $b-a$ et $f(b)-f(a)$ ont le
+   même signe pour tous réels $a$ et $b$ distincts de $I$.
+b) $f$ est décroissante sur $I$ signifie que $b-a$ et $f(b)-f(a)$ ont des
+   signes contraires.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**a)** Si $f$ est croissante et $a<b$ alors $f(a)\leq f(b)$ donc $b-a>0$
+et $f(b)-f(a)\geq 0$ : même signe (au sens large). Si $a>b$, par
+croissance $f(a)\geq f(b)$, donc $b-a<0$ et $f(b)-f(a)\leq 0$ : même
+signe à nouveau. La réciproque se traite de la même façon en revenant à
+la définition.
+
+**b)** Symétrique, avec $f$ décroissante : $a<b \Rightarrow f(a)\geq
+f(b)$, donc $b-a>0$ mais $f(b)-f(a)\leq 0$ : signes contraires.
+:::
+
+::: {.callout-important}
+## Définition
+Soit $a$ et $b$ deux réels distincts de $I$. Le réel
+$\dfrac{f(b)-f(a)}{b-a}$ s'appelle le **taux d'accroissement** de $f$
+entre $a$ et $b$.
+:::
+
+::: {.activite}
+[Activité 7]{.activite-titre}
+Montrer que :
+
+- $f$ est croissante sur $I$ si et seulement si pour tous réels $a$ et
+  $b$ distincts de $I$, $\dfrac{f(b)-f(a)}{b-a} \geq 0$.
+- $f$ est décroissante sur $I$ si et seulement si pour tous réels $a$ et
+  $b$ distincts de $I$, $\dfrac{f(b)-f(a)}{b-a} \leq 0$.
+- $f$ est constante sur $I$ si et seulement si pour tous réels $a$ et $b$
+  distincts de $I$, $\dfrac{f(b)-f(a)}{b-a} = 0$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Conséquence immédiate de l'activité 6 : un quotient est positif si et
+seulement si le numérateur et le dénominateur sont de même signe, négatif
+si et seulement si signes contraires, nul si et seulement si le
+numérateur est nul (le dénominateur $b-a$ n'étant jamais nul puisque
+$a\neq b$).
+:::
+
+::: {.activite}
+[Activité 8]{.activite-titre}
+Soit $f$ la fonction à variable réelle définie par $f(x)=x^2-2x+5$.
+
+
+1. Soit $a$ et $b$ deux réels distincts. Vérifier que $f(b)-f(a)=b^2-a^2-2(b-a)$.
+2. Montrer que $\dfrac{f(b)-f(a)}{b-a}=b+a-2$.
+3. En déduire que $f$ est croissante sur $[1,+\infty[$ et décroissante
+   sur $]-\infty,1]$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**a-** $f(b)-f(a)=(b^2-2b+5)-(a^2-2a+5)=b^2-a^2-2(b-a)$.
+
+**b-** $\dfrac{f(b)-f(a)}{b-a}=\dfrac{(b-a)(b+a)-2(b-a)}{b-a}=b+a-2$
+(pour $a\neq b$).
+
+**c-** Si $a,b\geq 1$, alors $a+b\geq 2$ donc le taux d'accroissement
+$b+a-2\geq 0$ : $f$ est croissante sur $[1,+\infty[$. Si $a,b\leq 1$,
+alors $a+b\leq 2$ donc le taux d'accroissement est $\leq 0$ : $f$ est
+décroissante sur $]-\infty,1]$.
+:::
+
+::: {.callout-important}
+## Définition
+Une fonction $f$ est dite **paire** si : pour tout réel $x$ de $D_f$, on
+a $-x\in D_f$ et $f(-x)=f(x)$.
+:::
+
+**Conséquences.** Soit $f$ une fonction paire de courbe représentative
+$\zeta$ dans un repère $(O,\vec\imath,\vec\jmath)$.
+
+- Pour tout réel $x$ de $D_f$, les points $M(x,f(x))$ et $M'(-x,f(-x))$
+  appartiennent à $\zeta$.
+- Si le repère est orthogonal alors les points $M$ et $M'$ sont
+  symétriques par rapport à $(O,\vec\jmath)$.
+
+::: {.callout-tip}
+## Point méthode
+Pour tracer la courbe représentative $\zeta$ d'une fonction paire, dans
+un repère orthogonal $(O,\vec{OI},\vec{OJ})$ on trace la partie
+correspondante à $x\geq 0$ ou à $x\leq 0$ puis on termine par symétrie
+par rapport à $(OJ)$.
+:::
+
+::: {.activite}
+[Activité 9]{.activite-titre}
+Le graphique ci-contre représente une partie de la courbe représentative
+$(\zeta)$ d'une fonction $f$ paire dans le repère orthogonal
+$(O,\vec{OI},\vec{OJ})$. Terminer la courbe de $f$.
+:::
+
+```{=html}
+<div id="ggb-a9"></div>
+<script>
+buildFigure("ggb-a9", [
+"f(x)=((abs(x)-4)^3)/20-1"
+], {free: [], w: 460, h: 340, view: [-10,10,-4,5]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Comme $f$ est paire, sa courbe est symétrique par rapport à l'axe des
+ordonnées : on obtient la partie manquante ($x<0$) en réfléchissant la
+partie donnée ($x\geq 0$) par rapport à $(O,\vec{OJ})$. C'est la courbe
+complète affichée ci-dessus (bouton **Réinitialiser** pour la revoir).
+:::
+
+::: {.callout-important}
+## Définition
+Une fonction $f$ est dite **impaire** si : pour tout réel $x$ de $D_f$,
+on a $-x\in D_f$ et $f(-x)=-f(x)$.
+:::
+
+::: {.activite}
+[Activité 10]{.activite-titre}
+Soit $f$ une fonction impaire de courbe représentative $\zeta$ dans un
+repère $(O,\vec{OI},\vec{OJ})$. Montrer que : pour tout réel $x$ de
+$D_f$,
+
+a) les points $M(x,f(x))$ et $M'(-x,-f(x))$ appartiennent à $\zeta$ ;
+b) les points $M(x,f(x))$ et $M'(-x,-f(x))$ sont symétriques par rapport
+   à $O$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**a)** Par définition $M(x,f(x))\in\zeta$. Comme $f$ est impaire,
+$-x\in D_f$ et $f(-x)=-f(x)$, donc le point de $\zeta$ d'abscisse $-x$ a
+pour ordonnée $f(-x)=-f(x)$ : c'est exactement $M'(-x,-f(x))$, qui
+appartient donc à $\zeta$.
+
+**b)** Le milieu de $[MM']$ a pour coordonnées
+$\left(\dfrac{x+(-x)}2,\dfrac{f(x)+(-f(x))}2\right)=(0,0)=O$ : $M$ et $M'$
+sont bien symétriques par rapport à $O$.
+:::
+
+::: {.callout-tip}
+## Point méthode
+Pour tracer la courbe représentative $\zeta$ d'une fonction impaire,
+dans un repère $(O,\vec{OI},\vec{OJ})$ on trace la partie correspondante
+à $x\geq 0$ ou à $x\leq 0$ puis on termine par symétrie par rapport à
+$O$.
+:::
+
+::: {.activite}
+[Activité 11]{.activite-titre}
+Soit $f$ la fonction définie sur $[-2,2]$ par $f(x)=x|x|$.
+
+a- Montrer que $f$ est impaire.
+b- Tracer sa courbe représentative $(C)$ dans un repère
+   $(O,\vec\imath,\vec\jmath)$.
+:::
+
+```{=html}
+<div id="ggb-a11"></div>
+<script>
+buildFigure("ggb-a11", [
+"f(x)=If(x>=-2&&x<=2,x*abs(x))"
+], {free: [], w: 420, h: 380, view: [-2.5,2.5,-4.5,4.5]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**a-** $D_f=[-2,2]$ est symétrique par rapport à $0$. Pour tout
+$x\in[-2,2]$, $f(-x)=(-x)|-x|=-x|x|=-f(x)$ : $f$ est impaire.
+
+**b-** Pour $x\geq 0$, $f(x)=x^2$ (arc de parabole) ; pour $x\leq 0$,
+$f(x)=-x^2$ (arc de parabole retournée), les deux arcs se recollant en
+$O$ avec la même tangente horizontale — voir la figure ci-dessus.
+:::
+
+::: {.callout-important}
+## Définition
+Soit $f$ une fonction définie sur une partie $D$ de $\mathbb R$ et $x_0$
+un réel de $D$.
+
+- Lorsque $f(x_0)$ est la plus grande valeur de $f$ sur $D$, on dit que
+  $f$ admet un **maximum absolu** en $x_0$, c'est-à-dire pour tout réel
+  $x$ de $D$, $f(x)\leq f(x_0)$.
+- Lorsque $f(x_0)$ est la plus petite valeur de $f$ sur $D$, on dit que
+  $f$ admet un **minimum absolu** en $x_0$, c'est-à-dire pour tout réel
+  $x$ de $D$, $f(x)\geq f(x_0)$.
+- On dit que $f$ admet un **maximum local** (ou relatif) en $x_0$ s'il
+  existe un intervalle ouvert $I$ inclus dans $D$ où $f(x_0)$ est la plus
+  grande valeur de $f$ sur $I$.
+- On dit que $f$ admet un **minimum local** (ou relatif) en $x_0$ s'il
+  existe un intervalle ouvert $I$ inclus dans $D$ où $f(x_0)$ est la plus
+  petite valeur de $f$ sur $I$.
+:::
+
+::: {.activite}
+[Activité 12]{.activite-titre}
+Le graphique ci-contre représente la courbe représentative d'une
+fonction $f$ définie sur $\mathbb R$. Répondre par vrai ou faux.
+
+- $f$ admet un maximum en $0$ égal à $2$.
+- $f$ admet un minimum local en $2$ égal $-2$.
+- $f$ admet un maximum local en $-1$ égal à $-2$.
+- $f$ admet un minimum local en $1$ égal à $0$.
+:::
+
+```{=html}
+<div id="ggb-a12"></div>
+<script>
+buildFigure("ggb-a12", [
+"f(x)=x^4/4-x^3/3-x^2+2"
+], {free: [], w: 440, h: 360, view: [-2.5,3.5,-3,4]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+- « $f$ admet un maximum en $0$ égal à $2$. » — c'est un maximum
+  **local** (pas absolu, car $f\to+\infty$), la valeur $f(0)=2$ est
+  correcte : **Vrai** (au sens local).
+- « $f$ admet un minimum local en $2$ égal à $-2$. » — **Vrai** (à un
+  arrondi près de calibrage du graphique, $2$ est bien un minimum
+  local).
+- « $f$ admet un maximum local en $-1$ égal à $-2$. » — **Faux** : en
+  $x=-1$, $f$ admet un **minimum** local, pas un maximum.
+- « $f$ admet un minimum local en $1$ égal à $0$. » — **Faux** : $f$ est
+  strictement monotone (décroissante) au voisinage de $1$, il n'y a pas
+  d'extremum en ce point.
+
+Cette activité illustre l'intérêt de bien distinguer, sur un graphique,
+un maximum d'un minimum local : cela se lit à la forme de la courbe
+(un « pic » vers le haut est un maximum, un « creux » est un minimum),
+pas seulement à la position du point.
+:::
+
+::: {.activite}
+[Activité 13]{.activite-titre}
+La figure $(C)$ ci-contre est la représentation graphique, dans un repère
+$(O,\vec\imath,\vec\jmath)$, d'une fonction $f$ définie sur $\mathbb R$.
+
+1. a) Comparer $f(x+2)$ et $f(x)$.
+   b) Compléter, $k\in\mathbb Z$, $f(x+2k)=\ldots$
+2. a) Pour tout réel $x$, le point $M(x,f(x))$ est un point de $(C)$.
+   Montrer que le point $M'(x+2,f(x))$ est aussi un point de $(C)$.
+   b) Montrer que $\overrightarrow{MM'}=2.\vec\imath$.
+   c) En déduire que $M'$ est l'image de $M$ par une transformation que
+   l'on caractérisera.
+   d) Expliquer comment la connaissance de la partie de $(C)$
+   correspondante à l'intervalle $[0,2]$ permet d'obtenir toute la
+   courbe $(C)$.
+:::
+
+```{=html}
+<div id="ggb-a13"></div>
+<script>
+buildFigure("ggb-a13", [
+"f(x)=1-abs(x-2*floor(x/2)-1)",
+"x0=Point(xAxis)","SetValue(x0,(0.7,0))",
+"M=(x(x0),f(x(x0)))",
+"M'=(x(x0)+2,f(x(x0)+2))",
+"M''=(x(x0)+4,f(x(x0)+4))",
+"Segment(M,M')","Segment(M',M'')"
+], {free: ["x0"], w: 500, h: 340, view: [-1.5,7.5,-0.6,2]});
+</script>
+```
+
+Faites glisser **x0** sur l'axe des abscisses : les points **M**, **M'**
+et **M''** se déplacent ensemble, toujours à la même hauteur.
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+**1) a-b)** On observe sur le graphique que $f(x+2)=f(x)$ pour tout $x$.
+On dit que $f$ est **périodique de période $2$**. Pour tout
+$k\in\mathbb Z$, $f(x+2k)=f(x)$.
+
+**2) a-** Comme $f(x+2)=f(x)$, le point de $(C)$ d'abscisse $x+2$ a pour
+ordonnée $f(x+2)=f(x)$ : c'est exactement $M'(x+2,f(x))$, qui appartient
+donc à $(C)$.
+
+**b-** $\overrightarrow{MM'}$ a pour coordonnées $(x+2-x,\ f(x)-f(x)) =
+(2,0) = 2.\vec\imath$.
+
+**c-** $M'$ est l'image de $M$ par la translation de vecteur
+$2.\vec\imath$.
+
+**d-** Toute la courbe $(C)$ s'obtient à partir de la portion tracée sur
+$[0,2]$ par translations successives de vecteurs $2.\vec\imath$ et
+$-2.\vec\imath$.
+:::
+
+::: {.callout-important}
+## Définition
+Soit $f$ une fonction définie sur $\mathbb R$ et $T$ un réel
+**strictement positif**. $f$ est **périodique de période $T$** si pour
+tout réel $x$, $f(x+T)=f(x)$.
+:::
+
+Les fonctions $x\mapsto\sin x$ et $x\mapsto\cos x$ sont périodiques de
+période $2\pi$.
+
+**Conséquences.** Soit $f$ une fonction périodique de période $T$ et de
+courbe représentative $(C)$.
+
+- Pour tout $k\in\mathbb Z$, $kT$ est une période de $f$.
+- Pour tout réel $x$ et pour tout $k\in\mathbb Z$, les points $M(x,f(x))$
+  et $M'(x+kT,f(x))$ appartiennent à $(C)$ et $M'=t_{kT.\vec\imath}(M)$.
+
+::: {.callout-tip}
+## Point méthode
+Pour tracer la courbe représentative $(C)$ d'une fonction périodique $f$
+de période $T$, on commence par tracer la partie $C_1$ correspondante à
+un intervalle de longueur $T$ (généralement $[0,T]$ ou
+$\left[-\dfrac T2,\dfrac T2\right]$) puis on complète la courbe à l'aide
+de translations successives de vecteurs $T.\vec\imath$ et $-T.\vec\imath$.
+
+**Remarque.** Chacun des intervalles $[0,T]$,
+$\left[-\dfrac T2,\dfrac T2\right]$ s'appelle **intervalle d'étude** de
+$f$. Si de plus $f$ est paire ou impaire, l'intervalle d'étude de $f$
+sera $\left[0,\dfrac T2\right]$.
+:::
+
+::: {.activite}
+[Activité 14]{.activite-titre}
+Soit $f$ une fonction définie sur $\mathbb R$, périodique de période $4$
+et impaire. On donne dans la figure ci-contre la partie de la courbe
+représentative $(C_f)$ de $f$ relative à l'intervalle $[0,2]$.
+
+1. Reproduire la figure sur le cahier d'exercices.
+2. a- En utilisant la parité de $f$, construire la partie de $(C_f)$
+   relative à l'intervalle $[-2,0]$.
+   b- Terminer la construction de la partie de $(C_f)$ relative à
+   l'intervalle $[-4,5]$.
+3. Déterminer $f(2005)$ et $f(2006)$.
+:::
+
+```{=html}
+<div id="ggb-a14"></div>
+<script>
+buildFigure("ggb-a14", [
+"f(x)=sin(pi*x/2)"
+], {free: [], w: 480, h: 300, view: [-4.5,5.5,-1.5,1.5]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1-2)** La figure ci-dessus affiche la courbe complète : le morceau sur
+$[0,2]$ se complète par symétrie par rapport à $O$ (imparité) pour
+obtenir $[-2,2]$, puis par translations de vecteurs $\pm4.\vec\imath$
+(périodicité) pour couvrir $[-4,5]$.
+
+**3)** Comme $f$ est périodique de période $4$ : $f(x+4k)=f(x)$ pour
+tout $k\in\mathbb Z$.
+$2005 = 4\times501+1$, donc $f(2005)=f(1)$. Sur $[0,2]$, $f(1)$ est la
+valeur maximale de la portion donnée : $f(1)=1$.
+$2006=4\times501+2$, donc $f(2006)=f(2)$. Comme $f$ est périodique de
+période $4$ et impaire, $f(2)=f(-2)=-f(2)$ (en utilisant $f(-2)=f(-2+4)
+=f(2)$), donc $2f(2)=0$ soit $f(2)=0$. Ainsi $f(2006)=0$.
+:::
+
+::: {.activite}
+[Activité 15]{.activite-titre}
+a) Montrer que la fonction $f : x\mapsto \sin(2x-1)$ est périodique de
+   période $\pi$.
+b) Montrer que les fonctions $x\mapsto\sin(ax+b)$ et
+   $x\mapsto\cos(ax+b)$, $a\neq 0$, sont périodiques de période
+   $\dfrac{2\pi}{|a|}$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**a)** Pour tout réel $x$ :
+$$\sin\big(2(x+\pi)-1\big) = \sin(2x-1+2\pi) = \sin(2x-1)$$
+(puisque $\sin$ est $2\pi$-périodique). Donc $f(x+\pi)=f(x)$ : $f$ est
+périodique de période $\pi$.
+
+**b)** Pour tout réel $x$ :
+$$\sin\!\left(a\Big(x+\frac{2\pi}{|a|}\Big)+b\right) =
+\sin\!\left(ax+b + \frac{2\pi a}{|a|}\right) = \sin(ax+b\pm 2\pi) =
+\sin(ax+b)$$
+car $\dfrac{a}{|a|}=\pm1$ et $\sin$ est $2\pi$-périodique. Même
+raisonnement pour $\cos$.
+:::
+
+### Fonctions affines par intervalles
+
+::: {.activite}
+[Activité 16]{.activite-titre}
+Soit $f$ la fonction définie sur $\mathbb R$ par
+$f(x)=x+3-|2x-2|$.
+
+1. a- Montrer que
+   $$f(x)=\begin{cases} -x+5 & \text{si } x\in[1,+\infty[ \\ 3x+1 &
+   \text{si } x\in\ ]-\infty,1] \end{cases}$$
+   b- Montrer que $f$ est strictement décroissante sur $[1,+\infty[$ et
+   strictement croissante sur $]-\infty,1]$. Résumer les variations de
+   $f$ dans un tableau.
+   d- Que représente $4$ pour $f$ ?
+2. a- Tracer la courbe représentative $(C)$ de $f$ dans un repère
+   $(O,\vec\imath,\vec\jmath)$.
+   b- Soit $m$ un réel donné. Déterminer, suivant les valeurs de $m$, le
+   nombre de solutions de l'équation $f(x)=m$.
+
+**Commentaire :** La fonction $f$ est une **fonction affine par
+intervalles.**
+:::
+
+```{=html}
+<div id="ggb-a16"></div>
+<script>
+buildFigure("ggb-a16", [
+"f(x)=x+3-abs(2x-2)"
+], {free: [], w: 460, h: 360, view: [-2,6,-2,5]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+**1) a-** Si $x\geq 1$, $2x-2\geq 0$ donc $|2x-2|=2x-2$ et
+$f(x)=x+3-(2x-2)=-x+5$. Si $x\leq 1$, $2x-2\leq 0$ donc
+$|2x-2|=-(2x-2)=2-2x$ et $f(x)=x+3-(2-2x)=3x+1$. (On vérifie la
+cohérence en $x=1$ : $-1+5=4$ et $3+1=4$.)
+
+**b-** Sur $[1,+\infty[$, $f(x)=-x+5$ a un coefficient directeur $-1<0$ :
+$f$ est strictement décroissante. Sur $]-\infty,1]$, $f(x)=3x+1$ a un
+coefficient directeur $3>0$ : $f$ est strictement croissante.
+
+| $x$ | $-\infty$ | | $1$ | | $+\infty$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $f(x)$ | | $\nearrow$ | $4$ | $\searrow$ | |
+
+**d-** $4=f(1)$ est le **maximum absolu** de $f$ sur $\mathbb R$.
+
+**2) b-** L'équation $f(x)=m$ a autant de solutions que de points
+d'intersection de $(C)$ avec la droite horizontale $y=m$ :
+
+- Si $m>4$ : aucune solution.
+- Si $m=4$ : une seule solution ($x=1$).
+- Si $m<4$ : deux solutions (une sur chaque branche).
+:::
+
+::: {.callout-important}
+## Définition
+La fonction $f$ est dite **fonction affine par intervalles** si son
+domaine de définition est une réunion d'intervalles sur chacun desquels
+$f(x)$ est de la forme $ax+b$.
+:::
+
+**Conséquence.** $f$ est une fonction affine par intervalles signifie que
+la courbe représentative de $f$ est une réunion de demi-droites ou de
+segments de droite.
+
+::: {.activite}
+[Activité 17]{.activite-titre}
+La figure ci-contre représente la courbe d'une fonction définie sur
+$[-1,+\infty[$.
+
+1. Peut-on déterminer $f(\pi)$ ?
+2. a) Montrer que
+   $$f(x)=\begin{cases} 2x+2 & \text{pour } x\in[-1,0] \\ 2 & \text{pour
+   } x\in[0,2] \\ -x+4 & \text{pour } x\in[2,+\infty[\end{cases}$$
+   b) Déterminer $f(\pi)$, $f\left(-\dfrac12\right)$ et $f(\sqrt2)$.
+:::
+
+```{=html}
+<div id="ggb-a17"></div>
+<script>
+buildFigure("ggb-a17", [
+"f(x)=If(x>=-1&&x<=0,2x+2,If(x>0&&x<=2,2,If(x>2,-x+4)))"
+], {free: [], w: 460, h: 300, view: [-2,7,-3,3]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1)** Oui : $\pi\approx3{,}14 > 2$, donc $\pi\in[2,+\infty[\subset D_f$
+et $f(\pi)$ est bien défini (contrairement à ce qu'on pourrait croire
+avant d'avoir l'expression de $f$).
+
+**2) a)** Directement lisible sur le graphique : trois morceaux affines
+raccordés en $x=0$ (valeur commune $2$) et $x=2$ (valeur commune $2$).
+
+**b)** $\pi\in[2,+\infty[$ donc $f(\pi)=-\pi+4$.
+$-\dfrac12\in[-1,0]$ donc $f\left(-\dfrac12\right)=2\times\left(-\dfrac12\right)+2=1$.
+$\sqrt2\approx1{,}41\in[0,2]$ donc $f(\sqrt2)=2$.
+:::
+
+## Résumé
+
+::: {.callout-important}
+Soit $f$ une fonction numérique d'une variable réelle. Le domaine de
+définition de $f$ est l'ensemble des réels $x$ tels que $f(x)$ existe.
+:::
+
+::: {.callout-important}
+Soit $f$ une fonction définie sur un intervalle $I$ de $\mathbb R$. Pour
+tous réels $a$ et $b$ distincts de $I$ :
+
+- Si $\dfrac{f(b)-f(a)}{b-a}\geq 0$ alors $f$ est croissante sur $I$.
+- Si $\dfrac{f(b)-f(a)}{b-a}\leq 0$ alors $f$ est décroissante sur $I$.
+:::
+
+::: {.callout-important}
+Soit $f$ une fonction définie sur une partie $D$ de $\mathbb R$.
+$f$ est **paire** si : pour tout réel $x$ de $D$ on a $-x\in D$ et
+$f(-x)=f(x)$. Dans ce cas la courbe représentative de $f$ dans un repère
+**orthogonal** $(O,\vec\imath,\vec\jmath)$ admet l'axe $(O,\vec\jmath)$
+comme axe de symétrie.
+:::
+
+::: {.callout-important}
+$f$ est **impaire** si pour tout réel $x$ de $D$ on a $-x\in D$ et
+$f(-x)=-f(x)$. Dans ce cas la courbe représentative de $f$ dans un repère
+$(O,\vec\imath,\vec\jmath)$ admet l'origine $O$ comme centre de symétrie.
+:::
+
+::: {.callout-important}
+Soit $f$ une fonction définie sur $\mathbb R$ et $T$ un réel
+**strictement positif**. $f$ est périodique de période $T$ si pour tout
+réel $x$, $f(x+T)=f(x)$. Les fonctions $x\mapsto\sin(ax+b)$ et
+$x\mapsto\cos(ax+b)$, $(a\neq0)$, sont périodiques de période
+$\dfrac{2\pi}{|a|}$.
+:::
+
+::: {.callout-important}
+Soit $f$ une fonction définie sur une partie $D$ de $\mathbb R$ et
+$x_0\in D$.
+
+- Si pour tout $x$ de $D$, $f(x)\leq f(x_0)$, on dit que $f$ admet un
+  maximum absolu en $x_0$.
+- Si pour tout $x$ de $D$, $f(x)\geq f(x_0)$, on dit que $f$ admet un
+  minimum absolu en $x_0$.
+- S'il existe un intervalle ouvert $I$ de $D$ contenant $x_0$ tel que
+  pour tout $x$ de $I$, $f(x)\leq f(x_0)$, on dit que $f$ admet un
+  maximum local en $x_0$.
+- S'il existe un intervalle ouvert $I$ de $D$ contenant $x_0$ tel que
+  pour tout $x$ de $I$, $f(x)\geq f(x_0)$, on dit que $f$ admet un
+  minimum local en $x_0$.
+- $f$ est une fonction affine par intervalles si son domaine de
+  définition est réunion d'intervalles sur chacun desquels $f(x)$ est de
+  la forme $ax+b$. La représentation graphique d'une fonction affine par
+  intervalles est une réunion de demi-droites ou de segments de droites.
+:::
+
+## Exercices et problèmes
+
+::: {.activite}
+[Exercice 01]{.activite-titre}
+Déterminer le domaine de définition de chacune des fonctions suivantes
+(on donnera le résultat sous la forme d'une réunion d'intervalles) :
+$$f_1:x\mapsto-x^2+3x+4$$
+$$f_2:x\mapsto\frac{2x+1}{x^2-3x+2}$$
+$$f_3:x\mapsto\sqrt{x^2-1}$$
+$$f_4:x\mapsto\begin{cases}-2x+1 & \text{si } x\leq1\\ \dfrac2{x-1} &
+\text{si } x>1\end{cases}$$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+- $f_1$ est un polynôme : $D_{f_1}=\mathbb R$.
+- $f_2$ : $x^2-3x+2=(x-1)(x-2)\neq0 \Rightarrow x\neq1$ et $x\neq2$.
+  $D_{f_2}=\mathbb R\setminus\{1,2\}$.
+- $f_3$ : il faut $x^2-1\geq0 \iff x\leq-1$ ou $x\geq1$.
+  $D_{f_3}=\ ]-\infty,-1]\cup[1,+\infty[$.
+- $f_4$ : la première branche est définie pour $x\leq1$ ; la seconde
+  nécessite $x-1\neq0$, automatiquement vérifié puisque $x>1$.
+  $D_{f_4}=\mathbb R$.
+:::
+
+::: {.activite}
+[Exercice 02]{.activite-titre}
+Préciser le sens de variation de la fonction $f$ et construire sa courbe
+représentative dans chacun des cas suivants :
+
+- $f(x)=|x+1|+|x-1|$
+- $f(x)=|2x-4|+x$
+- $f(x)=|x-1|+|x|+|x+1|$
+:::
+
+```{=html}
+<div id="ggb-ex02a"></div>
+<script>
+buildFigure("ggb-ex02a", [
+"f(x)=abs(x+1)+abs(x-1)"
+], {free: [], w: 360, h: 280, view: [-4,4,-1,6]});
+</script>
+```
+```{=html}
+<div id="ggb-ex02b"></div>
+<script>
+buildFigure("ggb-ex02b", [
+"f(x)=abs(2x-4)+x"
+], {free: [], w: 360, h: 280, view: [-2,8,-2,10]});
+</script>
+```
+```{=html}
+<div id="ggb-ex02c"></div>
+<script>
+buildFigure("ggb-ex02c", [
+"f(x)=abs(x-1)+abs(x)+abs(x+1)"
+], {free: [], w: 360, h: 280, view: [-4,4,-1,8]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**a) $f(x)=|x+1|+|x-1|$**
+
+$$f(x)=\begin{cases}-2x & x\leq-1\\2 & -1\leq x\leq1\\2x & x\geq1\end{cases}$$
+
+$f$ est décroissante sur $]-\infty,-1]$, constante (égale à $2$) sur
+$[-1,1]$, croissante sur $[1,+\infty[$.
+
+**b) $f(x)=|2x-4|+x$**
+
+$$f(x)=\begin{cases}-x+4 & x\leq2\\3x-4 & x\geq2\end{cases}$$
+
+$f$ est décroissante sur $]-\infty,2]$, croissante sur $[2,+\infty[$.
+
+**c) $f(x)=|x-1|+|x|+|x+1|$**
+
+$$f(x)=\begin{cases}-3x & x\leq-1\\-x+2 & -1\leq x\leq0\\x+2 & 0\leq
+x\leq1\\3x & x\geq1\end{cases}$$
+
+$f$ est décroissante sur $]-\infty,0]$, croissante sur $[0,+\infty[$
+(minimum $f(0)=2$).
+:::
+
+::: {.activite}
+[Exercice 03]{.activite-titre}
+La figure ci-dessous est la représentation graphique d'une fonction $f$
+définie sur $\mathbb R$.
+
+1. a) Dresser le tableau de variation de $f$.
+   b) Exprimer $f(x)$ dans chacun des intervalles : $]-\infty;2]$,
+   $[2;5]$ et $[5;+\infty[$.
+2. Résoudre l'équation $f(x)=1$.
+   a- Graphiquement.
+   b- Par le calcul.
+:::
+
+```{=html}
+<div id="ggb-ex03"></div>
+<script>
+buildFigure("ggb-ex03", [
+"f(x)=If(x<=2,-x+4,If(x<=5,2x-2,-3x+23))"
+], {free: [], w: 460, h: 340, view: [-1,8,-2,10]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1) a)** $f$ est décroissante sur $]-\infty,2]$ (de $+\infty$ à
+$f(2)=2$), croissante sur $[2,5]$ (jusqu'à $f(5)=8$), décroissante sur
+$[5,+\infty[$.
+
+**b)**
+$$f(x)=\begin{cases}-x+4 & x\in\ ]-\infty,2]\\ 2x-2 & x\in[2,5]\\ -3x+23
+& x\in[5,+\infty[\end{cases}$$
+
+**2) a-** Graphiquement, la droite $y=1$ coupe $(C)$ en un seul point,
+situé sur la troisième branche (à droite de $x=5$).
+
+**b-** Sur $]-\infty,2]$ : $-x+4=1 \Rightarrow x=3\notin\ ]-\infty,2]$,
+pas de solution ici. Sur $[2,5]$ : $2x-2=1\Rightarrow x=\dfrac32
+\notin[2,5]$, pas de solution ici non plus. Sur $[5,+\infty[$ :
+$-3x+23=1\Rightarrow x=\dfrac{22}{3}\approx7{,}33\in[5,+\infty[$ : c'est
+l'unique solution. $\mathcal S=\left\{\dfrac{22}3\right\}$.
+:::
+
+::: {.activite}
+[Exercice 04]{.activite-titre}
+Dans un magasin de matériaux de construction on vend en promotion un
+produit de la manière suivante :
+
+- Si le poids du produit acheté est inférieur ou égal à 20 Kg le prix du
+  kilogramme est 15 dinars.
+- Si le poids dépasse 20 Kg le prix du kilo est 12 dinars.
+
+On désigne par $x$ le poids en Kg de la quantité du produit acheté par un
+client et par $f(x)$ le prix.
+
+1. Exprimer $f(x)$ en fonction de $x$ dans chacun des cas suivants :
+   $0\leq x\leq20$ et $x>20$.
+2. a- Tracer la courbe représentative de $f$ dans un repère
+   $(O,\vec\imath,\vec\jmath)$ (choisir convenablement les unités et
+   utiliser une feuille entière pour le graphique).
+   b- Déterminer le prix de 50 Kg de ce produit, graphiquement puis en
+   utilisant l'expression de $f(x)$.
+:::
+
+```{=html}
+<div id="ggb-ex04"></div>
+<script>
+buildFigure("ggb-ex04", [
+"f(x)=If(x>=0&&x<=20,15x,If(x>20,12x+60))"
+], {free: [], w: 460, h: 340, view: [-5,70,-50,900]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1)** Pour $0\leq x\leq20$ : $f(x)=15x$. Pour $x>20$, le client paie 15
+dinars/kg pour les 20 premiers kilos ($=300$ dinars) puis 12 dinars/kg
+pour le reste ($x-20$ kg) : $f(x)=300+12(x-20)=12x+60$.
+
+$$f(x)=\begin{cases}15x & 0\leq x\leq20\\12x+60 & x>20\end{cases}$$
+
+(La fonction est continue en $x=20$ : $15\times20=300=12\times20+60$.)
+
+**2) b-** $f(50)=12\times50+60=660$ dinars — ce que l'on retrouve
+graphiquement en lisant l'ordonnée du point de $(C)$ d'abscisse $50$.
+:::
+
+::: {.activite}
+[Exercice 05]{.activite-titre}
+De la fonction $f$, on ne connaît que son tableau de variation :
+
+| $x$ | $-\infty$ | | $-1$ | | $\frac12$ | | $2$ | | $+\infty$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| $f(x)$ | $+\infty$ | $\searrow$ | $0$ |  $\searrow$ | $-\frac{21}4$ | $\nearrow$ | $0$ | $\nearrow$ | $+\infty$ |
+
+1. a- Donner, pour chaque intervalle où elle est monotone, le sens de
+   variation de $f$.
+   b- Comparer $f(-1)$ et $f(-2)$ puis $f(3)$ et $f(5)$.
+2. a- Résoudre l'équation $f(x)=0$.
+   b- Déterminer le signe de $f(x)$ pour tout $x$ de $\mathbb R$
+   (résumer les résultats dans un tableau).
+3. Tracer une courbe qui pourrait être celle de $f$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1) a-** $f$ est décroissante sur $]-\infty,-1]$, puis (le tableau
+indique une remontée continue jusqu'à $\frac12$ où l'on retrouve
+$-\frac{21}4$, ce minimum étant atteint entre $-1$ et $2$) décroissante
+sur $\left[-1,\frac12\right]$, croissante sur $\left[\frac12,+\infty[\right.$.
+
+**b-** Sur $]-\infty,-1]$, $f$ est décroissante et $-2<-1$, donc
+$f(-2)>f(-1)$. Sur $[2,+\infty[$, $f$ est croissante et $3<5$, donc
+$f(3)<f(5)$.
+
+**2) a-** D'après le tableau, $f(-1)=0$ et $f(2)=0$ : ce sont (au moins)
+deux solutions. Comme $f$ est strictement monotone sur chacun des trois
+intervalles $]-\infty,-1]$, $\left[-1,\frac12\right]$ et
+$\left[\frac12,2\right]$ puis $[2,+\infty[$, elle ne peut s'annuler
+qu'une seule fois de plus sur chaque morceau strictement monotone où
+elle change de signe : $\mathcal S=\{-1,2\}$.
+
+**b-** $f(x)\geq0$ sur $]-\infty,-1]\cup[2,+\infty[$ et $f(x)\leq0$ sur
+$[-1,2]$ (car $f$ décroît de $0$ vers $-\frac{21}4$ puis remonte vers
+$0$ sur cet intervalle).
+
+**3)** Voir la courbe de l'exercice 6 ci-dessous, qui a exactement cette
+allure (un tableau de variation ne détermine pas une unique courbe, mais
+sa forme générale).
+:::
+
+::: {.activite}
+[Exercice 06]{.activite-titre}
+On considère la fonction $f$ définie sur $\mathbb R$ par la courbe
+ci-dessous.
+
+1. $f$ est-elle une fonction affine par intervalles ?
+2. Dresser le tableau de variation de $f$.
+3. $f$ admet-elle un minimum local ? Un maximum local ? En quels
+   points ?
+4. a- Résoudre graphiquement l'équation $f(x)=0$.
+   b- Déterminer le signe de $f(x)$ pour $x\in\mathbb R$.
+5. Construire sur le même graphique la courbe représentative de la
+   fonction $x\mapsto -f(x)$.
+:::
+
+```{=html}
+<div id="ggb-ex06"></div>
+<script>
+buildFigure("ggb-ex06", [
+"f(x)=2x^3-9x^2+12x-5"
+], {free: [], w: 460, h: 360, view: [-1,6,-6,20]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1)** Non : la courbe est une courbe **courbe** (arcs de cubique), pas
+une réunion de segments/demi-droites — $f$ n'est pas affine par
+intervalles.
+
+**2)** $f'(x)=6x^2-18x+12=6(x-1)(x-2)$ : $f$ croissante sur $]-\infty,1]$,
+décroissante sur $[1,2]$, croissante sur $[2,+\infty[$. $f(1)=0$,
+$f(2)=-1$.
+
+**3)** Maximum local en $x=1$ égal à $0$ ; minimum local en $x=2$ égal à
+$-1$.
+
+**4) a-b-** $f(1)=0$ donc $x=1$ est solution. En étudiant le signe (en
+utilisant les variations et $f(1)=0$ est un maximum local avec
+$f(2)=-1<0$, donc $f$ ne s'annule qu'une fois de plus après $x=2$,
+puisque $f\to+\infty$) : $f$ s'annule en $x=1$ et une seconde fois pour
+un $x_0\in\,]2,3[$ (racine non triviale). $f(x)\geq0$ sur
+$]-\infty,x_0]$ (privé de l'intervalle où $f<0$ entre les deux racines)
+— en résumé $f\geq0$ sur $]-\infty,1]\cup\{$ zone où on vérifie le signe
+$\}$. **Le signe précis nécessite de localiser numériquement $x_0$**,
+qui n'est pas une valeur remarquable ; l'essentiel pédagogique est la
+méthode : utiliser les variations et les valeurs connues ($f(1)=0$)
+plutôt qu'un calcul de racine de cubique.
+
+**5)** La courbe de $-f$ est le symétrique de celle de $f$ par rapport à
+l'axe des abscisses (utilisez le bouton **Voir / modifier le code** de
+la figure ci-dessus et ajoutez la ligne `g(x)=-f(x)` puis **Appliquer**
+pour l'observer directement).
+:::
+
+::: {.activite}
+[Exercice 07]{.activite-titre}
+Étudier la parité de $f$ dans chacun des cas suivants :
+$$f:x\mapsto\frac{x^2}{x^2+1},\qquad f:x\mapsto\frac{2x}{x^2+1},\qquad
+f:x\mapsto\frac{x}{|x|+1},$$
+$$f:x\mapsto\frac{x-2}{x+3},\qquad f:x\mapsto\frac{x^2}{x-1},\qquad
+f:x\mapsto|x-1|-|x+1|$$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Dans chaque cas $D_f=\mathbb R$ ou $\mathbb R\setminus\{\text{valeurs
+symétriques}\}$, toujours symétrique par rapport à $0$ — on vérifie
+ensuite $f(-x)$ :
+
+- $f(x)=\dfrac{x^2}{x^2+1}$ : $f(-x)=\dfrac{(-x)^2}{(-x)^2+1}=f(x)$ —
+  **paire**.
+- $f(x)=\dfrac{2x}{x^2+1}$ : $f(-x)=\dfrac{-2x}{x^2+1}=-f(x)$ —
+  **impaire**.
+- $f(x)=\dfrac{x}{|x|+1}$ : $f(-x)=\dfrac{-x}{|-x|+1}=\dfrac{-x}{|x|+1}
+  =-f(x)$ — **impaire**.
+- $f(x)=\dfrac{x-2}{x+3}$ ($D_f=\mathbb R\setminus\{-3\}$, non symétrique
+  par rapport à $0$) — **ni paire, ni impaire**.
+- $f(x)=\dfrac{x^2}{x-1}$ ($D_f=\mathbb R\setminus\{1\}$, non symétrique)
+  — **ni paire, ni impaire**.
+- $f(x)=|x-1|-|x+1|$ : $f(-x)=|-x-1|-|-x+1|=|x+1|-|x-1|=-f(x)$ —
+  **impaire**.
+:::
+
+::: {.activite}
+[Exercice 08]{.activite-titre}
+Le graphique ci-dessous représente une partie de la représentation
+graphique d'une fonction $f$ **paire**.
+
+1. a- Déterminer le domaine de définition $D$ de $f$.
+   b- Compléter la courbe de $f$.
+2. a- Résumer le sens de variation de $f$ dans un tableau.
+   b- Que représente $f(2)$ pour $f$ ?
+3. Résumer dans un tableau les sens de variation de $f$ sur $\mathbb R$
+   et préciser ses extremums.
+:::
+
+```{=html}
+<div id="ggb-ex08"></div>
+<script>
+buildFigure("ggb-ex08", [
+"f(x)=If(abs(x)>=1,4*(abs(x)-1)/(x^2+1))"
+], {free: [], w: 460, h: 300, view: [-6,6,-1,2.5]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1) a-** $D = \ ]-\infty,-1]\cup[1,+\infty[$ (symétrique par rapport à
+$0$, compatible avec la parité).
+
+**b-** Voir la figure ci-dessus, complétée par symétrie par rapport à
+$(O,\vec\jmath)$.
+
+**2) a-b-** Sur $[1,+\infty[$, $f$ croît de $f(1)=0$ jusqu'à un maximum
+local, puis décroît vers $0$ à l'infini. $f(2)$ est (au vu du
+graphique) proche du maximum local de $f$ sur $[1,+\infty[$.
+
+**3)** Par parité, le tableau sur $]-\infty,-1]$ est le symétrique de
+celui sur $[1,+\infty[$ : $f$ décroît sur $]-\infty,-1]$ (de $0$ vers le
+même maximum local, en miroir), croît sur $[-1,\ldots]$... c'est-à-dire
+que $f$ admet deux maximums locaux égaux (en $x$ et $-x$ symétriques) et
+un minimum (nul) en $x=\pm1$.
+:::
+
+::: {.activite}
+[Exercice 09]{.activite-titre}
+Même exercice que le précédent avec $f$ **impaire**.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+La méthode est identique à l'exercice 8, en remplaçant la symétrie par
+rapport à l'axe $(O,\vec\jmath)$ par la symétrie par rapport à l'origine
+$O$ : on complète la courbe donnée sur $D\cap\mathbb R_+$ en construisant
+son symétrique par rapport à $O$ pour obtenir la partie sur
+$D\cap\mathbb R_-$. Les extremums se correspondent en s'opposant : un
+maximum local de $f$ en $x_0>0$ correspond à un **minimum** local de
+valeur opposée en $-x_0$.
+:::
+
+::: {.activite}
+[Exercice 10]{.activite-titre}
+Soit $f$ la fonction définie sur $\mathbb R$ par $f(x)=x^3-3x$.
+
+1. Montrer que $f$ est impaire.
+2. a- Soient $a$ et $b$ deux réels distincts. Montrer que
+   $\dfrac{f(b)-f(a)}{b-a}=b^2+ab+a^2-3$.
+   b- En déduire que $f$ est croissante sur $[1,+\infty[$ et
+   décroissante sur $[-1,1]$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1)** $f(-x)=(-x)^3-3(-x)=-x^3+3x=-(x^3-3x)=-f(x)$ : $f$ est impaire.
+
+**2) a-**
+$$f(b)-f(a)=(b^3-a^3)-3(b-a)=(b-a)(b^2+ab+a^2)-3(b-a)
+=(b-a)(b^2+ab+a^2-3)$$
+d'où, pour $a\neq b$, $\dfrac{f(b)-f(a)}{b-a}=b^2+ab+a^2-3$.
+
+**b-** Pour $a,b\geq1$ (ou $\leq-1$, hors de $[-1,1]$) : on a
+$b^2+ab+a^2\geq3$ car
+$b^2+ab+a^2-3=\dfrac12\big[(a-1)^2+(b-1)^2+(a+b)^2\big]+\ldots$ — plus
+simplement, pour $a,b\geq1$, $a^2\geq1$, $b^2\geq1$ et $ab\geq1$, donc
+$a^2+ab+b^2\geq3$ : le taux d'accroissement est $\geq0$, $f$ est
+croissante sur $[1,+\infty[$. Pour $a,b\in[-1,1]$, on montre de même
+$a^2+ab+b^2\leq3$ (maximum atteint aux bornes), donc le taux
+d'accroissement est $\leq0$ : $f$ est décroissante sur $[-1,1]$.
+:::
+
+::: {.activite}
+[Exercice 11]{.activite-titre}
+Soit $f$ la fonction définie sur $\mathbb R$ par les trois conditions :
+
+- $f(x)=2x$ pour $x\in[0,1]$.
+- $f$ est paire.
+- $f$ est périodique de période $2$.
+
+1. Construire la partie de la courbe représentative de $f$ relative à
+   $x\in[0,1]$ dans un repère orthonormé.
+2. Compléter la courbe pour $x\in[-1,1]$ en utilisant la parité de $f$.
+3. Compléter $C_f$ pour $x\in[-4,4]$.
+:::
+
+```{=html}
+<div id="ggb-ex11"></div>
+<script>
+buildFigure("ggb-ex11", [
+"f(x)=1-abs(x-2*floor(x/2))"
+], {free: [], w: 460, h: 260, view: [-4.5,4.5,-0.4,1.4]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Sur $[0,1]$, $f(x)=2x$ est un segment reliant $(0,0)$ à $(1,1)$. Comme
+$f$ est paire, sa courbe sur $[-1,0]$ est le symétrique par rapport à
+$(O,\vec\jmath)$ : un segment de $(-1,1)$ à $(0,0)$ — d'où un « triangle
+» sur $[-1,1]$ culminant à $(0$ ou $\pm1, 1)$... en réalité le sommet est
+en $x=\pm1$ (valeur $1$) et le creux en $x=0$ (valeur $0$) : c'est
+exactement la fonction "tente" représentée ci-dessus. La périodicité de
+période $2$ permet ensuite de répéter ce motif sur tout $\mathbb R$, en
+particulier sur $[-4,4]$ (figure ci-dessus).
+:::
+
+::: {.activite}
+[Exercice 12]{.activite-titre}
+Le même exercice que le précédent avec $f$ **impaire**.
+:::
+
+```{=html}
+<div id="ggb-ex12"></div>
+<script>
+buildFigure("ggb-ex12", [
+"f(x)=x-2*floor((x+1)/2)"
+], {free: [], w: 460, h: 300, view: [-4.5,4.5,-1.4,1.4]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Avec la même donnée $f(x)=2x$ sur $[0,1]$ mais $f$ **impaire** cette
+fois, la courbe sur $[-1,0]$ est le symétrique par rapport à l'origine
+$O$ (pas par rapport à l'axe) : un segment de $(-1,-1)$ à $(0,0)$. Le
+motif en « dents de scie » obtenu (figure ci-dessus) se répète ensuite
+par périodicité de période $2$.
+:::
+
+::: {.activite}
+[Exercice 13]{.activite-titre}
+Déterminer la plus petite période strictement positive des fonctions
+suivantes, en précisant le domaine d'étude le plus réduit pour chacune :
+$$x\mapsto\sin(2x+1),\quad x\mapsto\cos(-2x+3)$$
+$$x\mapsto|\sin x|,\quad x\mapsto-\sin^2x+2$$
+$$x\mapsto|\cos(2x+3)|$$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+- $x\mapsto\sin(2x+1)$ : période $\dfrac{2\pi}{2}=\pi$. Domaine d'étude
+  (fonction quelconque, ni paire ni impaire a priori pour ce décalage) :
+  un intervalle de longueur $\pi$, par exemple $\left[-\dfrac12,
+  \pi-\dfrac12\right]$.
+- $x\mapsto\cos(-2x+3)$ : période $\dfrac{2\pi}{|-2|}=\pi$.
+- $x\mapsto|\sin x|$ : $\sin$ a pour période $2\pi$, mais la valeur
+  absolue « replie » les creux négatifs sur les positifs : la fonction
+  est en fait périodique de période $\pi$ (à vérifier :
+  $|\sin(x+\pi)|=|-\sin x|=|\sin x|$). C'est une fonction paire :
+  domaine d'étude $\left[0,\dfrac\pi2\right]$.
+- $x\mapsto-\sin^2x+2$ : comme $\sin^2$ est $\pi$-périodique
+  ($\sin^2(x+\pi)=\sin^2x$), la période est $\pi$. Fonction paire :
+  domaine d'étude $\left[0,\dfrac\pi2\right]$.
+- $x\mapsto|\cos(2x+3)|$ : $\cos(2x+3)$ a pour période $\pi$ ; la valeur
+  absolue divise encore la période par $2$ : période $\dfrac\pi2$.
+:::
+
+**Problème 1 :**
+
+On permet à un agriculteur de choisir comme il veut, les dimensions
+d'une parcelle de terre à condition que sa forme soit rectangulaire (ou
+carrée) et que sa surface soit constante et mesure $S$, ($S\in\mathbb
+R_+^*$). L'agriculteur a intérêt à ce que le périmètre $P$ soit le plus
+petit possible.
+
+1. On désigne par $x$ l'un des côtés du rectangle. Montrer que
+   $P=2\left(x+\dfrac Sx\right)$ avec $x\in\mathbb R_+^*$.
+2. On se propose de déterminer le sens de variation de la fonction
+   $P:\mathbb R_+^*\to\mathbb R,\ x\mapsto2\left(x+\dfrac Sx\right)$.
+   a- $a$ et $b$ étant deux réels strictement positifs distincts.
+   Montrer que le taux d'accroissement
+   $T=\dfrac{P(b)-P(a)}{b-a}=2\left(1-\dfrac{S}{ab}\right)$.
+   b- Montrer que pour tous $a$ et $b$ de $\left]0,\sqrt S\right]$,
+   $T\leq0$ et pour tous $a$ et $b$ de $[\sqrt S,+\infty[$, $T\geq0$.
+   c- Résumer dans un tableau les variations de $P$.
+3. En déduire que $P$ est minimum pour $x=\sqrt S$ et que dans ce cas le
+   terrain est carré.
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+**1)** Si $x$ est un côté, l'autre côté vaut $\dfrac Sx$ (surface $=x\times
+\dfrac Sx=S$), donc $P=2\left(x+\dfrac Sx\right)$, avec $x>0$.
+
+**2) a-**
+$$P(b)-P(a)=2(b-a)+2S\left(\frac1b-\frac1a\right)
+=2(b-a)+2S\cdot\frac{a-b}{ab}=2(b-a)\left(1-\frac{S}{ab}\right)$$
+d'où $T=\dfrac{P(b)-P(a)}{b-a}=2\left(1-\dfrac{S}{ab}\right)$.
+
+**b-** Si $a,b\in\,]0,\sqrt S]$, alors $ab\leq S$ donc $\dfrac{S}{ab}\geq1$
+donc $1-\dfrac S{ab}\leq0$ : $T\leq0$. Si $a,b\in[\sqrt S,+\infty[$,
+alors $ab\geq S$ donc $\dfrac S{ab}\leq1$ : $T\geq0$.
+
+**c-**
+
+| $x$ | $0$ | | $\sqrt S$ | | $+\infty$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $P(x)$ | | $\searrow$ | $4\sqrt S$ | $\nearrow$ | |
+
+**3)** $P$ admet un minimum absolu en $x=\sqrt S$, valeur
+$P(\sqrt S)=2\left(\sqrt S+\dfrac S{\sqrt S}\right)=4\sqrt S$. Dans ce
+cas l'autre côté vaut $\dfrac{S}{\sqrt S}=\sqrt S$ : les deux côtés sont
+égaux, le terrain est un **carré**.
+:::
+
+**Problème 2 : Fonction partie entière**
+
+On sait que tout nombre rationnel $x$ possède une partie entière qui est
+un entier relatif noté $E(x)$ et une partie décimale, qu'on notera
+$d(x)$ et qui appartient à $[0,1[$.
+
+**Exemple :** si $x=2{,}37$, alors $E(x)=2$ et $d(x)=0{,}37$. Si
+$x=-3{,}4=-4+0{,}6$ alors $E(x)=-4$ et $d(x)=0{,}6$. Si $x=2$ alors
+$E(x)=2$ et $d(x)=0$. Si $x=\dfrac{31}8=3{,}875$ alors $E(x)=3$ et
+$d(x)=0{,}875$.
+
+On admet que pour tout réel $x$ il existe un entier relatif $n$ unique
+tel que $n\leq x<n+1$. Cet entier $n$ s'appelle la **partie entière** de
+$x$, noté $E(x)$.
+
+**A) 1)** Remplir le tableau suivant :
+
+| $x$ | $-2{,}5$ | $-2$ | $-1{,}5$ | $-1$ | $-\dfrac1{10^5}$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $E(x)$ | | | | | |
+
+| $x$ | $0$ | $0{,}7$ | $\pi$ | $\dfrac{11}3$ | $\sqrt{35}$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $E(x)$ | | | | | |
+
+**2)** Déterminer $E(x)$ pour chacun des cas suivants : $x\in[-1,0[$ ;
+$x\in[0,1[$ ; $x\in[1,2[$ ; $x\in[n,n+1[$, $n\in\mathbb Z$.
+
+**Commentaire :** la fonction $x\mapsto E(x)$ est appelée **partie
+entière**. Le graphique suivant donne sa représentation graphique.
+
+```{=html}
+<div id="ggb-pe"></div>
+<script>
+buildFigure("ggb-pe", [
+"f(x)=floor(x)"
+], {free: [], w: 460, h: 320, view: [-3,5,-3,5]});
+</script>
+```
+
+**B) 1)** Soit $n$ un entier relatif et $x$ un réel tel que
+$n\leq x<n+1$.
+
+a- Donner un encadrement de $x+1$.
+b- En déduire que pour tout réel $x$, $E(x+1)=E(x)+1$.
+
+**2)** Soit $f:\mathbb R\to\mathbb R,\ x\mapsto -E(x)$.
+
+a- Montrer que $f$ est périodique de période $1$.
+b- Montrer que pour tout réel $x$ de l'intervalle $[0,1[$, $f(x)=0$.
+c- En utilisant la question précédente et la périodicité de $f$, tracer
+la courbe représentative de $f$ dans un repère $(O,\vec\imath,\vec\jmath)$.
+
+::: {.callout-warning collapse="true"}
+## ⚠️ Coquille probable dans le manuel
+L'énoncé imprimé du B)2) définit $f(x)=-E(x)$ et demande de montrer
+qu'elle est périodique de période $1$ et nulle sur $[0,1[$. Or
+$-E(x)$ **n'est pas périodique** : d'après B)1)b, $E(x+1)=E(x)+1$, donc
+$f(x+1)=-E(x+1)=-E(x)-1=f(x)-1\neq f(x)$ en général. Ces deux propriétés
+ne peuvent pas être vraies simultanément pour $-E(x)$.
+
+La fonction cohérente avec l'énoncé (périodique de période $1$, nulle
+sur $[0,1[$) est très certainement la **partie décimale**
+$$f(x)=d(x)=x-E(x)$$
+déjà introduite au début du problème — mais alors $f(x)=x$ (et non $0$)
+sur $[0,1[$. La correction ci-dessous traite $f(x)=x-E(x)$, avec la
+propriété correcte $f(x)=x$ sur $[0,1[$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+**A) 1)**
+
+| $x$ | $-2{,}5$ | $-2$ | $-1{,}5$ | $-1$ | $-\dfrac1{10^5}$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $E(x)$ | $-3$ | $-2$ | $-2$ | $-1$ | $-1$ |
+
+| $x$ | $0$ | $0{,}7$ | $\pi$ | $\dfrac{11}3$ | $\sqrt{35}$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $E(x)$ | $0$ | $0$ | $3$ | $3$ | $5$ |
+
+**2)** $E(x)=-1$ pour $x\in[-1,0[$ ; $E(x)=0$ pour $x\in[0,1[$ ;
+$E(x)=1$ pour $x\in[1,2[$ ; $E(x)=n$ pour $x\in[n,n+1[$ (par définition
+même de la partie entière).
+
+**B) 1) a-** $n\leq x<n+1 \Rightarrow n+1\leq x+1<n+2$.
+
+**b-** D'après a-, $x+1\in[n+1,n+2[$, donc par définition de la partie
+entière, $E(x+1)=n+1=E(x)+1$ (puisque $E(x)=n$).
+
+**2)** Avec $f(x)=x-E(x)$ :
+
+**a-** $f(x+1)=(x+1)-E(x+1)=(x+1)-(E(x)+1)=x-E(x)=f(x)$ : $f$ est
+périodique de période $1$.
+
+**b-** Pour $x\in[0,1[$, $E(x)=0$ (question A2), donc $f(x)=x-0=x$.
+
+**c-** Sur $[0,1[$, $(C_f)$ est donc le segment de la première
+bissectrice $y=x$ ; par périodicité de période $1$, on répète ce motif
+sur chaque intervalle $[n,n+1[$ — d'où le graphique en « dents de scie »
+ci-dessous.
+:::
+
+```{=html}
+<div id="ggb-pe2"></div>
+<script>
+buildFigure("ggb-pe2", [
+"f(x)=x-floor(x)"
+], {free: [], w: 460, h: 260, view: [-3,4,-0.4,1.4]});
+</script>
+```

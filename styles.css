@@ -1,0 +1,310 @@
+/* Mycourses — thème du site */
+
+:root {
+  --mc-pink: #d6006e;
+  --mc-blue: #0b6e99;
+  --mc-green: #4c8c2b;
+  --mc-orange: #e07b00;
+}
+
+.navbar-title {
+  font-weight: 700;
+}
+
+/* Profil de l'auteur (page d'accueil) — sobre : fond neutre, un seul
+   accent de couleur (bleu du site), typographie soignée plutôt que des
+   aplats colorés. */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin: 2.25rem 0 2.75rem 0;
+  padding: 3rem;
+  background: #fcfdfd;
+  border: 1px solid #e6ecf0;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(20, 30, 40, 0.03);
+}
+.profile-photo {
+  flex: 0 0 auto;
+  width: 208px;
+  height: 208px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 12px 28px -8px rgba(20, 35, 50, 0.28);
+}
+.profile-divider {
+  flex: 0 0 auto;
+  align-self: stretch;
+  width: 1px;
+  background: #e2e8ec;
+}
+.profile-info {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.profile-info h2 {
+  margin: 0 0 0.6rem 0;
+  padding: 0;
+  border: none;
+  font-size: 2.1rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: #172230;
+  line-height: 1.15;
+}
+.profile-role {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--mc-blue);
+  margin: 0 0 0.55rem 0;
+}
+.profile-tagline {
+  color: #3d4a58;
+  font-style: italic;
+  line-height: 1.55;
+  max-width: 52ch;
+  margin: 0 0 1.15rem 0;
+  font-size: 0.92rem;
+}
+.profile-bio {
+  color: #56636f;
+  line-height: 1.75;
+  max-width: 56ch;
+  margin: 0 0 1.35rem 0;
+  font-size: 0.99rem;
+}
+.profile-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #172230;
+  text-decoration: none;
+  border-bottom: 1px solid #c3cdd5;
+  padding-bottom: 3px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.profile-links a:hover {
+  color: var(--mc-blue);
+  border-color: var(--mc-blue);
+}
+@media (max-width: 640px) {
+  .profile {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2.25rem 1.5rem;
+  }
+  .profile-divider { display: none; }
+  .profile-photo { width: 168px; height: 168px; }
+  .profile-bio, .profile-tagline { max-width: 100%; }
+}
+
+/* Bandeaux de rubrique, façon manuel scolaire */
+.rubrique {
+  border-left: 6px solid var(--mc-blue);
+  background: #f2f8fb;
+  padding: 0.75rem 1rem;
+  border-radius: 0 6px 6px 0;
+  margin: 1.5rem 0;
+}
+.rubrique h2, .rubrique h3 { margin-top: 0; }
+
+.rubrique-cours   { border-left-color: var(--mc-pink); background: #fdf0f6; }
+.rubrique-tic      { border-left-color: var(--mc-orange); background: #fff6ea; }
+.rubrique-exercices{ border-left-color: var(--mc-green); background: #f2f8ee; }
+.rubrique-culture  { border-left-color: #8a4b9e; background: #f7f0fa; }
+
+/* Activités du manuel */
+.activite {
+  border: 1px solid #d8e3ea;
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  margin: 1.1rem 0;
+  background: #fbfdfe;
+}
+.activite .activite-titre {
+  font-weight: 700;
+  color: var(--mc-blue);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+/* Cartes "Manuels disponibles" (page d'accueil) */
+.manuel-card {
+  border: 1px solid #e6ecf0;
+  border-radius: 6px;
+  padding: 1.4rem 1.6rem;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.manuel-card:hover {
+  border-color: #c3d4de;
+  box-shadow: 0 4px 16px -6px rgba(20, 35, 50, 0.12);
+}
+.manuel-card h3 {
+  margin-top: 0;
+  font-size: 1.08rem;
+}
+.manuel-card a {
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.manuel-card a:hover {
+  border-bottom-color: currentColor;
+}
+
+/* Blocs "à retenir" */
+div.callout-important {
+  border-left-color: var(--mc-pink);
+}
+
+/* Exercices interactifs Pyodide */
+.pyodide-exercise, .exercise-editor {
+  border-radius: 8px;
+}
+
+/* GeoGebra */
+.geogebra-wrap {
+  margin: 1.25rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Équations affichées (MathJax) trop larges pour la colonne : défilement
+   horizontal plutôt que débordement hors de la page. */
+mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+/* Tableur (Jspreadsheet CE) */
+.spreadsheet-wrap {
+  margin: 1.1rem 0;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.spreadsheet-wrap .jexcel_container {
+  display: inline-block;
+}
+
+/* Tableaux larges : on les fait défiler plutôt que de casser la page.
+   Toute table pandoc est enveloppée (voir filters/table-scroll.lua)
+   dans un conteneur .table-scroll-wrap qui gère le défilement. */
+.table-scroll-wrap {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 100%;
+  max-height: 70vh;
+  margin: 1.1rem 0;
+  border: 1px solid #dfe7ec;
+  border-radius: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+.table-scroll-wrap table {
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+/* En-tête figé en haut (tables à beaucoup de lignes) */
+.table-scroll-wrap table thead th {
+  position: sticky;
+  top: 0;
+  background: #f7fafc;
+  z-index: 2;
+}
+/* Première colonne figée à gauche (tables à double entrée très larges) */
+.table-scroll-wrap table th:first-child,
+.table-scroll-wrap table td:first-child {
+  position: sticky;
+  left: 0;
+  background: #fbfdfe;
+  z-index: 1;
+  box-shadow: 2px 0 4px -2px rgba(0, 0, 0, 0.15);
+}
+.table-scroll-wrap table thead th:first-child {
+  z-index: 3;
+}
+.table-scroll-wrap table td,
+.table-scroll-wrap table th {
+  white-space: nowrap;
+}
+
+/* Corrections repliables (step-by-step) */
+div.callout.callout-style-default.callout-correction {
+  border-left-color: var(--mc-green);
+}
+
+/* Figures GeoGebra : cadre + barre d'outils (Réinitialiser / Voir le code),
+   même esprit que les cellules Python (Run Code / Start Over). */
+.ggb-figure {
+  margin: 1.1rem 0;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #dfe7ec;
+  border-radius: 8px;
+  padding: 0.6rem;
+  background: #fbfdfe;
+}
+.ggb-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+.ggb-btn {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid #c7d2d9;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #274156;
+  cursor: pointer;
+}
+.ggb-btn:hover { background: #f0f5f8; }
+.ggb-btn-primary {
+  background: var(--mc-blue);
+  color: #fff;
+  border-color: var(--mc-blue);
+}
+.ggb-btn-primary:hover { background: #095a80; }
+.ggb-canvas {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #fbfdfe;
+}
+.ggb-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a99a6;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+.ggb-codepanel {
+  margin-top: 0.6rem;
+  border-top: 1px dashed #c7d2d9;
+  padding-top: 0.6rem;
+}
+.ggb-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  border: 1px solid #c7d2d9;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  resize: vertical;
+}

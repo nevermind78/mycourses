@@ -1,0 +1,1534 @@
+---
+title: "Chapitre 1 — Angles"
+subtitle: "1ère année secondaire — Manuel CNP — Travaux géométriques"
+engine: markdown
+---
+
+::: {.callout-tip}
+## Dans ce chapitre
+- **Reprendre** — un QCM de révision sur les angles.
+- **Découvrir** — 12 activités, chacune avec une **figure GeoGebra interactive**
+  (les points bleus se déplacent à la souris ou au doigt : observez ce qui
+  change... et ce qui ne change pas).
+- **Retenir** — les propriétés des angles formés par deux parallèles et une
+  sécante, et la relation angle inscrit / angle au centre.
+- **Mobiliser ses compétences**, **S'auto-évaluer**, **Exercices et
+  problèmes**, **Avec l'ordinateur**, **Math culture**.
+:::
+
+```{=html}
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<script>
+// --- Mycourses / GeoGebra helper -------------------------------------
+// Chaque figure : points FIXES par défaut (non déplaçables), sauf ceux
+// listés dans opts.free. Boutons "Réinitialiser" (rejoue la construction
+// d'origine) et "Voir / modifier le code" (éditeur de commandes GeoGebra,
+// comme les cellules Python : on modifie, puis on clique "Appliquer").
+var GGB = { apis: {}, initCmds: {}, freePts: {}, views: {}, resizers: {}, toolbarOn: {}, sizes: {}, cleanups: {} };
+
+// Grille et axes visibles par défaut sur chaque figure (setPerspective("G")
+// les masque sinon).
+function ggbShowGrid(api) {
+  try { api.setAxesVisible(true, true); } catch (e) {}
+  try { api.setGridVisible(true); } catch (e) {}
+}
+
+// Affiche/masque la palette d'outils géométriques de GeoGebra (Point,
+// Intersection, Droite parallèle, etc.). Contrairement au menu ☰ ci-dessus,
+// l'API showToolBar() de GeoGebra ne reconstruit pas correctement les icônes
+// une fois masquées : rebasculer showToolBar(true) après un showToolBar(false)
+// laisse le panneau vide (constaté en test). On recrée donc l'applet avec le
+// bon réglage dès le démarrage, en conservant la construction et l'état des
+// points via getXML/setXML (aucune perte : ni la figure, ni un point que
+// l'élève aurait déplacé).
+function ggbRebuildApplet(id, showTools) {
+  var oldApi = GGB.apis[id];
+  if (!oldApi) return;
+  var xml;
+  try { xml = oldApi.getXML(); } catch (e) { return; }
+
+  var container = document.getElementById(id);
+  var oldInner = container.querySelector(".ggb-inner");
+  var newInner = document.createElement("div");
+  var canvasId = id + "-inner-" + Date.now();
+  newInner.id = canvasId;
+  newInner.className = "ggb-inner";
+  oldInner.replaceWith(newInner);
+
+  var size = GGB.sizes[id] || [480, 360];
+  var baseW = size[0], baseH = size[1];
+
+  var params = {
+    appName: "geometry", width: baseW, height: baseH,
+    showToolBar: showTools, showAlgebraInput: false, showMenuBar: true,
+    showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+    language: "fr",
+    appletOnLoad: function (api) {
+      GGB.apis[id] = api;
+      try { if (!showTools) api.setPerspective("G"); } catch (e) {}
+      try { api.setXML(xml); } catch (e) {}
+      ggbShowGrid(api);
+      ggbFitView(api, id);
+      ggbMakeResponsive(id, api, container, baseW / baseH);
+    }
+  };
+  new GGBApplet(params, true).inject(canvasId);
+}
+
+function ggbToggleTools(id) {
+  if (!GGB.apis[id]) return;
+  var show = !GGB.toolbarOn[id];
+  GGB.toolbarOn[id] = show;
+  var container = document.getElementById(id);
+  var btn = container.querySelector('[data-act="tools"]');
+  if (btn) btn.textContent = show ? "🛠 Masquer les outils GeoGebra" : "🛠 Outils GeoGebra";
+  ggbRebuildApplet(id, show);
+}
+
+function ggbRunCommands(api, commands, free) {
+  commands.forEach(function (cmd) {
+    try { api.evalCommand(cmd); } catch (e) { console.error("GGB cmd failed:", cmd, e); }
+  });
+  var n = api.getObjectNumber();
+  for (var i = 0; i < n; i++) {
+    var name = api.getObjectName(i);
+    try {
+      if (api.getObjectType(name) === "point" && free.indexOf(name) === -1) {
+        api.setFixed(name, true);
+      }
+    } catch (e) {}
+  }
+}
+
+// Cadre la vue sur la construction : soit une fenêtre fixe explicite
+// (GGB.views[id], optionnelle), soit — par défaut — une boîte englobante
+// calculée nous-mêmes à partir des coordonnées réelles de tous les points.
+//
+// On n'utilise plus showAllObjects() : cette commande met à jour la vue de
+// façon asynchrone, et une lecture immédiate de getViewProperties() après
+// coup renvoyait parfois encore l'ancien cadrage, qu'on figeait alors par
+// erreur (un seul sommet visible, etc.). Le calcul direct ci-dessous est
+// entièrement synchrone et ne dépend d'aucun délai.
+function ggbFitView(api, id) {
+  var v = GGB.views[id];
+  try {
+    var cx, cy, halfW, halfH;
+    if (v) {
+      cx = (v[0] + v[1]) / 2; cy = (v[2] + v[3]) / 2;
+      halfW = (v[1] - v[0]) / 2; halfH = (v[3] - v[2]) / 2;
+    } else {
+      var n = api.getObjectNumber();
+      var xs = [], ys = [];
+      for (var i = 0; i < n; i++) {
+        var name = api.getObjectName(i);
+        if (api.getObjectType(name) === "point") {
+          var x = api.getXcoord(name), y = api.getYcoord(name);
+          if (isFinite(x) && isFinite(y)) { xs.push(x); ys.push(y); }
+        }
+      }
+      if (xs.length === 0) return;
+      var xMin = Math.min.apply(null, xs), xMax = Math.max.apply(null, xs);
+      var yMin = Math.min.apply(null, ys), yMax = Math.max.apply(null, ys);
+      cx = (xMin + xMax) / 2; cy = (yMin + yMax) / 2;
+      halfW = Math.max((xMax - xMin) / 2, 0.3) * 1.25;
+      halfH = Math.max((yMax - yMin) / 2, 0.3) * 1.25;
+    }
+
+    // GeoGebra impose la même échelle en x et en y (pas de déformation) :
+    // si on ne demande pas déjà le bon rapport largeur/hauteur, il agrandit
+    // lui-même une des deux dimensions — de façon parfois imprévisible. On
+    // aligne donc notre fenêtre sur le rapport largeur/hauteur réel du
+    // canevas avant de l'imposer.
+    //
+    // Piège constaté : api.getViewProperties().width/height (lues pour
+    // connaître ce rapport) ne sont pas fiables ici — undefined selon le
+    // moment de l'appel — et retombaient alors sur un rapport par défaut
+    // 4/3 qui ne correspond pas au vrai canevas, déformant les cercles en
+    // ellipses. On utilise à la place la taille que NOUS avons demandée
+    // nous-mêmes (GGB.sizes[id], voir buildFigure et ggbMakeResponsive, qui
+    // redimensionne toujours en conservant ce même rapport) : fiable et
+    // toujours disponible, sans dépendre de l'API GeoGebra pour ça.
+    var size = GGB.sizes[id];
+    var pxAspect = (size && size[0] > 0 && size[1] > 0) ? (size[0] / size[1]) : (4 / 3);
+    if (halfW / halfH < pxAspect) { halfW = halfH * pxAspect; }
+    else { halfH = halfW / pxAspect; }
+
+    api.setCoordSystem(cx - halfW, cx + halfW, cy - halfH, cy + halfH);
+  } catch (e) {}
+}
+
+function ggbReset(id) {
+  var api = GGB.apis[id];
+  if (!api) return; // figure pas encore chargée (voir buildFigure / chargement différé)
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, GGB.initCmds[id], GGB.freePts[id]);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  if (ta) ta.value = GGB.initCmds[id].join("\n");
+  // setPerspective("G") remet les outils masqués : on aligne le bouton.
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+function ggbApplyCode(id) {
+  var api = GGB.apis[id];
+  if (!api) return;
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  var lines = ta.value.split("\n")
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return s.length > 0; });
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, lines, GGB.freePts[id]);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+// Charger 20+ applets GeoGebra (WebAssembly) simultanément au chargement
+// de la page sature le processeur : les redimensionnements temporisés de
+// certaines figures se calculaient alors sur des états intermédiaires, et
+// la figure semblait tronquée ou mal cadrée (constaté en pratique). Chaque
+// figure n'est donc réellement construite que lorsqu'elle approche de la
+// zone visible (chargement différé), comme des images "lazy-load".
+function buildFigure(id, commands, opts) {
+  opts = opts || {};
+  var free = opts.free || [];
+  GGB.initCmds[id] = commands.slice();
+  GGB.freePts[id] = free;
+  GGB.views[id] = opts.view || null;
+
+  var container = document.getElementById(id);
+  container.classList.add("ggb-figure");
+  var baseW = opts.w || 480, baseH = opts.h || 360;
+  GGB.sizes[id] = [baseW, baseH];
+  container.innerHTML =
+    '<div class="ggb-toolbar">' +
+      '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
+      '<button type="button" class="ggb-btn" data-act="code">✏️ Voir / modifier le code</button>' +
+      '<button type="button" class="ggb-btn" data-act="tools">🛠 Outils GeoGebra</button>' +
+    '</div>' +
+    '<div class="ggb-canvas" style="aspect-ratio:' + baseW + '/' + baseH + '">' +
+      '<div class="ggb-placeholder">Figure GeoGebra — chargement…</div>' +
+      '<div class="ggb-inner"></div>' +
+    '</div>' +
+    '<div class="ggb-codepanel" hidden>' +
+      '<textarea class="ggb-textarea" spellcheck="false" rows="' + Math.min(Math.max(commands.length, 4), 16) + '"></textarea>' +
+      '<button type="button" class="ggb-btn ggb-btn-primary" data-act="apply">▶ Appliquer les modifications</button>' +
+    '</div>';
+
+  var ta = container.querySelector(".ggb-textarea");
+  ta.value = commands.join("\n");
+  container.querySelector('[data-act="reset"]').addEventListener("click", function () { ggbReset(id); });
+  container.querySelector('[data-act="apply"]').addEventListener("click", function () { ggbApplyCode(id); });
+  container.querySelector('[data-act="code"]').addEventListener("click", function () {
+    var panel = container.querySelector(".ggb-codepanel");
+    panel.hidden = !panel.hidden;
+  });
+  container.querySelector('[data-act="tools"]').addEventListener("click", function () { ggbToggleTools(id); });
+
+  var loaded = false;
+  function loadApplet() {
+    if (loaded) return;
+    loaded = true;
+    var placeholder = container.querySelector(".ggb-placeholder");
+    if (placeholder) placeholder.remove();
+
+    // GeoGebra reçoit son propre élément dédié (.ggb-inner), distinct du
+    // conteneur .ggb-canvas : injecter directement dans .ggb-canvas
+    // empêche api.setSize() de fonctionner par la suite (constaté en test).
+    var innerDiv = container.querySelector(".ggb-inner");
+    var canvasId = id + "-inner";
+    innerDiv.id = canvasId;
+
+    var params = {
+      appName: "geometry", width: baseW, height: baseH,
+      showToolBar: false, showAlgebraInput: false, showMenuBar: true,
+      showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+      language: "fr",
+      appletOnLoad: function (api) {
+        GGB.apis[id] = api;
+        try { api.setPerspective("G"); } catch (e) {}
+        ggbShowGrid(api);
+        ggbRunCommands(api, commands, free);
+        ggbFitView(api, id);
+        ggbMakeResponsive(id, api, container, baseW / baseH);
+      }
+    };
+    new GGBApplet(params, true).inject(canvasId);
+  }
+
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { loadApplet(); io.disconnect(); }
+      });
+    }, { rootMargin: "600px 0px" });
+    io.observe(container);
+  } else {
+    loadApplet();
+  }
+}
+
+// Adapte la taille de l'applet à la largeur réelle de la colonne de
+// contenu (sidebar / TOC compris), au chargement et au redimensionnement,
+// en conservant le rapport largeur/hauteur d'origine de la figure.
+//
+// Important : on mesure le conteneur EXTÉRIEUR (.ggb-figure, largeur fixée
+// par CSS à 100% de la colonne) et non la zone du dessin elle-même — sinon
+// setSize() change la taille de la zone observée, qui redéclenche le
+// redimensionnement, qui rappelle setSize()... (boucle infinie -> "vibration").
+function ggbMakeResponsive(id, api, outerDiv, aspect) {
+  // Si l'applet a été recréée (bascule des outils GeoGebra, voir
+  // ggbRebuildApplet), l'ancien ResizeObserver et l'ancien écouteur
+  // "resize" existent toujours et appelleraient setSize() sur une instance
+  // détruite : on les retire avant d'en recréer de nouveaux.
+  if (GGB.cleanups[id]) { try { GGB.cleanups[id](); } catch (e) {} }
+  var lastW = -1;
+  var padding = null;
+  var fitToken = 0;
+  var debounceTimer = null;
+
+  // Applique la taille ET recadre la vue. N'est appelé qu'une fois la
+  // largeur du conteneur stabilisée (voir scheduleResize ci-dessous) —
+  // jamais à chaque pixel pendant un glisser de la fenêtre.
+  function applySize() {
+    if (padding === null) {
+      var cs = window.getComputedStyle(outerDiv);
+      padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    }
+    var w = Math.floor(outerDiv.clientWidth - padding);
+    if (w < 80 || w === lastW) return;
+    lastW = w;
+    api.setSize(w, Math.round(w / aspect));
+    // setSize() traite le redimensionnement de façon asynchrone (son rendu
+    // interne n'est pas terminé une frame plus tard) : on réajuste le
+    // cadrage un peu après coup, sinon showAllObjects() calcule le zoom sur
+    // les anciennes dimensions (figure trop/pas assez zoomée, mal centrée).
+    // Un jeton annule tout recadrage devenu obsolète si une nouvelle taille
+    // arrive entre-temps.
+    var myToken = ++fitToken;
+    var attempt = 0;
+    function tryFit() {
+      if (myToken !== fitToken) return; // une taille plus récente a pris le relais
+      ggbFitView(api, id);
+      attempt++;
+      // Un second passage un peu plus tard rattrape les cas où le premier
+      // recadrage a encore été calculé avant la fin du rendu interne.
+      if (attempt === 1) setTimeout(tryFit, 220);
+    }
+    setTimeout(tryFit, 220);
+  }
+
+  // Attend une accalmie (~120ms sans nouvel événement) avant d'appliquer la
+  // taille : pendant qu'on glisse le bord de la fenêtre, on ne fait rien.
+  function scheduleResize() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applySize, 120);
+  }
+
+  GGB.resizers[id] = applySize;
+  applySize();
+  window.addEventListener("resize", scheduleResize);
+  var ro = null;
+  if (window.ResizeObserver) {
+    ro = new ResizeObserver(scheduleResize);
+    ro.observe(outerDiv);
+  } else {
+    setTimeout(applySize, 300);
+  }
+  GGB.cleanups[id] = function () {
+    window.removeEventListener("resize", scheduleResize);
+    if (ro) ro.disconnect();
+  };
+}
+</script>
+```
+
+## Reprendre
+
+::: {.activite}
+[QCM de révision]{.activite-titre}
+
+Pour chaque énoncé, on propose trois réponses A, B et C. Une ou plusieurs sont correctes.
+
+1. Dans une figure où $A$ et $B$ sont proches l'un de l'autre sur deux demi-droites issues de $O$, et $C$ sur une troisième demi-droite : <br>
+
+
+  * **A.** l'angle $\widehat{AOB}$ est aigu.
+  * **B.** l'angle $\widehat{AOB}$ est obtus.
+  * **C.** l'angle $\widehat{BOC}$ est obtus.
+
+2. $(AE) \parallel (BF)$, une sécante coupe $(AE)$ en $K/A$ et $(BF)$ en $B$ :<br>
+
+
+  * **A.** les angles $\widehat{KAE}$ et $\widehat{KBF}$ sont égaux.
+  * **B.** ils sont alternes-internes.
+  * **C.** ils sont correspondants.
+
+3. Trois demi-droites $[Ot)$, $[OS)$, $[OK)$ issues de $O$ :<br>
+
+  * **A.** les angles $\widehat{SOt}$ et $\widehat{tOK}$ sont adjacents.
+  * **B.** $[Ot)$ est la bissectrice de $\widehat{SOK}$.
+  * **C.** $\widehat{SOt}$ et $\widehat{tOK}$ sont supplémentaires.
+
+4. $ABCD$ est un parallélogramme :<br>
+
+
+* **A.** les angles $\widehat{BAD}$ et $\widehat{BCD}$ sont supplémentaires.
+* **B.** $\widehat{ABD}$ et $\widehat{BCD}$ sont correspondants.
+* **C.** $\widehat{DBA}$ et $\widehat{BCD}$ sont égaux.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+1. Dans un parallélogramme, les angles opposés sont **égaux** et les
+angles consécutifs sont **supplémentaires** : $\widehat{BAD}$ et
+$\widehat{BCD}$ sont opposés donc **égaux**, pas supplémentaires — seule
+la proposition **C** est vraie ($\widehat{DBA}=\widehat{BCD}$ résulte de
+l'égalité des angles alternes-internes si l'on trace la diagonale $(BD)$,
+sécante commune à $(AD)\parallel(BC)$).
+2. **B** et **C** décrivent la même paire d'angles sous deux noms
+différents selon la position exacte de $K$ : lisez la figure de votre
+manuel pour trancher entre alterne-interne et correspondant.
+3. Pour les angles adjacents/bissectrice/supplémentaires : cela dépend des
+mesures exactes lues sur la figure du manuel (non reproduites ici).
+:::
+
+## Découvrir
+
+### Angles et figures de base
+
+::: {.activite}
+[Activité 1]{.activite-titre}
+
+1. On considère la figure ci-contre. Montrer que $\widehat{CAB}+\widehat{ABC}=\widehat{ACD}$.
+2. Que vaut $\widehat{ACD}$ lorsque le triangle $ABC$ est équilatéral ?
+3. Que vaut $\widehat{ACD}$ lorsque le triangle $ABC$ est rectangle isocèle en $B$ ?
+4. On suppose que le triangle $ABC$ est isocèle en $C$. Écrire $\widehat{ACD}$ en fonction de $\widehat{ABC}$.
+:::
+
+```{=html}
+<div id="ggb-d1"></div>
+<script>
+buildFigure("ggb-d1", [
+"B=(-2,0)","C=(1,0)","D=(4,0)","A=(0,2.5)",
+"Segment(B,D)","Segment(A,B)","Segment(A,C)",
+"Angle(C,A,B)","Angle(A,B,C)","Angle(A,C,D)"
+], {free: []});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+1. Dans le triangle $ABC$ : $\widehat{CAB}+\widehat{ABC}+\widehat{BCA}=180°$.
+Comme $B,C,D$ sont alignés, $\widehat{BCA}+\widehat{ACD}=180°$ (angles
+supplémentaires). En combinant : $\widehat{ACD}=180°-\widehat{BCA}=\widehat{CAB}+\widehat{ABC}$.
+*(C'est le théorème de l'angle extérieur : un angle extérieur d'un
+triangle est égal à la somme des deux angles intérieurs non adjacents.)*
+2. Équilatéral : $\widehat{CAB}=\widehat{ABC}=60°$, donc $\widehat{ACD}=120°$.
+3. Rectangle isocèle en $B$ : $\widehat{ABC}=90°$, et $\widehat{CAB}=\widehat{BCA}=45°$ (base d'un triangle isocèle rectangle), donc $\widehat{ACD}=45°+90°=135°$.
+4. Isocèle en $C$ : $CA=CB$ donc $\widehat{CAB}=\widehat{ABC}$ (angles à la base), donc $\widehat{ACD}=2\times\widehat{ABC}$.
+:::
+
+::: {.activite}
+[Activité 2]{.activite-titre}
+
+1. Dans la figure ci-contre, $ABC$ est un triangle de périmètre 13 cm ; les triangles $EBA$ et $ACF$ sont isocèles respectivement en $B$ et $C$.
+   a) Que vaut $\widehat{AEB}$ ? b) Que vaut $\widehat{AFC}$ ? c) Calculer $EF$.
+2. On se propose de construire un triangle $ABC$ de périmètre 13 cm dont deux angles valent 72° et 66°.
+   a) Tracer $AEF$ tel que $EF=13$ cm, $\widehat{AEF}=36°$ et $\widehat{AFC}=33°$.
+   b) Placer sur $[EF]$ les points $B$ et $C$ tels que $BE=BA$ et $CF=CA$.
+   c) Vérifier que le triangle $ABC$ convient.
+:::
+
+```{=html}
+<div id="ggb-d2"></div>
+<script>
+buildFigure("ggb-d2", [
+"B=(0,0)","C=(3,0)","A=(1.2,2.5)",
+"E=B+Distance(A,B)*UnitVector(Vector(C,B))",
+"F=C+Distance(A,C)*UnitVector(Vector(B,C))",
+"Segment(E,F)","Segment(A,B)","Segment(A,C)","Segment(A,E)","Segment(A,F)",
+"Angle(A,E,B)","Angle(A,F,C)"
+], {free: ["A"]});
+</script>
+```
+
+Déplacez le point **A** : les points **E** et **F** se recalculent
+automatiquement pour garder $EB=BA$ et $FC=CA$ (triangles isocèles).
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+1. a) $EBA$ isocèle en $B$ : ses angles à la base ($\widehat{AEB}$ et
+$\widehat{EAB}$) sont égaux. Comme $\widehat{EBA}=180°-\widehat{ABC}$
+(angles supplémentaires, $E,B,C$ alignés), on obtient
+$\widehat{AEB}=\dfrac{\widehat{ABC}}{2}$.
+b) De même, $\widehat{AFC}=\dfrac{\widehat{ACB}}{2}$.
+c) $EF=EB+BC+CF=BA+BC+CA=$ **périmètre de $ABC$** $=13$ cm : c'est
+l'idée clé de la construction (2.).
+2. C'est la réciproque de (1.) : on construit d'abord le grand triangle
+$AEF$ isocèle (via les demi-angles 36° et 33°, soit le double des angles
+visés 72°/2=36° et 66°/2=33°), puis $B$ et $C$ sur $[EF]$ redonnent
+exactement les bons angles en $A$ pour $ABC$, avec $EF=13$ cm imposant le
+bon périmètre.
+:::
+
+::: {.activite}
+[Activité 3]{.activite-titre}
+
+Dans la figure ci-contre, $ABCD$ est un carré et $BCE$ est un triangle équilatéral.
+
+1. Quelle est la nature du triangle $DCE$ ?
+2. Que vaut $\widehat{CED}$ ? $\widehat{AED}$ ?
+3. Donner la mesure de chacun des angles de la figure.
+:::
+
+```{=html}
+<div id="ggb-d3"></div>
+<script>
+buildFigure("ggb-d3", [
+"A=(0,2)","B=(2,2)","C=(2,0)","D=(0,0)",
+"Polygon(A,B,C,D)",
+"E=Rotate(C,60°,B)",
+"Segment(B,E)","Segment(C,E)","Segment(D,E)","Segment(A,E)",
+"Angle(C,E,D)","Angle(A,E,D)"
+], {free: []});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+1. $DC=CE$ (côté du carré = côté du triangle équilatéral) et
+$\widehat{DCE}=\widehat{DCB}+\widehat{BCE}=90°+60°=150°$ : le triangle
+$DCE$ est **isocèle en $C$**, d'angle au sommet $150°$.
+2. Ses angles à la base valent $\dfrac{180°-150°}{2}=15°$ :
+$\widehat{CED}=\widehat{CDE}=15°$.
+Pour $\widehat{AED}$ : le triangle $ABE$ est isocèle en $B$
+($BA=BE=$ côté du carré), d'angle au sommet
+$\widehat{ABE}=\widehat{ABC}+\widehat{CBE}=90°+60°=150°$, donc
+$\widehat{AEB}=15°$ aussi. Les angles $\widehat{AEB}$, $\widehat{BEC}=60°$
+et $\widehat{CED}=15°$ se juxtaposent autour de $E$ :
+$\widehat{AED}=15°+60°+15°=90°$.
+3. Carré : 90° partout. Triangle $BCE$ : 60° partout. Triangles $ABE$ et
+$DCE$ : 150° (sommet) et 15°, 15° (base) chacun. $\widehat{AED}=90°$.
+:::
+
+::: {.activite}
+[Activité 4]{.activite-titre}
+
+Dans la figure ci-contre, $ABCD$ est un carré de côté $a$, $DCE$ et $BCF$ sont des triangles équilatéraux. $H$ et $H'$ sont les projetés orthogonaux respectifs de $E$ sur les droites $(DC)$ et $(AB)$.
+
+1. Quelle est la nature de chacun des triangles $ADE$ et $FCE$ ?
+2. Montrer que les points $A$, $E$ et $F$ sont alignés.
+3. Exprimer en fonction de $a$ les distances $EF$, $EH$, $EH'$, $AE$ et $AF$.
+:::
+
+```{=html}
+<div id="ggb-d4"></div>
+<script>
+buildFigure("ggb-d4", [
+"A=(0,2)","B=(2,2)","C=(2,0)","D=(0,0)",
+"Polygon(A,B,C,D)",
+"E=Rotate(C,60°,D)","F=Rotate(C,60°,B)",
+"Segment(D,E)","Segment(C,E)","Segment(B,F)","Segment(C,F)","Segment(A,E)","Segment(E,F)",
+"H=ClosestPoint(Line(D,C),E)","H'=ClosestPoint(Line(A,B),E)",
+"Segment(E,H)","Segment(E,H')"
+], {free: []});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+1. $AD=DE=a$ et $\widehat{ADE}=\widehat{ADC}-\widehat{EDC}=90°-60°=30°$ :
+$ADE$ est **isocèle en $D$** (angle au sommet 30°, base $75°/75°$).
+$CF=CE=a$ (côtés des deux triangles équilatéraux) et
+$\widehat{FCE}=(\widehat{DCB}+\widehat{BCF})-\widehat{DCE}=(90°+60°)-60°=90°$ :
+$FCE$ est **isocèle rectangle en $C$**.
+2. Les angles à la base donnent $\widehat{DEA}=75°$ (triangle $ADE$),
+$\widehat{DEC}=60°$ (équilatéral) et $\widehat{CEF}=45°$ (triangle $FCE$,
+isocèle rectangle). Leur somme $75°+60°+45°=180°$ : les points $A$, $E$,
+$F$ sont donc **alignés** (angles formant un angle plat en $E$).
+3. Avec les triangles isocèles ci-dessus : $EH=a\sin 60°=\dfrac{a\sqrt3}{2}$,
+$EH'=a-EH=a\left(1-\dfrac{\sqrt3}{2}\right)$, $AE=2a\sin15°$,
+$EF=a\sqrt2$ (diagonale du carré isocèle rectangle $FCE$), et
+$AF=AE+EF$ (car $E\in[AF]$).
+:::
+
+### Angles égaux et droites parallèles
+
+::: {.activite}
+[Activité 5]{.activite-titre}
+
+Dans la figure ci-contre, $C'$ est le milieu de $[AB]$ et $B'$ est le milieu de $[AC]$. Calculer tous les angles de la figure.
+:::
+
+```{=html}
+<div id="ggb-d5"></div>
+<script>
+buildFigure("ggb-d5", [
+"B=(0,0)","C=(5,0)","A=(1.5,3.2)",
+"Polygon(A,B,C)",
+"C'=Midpoint(A,B)","B'=Midpoint(A,C)",
+"Segment(C',B')",
+"Angle(A,B,C)","Angle(B,A,C)","Angle(A,C',B')"
+], {free: []});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+$(C'B')$ est la **droite des milieux** du triangle $ABC$ (elle joint les
+milieux de $[AB]$ et $[AC]$) : elle est donc **parallèle à $(BC)$**.
+Comme $(C'B')\parallel(BC)$ avec la sécante $(AB)$, les angles
+correspondants sont égaux : $\widehat{AC'B'}=\widehat{ABC}$. De même,
+avec la sécante $(AC)$ : $\widehat{AB'C'}=\widehat{ACB}$. Avec les valeurs
+du manuel ($\widehat{ABC}=50°$, $\widehat{BAC}=42°$, donc
+$\widehat{ACB}=180°-50°-42°=88°$) : $\widehat{AC'B'}=50°$ et
+$\widehat{AB'C'}=88°$ (le triangle $AC'B'$ a les mêmes angles que $ABC$ :
+il lui est semblable, réduit de moitié).
+:::
+
+::: {.activite}
+[Activité 6]{.activite-titre}
+
+On considère deux droites parallèles $(xx')$ et $(yy')$. Une droite $D$ est sécante à $(xx')$ et $(yy')$ respectivement en $A$ et $B$. On désigne par $B'$ le projeté orthogonal de $B$ sur $(xx')$.
+
+1. Montrer que les angles intérieurs $\widehat{xAB}$ et $\widehat{yBA}$ sont supplémentaires.
+2. Montrer que les angles alternes-internes $\widehat{xAB}$ et $\widehat{y'BA}$ sont égaux.
+3. Montrer que les angles correspondants $\widehat{xAB}$ et $\widehat{yBC}$ sont égaux.
+:::
+
+```{=html}
+<div id="ggb-d6"></div>
+<script>
+buildFigure("ggb-d6", [
+"Px=(-1,2)","Px2=(6,2)","lineXX=Line(Px,Px2)",
+"Py=(-1,0)","Py2=(6,0)","lineYY=Line(Py,Py2)",
+"A=Point(lineXX)","SetValue(A,(3,2))",
+"B=Point(lineYY)","SetValue(B,(1,0))",
+"Line(A,B)",
+"B'=ClosestPoint(lineXX,B)","Segment(B,B')",
+"Angle(Px2,A,B)","Angle(Py,B,A)","Angle(Py2,B,A)"
+], {free: ["A","B"]});
+</script>
+```
+
+**A** et **B** sont déplaçables le long de leurs droites respectives :
+faites glisser la sécante et observez que les angles marqués restent liés
+par les mêmes relations.
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+Ces trois résultats sont précisément les propriétés énoncées dans le
+**Retenir** ci-dessous : deux droites parallèles coupées par une sécante
+forment des angles intérieurs de même côté supplémentaires, des angles
+alternes-internes égaux et des angles correspondants égaux. Utilisez la
+figure interactive (rapporteur virtuel : faites glisser $A$ ou $B$) pour
+vérifier numériquement ces trois égalités avant la démonstration
+rigoureuse, qui utilise la perpendiculaire $(BB')$ comme axe de symétrie
+auxiliaire.
+:::
+
+::: {.activite}
+[Activité 7]{.activite-titre}
+
+On considère une droite $D$ et deux droites $(xx')$ et $(yy')$ sécantes à $D$, respectivement en $A$ et $B$. On désigne par $B'$ le projeté orthogonal de $B$ sur $(xx')$. On suppose que les angles $\widehat{xAB}$ et $\widehat{yBA}$ sont supplémentaires.
+
+a) Que peut-on dire des angles $\widehat{x'AB}$ et $\widehat{y'BA}$ ?
+b) Montrer que $(BB')$ est perpendiculaire à $(yy')$.
+c) Quelle est la position relative des droites $(xx')$ et $(yy')$ ?
+:::
+
+```{=html}
+<div id="ggb-d7"></div>
+<script>
+buildFigure("ggb-d7", [
+"Px=(-1,2)","Px2=(6,2)","lineXX=Line(Px,Px2)",
+"Py=(-1,0)","Py2=(6,0)","lineYY=Line(Py,Py2)",
+"A=Point(lineXX)","SetValue(A,(3,2))",
+"B=Point(lineYY)","SetValue(B,(1,0))",
+"Line(A,B)",
+"B'=ClosestPoint(lineXX,B)","Segment(B,B')",
+"Angle(Px2,A,B)","Angle(Py,B,A)","Angle(Py2,B,A)"
+], {free: ["A","B"]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+C'est la **réciproque** de l'Activité 6.
+a) $\widehat{x'AB}$ et $\widehat{y'BA}$ sont supplémentaires aussi (angles
+opposés par la sommet aux précédents).
+b) et c) Si les angles intérieurs de même côté sont supplémentaires, alors
+$(xx')\parallel(yy')$ (propriété admise, énoncée dans le Retenir) ; la
+perpendiculaire $(BB')$ à $(xx')$ est alors aussi perpendiculaire à
+$(yy')$, puisque deux droites parallèles ont les mêmes perpendiculaires.
+:::
+
+::: {.activite}
+[Activité 8]{.activite-titre}
+
+Observer la figure ci-contre où les angles alternes-internes $\widehat{BAC}$ et $\widehat{ACD}$ sont égaux.
+
+1. Montrer que les angles $\widehat{BAC}$ et $\widehat{ECA}$ sont supplémentaires.
+2. Quelle est la position relative des droites $(AB)$ et $(CD)$ ?
+:::
+
+```{=html}
+<div id="ggb-d8"></div>
+<script>
+buildFigure("ggb-d8", [
+"B=(-1,1)","A=(2,1)","Line(B,A)",
+"E=(-2,-1)","C=(1,-1)","D=(4,-1)","Line(E,D)",
+"Segment(A,C)",
+"Angle(B,A,C)","Angle(A,C,E)"
+], {free: []});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+1. $E$, $C$, $D$ sont alignés, donc $\widehat{ACD}$ et $\widehat{ECA}$
+sont supplémentaires (angles sur une droite). Or
+$\widehat{BAC}=\widehat{ACD}$ (donné), donc $\widehat{BAC}$ et
+$\widehat{ECA}$ sont **supplémentaires** aussi.
+2. Les angles alternes-internes $\widehat{BAC}$ et $\widehat{ACD}$ étant
+égaux, les droites $(AB)$ et $(CD)$ sont **parallèles** (propriété
+réciproque du Retenir).
+:::
+
+::: {.activite}
+[Activité 9]{.activite-titre}
+
+Observer la figure ci-contre où les angles correspondants $\widehat{BAC}$ et $\widehat{ECK}$ sont égaux.
+
+1. Montrer que les angles $\widehat{BAC}$ et $\widehat{ECA}$ sont supplémentaires.
+2. Quelle est la position relative des droites $(AB)$ et $(CD)$ ?
+:::
+
+```{=html}
+<div id="ggb-d9"></div>
+<script>
+buildFigure("ggb-d9", [
+"B=(-1,1)","A=(2,1)","Line(B,A)",
+"E=(-2,-1)","C=(1,-1)","D=(4,-1)","Line(E,D)",
+"K=(0.5,-2.3)",
+"Segment(A,C)","Segment(C,K)",
+"Angle(B,A,C)","Angle(E,C,K)","Angle(A,C,E)"
+], {free: []});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+1. $\widehat{ECK}$ et $\widehat{ECA}$ sont supplémentaires (angles sur la
+droite $(AK)$... plus précisément $\widehat{ACE}$ et $\widehat{ACK}$
+forment un angle plat avec $K,C,$ la sécante). Comme
+$\widehat{BAC}=\widehat{ECK}$ (donné), on retrouve
+$\widehat{BAC}+\widehat{ECA}=180°$.
+2. On retombe sur la configuration de l'Activité 8 : $(AB)\parallel(CD)$.
+:::
+
+### Angles inscrits et angles au centre
+
+::: {.activite}
+[Activité 10]{.activite-titre}
+
+$A$ et $B$ sont deux points distincts et $(C)$ est le cercle de diamètre $[AB]$.
+
+1. Soit $P$ un point de $(C)$ distinct de $A$ et $B$. Montrer que $APB$ est un triangle rectangle en $P$.
+2. Soit $M$ un point intérieur au cercle. Montrer que $\widehat{AMB}>90°$.
+3. Soit $N$ un point extérieur au cercle. Montrer que $\widehat{ANB}<90°$.
+4. Quel est l'ensemble des points $P$ du plan tels que $\widehat{APB}=90°$ ?
+:::
+
+```{=html}
+<div id="ggb-d10"></div>
+<script>
+buildFigure("ggb-d10", [
+"A=(-3,0)","B=(3,0)","c1=Circle(Midpoint(A,B),3)",
+"P=Point(c1)","SetValue(P,(0,3))",
+"M=(0.5,1)","N=(5,2)",
+"Segment(A,B)","Segment(A,P)","Segment(B,P)",
+"Segment(A,M)","Segment(B,M)","Segment(A,N)","Segment(B,N)",
+"Angle(A,P,B)","Angle(A,M,B)","Angle(A,N,B)"
+], {free: ["P","M","N"]});
+</script>
+```
+
+Faites glisser **P** tout le long du cercle : l'angle $\widehat{APB}$
+reste-t-il égal à 90° ? Déplacez aussi **M** et **N** librement.
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+1. $[AB]$ est un diamètre, donc son milieu $O$ est le centre du cercle :
+$OA=OB=OP$ (rayons). Le triangle $APB$ est donc formé de deux triangles
+isocèles $OAP$ et $OBP$ partageant le sommet $O$ ; en notant leurs angles
+à la base $\alpha$ et $\beta$, la somme des angles de $APB$ donne
+$2\alpha+2\beta=180°$, donc $\widehat{APB}=\alpha+\beta=90°$ : **$APB$
+est rectangle en $P$**.
+2. Si $M$ est intérieur au cercle, le segment $[AM)$ prolongé recoupe le
+cercle en un point $P$ tel que $\widehat{APB}=90°$ (résultat 1) ; comme
+$M$ est "avant" $P$ sur ce segment, l'angle $\widehat{AMB}$ ne peut
+qu'être **plus grand** que $90°$.
+3. Symétriquement, pour $N$ extérieur, $\widehat{ANB}<90°$.
+4. D'après 1., 2., 3., l'ensemble cherché est exactement le **cercle de
+diamètre $[AB]$, privé des points $A$ et $B$**.
+:::
+
+::: {.activite}
+[Activité 11]{.activite-titre}
+
+Observer la figure ci-contre (cercle de centre $O$ passant par $A,B,C,D$).
+
+1. Calculer $\widehat{AOB}+\widehat{COB}$.
+2. Calculer $(2a+2b)$.
+3. Calculer $\widehat{ABC}$ et comparer à $\widehat{AOC}$.
+4. Calculer $\widehat{ADC}$. Que remarque-t-on ?
+:::
+
+```{=html}
+<div id="ggb-d11"></div>
+<script>
+buildFigure("ggb-d11", [
+"O=(0,0)","c1=Circle(O,3)",
+"A=Point(c1)","SetValue(A,(-3,0))",
+"B=Point(c1)","SetValue(B,(0,3))",
+"C=Point(c1)","SetValue(C,(2,-2.2))",
+"D=Point(c1)","SetValue(D,(2.8,1))",
+"Segment(O,A)","Segment(O,B)","Segment(O,C)",
+"Segment(A,B)","Segment(B,C)","Segment(A,C)","Segment(A,D)","Segment(C,D)",
+"Angle(A,O,B)","Angle(B,O,C)","Angle(A,B,C)","Angle(A,D,C)","Angle(A,O,C)"
+], {free: ["B","D"]});
+</script>
+```
+
+Faites glisser **B** et **D** sur le cercle : les angles $\widehat{ABC}$
+et $\widehat{ADC}$ changent-ils ?
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+1. $\widehat{AOB}+\widehat{BOC}=\widehat{AOC}$ (angles adjacents autour
+de $O$, $B$ étant "entre" $A$ et $C$ du point de vue de $O$).
+2. En notant $a=\widehat{OBA}$ et $b=\widehat{OBC}$ (le point $B$ voit
+les triangles isocèles $OAB$ et $OBC$), on a directement
+$2a+2b=\widehat{AOB}+\widehat{BOC}=\widehat{AOC}$ (triangles isocèles :
+angle au sommet $=180°-2\times$angle à la base, d'où
+$\widehat{AOB}=180°-2a$... en réalité le calcul détaillé donne
+$\widehat{ABC}=a+b$ et $\widehat{AOC}=2a+2b=2\times\widehat{ABC}$).
+3. $\widehat{ABC}=a+b=\dfrac{\widehat{AOC}}{2}$ : l'angle inscrit
+$\widehat{ABC}$ vaut **la moitié** de l'angle au centre $\widehat{AOC}$
+qui intercepte le même arc $[AC]$.
+4. $\widehat{ADC}$ intercepte lui aussi l'arc $[AC]$ (ne contenant ni $B$
+ni $D$) : par le même argument, $\widehat{ADC}=\dfrac{\widehat{AOC}}{2}$
+également. **On remarque que $\widehat{ADC}=\widehat{ABC}$** : deux
+angles inscrits qui interceptent le même arc sont égaux.
+:::
+
+::: {.activite}
+[Activité 12]{.activite-titre}
+
+Soit $ABC$ un triangle inscrit dans un cercle $(C)$ de centre $O$. Comparer, dans chacun des cas (1ᵉʳ cas : $O$ intérieur au triangle ; 2ème cas : $O$ extérieur), $\widehat{BAC}$ et $\widehat{BOC}$.
+:::
+
+```{=html}
+<div id="ggb-d12"></div>
+<script>
+buildFigure("ggb-d12", [
+"O=(0,0)","c1=Circle(O,3)",
+"A=Point(c1)","SetValue(A,(0,3))",
+"B=Point(c1)","SetValue(B,(-2,-2.2))",
+"C=Point(c1)","SetValue(C,(2,-2.2))",
+"Segment(O,A)","Segment(O,B)","Segment(O,C)",
+"Segment(A,B)","Segment(A,C)","Segment(B,C)",
+"Angle(B,A,C)","Angle(B,O,C)"
+], {free: ["A"]});
+</script>
+```
+
+Faites glisser **A** tout le long du cercle, y compris sur le petit arc
+$BC$ : vous passez ainsi du 1ᵉʳ cas ($O$ intérieur au triangle) au 2ème
+cas ($O$ extérieur). L'angle $\widehat{BOC}$ reste-t-il toujours le double
+de $\widehat{BAC}$ ?
+
+::: {.callout-note collapse="true"}
+## ✅ Correction — étape par étape
+Dans les **deux cas**, $\widehat{BOC}=2\times\widehat{BAC}$ : c'est le
+théorème de l'angle inscrit / angle au centre, déjà établi à l'Activité
+11 pour le premier cas. Quand $O$ est extérieur au triangle (2ème cas, $A$
+sur le petit arc $BC$), le même raisonnement s'applique en considérant
+l'angle réflexe au centre, ou en soustrayant deux angles inscrits obtenus
+via un point diamétralement opposé à $A$. Ce résultat, valable **dans
+tous les cas de figure**, est LE théorème central du chapitre (voir
+Retenir) : *"un angle inscrit dans un cercle est égal à la moitié de
+l'angle au centre qui intercepte le même arc."*
+:::
+
+## Retenir
+
+::: {.callout-note}
+## Angles égaux et droites parallèles
+Deux droites parallèles forment avec une sécante :
+
+- deux angles intérieurs d'un même côté **supplémentaires** ;
+- deux angles alternes-internes **égaux** ;
+- deux angles correspondants **égaux**.
+
+*(Réciproques, chacune admise et illustrée aux Activités 6 à 9
+ci-dessus) :* si deux droites forment avec une sécante deux angles
+intérieurs d'un même côté supplémentaires — ou deux angles
+alternes-internes égaux, ou deux angles correspondants égaux — alors ces
+deux droites sont **parallèles**.
+:::
+
+::: {.callout-note}
+## Angle inscrit et angle au centre associé
+- Un angle qui a son sommet sur un cercle et dont les côtés recoupent ce
+  cercle est un **angle inscrit** dans ce cercle. Un angle dont le sommet
+  est le centre d'un cercle est un **angle au centre** de ce cercle.
+- Si $[BC]$ est un diamètre du cercle circonscrit à $ABC$, alors ce
+  triangle est **rectangle en $A$** (Activité 10).
+- $A$ et $B$ étant deux points distincts, les points $P$ tels que
+  $\widehat{APB}=90°$ sont exactement les points du **cercle de diamètre
+  $[AB]$**, privé de $A$ et $B$ (Activité 10).
+- Un **angle inscrit** dans un cercle est égal à la **moitié** de l'angle
+  au centre qui intercepte le même arc (Activités 11 et 12).
+- **Deux angles inscrits qui interceptent le même arc sont égaux**
+  (Activité 11).
+:::
+
+## Mobiliser ses compétences
+
+### Angles et figures de base
+
+::: {.activite}
+[Situation 1]{.activite-titre}
+Soit deux points distincts $A$ et $O$. Construire à l'aide du compas
+seulement le point $A'$ symétrique du point $A$ par rapport à $O$.
+
+**Stratégie** : tracer $(C)$ de centre $O$, rayon $OA$ ; placer $B\in(C)$
+tel que $AB=OA$ ; placer $C\in(C)$, distinct de $A$, tel que $OB=BC$ ;
+placer $A'\in(C)$, distinct de $B$, tel que $OC=CA'$ ; expliquer pourquoi
+$A'$ est le symétrique de $A$ par rapport à $O$ (indice : $OA'A$ est un
+diamètre car $OABC A'$ construit un hexagone régulier de triangles
+équilatéraux, donc $A$, $O$, $A'$ sont alignés avec $OA=OA'$).
+:::
+
+::: {.activite}
+[Situation 2]{.activite-titre}
+Un polygone est dit régulier s'il est inscrit dans un cercle et si tous
+ses côtés sont isométriques. Construire un hexagone régulier connaissant
+son centre $O$ et un de ses sommets $A$, en reportant six fois le rayon
+$OA$ sur le cercle (le côté d'un hexagone régulier est égal à son rayon,
+car chaque triangle $OA_iA_{i+1}$ est équilatéral — angle au centre de
+$360°/6=60°$).
+:::
+
+### Angles et droites parallèles
+
+::: {.activite}
+[Situation 1]{.activite-titre}
+On se propose de découper dans la plaque triangulaire $ABC$ un triangle
+de même aire que $EFG$ et de sommet $A$, avec $EF=AD$ et $FG=DK$ (mêmes
+notations que le manuel, $\widehat{}=40°$ commun).
+
+**Stratégie** : comparer les triangles $ADK$ et $EFG$ (cas d'isométrie —
+un angle égal entre deux côtés égaux) ; en déduire que $(AB)\parallel(KH)$
+(angles correspondants égaux) ; conclure que $ADH$ et $EFG$ ont même aire
+en utilisant l'égalité des distances entre droites parallèles.
+:::
+
+::: {.activite}
+[Situation 2]{.activite-titre}
+Plan d'une terrasse : $[EB]$ et $[CF]$ sont des arcs de cercle de centres
+respectifs $A$ et $D$.
+
+1. Montrer que $(BC)\parallel(AD)$ (angles intérieurs de même côté
+   supplémentaires : $80°+130°\ne180°$... utilisez plutôt les angles
+   donnés dans votre figure : $\widehat{A}=80°$ et l'angle en $D=50°$
+   avec l'angle droit marqué, la somme des angles intérieurs d'un même
+   côté de la sécante $(AD)$ vaut $180°$).
+2. Calculer l'aire du trapèze $ABCD$ puis celle des secteurs $EAB$ et
+   $CDF$ pour en déduire l'aire totale de la terrasse.
+:::
+
+### Utiliser les angles inscrits pour comparer des grandeurs
+
+::: {.activite}
+[Situation 1]{.activite-titre}
+$[MN]$ et $[PQ]$ sont deux cordes perpendiculaires d'un cercle $(C)$, se
+coupant en $I$. $H$ est le pied de la hauteur issue de $I$ dans le
+triangle $IMQ$. La droite $(IH)$ coupe $[PN]$ en $A$.
+
+1. Montrer que $\widehat{MIH}=\widehat{MQI}$ (triangles $QHI$ et $MIQ$
+   rectangles respectivement en $H$ et $I$, partageant l'angle
+   complémentaire en $Q$).
+2. En déduire, avec $\widehat{MQI}=\widehat{INP}$ (angles inscrits
+   interceptant le même arc), que le triangle $AIN$ est isocèle.
+3. Montrer que $A$ est le milieu de $[PN]$ (triangle $PIN$ rectangle en
+   $I$, la médiane issue de l'angle droit égale la moitié de
+   l'hypoténuse).
+:::
+
+::: {.activite}
+[Situation 2]{.activite-titre}
+On considère un cercle $(C)$ de centre $O$ et de rayon 4 cm, et un point
+$A$ tel que $OA=5$ cm. Le cercle $(C')$ de diamètre $[OA]$ coupe $(C)$ en
+$T$ et $T'$.
+
+1. a) Montrer que $(AT)$ et $(AT')$ sont les tangentes à $(C)$ issues de
+   $A$ (angle inscrit dans le demi-cercle $(C')$, donc $\widehat{OTA}=90°$).
+   b) Montrer que $AT=AT'$ et calculer $AT$ (Pythagore : $AT=\sqrt{OA^2-OT^2}=\sqrt{25-16}=3$ cm).
+2. Montrer que $(OA)$ est la bissectrice de $\widehat{TOT'}$.
+3. Pour $M$ sur $(C)$, intérieur à $(C')$, la tangente à $(C)$ en $M$
+   coupe $[AT]$ en $P$ et $[AT']$ en $P'$ :
+   a) Montrer que le périmètre de $APP'$ est constant et vaut $2\times AT=6$ cm.
+   b) Montrer que l'angle $\widehat{POP'}$ est constant.
+:::
+
+## S'auto-évaluer
+
+::: {.activite}
+[Vrai ou faux]{.activite-titre}
+Un angle de 3° regardé avec une loupe "grossissant 2 fois" est doublé.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**Faux.** Une loupe grossit les longueurs apparentes, pas les angles :
+un angle ne dépend pas de la distance d'observation ni du grossissement
+optique, il reste de 3°.
+:::
+
+::: {.activite}
+[Observer]{.activite-titre}
+Répondre par vrai ou faux, à partir des angles indiqués sur chaque figure du manuel :
+
+1. $(AB)\parallel(ST)$ ? (trapèze $ABTS$ avec $\widehat{S}=131{,}2°$ et un angle de $48{,}8°$ en bas)
+2. $(MN)\parallel(PQ)$ ? (deux segments sécants avec $\widehat{M}=72°$ et $\widehat{Q}=66°$)
+3. $(LH)\parallel(OR)$ ? (triangle avec deux angles de $41{,}5°$)
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+1. $131{,}2°+48{,}8°=180°$ : les angles intérieurs de même côté sont
+supplémentaires, donc $(AB)\parallel(ST)$ — **Vrai**.
+2. $72°\ne66°$ : les angles ne correspondent à aucune configuration
+d'angles égaux entre $(MN)$ et $(PQ)$ — **Faux** a priori (il faudrait
+vérifier la nature exacte des angles marqués sur la figure du manuel).
+3. Les deux angles marqués valent $41{,}5°$ chacun : s'ils sont
+alternes-internes ou correspondants pour les droites $(LH)$ et $(OR)$,
+alors $(LH)\parallel(OR)$ — **Vrai**.
+:::
+
+::: {.activite}
+[Recopier et compléter]{.activite-titre}
+D'après les figures du manuel :
+
+1. $\widehat{POQ} = \ldots$ (cercle, $\widehat{PRQ}=50°$ inscrit)
+2. $\widehat{AOC} = \ldots$ (cercle, angle inscrit $\widehat{ABC}=130°$)
+3. $\widehat{ZOY} = \ldots$ (cercle, angle inscrit $\widehat{ZXY}=15°$)
+4. $\widehat{SMO} = \ldots$ (cercle, $\widehat{SIO}=60°$, angle donné $210°$)
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Dans chaque cas, l'angle au centre vaut **le double** de l'angle inscrit
+qui intercepte le même arc :
+
+1. $\widehat{POQ}=2\times50°=100°$.
+2. $\widehat{AOC}=2\times130°$ ou son supplémentaire $360°-2\times130°=100°$
+   selon l'arc intercepté (l'angle $\widehat{ABC}=130°$ étant obtus,
+   c'est l'arc "de l'autre côté" qui est intercepté : $\widehat{AOC}=100°$
+   en général pour ce type de figure).
+3. $\widehat{ZOY}=2\times15°=30°$.
+4. À partir de $\widehat{SIO}=60°$ (angle inscrit) : $\widehat{SMO}$
+   s'en déduit avec l'angle $210°$ donné, en utilisant que les angles au
+   centre autour de $O$ totalisent $360°$.
+
+*(Ces valeurs numériques dépendent de la lecture précise des figures du
+manuel ; la méthode — angle au centre = 2× angle inscrit — est le point
+essentiel à retenir.)*
+:::
+
+## Exercices et problèmes
+
+### Appliquer
+
+::: {.activite}
+[Exercice 1]{.activite-titre}
+Calculer les angles désignés par une lettre dans cinq petites figures :
+triangle $NOA$ isocèle en $O$ ($ON=OA$) avec $\widehat{N}=52°$
+(trouver $a$, $b$) ; triangle $TIS$ isocèle en $I$ ($IT=IS$) avec
+$\widehat{I}=90°$ (trouver les deux angles $c$) ; triangle $UGK$
+rectangle en $G$ ($\widehat{G}=90°$) avec $\widehat{K}=30°$ et $DU=DK$
+(trouver $f$, $g$) ; deux droites parallèles (même couleur) coupées par
+deux sécantes formant $130°$ et $60°$ (trouver $i,j,k,m$) ; triangle
+d'angles $2h$, $6h$, $h$ (trouver $h$).
+
+*(Seule la première figure — le triangle $NOA$ — est reproduite ci-dessous
+à titre d'exemple ; les quatre autres se traitent avec la même méthode.)*
+:::
+
+```{=html}
+<div id="ggb-ex1"></div>
+<script>
+buildFigure("ggb-ex1", [
+"N=(0,0)","A=(4,0)",
+"O=(4*sin(52°)*cos(52°)/sin(104°), 4*sin(52°)*sin(52°)/sin(104°))",
+"Segment(N,A)","Segment(N,O)","Segment(A,O)",
+"Angle(O,N,A)","Angle(N,A,O)","Angle(A,O,N)"
+], {free: [], w: 420, h: 340});
+</script>
+```
+
+::: {.activite}
+[Exercice 2]{.activite-titre}
+Dans la figure qui suit, $\Delta$ est parallèle à $\Delta'$, $[AD]$ est
+la bissectrice de $\widehat{A}$ et $[CD]$ est la bissectrice de
+$\widehat{C}$ (angles formés par $\Delta$, $\Delta'$ et une sécante en
+$A$ et $C$, avec $D$ intersection des deux bissectrices). Montrer que
+$\widehat{ADC}=90°$.
+:::
+
+::: {.activite}
+[Exercice 3]{.activite-titre}
+Observer la figure suivante où chacun des triangles rectangles $OAB$,
+$OBC$, $OCD$ est isocèle (sommets $D,C,B,A$ autour de $E,O,A$ alignés).
+
+a) Montrer que $(OC)\perp(OA)$, que $E,O,A$ sont alignés, et que
+$(OB)\perp(OD)$.
+b) Calculer $OB, OC, OD, OE$ lorsque $OA=1$ cm.
+:::
+
+```{=html}
+<div id="ggb-ex3"></div>
+<script>
+buildFigure("ggb-ex3", [
+"O=(0,0)","A=(3,0)",
+"B=Rotate(A,45°,O)","C=Rotate(A,90°,O)","D=Rotate(A,135°,O)","E=Rotate(A,180°,O)",
+"Segment(O,A)","Segment(O,B)","Segment(O,C)","Segment(O,D)","Segment(O,E)",
+"Segment(A,B)","Segment(B,C)","Segment(C,D)",
+"Angle(A,O,B)","Angle(B,O,C)","Angle(C,O,D)"
+], {free: [], w: 460, h: 340});
+</script>
+```
+
+::: {.activite}
+[Exercice 4]{.activite-titre}
+Figure : $\widehat{DCA}=\widehat{CAB}=30°$ (diagonale $AC$ d'un
+quadrilatère $ABCD$).
+a) Montrer que $ABCD$ est un rectangle. b) $ABCD$ est-il un carré ?
+:::
+
+```{=html}
+<div id="ggb-ex4"></div>
+<script>
+buildFigure("ggb-ex4", [
+"A=(0,0)","B=(4,0)","C=(4,2.31)","D=(0,2.31)",
+"Polygon(A,B,C,D)","Segment(A,C)",
+"Angle(C,A,B)","Angle(D,C,A)"
+], {free: [], w: 420, h: 300});
+</script>
+```
+
+::: {.activite}
+[Exercice 5]{.activite-titre}
+Tracer un triangle équilatéral $ABC$ tel que $AB=10$ cm et placer $M$ sur
+la bissectrice de l'angle $\widehat{BAC}$ tel que $AM=5$ cm. $(AM)$ coupe
+$[BC]$ en $H$.
+a) Vérifier que $M\in[AH]$. b) Calculer l'aire du triangle $ABM$.
+:::
+
+```{=html}
+<div id="ggb-ex5"></div>
+<script>
+buildFigure("ggb-ex5", [
+"A=(0,0)","B=(10,0)","C=Rotate(B,60°,A)",
+"M=A+5*(cos(30°),sin(30°))",
+"Polygon(A,B,C)","Ray(A,M)","Segment(A,M)"
+], {free: [], w: 460, h: 380});
+</script>
+```
+
+::: {.activite}
+[Exercice 6]{.activite-titre}
+Dans la figure qui suit, les points $A,C,E,G$ sont alignés, avec
+$\widehat{BAC}=100°$, $\widehat{BCA}=40°$, $\widehat{FEG}=60°$,
+$\widehat{FGE}=80°$. Démontrer que les droites $(AB)$ et $(EF)$ sont
+parallèles.
+:::
+
+```{=html}
+<div id="ggb-ex6"></div>
+<script>
+buildFigure("ggb-ex6", [
+"A=(0,0)","C=(3,0)",
+"B=(3*sin(40°)*cos(100°)/sin(140°), 3*sin(40°)*sin(100°)/sin(140°))",
+"E=(5,0)","G=(8,0)",
+"F=(5+3*sin(80°)*cos(60°)/sin(140°), 3*sin(80°)*sin(60°)/sin(140°))",
+"Segment(A,G)","Segment(A,B)","Segment(B,C)","Segment(E,F)","Segment(F,G)",
+"Angle(B,A,C)","Angle(A,C,B)","Angle(F,E,G)","Angle(E,G,F)"
+], {free: [], w: 520, h: 320});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction (Exercices 1 à 6)
+**Ex.1–5 :** applications directes des propriétés du Retenir (angle
+extérieur, isocèle/équilatéral, angles alternes/correspondants, somme
+des angles d'un triangle) — reportez les valeurs de votre figure dans les
+formules démontrées aux Activités 1 à 5.
+**Ex.6 :** dans le triangle $ABC$, $\widehat{ABC}=180°-100°-40°=40°$, qui
+est l'angle extérieur en $C$ pour la droite $(AG)$... plus directement :
+$\widehat{BCA}=40°$ et $\widehat{FEG}=60°$ ne sont pas directement
+comparables ; c'est en fait l'angle extérieur en $E$,
+$\widehat{FEA}=180°-60°=120°$, qu'il faut comparer à l'angle extérieur en
+$C$ correspondant : la démonstration standard compare les angles
+$\widehat{BCA}$ (ou son supplémentaire) et $\widehat{FEG}$ comme angles
+correspondants pour la sécante $(ACEG)$ — si ces angles sont égaux, les
+droites $(AB)$ et $(EF)$ sont parallèles (propriété réciproque du
+Retenir).
+:::
+
+### Maîtriser
+
+::: {.activite}
+[Exercice 7]{.activite-titre}
+$(C)$ et $(C')$ sont deux cercles de centres respectifs $O$ et $O'$,
+tangents extérieurement en $P$. Une droite passant par $P$ recoupe $(C)$
+en $A$ et $(C')$ en $A'$. Montrer que $(OA)$ et $(O'A')$ sont parallèles.
+:::
+
+::: {.activite}
+[Exercice 8]{.activite-titre}
+Tracer un triangle $ABC$ isocèle en $A$. Soit $[At)$ la bissectrice de
+l'angle extérieur à $\widehat{A}$. Montrer que $(At)$ et $(BC)$ sont
+parallèles.
+:::
+
+::: {.activite}
+[Exercice 9]{.activite-titre}
+a) Calculer le périmètre d'un cercle circonscrit à un triangle $EFG$
+rectangle en $E$ dont l'hypoténuse mesure 6 cm.
+b) Calculer l'aire du disque limité par le cercle circonscrit à un
+triangle $ABC$ rectangle en $A$ tel que $BC=5$ cm.
+:::
+
+```{=html}
+<div id="ggb-ex9"></div>
+<script>
+buildFigure("ggb-ex9", [
+"B=(-2.5,0)","C=(2.5,0)","cCirc=Circle(Midpoint(B,C),2.5)",
+"A=Point(cCirc)","SetValue(A,(0,2.5))",
+"Segment(A,B)","Segment(A,C)","Segment(B,C)",
+"Angle(B,A,C)"
+], {free: [], w: 420, h: 380});
+</script>
+```
+
+*(Le triangle est bien rectangle en $A$, quelle que soit la position de
+$A$ sur le cercle : c'est le résultat de l'Activité 10. Le rayon du
+cercle circonscrit est donc toujours la moitié de l'hypoténuse $BC$.)*
+
+::: {.activite}
+[Exercice 10]{.activite-titre}
+Recopier la figure suivante où $(C_1)$ est un cercle de diamètre $[AB]$,
+$(C_2)$ est un cercle de centre $B$ qui coupe $(C_1)$ en deux points $T$
+et $T'$. Montrer que les droites $(AT)$ et $(AT')$ sont les tangentes au
+cercle $(C_2)$ issues de $A$.
+:::
+
+```{=html}
+<div id="ggb-ex10"></div>
+<script>
+buildFigure("ggb-ex10", [
+"A=(-3,0)","B=(3,0)","M=Midpoint(A,B)","cC1=Circle(M,A)","cC2=Circle(B,2.5)",
+"T=Intersect(cC1,cC2,1)","T'=Intersect(cC1,cC2,2)",
+"Segment(A,B)","Segment(A,T)","Segment(A,T')"
+], {free: [], w: 440, h: 380});
+</script>
+```
+
+::: {.activite}
+[Exercice 11]{.activite-titre}
+Dans la figure qui suit, $ABCD$ est un parallélogramme, $E,F,G,H$ sont
+les pieds des bissectrices des quatre angles.
+1. Quelle est la nature du quadrilatère $EFGH$ ?
+2. Quelle est sa nature lorsque $ABCD$ est un rectangle ?
+3. Quelle est la nature de $ABCD$ lorsque $E,F,G,H$ sont confondus ?
+:::
+
+```{=html}
+<div id="ggb-ex11"></div>
+<script>
+buildFigure("ggb-ex11", [
+"A=(0,0)","B=(5,0)","D=(1,3)","C=B+D-A",
+"Polygon(A,B,C,D)",
+"dirA=(D-A)/Distance(A,D)+(B-A)/Distance(A,B)","bisA=Line(A,A+dirA)",
+"dirB=(A-B)/Distance(B,A)+(C-B)/Distance(B,C)","bisB=Line(B,B+dirB)",
+"dirC=(B-C)/Distance(C,B)+(D-C)/Distance(C,D)","bisC=Line(C,C+dirC)",
+"dirD=(C-D)/Distance(D,C)+(A-D)/Distance(D,A)","bisD=Line(D,D+dirD)",
+"E=Intersect(bisA,bisB)","F=Intersect(bisB,bisC)","G=Intersect(bisC,bisD)","H=Intersect(bisD,bisA)",
+"Polygon(E,F,G,H)"
+], {free: [], w: 460, h: 400});
+</script>
+```
+
+::: {.activite}
+[Exercice 12]{.activite-titre}
+Dans la figure ci-dessous, $(C)$ est un cercle de centre $O$ et
+$\widehat{BAC}$ et $\widehat{MIN}$ sont deux angles inscrits égaux.
+Montrer que les arcs $[CB]$ et $[MN]$ sont isométriques.
+:::
+
+```{=html}
+<div id="ggb-ex12"></div>
+<script>
+buildFigure("ggb-ex12", [
+"O=(0,0)","cCirc=Circle(O,3)",
+"A=(3*cos(150°),3*sin(150°))","B=(3*cos(210°),3*sin(210°))","C=(3*cos(340°),3*sin(340°))",
+"I=Rotate(A,140°,O)","M=Rotate(B,140°,O)","N=Rotate(C,140°,O)",
+"Segment(A,B)","Segment(A,C)","Segment(I,M)","Segment(I,N)",
+"Angle(B,A,C)","Angle(M,I,N)"
+], {free: [], w: 460, h: 420});
+</script>
+```
+
+::: {.activite}
+[Exercice 13]{.activite-titre}
+On considère un triangle équilatéral $ABC$ et son cercle circonscrit
+$(C)$.
+1. À tout point $M$ de l'arc $[BC]$ ne contenant pas $A$, on associe le
+point $N$ du segment $[AM]$ tel que $MN=MC$. Montrer que le triangle
+$MNC$ est équilatéral.
+2. La droite $(CN)$ recoupe $(C)$ en $P$. Déterminer la nature du
+triangle $APN$ puis celle du quadrilatère $MNPB$.
+:::
+
+```{=html}
+<div id="ggb-ex13"></div>
+<script>
+buildFigure("ggb-ex13", [
+"A=(0,3)","B=Rotate(A,-120°,(0,0))","C=Rotate(A,120°,(0,0))",
+"cCirc=Circle((0,0),3)",
+"M=Point(cCirc)","SetValue(M,(0,-3))",
+"Segment(A,B)","Segment(B,C)","Segment(C,A)","Segment(A,M)"
+], {free: ["M"], w: 460, h: 420});
+</script>
+```
+
+Faites glisser **M** le long du petit arc $BC$ (celui qui ne contient pas $A$).
+
+::: {.activite}
+[Exercice 14]{.activite-titre}
+$A,B,C,D$ sont quatre points distincts d'un même cercle $(C)$.
+1. Montrer que les angles $\widehat{DAB}$ et $\widehat{DCB}$ sont
+supplémentaires.
+2. Montrer que les angles $\widehat{ABC}$ et $\widehat{ADC}$ sont
+supplémentaires.
+:::
+
+```{=html}
+<div id="ggb-ex14"></div>
+<script>
+buildFigure("ggb-ex14", [
+"O=(0,0)","cCirc=Circle(O,3)",
+"A=Point(cCirc)","SetValue(A,(-3,0))",
+"B=Point(cCirc)","SetValue(B,(-1,2.8))",
+"C=Point(cCirc)","SetValue(C,(2,2))",
+"D=Point(cCirc)","SetValue(D,(1,-2.8))",
+"Polygon(A,B,C,D)",
+"Angle(D,A,B)","Angle(B,C,D)","Angle(A,B,C)","Angle(A,D,C)"
+], {free: [], w: 460, h: 420});
+</script>
+```
+
+::: {.activite}
+[Exercice 15]{.activite-titre}
+Soit un triangle $ABC$ inscrit dans un cercle $(C)$. On trace les
+hauteurs $[AA']$ et $[CC']$. Soit $H$ l'orthocentre de $ABC$. La hauteur
+$(AA')$ recoupe $(C)$ en $D$. Démontrer que la demi-droite $[CB)$ est la
+bissectrice de l'angle $\widehat{HCD}$.
+:::
+
+::: {.activite}
+[Exercice 16]{.activite-titre}
+Dans la figure ci-contre, les cordes $[AB]$ et $[CD]$ sont parallèles.
+a) Comparer les triangles $ACD$ et $BCD$. En déduire que $AC=BD$.
+b) Montrer que $\widehat{AOC}=\widehat{BOD}$.
+:::
+
+```{=html}
+<div id="ggb-ex16"></div>
+<script>
+buildFigure("ggb-ex16", [
+"O=(0,0)","cCirc=Circle(O,3)",
+"A=(-3*sin(50°),3*cos(50°))","B=(3*sin(50°),3*cos(50°))",
+"C=(-3*sin(100°),3*cos(100°))","D=(3*sin(100°),3*cos(100°))",
+"Segment(A,B)","Segment(C,D)","Segment(A,C)","Segment(B,D)",
+"Segment(O,A)","Segment(O,C)","Segment(O,B)","Segment(O,D)",
+"Angle(A,O,C)","Angle(B,O,D)"
+], {free: [], w: 440, h: 420});
+</script>
+```
+
+::: {.activite}
+[Exercice 17]{.activite-titre}
+$ABCD$ est un carré de côté 6 cm inscrit dans un cercle $(C)$ de centre
+$O$.
+1. a) Calculer l'aire de la partie colorée (entre le carré et le cercle).
+b) Tracer la tangente $\Delta$ au cercle $(C)$ en $A$.
+2. La médiatrice de $[AD]$ coupe $\Delta$ en $N$. Calculer l'aire du
+triangle $CDN$.
+:::
+
+```{=html}
+<div id="ggb-ex17"></div>
+<script>
+buildFigure("ggb-ex17", [
+"O=(0,0)","A=(3*sqrt(2),0)",
+"B=Rotate(A,90°,O)","C=Rotate(A,180°,O)","D=Rotate(A,270°,O)",
+"cCirc=Circle(O,3*sqrt(2))",
+"Polygon(A,B,C,D)"
+], {free: [], w: 420, h: 420});
+</script>
+```
+
+*(La tangente $\Delta$ en $A$ n'est pas encore tracée automatiquement
+ici — ajoutez-la vous-même via "Voir / modifier le code" avec la commande
+`Tangent(A,cCirc)` pour explorer la question 1.b.)*
+
+::: {.activite}
+[Exercice 18]{.activite-titre}
+Soit $[AB]$ un segment fixe de milieu $O$. Choisir un point $M$
+n'appartenant pas à $(AB)$ tel que $OM=OA$. Soit $K$ le projeté orthogonal
+de $M$ sur $(AB)$.
+a) Exprimer de deux façons l'aire du triangle $AMB$.
+b) Quelle doit être la position de $M$ pour que $KM$ soit maximale ?
+c) Déduire la position de $M$ pour que le produit $MA\times MB$ soit
+maximum.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction (Exercices 7 à 18) — étape par étape
+*(à venir — ces 12 exercices d'approfondissement s'appuient tous sur les
+théorèmes du Retenir : angle inscrit/angle au centre pour 9, 10, 12, 13,
+14, 15, 16, 17 ; parallèles et sécantes pour 7, 8, 11 ; optimisation
+géométrique pour 18. Une correction détaillée sera ajoutée dans une
+prochaine passe.)*
+:::
+
+::: {.activite}
+[Avec l'ordinateur]{.activite-titre}
+À l'aide d'un logiciel :
+
+- Tracer un cercle $(C)$ de centre $O$ et marquer deux points $I$ et $J$
+  sur ce cercle. Mesurer $\widehat{IOJ}$.
+- Placer un point $S$ à l'intérieur de $(C)$. Mesurer $\widehat{ISJ}$.
+  A-t-on $\widehat{IOJ}=2\widehat{ISJ}$ ?
+- Placer un point $R$ à l'extérieur de $(C)$. Mesurer $\widehat{IRJ}$.
+  A-t-on $\widehat{IOJ}=2\widehat{IRJ}$ ?
+:::
+
+```{=html}
+<div id="ggb-ordi"></div>
+<script>
+buildFigure("ggb-ordi", [
+"O=(0,0)","c1=Circle(O,3)",
+"I=Point(c1)","SetValue(I,(-3,0))",
+"J=Point(c1)","SetValue(J,(2,2))",
+"S=(0,0.5)","R=(4,3)",
+"Segment(I,J)","Segment(I,S)","Segment(J,S)","Segment(I,R)","Segment(J,R)",
+"Angle(I,O,J)","Angle(I,S,J)","Angle(I,R,J)"
+], {free: ["S","R"]});
+</script>
+```
+
+Faites glisser **S** (intérieur) et **R** (extérieur) : vous devriez
+observer $\widehat{IOJ}=2\widehat{ISJ}$ tant que $S$ reste sur le grand
+arc, mais **pas** de relation aussi simple pour $R$ extérieur (la formule
+$\widehat{IOJ}=2\widehat{ISJ}$ est spécifique aux angles **inscrits**,
+c'est-à-dire aux sommets **sur** le cercle).
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+$\widehat{IOJ}=2\,\widehat{ISJ}$ **oui**, tant que $S$ est sur le cercle
+(angle inscrit / angle au centre, Activités 11-12) — mais $S$ ici est
+seulement *intérieur*, pas sur le cercle : la relation exacte
+$\widehat{IOJ}=2\widehat{ISJ}$ ne tient donc **pas** en général pour un
+point intérieur quelconque (on a seulement $\widehat{ISJ}>\widehat{IOJ}/2$
+lorsque $S$ est "proche" du cercle, par continuité avec le cas inscrit).
+Pour $R$ extérieur, $\widehat{IRJ}<$ l'angle inscrit correspondant : la
+réponse est **non**, il n'y a pas de relation de double aussi simple.
+:::
+
+## Math culture
+
+### Mesurer la terre avec Ératosthène
+
+Quand le soleil éclaire le fond d'un puits dans la ville de Syène
+(aujourd'hui Assouan), à Alexandrie un bâton vertical de 1 mètre fait une
+ombre de 0,125 mètre, ce qui donne $\hat a=7{,}12°$. La distance de Syène
+à Alexandrie étant environ 800 km, Ératosthène en déduit la circonférence
+terrestre puis le rayon de la Terre (les rayons solaires étant supposés
+parallèles, les angles alternes-internes sont égaux).
+
+::: {.callout-note collapse="true"}
+## ✅ Méthode d'Ératosthène
+L'angle au centre entre Syène et Alexandrie vaut aussi $\hat a=7{,}12°$
+(angles alternes-internes, rayons du soleil parallèles). Une règle de
+proportionnalité relie cet angle à l'arc de 800 km :
+$$\text{circonférence} = 800 \times \frac{360°}{7{,}12°} \approx 40\,449 \text{ km}$$
+$$\text{rayon} = \frac{\text{circonférence}}{2\pi} \approx 6\,438 \text{ km}$$
+— une valeur remarquablement proche du rayon terrestre réel (environ
+6 371 km), obtenue plus de 2 000 ans avant les mesures satellite !
+:::
+
+### Note historique
+
+Né à Cyrène, en Libye, vers 275 av. J.-C., Ératosthène était le directeur
+de la bibliothèque d'Alexandrie (en Égypte) de 235 jusqu'à sa mort en
+194 av. J.-C. Il est célèbre pour cette mesure de la Terre et pour le
+procédé de détermination des nombres premiers appelé « Crible
+d'Ératosthène ».
+
+### L'étoile du drapeau tunisien
+
+Les sommets de l'étoile du drapeau tunisien sont les 5 sommets d'un
+pentagone régulier $ABCDE$. Que vaut l'angle $\widehat{BAE}$ ? Tracer un
+pentagone et en déduire une construction de l'étoile.
+
+```{=html}
+<div id="ggb-pentagone"></div>
+<script>
+buildFigure("ggb-pentagone", [
+"O=(0,0)",
+"A=(0,3)",
+"B=Rotate(A,-72°,O)",
+"C=Rotate(A,-144°,O)",
+"D=Rotate(A,-216°,O)",
+"E=Rotate(A,-288°,O)",
+"Polygon(A,B,C,D,E)",
+"Segment(A,C)","Segment(A,D)","Segment(B,D)","Segment(B,E)","Segment(C,E)"
+], {free: [], w: 420, h: 380});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Un pentagone régulier a des angles au centre de $360°/5=72°$. L'angle
+$\widehat{BAE}$ (angle interne au sommet $A$) vaut
+$\dfrac{(5-2)\times180°}{5}=108°$. L'étoile à 5 branches s'obtient en
+traçant les 5 diagonales du pentagone régulier.
+:::

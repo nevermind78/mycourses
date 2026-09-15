@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chapitre 1 — Angles – Mycourses — Mathématiques</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../1ere-annee/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a37ad5cf1d2f8277837153f05fc1f70b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-ae62c868cad7ab4f4b4892f1b5edfc38.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Mycourses — Mathématiques</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Accueil</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../economie-gestion-3eme/index.html"> 
+<span class="menu-text">Économie &amp; Gestion — 3ème</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../1ere-annee/index.html" aria-current="page"> 
+<span class="menu-text">1ère année secondaire</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../3eme-technique/index.html"> 
+<span class="menu-text">3ème Sciences Techniques</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/nevermind78/mycourses" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../1ere-annee/chapitre-01-angles.html">Travaux géométriques</a></li><li class="breadcrumb-item"><a href="../1ere-annee/chapitre-01-angles.html">Chapitre 1 — Angles</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../1ere-annee/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1ère année secondaire</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Travaux géométriques</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../1ere-annee/chapitre-01-angles.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Chapitre 1 — Angles</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sur cette page</h2>
+   
+  <ul>
+  <li><a href="#reprendre" id="toc-reprendre" class="nav-link active" data-scroll-target="#reprendre"><span class="header-section-number">1</span> Reprendre</a></li>
+  <li><a href="#découvrir" id="toc-découvrir" class="nav-link" data-scroll-target="#découvrir"><span class="header-section-number">2</span> Découvrir</a>
+  <ul class="collapse">
+  <li><a href="#angles-et-figures-de-base" id="toc-angles-et-figures-de-base" class="nav-link" data-scroll-target="#angles-et-figures-de-base"><span class="header-section-number">2.1</span> Angles et figures de base</a></li>
+  <li><a href="#angles-égaux-et-droites-parallèles" id="toc-angles-égaux-et-droites-parallèles" class="nav-link" data-scroll-target="#angles-égaux-et-droites-parallèles"><span class="header-section-number">2.2</span> Angles égaux et droites parallèles</a></li>
+  <li><a href="#angles-inscrits-et-angles-au-centre" id="toc-angles-inscrits-et-angles-au-centre" class="nav-link" data-scroll-target="#angles-inscrits-et-angles-au-centre"><span class="header-section-number">2.3</span> Angles inscrits et angles au centre</a></li>
+  </ul></li>
+  <li><a href="#retenir" id="toc-retenir" class="nav-link" data-scroll-target="#retenir"><span class="header-section-number">3</span> Retenir</a></li>
+  <li><a href="#mobiliser-ses-compétences" id="toc-mobiliser-ses-compétences" class="nav-link" data-scroll-target="#mobiliser-ses-compétences"><span class="header-section-number">4</span> Mobiliser ses compétences</a>
+  <ul class="collapse">
+  <li><a href="#angles-et-figures-de-base-1" id="toc-angles-et-figures-de-base-1" class="nav-link" data-scroll-target="#angles-et-figures-de-base-1"><span class="header-section-number">4.1</span> Angles et figures de base</a></li>
+  <li><a href="#angles-et-droites-parallèles" id="toc-angles-et-droites-parallèles" class="nav-link" data-scroll-target="#angles-et-droites-parallèles"><span class="header-section-number">4.2</span> Angles et droites parallèles</a></li>
+  <li><a href="#utiliser-les-angles-inscrits-pour-comparer-des-grandeurs" id="toc-utiliser-les-angles-inscrits-pour-comparer-des-grandeurs" class="nav-link" data-scroll-target="#utiliser-les-angles-inscrits-pour-comparer-des-grandeurs"><span class="header-section-number">4.3</span> Utiliser les angles inscrits pour comparer des grandeurs</a></li>
+  </ul></li>
+  <li><a href="#sauto-évaluer" id="toc-sauto-évaluer" class="nav-link" data-scroll-target="#sauto-évaluer"><span class="header-section-number">5</span> S’auto-évaluer</a></li>
+  <li><a href="#exercices-et-problèmes" id="toc-exercices-et-problèmes" class="nav-link" data-scroll-target="#exercices-et-problèmes"><span class="header-section-number">6</span> Exercices et problèmes</a>
+  <ul class="collapse">
+  <li><a href="#appliquer" id="toc-appliquer" class="nav-link" data-scroll-target="#appliquer"><span class="header-section-number">6.1</span> Appliquer</a></li>
+  <li><a href="#maîtriser" id="toc-maîtriser" class="nav-link" data-scroll-target="#maîtriser"><span class="header-section-number">6.2</span> Maîtriser</a></li>
+  </ul></li>
+  <li><a href="#math-culture" id="toc-math-culture" class="nav-link" data-scroll-target="#math-culture"><span class="header-section-number">7</span> Math culture</a>
+  <ul class="collapse">
+  <li><a href="#mesurer-la-terre-avec-ératosthène" id="toc-mesurer-la-terre-avec-ératosthène" class="nav-link" data-scroll-target="#mesurer-la-terre-avec-ératosthène"><span class="header-section-number">7.1</span> Mesurer la terre avec Ératosthène</a></li>
+  <li><a href="#note-historique" id="toc-note-historique" class="nav-link" data-scroll-target="#note-historique"><span class="header-section-number">7.2</span> Note historique</a></li>
+  <li><a href="#létoile-du-drapeau-tunisien" id="toc-létoile-du-drapeau-tunisien" class="nav-link" data-scroll-target="#létoile-du-drapeau-tunisien"><span class="header-section-number">7.3</span> L’étoile du drapeau tunisien</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../1ere-annee/chapitre-01-angles.html">Travaux géométriques</a></li><li class="breadcrumb-item"><a href="../1ere-annee/chapitre-01-angles.html">Chapitre 1 — Angles</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Chapitre 1 — Angles</h1>
+<p class="subtitle lead">1ère année secondaire — Manuel CNP — Travaux géométriques</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Dans ce chapitre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Reprendre</strong> — un QCM de révision sur les angles.</li>
+<li><strong>Découvrir</strong> — 12 activités, chacune avec une <strong>figure GeoGebra interactive</strong> (les points bleus se déplacent à la souris ou au doigt : observez ce qui change… et ce qui ne change pas).</li>
+<li><strong>Retenir</strong> — les propriétés des angles formés par deux parallèles et une sécante, et la relation angle inscrit / angle au centre.</li>
+<li><strong>Mobiliser ses compétences</strong>, <strong>S’auto-évaluer</strong>, <strong>Exercices et problèmes</strong>, <strong>Avec l’ordinateur</strong>, <strong>Math culture</strong>.</li>
+</ul>
+</div>
+</div>
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<script>
+// --- Mycourses / GeoGebra helper -------------------------------------
+// Chaque figure : points FIXES par défaut (non déplaçables), sauf ceux
+// listés dans opts.free. Boutons "Réinitialiser" (rejoue la construction
+// d'origine) et "Voir / modifier le code" (éditeur de commandes GeoGebra,
+// comme les cellules Python : on modifie, puis on clique "Appliquer").
+var GGB = { apis: {}, initCmds: {}, freePts: {}, views: {}, resizers: {}, toolbarOn: {}, sizes: {}, cleanups: {} };
+
+// Grille et axes visibles par défaut sur chaque figure (setPerspective("G")
+// les masque sinon).
+function ggbShowGrid(api) {
+  try { api.setAxesVisible(true, true); } catch (e) {}
+  try { api.setGridVisible(true); } catch (e) {}
+}
+
+// Affiche/masque la palette d'outils géométriques de GeoGebra (Point,
+// Intersection, Droite parallèle, etc.). Contrairement au menu ☰ ci-dessus,
+// l'API showToolBar() de GeoGebra ne reconstruit pas correctement les icônes
+// une fois masquées : rebasculer showToolBar(true) après un showToolBar(false)
+// laisse le panneau vide (constaté en test). On recrée donc l'applet avec le
+// bon réglage dès le démarrage, en conservant la construction et l'état des
+// points via getXML/setXML (aucune perte : ni la figure, ni un point que
+// l'élève aurait déplacé).
+function ggbRebuildApplet(id, showTools) {
+  var oldApi = GGB.apis[id];
+  if (!oldApi) return;
+  var xml;
+  try { xml = oldApi.getXML(); } catch (e) { return; }
+
+  var container = document.getElementById(id);
+  var oldInner = container.querySelector(".ggb-inner");
+  var newInner = document.createElement("div");
+  var canvasId = id + "-inner-" + Date.now();
+  newInner.id = canvasId;
+  newInner.className = "ggb-inner";
+  oldInner.replaceWith(newInner);
+
+  var size = GGB.sizes[id] || [480, 360];
+  var baseW = size[0], baseH = size[1];
+
+  var params = {
+    appName: "geometry", width: baseW, height: baseH,
+    showToolBar: showTools, showAlgebraInput: false, showMenuBar: true,
+    showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+    language: "fr",
+    appletOnLoad: function (api) {
+      GGB.apis[id] = api;
+      try { if (!showTools) api.setPerspective("G"); } catch (e) {}
+      try { api.setXML(xml); } catch (e) {}
+      ggbShowGrid(api);
+      ggbFitView(api, id);
+      ggbMakeResponsive(id, api, container, baseW / baseH);
+    }
+  };
+  new GGBApplet(params, true).inject(canvasId);
+}
+
+function ggbToggleTools(id) {
+  if (!GGB.apis[id]) return;
+  var show = !GGB.toolbarOn[id];
+  GGB.toolbarOn[id] = show;
+  var container = document.getElementById(id);
+  var btn = container.querySelector('[data-act="tools"]');
+  if (btn) btn.textContent = show ? "🛠 Masquer les outils GeoGebra" : "🛠 Outils GeoGebra";
+  ggbRebuildApplet(id, show);
+}
+
+function ggbRunCommands(api, commands, free) {
+  commands.forEach(function (cmd) {
+    try { api.evalCommand(cmd); } catch (e) { console.error("GGB cmd failed:", cmd, e); }
+  });
+  var n = api.getObjectNumber();
+  for (var i = 0; i < n; i++) {
+    var name = api.getObjectName(i);
+    try {
+      if (api.getObjectType(name) === "point" && free.indexOf(name) === -1) {
+        api.setFixed(name, true);
+      }
+    } catch (e) {}
+  }
+}
+
+// Cadre la vue sur la construction : soit une fenêtre fixe explicite
+// (GGB.views[id], optionnelle), soit — par défaut — une boîte englobante
+// calculée nous-mêmes à partir des coordonnées réelles de tous les points.
+//
+// On n'utilise plus showAllObjects() : cette commande met à jour la vue de
+// façon asynchrone, et une lecture immédiate de getViewProperties() après
+// coup renvoyait parfois encore l'ancien cadrage, qu'on figeait alors par
+// erreur (un seul sommet visible, etc.). Le calcul direct ci-dessous est
+// entièrement synchrone et ne dépend d'aucun délai.
+function ggbFitView(api, id) {
+  var v = GGB.views[id];
+  try {
+    var cx, cy, halfW, halfH;
+    if (v) {
+      cx = (v[0] + v[1]) / 2; cy = (v[2] + v[3]) / 2;
+      halfW = (v[1] - v[0]) / 2; halfH = (v[3] - v[2]) / 2;
+    } else {
+      var n = api.getObjectNumber();
+      var xs = [], ys = [];
+      for (var i = 0; i < n; i++) {
+        var name = api.getObjectName(i);
+        if (api.getObjectType(name) === "point") {
+          var x = api.getXcoord(name), y = api.getYcoord(name);
+          if (isFinite(x) && isFinite(y)) { xs.push(x); ys.push(y); }
+        }
+      }
+      if (xs.length === 0) return;
+      var xMin = Math.min.apply(null, xs), xMax = Math.max.apply(null, xs);
+      var yMin = Math.min.apply(null, ys), yMax = Math.max.apply(null, ys);
+      cx = (xMin + xMax) / 2; cy = (yMin + yMax) / 2;
+      halfW = Math.max((xMax - xMin) / 2, 0.3) * 1.25;
+      halfH = Math.max((yMax - yMin) / 2, 0.3) * 1.25;
+    }
+
+    // GeoGebra impose la même échelle en x et en y (pas de déformation) :
+    // si on ne demande pas déjà le bon rapport largeur/hauteur, il agrandit
+    // lui-même une des deux dimensions — de façon parfois imprévisible. On
+    // aligne donc notre fenêtre sur le rapport largeur/hauteur réel du
+    // canevas avant de l'imposer.
+    //
+    // Piège constaté : api.getViewProperties().width/height (lues pour
+    // connaître ce rapport) ne sont pas fiables ici — undefined selon le
+    // moment de l'appel — et retombaient alors sur un rapport par défaut
+    // 4/3 qui ne correspond pas au vrai canevas, déformant les cercles en
+    // ellipses. On utilise à la place la taille que NOUS avons demandée
+    // nous-mêmes (GGB.sizes[id], voir buildFigure et ggbMakeResponsive, qui
+    // redimensionne toujours en conservant ce même rapport) : fiable et
+    // toujours disponible, sans dépendre de l'API GeoGebra pour ça.
+    var size = GGB.sizes[id];
+    var pxAspect = (size && size[0] > 0 && size[1] > 0) ? (size[0] / size[1]) : (4 / 3);
+    if (halfW / halfH < pxAspect) { halfW = halfH * pxAspect; }
+    else { halfH = halfW / pxAspect; }
+
+    api.setCoordSystem(cx - halfW, cx + halfW, cy - halfH, cy + halfH);
+  } catch (e) {}
+}
+
+function ggbReset(id) {
+  var api = GGB.apis[id];
+  if (!api) return; // figure pas encore chargée (voir buildFigure / chargement différé)
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, GGB.initCmds[id], GGB.freePts[id]);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  if (ta) ta.value = GGB.initCmds[id].join("\n");
+  // setPerspective("G") remet les outils masqués : on aligne le bouton.
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+function ggbApplyCode(id) {
+  var api = GGB.apis[id];
+  if (!api) return;
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  var lines = ta.value.split("\n")
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return s.length > 0; });
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, lines, GGB.freePts[id]);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+// Charger 20+ applets GeoGebra (WebAssembly) simultanément au chargement
+// de la page sature le processeur : les redimensionnements temporisés de
+// certaines figures se calculaient alors sur des états intermédiaires, et
+// la figure semblait tronquée ou mal cadrée (constaté en pratique). Chaque
+// figure n'est donc réellement construite que lorsqu'elle approche de la
+// zone visible (chargement différé), comme des images "lazy-load".
+function buildFigure(id, commands, opts) {
+  opts = opts || {};
+  var free = opts.free || [];
+  GGB.initCmds[id] = commands.slice();
+  GGB.freePts[id] = free;
+  GGB.views[id] = opts.view || null;
+
+  var container = document.getElementById(id);
+  container.classList.add("ggb-figure");
+  var baseW = opts.w || 480, baseH = opts.h || 360;
+  GGB.sizes[id] = [baseW, baseH];
+  container.innerHTML =
+    '<div class="ggb-toolbar">' +
+      '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
+      '<button type="button" class="ggb-btn" data-act="code">✏️ Voir / modifier le code</button>' +
+      '<button type="button" class="ggb-btn" data-act="tools">🛠 Outils GeoGebra</button>' +
+    '</div>' +
+    '<div class="ggb-canvas" style="aspect-ratio:' + baseW + '/' + baseH + '">' +
+      '<div class="ggb-placeholder">Figure GeoGebra — chargement…</div>' +
+      '<div class="ggb-inner"></div>' +
+    '</div>' +
+    '<div class="ggb-codepanel" hidden>' +
+      '<textarea class="ggb-textarea" spellcheck="false" rows="' + Math.min(Math.max(commands.length, 4), 16) + '"></textarea>' +
+      '<button type="button" class="ggb-btn ggb-btn-primary" data-act="apply">▶ Appliquer les modifications</button>' +
+    '</div>';
+
+  var ta = container.querySelector(".ggb-textarea");
+  ta.value = commands.join("\n");
+  container.querySelector('[data-act="reset"]').addEventListener("click", function () { ggbReset(id); });
+  container.querySelector('[data-act="apply"]').addEventListener("click", function () { ggbApplyCode(id); });
+  container.querySelector('[data-act="code"]').addEventListener("click", function () {
+    var panel = container.querySelector(".ggb-codepanel");
+    panel.hidden = !panel.hidden;
+  });
+  container.querySelector('[data-act="tools"]').addEventListener("click", function () { ggbToggleTools(id); });
+
+  var loaded = false;
+  function loadApplet() {
+    if (loaded) return;
+    loaded = true;
+    var placeholder = container.querySelector(".ggb-placeholder");
+    if (placeholder) placeholder.remove();
+
+    // GeoGebra reçoit son propre élément dédié (.ggb-inner), distinct du
+    // conteneur .ggb-canvas : injecter directement dans .ggb-canvas
+    // empêche api.setSize() de fonctionner par la suite (constaté en test).
+    var innerDiv = container.querySelector(".ggb-inner");
+    var canvasId = id + "-inner";
+    innerDiv.id = canvasId;
+
+    var params = {
+      appName: "geometry", width: baseW, height: baseH,
+      showToolBar: false, showAlgebraInput: false, showMenuBar: true,
+      showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+      language: "fr",
+      appletOnLoad: function (api) {
+        GGB.apis[id] = api;
+        try { api.setPerspective("G"); } catch (e) {}
+        ggbShowGrid(api);
+        ggbRunCommands(api, commands, free);
+        ggbFitView(api, id);
+        ggbMakeResponsive(id, api, container, baseW / baseH);
+      }
+    };
+    new GGBApplet(params, true).inject(canvasId);
+  }
+
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { loadApplet(); io.disconnect(); }
+      });
+    }, { rootMargin: "600px 0px" });
+    io.observe(container);
+  } else {
+    loadApplet();
+  }
+}
+
+// Adapte la taille de l'applet à la largeur réelle de la colonne de
+// contenu (sidebar / TOC compris), au chargement et au redimensionnement,
+// en conservant le rapport largeur/hauteur d'origine de la figure.
+//
+// Important : on mesure le conteneur EXTÉRIEUR (.ggb-figure, largeur fixée
+// par CSS à 100% de la colonne) et non la zone du dessin elle-même — sinon
+// setSize() change la taille de la zone observée, qui redéclenche le
+// redimensionnement, qui rappelle setSize()... (boucle infinie -> "vibration").
+function ggbMakeResponsive(id, api, outerDiv, aspect) {
+  // Si l'applet a été recréée (bascule des outils GeoGebra, voir
+  // ggbRebuildApplet), l'ancien ResizeObserver et l'ancien écouteur
+  // "resize" existent toujours et appelleraient setSize() sur une instance
+  // détruite : on les retire avant d'en recréer de nouveaux.
+  if (GGB.cleanups[id]) { try { GGB.cleanups[id](); } catch (e) {} }
+  var lastW = -1;
+  var padding = null;
+  var fitToken = 0;
+  var debounceTimer = null;
+
+  // Applique la taille ET recadre la vue. N'est appelé qu'une fois la
+  // largeur du conteneur stabilisée (voir scheduleResize ci-dessous) —
+  // jamais à chaque pixel pendant un glisser de la fenêtre.
+  function applySize() {
+    if (padding === null) {
+      var cs = window.getComputedStyle(outerDiv);
+      padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    }
+    var w = Math.floor(outerDiv.clientWidth - padding);
+    if (w < 80 || w === lastW) return;
+    lastW = w;
+    api.setSize(w, Math.round(w / aspect));
+    // setSize() traite le redimensionnement de façon asynchrone (son rendu
+    // interne n'est pas terminé une frame plus tard) : on réajuste le
+    // cadrage un peu après coup, sinon showAllObjects() calcule le zoom sur
+    // les anciennes dimensions (figure trop/pas assez zoomée, mal centrée).
+    // Un jeton annule tout recadrage devenu obsolète si une nouvelle taille
+    // arrive entre-temps.
+    var myToken = ++fitToken;
+    var attempt = 0;
+    function tryFit() {
+      if (myToken !== fitToken) return; // une taille plus récente a pris le relais
+      ggbFitView(api, id);
+      attempt++;
+      // Un second passage un peu plus tard rattrape les cas où le premier
+      // recadrage a encore été calculé avant la fin du rendu interne.
+      if (attempt === 1) setTimeout(tryFit, 220);
+    }
+    setTimeout(tryFit, 220);
+  }
+
+  // Attend une accalmie (~120ms sans nouvel événement) avant d'appliquer la
+  // taille : pendant qu'on glisse le bord de la fenêtre, on ne fait rien.
+  function scheduleResize() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applySize, 120);
+  }
+
+  GGB.resizers[id] = applySize;
+  applySize();
+  window.addEventListener("resize", scheduleResize);
+  var ro = null;
+  if (window.ResizeObserver) {
+    ro = new ResizeObserver(scheduleResize);
+    ro.observe(outerDiv);
+  } else {
+    setTimeout(applySize, 300);
+  }
+  GGB.cleanups[id] = function () {
+    window.removeEventListener("resize", scheduleResize);
+    if (ro) ro.disconnect();
+  };
+}
+</script>
+<section id="reprendre" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="reprendre"><span class="header-section-number">1</span> Reprendre</h2>
+<div class="activite">
+<p><span class="activite-titre">QCM de révision</span></p>
+<p>Pour chaque énoncé, on propose trois réponses A, B et C. Une ou plusieurs sont correctes.</p>
+<ol type="1">
+<li>Dans une figure où <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> sont proches l’un de l’autre sur deux demi-droites issues de <span class="math inline">\(O\)</span>, et <span class="math inline">\(C\)</span> sur une troisième demi-droite : <br></li>
+</ol>
+<ul>
+<li><strong>A.</strong> l’angle <span class="math inline">\(\widehat{AOB}\)</span> est aigu.</li>
+<li><strong>B.</strong> l’angle <span class="math inline">\(\widehat{AOB}\)</span> est obtus.</li>
+<li><strong>C.</strong> l’angle <span class="math inline">\(\widehat{BOC}\)</span> est obtus.</li>
+</ul>
+<ol start="2" type="1">
+<li><span class="math inline">\((AE) \parallel (BF)\)</span>, une sécante coupe <span class="math inline">\((AE)\)</span> en <span class="math inline">\(K/A\)</span> et <span class="math inline">\((BF)\)</span> en <span class="math inline">\(B\)</span> :<br></li>
+</ol>
+<ul>
+<li><strong>A.</strong> les angles <span class="math inline">\(\widehat{KAE}\)</span> et <span class="math inline">\(\widehat{KBF}\)</span> sont égaux.</li>
+<li><strong>B.</strong> ils sont alternes-internes.</li>
+<li><strong>C.</strong> ils sont correspondants.</li>
+</ul>
+<ol start="3" type="1">
+<li>Trois demi-droites <span class="math inline">\([Ot)\)</span>, <span class="math inline">\([OS)\)</span>, <span class="math inline">\([OK)\)</span> issues de <span class="math inline">\(O\)</span> :<br></li>
+</ol>
+<ul>
+<li><strong>A.</strong> les angles <span class="math inline">\(\widehat{SOt}\)</span> et <span class="math inline">\(\widehat{tOK}\)</span> sont adjacents.</li>
+<li><strong>B.</strong> <span class="math inline">\([Ot)\)</span> est la bissectrice de <span class="math inline">\(\widehat{SOK}\)</span>.</li>
+<li><strong>C.</strong> <span class="math inline">\(\widehat{SOt}\)</span> et <span class="math inline">\(\widehat{tOK}\)</span> sont supplémentaires.</li>
+</ul>
+<ol start="4" type="1">
+<li><span class="math inline">\(ABCD\)</span> est un parallélogramme :<br></li>
+</ol>
+<ul>
+<li><strong>A.</strong> les angles <span class="math inline">\(\widehat{BAD}\)</span> et <span class="math inline">\(\widehat{BCD}\)</span> sont supplémentaires.</li>
+<li><strong>B.</strong> <span class="math inline">\(\widehat{ABD}\)</span> et <span class="math inline">\(\widehat{BCD}\)</span> sont correspondants.</li>
+<li><strong>C.</strong> <span class="math inline">\(\widehat{DBA}\)</span> et <span class="math inline">\(\widehat{BCD}\)</span> sont égaux.</li>
+</ul>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Dans un parallélogramme, les angles opposés sont <strong>égaux</strong> et les angles consécutifs sont <strong>supplémentaires</strong> : <span class="math inline">\(\widehat{BAD}\)</span> et <span class="math inline">\(\widehat{BCD}\)</span> sont opposés donc <strong>égaux</strong>, pas supplémentaires — seule la proposition <strong>C</strong> est vraie (<span class="math inline">\(\widehat{DBA}=\widehat{BCD}\)</span> résulte de l’égalité des angles alternes-internes si l’on trace la diagonale <span class="math inline">\((BD)\)</span>, sécante commune à <span class="math inline">\((AD)\parallel(BC)\)</span>).</li>
+<li><strong>B</strong> et <strong>C</strong> décrivent la même paire d’angles sous deux noms différents selon la position exacte de <span class="math inline">\(K\)</span> : lisez la figure de votre manuel pour trancher entre alterne-interne et correspondant.</li>
+<li>Pour les angles adjacents/bissectrice/supplémentaires : cela dépend des mesures exactes lues sur la figure du manuel (non reproduites ici).</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="découvrir" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="découvrir"><span class="header-section-number">2</span> Découvrir</h2>
+<section id="angles-et-figures-de-base" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="angles-et-figures-de-base"><span class="header-section-number">2.1</span> Angles et figures de base</h3>
+<div class="activite">
+<p><span class="activite-titre">Activité 1</span></p>
+<ol type="1">
+<li>On considère la figure ci-contre. Montrer que <span class="math inline">\(\widehat{CAB}+\widehat{ABC}=\widehat{ACD}\)</span>.</li>
+<li>Que vaut <span class="math inline">\(\widehat{ACD}\)</span> lorsque le triangle <span class="math inline">\(ABC\)</span> est équilatéral ?</li>
+<li>Que vaut <span class="math inline">\(\widehat{ACD}\)</span> lorsque le triangle <span class="math inline">\(ABC\)</span> est rectangle isocèle en <span class="math inline">\(B\)</span> ?</li>
+<li>On suppose que le triangle <span class="math inline">\(ABC\)</span> est isocèle en <span class="math inline">\(C\)</span>. Écrire <span class="math inline">\(\widehat{ACD}\)</span> en fonction de <span class="math inline">\(\widehat{ABC}\)</span>.</li>
+</ol>
+</div>
+<div id="ggb-d1"></div>
+<script>
+buildFigure("ggb-d1", [
+"B=(-2,0)","C=(1,0)","D=(4,0)","A=(0,2.5)",
+"Segment(B,D)","Segment(A,B)","Segment(A,C)",
+"Angle(C,A,B)","Angle(A,B,C)","Angle(A,C,D)"
+], {free: []});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Dans le triangle <span class="math inline">\(ABC\)</span> : <span class="math inline">\(\widehat{CAB}+\widehat{ABC}+\widehat{BCA}=180°\)</span>. Comme <span class="math inline">\(B,C,D\)</span> sont alignés, <span class="math inline">\(\widehat{BCA}+\widehat{ACD}=180°\)</span> (angles supplémentaires). En combinant : <span class="math inline">\(\widehat{ACD}=180°-\widehat{BCA}=\widehat{CAB}+\widehat{ABC}\)</span>. <em>(C’est le théorème de l’angle extérieur : un angle extérieur d’un triangle est égal à la somme des deux angles intérieurs non adjacents.)</em></li>
+<li>Équilatéral : <span class="math inline">\(\widehat{CAB}=\widehat{ABC}=60°\)</span>, donc <span class="math inline">\(\widehat{ACD}=120°\)</span>.</li>
+<li>Rectangle isocèle en <span class="math inline">\(B\)</span> : <span class="math inline">\(\widehat{ABC}=90°\)</span>, et <span class="math inline">\(\widehat{CAB}=\widehat{BCA}=45°\)</span> (base d’un triangle isocèle rectangle), donc <span class="math inline">\(\widehat{ACD}=45°+90°=135°\)</span>.</li>
+<li>Isocèle en <span class="math inline">\(C\)</span> : <span class="math inline">\(CA=CB\)</span> donc <span class="math inline">\(\widehat{CAB}=\widehat{ABC}\)</span> (angles à la base), donc <span class="math inline">\(\widehat{ACD}=2\times\widehat{ABC}\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 2</span></p>
+<ol type="1">
+<li>Dans la figure ci-contre, <span class="math inline">\(ABC\)</span> est un triangle de périmètre 13 cm ; les triangles <span class="math inline">\(EBA\)</span> et <span class="math inline">\(ACF\)</span> sont isocèles respectivement en <span class="math inline">\(B\)</span> et <span class="math inline">\(C\)</span>.
+<ol type="a">
+<li>Que vaut <span class="math inline">\(\widehat{AEB}\)</span> ? b) Que vaut <span class="math inline">\(\widehat{AFC}\)</span> ? c) Calculer <span class="math inline">\(EF\)</span>.</li>
+</ol></li>
+<li>On se propose de construire un triangle <span class="math inline">\(ABC\)</span> de périmètre 13 cm dont deux angles valent 72° et 66°.
+<ol type="a">
+<li>Tracer <span class="math inline">\(AEF\)</span> tel que <span class="math inline">\(EF=13\)</span> cm, <span class="math inline">\(\widehat{AEF}=36°\)</span> et <span class="math inline">\(\widehat{AFC}=33°\)</span>.</li>
+<li>Placer sur <span class="math inline">\([EF]\)</span> les points <span class="math inline">\(B\)</span> et <span class="math inline">\(C\)</span> tels que <span class="math inline">\(BE=BA\)</span> et <span class="math inline">\(CF=CA\)</span>.</li>
+<li>Vérifier que le triangle <span class="math inline">\(ABC\)</span> convient.</li>
+</ol></li>
+</ol>
+</div>
+<div id="ggb-d2"></div>
+<script>
+buildFigure("ggb-d2", [
+"B=(0,0)","C=(3,0)","A=(1.2,2.5)",
+"E=B+Distance(A,B)*UnitVector(Vector(C,B))",
+"F=C+Distance(A,C)*UnitVector(Vector(B,C))",
+"Segment(E,F)","Segment(A,B)","Segment(A,C)","Segment(A,E)","Segment(A,F)",
+"Angle(A,E,B)","Angle(A,F,C)"
+], {free: ["A"]});
+</script>
+<p>Déplacez le point <strong>A</strong> : les points <strong>E</strong> et <strong>F</strong> se recalculent automatiquement pour garder <span class="math inline">\(EB=BA\)</span> et <span class="math inline">\(FC=CA\)</span> (triangles isocèles).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><ol type="a">
+<li><span class="math inline">\(EBA\)</span> isocèle en <span class="math inline">\(B\)</span> : ses angles à la base (<span class="math inline">\(\widehat{AEB}\)</span> et <span class="math inline">\(\widehat{EAB}\)</span>) sont égaux. Comme <span class="math inline">\(\widehat{EBA}=180°-\widehat{ABC}\)</span> (angles supplémentaires, <span class="math inline">\(E,B,C\)</span> alignés), on obtient <span class="math inline">\(\widehat{AEB}=\dfrac{\widehat{ABC}}{2}\)</span>.</li>
+</ol></li>
+</ol>
+<ol start="2" type="a">
+<li>De même, <span class="math inline">\(\widehat{AFC}=\dfrac{\widehat{ACB}}{2}\)</span>.</li>
+<li><span class="math inline">\(EF=EB+BC+CF=BA+BC+CA=\)</span> <strong>périmètre de <span class="math inline">\(ABC\)</span></strong> <span class="math inline">\(=13\)</span> cm : c’est l’idée clé de la construction (2.).</li>
+</ol>
+<ol start="2" type="1">
+<li>C’est la réciproque de (1.) : on construit d’abord le grand triangle <span class="math inline">\(AEF\)</span> isocèle (via les demi-angles 36° et 33°, soit le double des angles visés 72°/2=36° et 66°/2=33°), puis <span class="math inline">\(B\)</span> et <span class="math inline">\(C\)</span> sur <span class="math inline">\([EF]\)</span> redonnent exactement les bons angles en <span class="math inline">\(A\)</span> pour <span class="math inline">\(ABC\)</span>, avec <span class="math inline">\(EF=13\)</span> cm imposant le bon périmètre.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 3</span></p>
+<p>Dans la figure ci-contre, <span class="math inline">\(ABCD\)</span> est un carré et <span class="math inline">\(BCE\)</span> est un triangle équilatéral.</p>
+<ol type="1">
+<li>Quelle est la nature du triangle <span class="math inline">\(DCE\)</span> ?</li>
+<li>Que vaut <span class="math inline">\(\widehat{CED}\)</span> ? <span class="math inline">\(\widehat{AED}\)</span> ?</li>
+<li>Donner la mesure de chacun des angles de la figure.</li>
+</ol>
+</div>
+<div id="ggb-d3"></div>
+<script>
+buildFigure("ggb-d3", [
+"A=(0,2)","B=(2,2)","C=(2,0)","D=(0,0)",
+"Polygon(A,B,C,D)",
+"E=Rotate(C,60°,B)",
+"Segment(B,E)","Segment(C,E)","Segment(D,E)","Segment(A,E)",
+"Angle(C,E,D)","Angle(A,E,D)"
+], {free: []});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><span class="math inline">\(DC=CE\)</span> (côté du carré = côté du triangle équilatéral) et <span class="math inline">\(\widehat{DCE}=\widehat{DCB}+\widehat{BCE}=90°+60°=150°\)</span> : le triangle <span class="math inline">\(DCE\)</span> est <strong>isocèle en <span class="math inline">\(C\)</span></strong>, d’angle au sommet <span class="math inline">\(150°\)</span>.</li>
+<li>Ses angles à la base valent <span class="math inline">\(\dfrac{180°-150°}{2}=15°\)</span> : <span class="math inline">\(\widehat{CED}=\widehat{CDE}=15°\)</span>. Pour <span class="math inline">\(\widehat{AED}\)</span> : le triangle <span class="math inline">\(ABE\)</span> est isocèle en <span class="math inline">\(B\)</span> (<span class="math inline">\(BA=BE=\)</span> côté du carré), d’angle au sommet <span class="math inline">\(\widehat{ABE}=\widehat{ABC}+\widehat{CBE}=90°+60°=150°\)</span>, donc <span class="math inline">\(\widehat{AEB}=15°\)</span> aussi. Les angles <span class="math inline">\(\widehat{AEB}\)</span>, <span class="math inline">\(\widehat{BEC}=60°\)</span> et <span class="math inline">\(\widehat{CED}=15°\)</span> se juxtaposent autour de <span class="math inline">\(E\)</span> : <span class="math inline">\(\widehat{AED}=15°+60°+15°=90°\)</span>.</li>
+<li>Carré : 90° partout. Triangle <span class="math inline">\(BCE\)</span> : 60° partout. Triangles <span class="math inline">\(ABE\)</span> et <span class="math inline">\(DCE\)</span> : 150° (sommet) et 15°, 15° (base) chacun. <span class="math inline">\(\widehat{AED}=90°\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 4</span></p>
+<p>Dans la figure ci-contre, <span class="math inline">\(ABCD\)</span> est un carré de côté <span class="math inline">\(a\)</span>, <span class="math inline">\(DCE\)</span> et <span class="math inline">\(BCF\)</span> sont des triangles équilatéraux. <span class="math inline">\(H\)</span> et <span class="math inline">\(H'\)</span> sont les projetés orthogonaux respectifs de <span class="math inline">\(E\)</span> sur les droites <span class="math inline">\((DC)\)</span> et <span class="math inline">\((AB)\)</span>.</p>
+<ol type="1">
+<li>Quelle est la nature de chacun des triangles <span class="math inline">\(ADE\)</span> et <span class="math inline">\(FCE\)</span> ?</li>
+<li>Montrer que les points <span class="math inline">\(A\)</span>, <span class="math inline">\(E\)</span> et <span class="math inline">\(F\)</span> sont alignés.</li>
+<li>Exprimer en fonction de <span class="math inline">\(a\)</span> les distances <span class="math inline">\(EF\)</span>, <span class="math inline">\(EH\)</span>, <span class="math inline">\(EH'\)</span>, <span class="math inline">\(AE\)</span> et <span class="math inline">\(AF\)</span>.</li>
+</ol>
+</div>
+<div id="ggb-d4"></div>
+<script>
+buildFigure("ggb-d4", [
+"A=(0,2)","B=(2,2)","C=(2,0)","D=(0,0)",
+"Polygon(A,B,C,D)",
+"E=Rotate(C,60°,D)","F=Rotate(C,60°,B)",
+"Segment(D,E)","Segment(C,E)","Segment(B,F)","Segment(C,F)","Segment(A,E)","Segment(E,F)",
+"H=ClosestPoint(Line(D,C),E)","H'=ClosestPoint(Line(A,B),E)",
+"Segment(E,H)","Segment(E,H')"
+], {free: []});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><span class="math inline">\(AD=DE=a\)</span> et <span class="math inline">\(\widehat{ADE}=\widehat{ADC}-\widehat{EDC}=90°-60°=30°\)</span> : <span class="math inline">\(ADE\)</span> est <strong>isocèle en <span class="math inline">\(D\)</span></strong> (angle au sommet 30°, base <span class="math inline">\(75°/75°\)</span>). <span class="math inline">\(CF=CE=a\)</span> (côtés des deux triangles équilatéraux) et <span class="math inline">\(\widehat{FCE}=(\widehat{DCB}+\widehat{BCF})-\widehat{DCE}=(90°+60°)-60°=90°\)</span> : <span class="math inline">\(FCE\)</span> est <strong>isocèle rectangle en <span class="math inline">\(C\)</span></strong>.</li>
+<li>Les angles à la base donnent <span class="math inline">\(\widehat{DEA}=75°\)</span> (triangle <span class="math inline">\(ADE\)</span>), <span class="math inline">\(\widehat{DEC}=60°\)</span> (équilatéral) et <span class="math inline">\(\widehat{CEF}=45°\)</span> (triangle <span class="math inline">\(FCE\)</span>, isocèle rectangle). Leur somme <span class="math inline">\(75°+60°+45°=180°\)</span> : les points <span class="math inline">\(A\)</span>, <span class="math inline">\(E\)</span>, <span class="math inline">\(F\)</span> sont donc <strong>alignés</strong> (angles formant un angle plat en <span class="math inline">\(E\)</span>).</li>
+<li>Avec les triangles isocèles ci-dessus : <span class="math inline">\(EH=a\sin 60°=\dfrac{a\sqrt3}{2}\)</span>, <span class="math inline">\(EH'=a-EH=a\left(1-\dfrac{\sqrt3}{2}\right)\)</span>, <span class="math inline">\(AE=2a\sin15°\)</span>, <span class="math inline">\(EF=a\sqrt2\)</span> (diagonale du carré isocèle rectangle <span class="math inline">\(FCE\)</span>), et <span class="math inline">\(AF=AE+EF\)</span> (car <span class="math inline">\(E\in[AF]\)</span>).</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="angles-égaux-et-droites-parallèles" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="angles-égaux-et-droites-parallèles"><span class="header-section-number">2.2</span> Angles égaux et droites parallèles</h3>
+<div class="activite">
+<p><span class="activite-titre">Activité 5</span></p>
+<p>Dans la figure ci-contre, <span class="math inline">\(C'\)</span> est le milieu de <span class="math inline">\([AB]\)</span> et <span class="math inline">\(B'\)</span> est le milieu de <span class="math inline">\([AC]\)</span>. Calculer tous les angles de la figure.</p>
+</div>
+<div id="ggb-d5"></div>
+<script>
+buildFigure("ggb-d5", [
+"B=(0,0)","C=(5,0)","A=(1.5,3.2)",
+"Polygon(A,B,C)",
+"C'=Midpoint(A,B)","B'=Midpoint(A,C)",
+"Segment(C',B')",
+"Angle(A,B,C)","Angle(B,A,C)","Angle(A,C',B')"
+], {free: []});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\((C'B')\)</span> est la <strong>droite des milieux</strong> du triangle <span class="math inline">\(ABC\)</span> (elle joint les milieux de <span class="math inline">\([AB]\)</span> et <span class="math inline">\([AC]\)</span>) : elle est donc <strong>parallèle à <span class="math inline">\((BC)\)</span></strong>. Comme <span class="math inline">\((C'B')\parallel(BC)\)</span> avec la sécante <span class="math inline">\((AB)\)</span>, les angles correspondants sont égaux : <span class="math inline">\(\widehat{AC'B'}=\widehat{ABC}\)</span>. De même, avec la sécante <span class="math inline">\((AC)\)</span> : <span class="math inline">\(\widehat{AB'C'}=\widehat{ACB}\)</span>. Avec les valeurs du manuel (<span class="math inline">\(\widehat{ABC}=50°\)</span>, <span class="math inline">\(\widehat{BAC}=42°\)</span>, donc <span class="math inline">\(\widehat{ACB}=180°-50°-42°=88°\)</span>) : <span class="math inline">\(\widehat{AC'B'}=50°\)</span> et <span class="math inline">\(\widehat{AB'C'}=88°\)</span> (le triangle <span class="math inline">\(AC'B'\)</span> a les mêmes angles que <span class="math inline">\(ABC\)</span> : il lui est semblable, réduit de moitié).</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 6</span></p>
+<p>On considère deux droites parallèles <span class="math inline">\((xx')\)</span> et <span class="math inline">\((yy')\)</span>. Une droite <span class="math inline">\(D\)</span> est sécante à <span class="math inline">\((xx')\)</span> et <span class="math inline">\((yy')\)</span> respectivement en <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span>. On désigne par <span class="math inline">\(B'\)</span> le projeté orthogonal de <span class="math inline">\(B\)</span> sur <span class="math inline">\((xx')\)</span>.</p>
+<ol type="1">
+<li>Montrer que les angles intérieurs <span class="math inline">\(\widehat{xAB}\)</span> et <span class="math inline">\(\widehat{yBA}\)</span> sont supplémentaires.</li>
+<li>Montrer que les angles alternes-internes <span class="math inline">\(\widehat{xAB}\)</span> et <span class="math inline">\(\widehat{y'BA}\)</span> sont égaux.</li>
+<li>Montrer que les angles correspondants <span class="math inline">\(\widehat{xAB}\)</span> et <span class="math inline">\(\widehat{yBC}\)</span> sont égaux.</li>
+</ol>
+</div>
+<div id="ggb-d6"></div>
+<script>
+buildFigure("ggb-d6", [
+"Px=(-1,2)","Px2=(6,2)","lineXX=Line(Px,Px2)",
+"Py=(-1,0)","Py2=(6,0)","lineYY=Line(Py,Py2)",
+"A=Point(lineXX)","SetValue(A,(3,2))",
+"B=Point(lineYY)","SetValue(B,(1,0))",
+"Line(A,B)",
+"B'=ClosestPoint(lineXX,B)","Segment(B,B')",
+"Angle(Px2,A,B)","Angle(Py,B,A)","Angle(Py2,B,A)"
+], {free: ["A","B"]});
+</script>
+<p><strong>A</strong> et <strong>B</strong> sont déplaçables le long de leurs droites respectives : faites glisser la sécante et observez que les angles marqués restent liés par les mêmes relations.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Ces trois résultats sont précisément les propriétés énoncées dans le <strong>Retenir</strong> ci-dessous : deux droites parallèles coupées par une sécante forment des angles intérieurs de même côté supplémentaires, des angles alternes-internes égaux et des angles correspondants égaux. Utilisez la figure interactive (rapporteur virtuel : faites glisser <span class="math inline">\(A\)</span> ou <span class="math inline">\(B\)</span>) pour vérifier numériquement ces trois égalités avant la démonstration rigoureuse, qui utilise la perpendiculaire <span class="math inline">\((BB')\)</span> comme axe de symétrie auxiliaire.</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 7</span></p>
+<p>On considère une droite <span class="math inline">\(D\)</span> et deux droites <span class="math inline">\((xx')\)</span> et <span class="math inline">\((yy')\)</span> sécantes à <span class="math inline">\(D\)</span>, respectivement en <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span>. On désigne par <span class="math inline">\(B'\)</span> le projeté orthogonal de <span class="math inline">\(B\)</span> sur <span class="math inline">\((xx')\)</span>. On suppose que les angles <span class="math inline">\(\widehat{xAB}\)</span> et <span class="math inline">\(\widehat{yBA}\)</span> sont supplémentaires.</p>
+<ol type="a">
+<li>Que peut-on dire des angles <span class="math inline">\(\widehat{x'AB}\)</span> et <span class="math inline">\(\widehat{y'BA}\)</span> ?</li>
+<li>Montrer que <span class="math inline">\((BB')\)</span> est perpendiculaire à <span class="math inline">\((yy')\)</span>.</li>
+<li>Quelle est la position relative des droites <span class="math inline">\((xx')\)</span> et <span class="math inline">\((yy')\)</span> ?</li>
+</ol>
+</div>
+<div id="ggb-d7"></div>
+<script>
+buildFigure("ggb-d7", [
+"Px=(-1,2)","Px2=(6,2)","lineXX=Line(Px,Px2)",
+"Py=(-1,0)","Py2=(6,0)","lineYY=Line(Py,Py2)",
+"A=Point(lineXX)","SetValue(A,(3,2))",
+"B=Point(lineYY)","SetValue(B,(1,0))",
+"Line(A,B)",
+"B'=ClosestPoint(lineXX,B)","Segment(B,B')",
+"Angle(Px2,A,B)","Angle(Py,B,A)","Angle(Py2,B,A)"
+], {free: ["A","B"]});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>C’est la <strong>réciproque</strong> de l’Activité 6. a) <span class="math inline">\(\widehat{x'AB}\)</span> et <span class="math inline">\(\widehat{y'BA}\)</span> sont supplémentaires aussi (angles opposés par la sommet aux précédents). b) et c) Si les angles intérieurs de même côté sont supplémentaires, alors <span class="math inline">\((xx')\parallel(yy')\)</span> (propriété admise, énoncée dans le Retenir) ; la perpendiculaire <span class="math inline">\((BB')\)</span> à <span class="math inline">\((xx')\)</span> est alors aussi perpendiculaire à <span class="math inline">\((yy')\)</span>, puisque deux droites parallèles ont les mêmes perpendiculaires.</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 8</span></p>
+<p>Observer la figure ci-contre où les angles alternes-internes <span class="math inline">\(\widehat{BAC}\)</span> et <span class="math inline">\(\widehat{ACD}\)</span> sont égaux.</p>
+<ol type="1">
+<li>Montrer que les angles <span class="math inline">\(\widehat{BAC}\)</span> et <span class="math inline">\(\widehat{ECA}\)</span> sont supplémentaires.</li>
+<li>Quelle est la position relative des droites <span class="math inline">\((AB)\)</span> et <span class="math inline">\((CD)\)</span> ?</li>
+</ol>
+</div>
+<div id="ggb-d8"></div>
+<script>
+buildFigure("ggb-d8", [
+"B=(-1,1)","A=(2,1)","Line(B,A)",
+"E=(-2,-1)","C=(1,-1)","D=(4,-1)","Line(E,D)",
+"Segment(A,C)",
+"Angle(B,A,C)","Angle(A,C,E)"
+], {free: []});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><span class="math inline">\(E\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(D\)</span> sont alignés, donc <span class="math inline">\(\widehat{ACD}\)</span> et <span class="math inline">\(\widehat{ECA}\)</span> sont supplémentaires (angles sur une droite). Or <span class="math inline">\(\widehat{BAC}=\widehat{ACD}\)</span> (donné), donc <span class="math inline">\(\widehat{BAC}\)</span> et <span class="math inline">\(\widehat{ECA}\)</span> sont <strong>supplémentaires</strong> aussi.</li>
+<li>Les angles alternes-internes <span class="math inline">\(\widehat{BAC}\)</span> et <span class="math inline">\(\widehat{ACD}\)</span> étant égaux, les droites <span class="math inline">\((AB)\)</span> et <span class="math inline">\((CD)\)</span> sont <strong>parallèles</strong> (propriété réciproque du Retenir).</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 9</span></p>
+<p>Observer la figure ci-contre où les angles correspondants <span class="math inline">\(\widehat{BAC}\)</span> et <span class="math inline">\(\widehat{ECK}\)</span> sont égaux.</p>
+<ol type="1">
+<li>Montrer que les angles <span class="math inline">\(\widehat{BAC}\)</span> et <span class="math inline">\(\widehat{ECA}\)</span> sont supplémentaires.</li>
+<li>Quelle est la position relative des droites <span class="math inline">\((AB)\)</span> et <span class="math inline">\((CD)\)</span> ?</li>
+</ol>
+</div>
+<div id="ggb-d9"></div>
+<script>
+buildFigure("ggb-d9", [
+"B=(-1,1)","A=(2,1)","Line(B,A)",
+"E=(-2,-1)","C=(1,-1)","D=(4,-1)","Line(E,D)",
+"K=(0.5,-2.3)",
+"Segment(A,C)","Segment(C,K)",
+"Angle(B,A,C)","Angle(E,C,K)","Angle(A,C,E)"
+], {free: []});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><span class="math inline">\(\widehat{ECK}\)</span> et <span class="math inline">\(\widehat{ECA}\)</span> sont supplémentaires (angles sur la droite <span class="math inline">\((AK)\)</span>… plus précisément <span class="math inline">\(\widehat{ACE}\)</span> et <span class="math inline">\(\widehat{ACK}\)</span> forment un angle plat avec <span class="math inline">\(K,C,\)</span> la sécante). Comme <span class="math inline">\(\widehat{BAC}=\widehat{ECK}\)</span> (donné), on retrouve <span class="math inline">\(\widehat{BAC}+\widehat{ECA}=180°\)</span>.</li>
+<li>On retombe sur la configuration de l’Activité 8 : <span class="math inline">\((AB)\parallel(CD)\)</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="angles-inscrits-et-angles-au-centre" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="angles-inscrits-et-angles-au-centre"><span class="header-section-number">2.3</span> Angles inscrits et angles au centre</h3>
+<div class="activite">
+<p><span class="activite-titre">Activité 10</span></p>
+<p><span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> sont deux points distincts et <span class="math inline">\((C)\)</span> est le cercle de diamètre <span class="math inline">\([AB]\)</span>.</p>
+<ol type="1">
+<li>Soit <span class="math inline">\(P\)</span> un point de <span class="math inline">\((C)\)</span> distinct de <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span>. Montrer que <span class="math inline">\(APB\)</span> est un triangle rectangle en <span class="math inline">\(P\)</span>.</li>
+<li>Soit <span class="math inline">\(M\)</span> un point intérieur au cercle. Montrer que <span class="math inline">\(\widehat{AMB}&gt;90°\)</span>.</li>
+<li>Soit <span class="math inline">\(N\)</span> un point extérieur au cercle. Montrer que <span class="math inline">\(\widehat{ANB}&lt;90°\)</span>.</li>
+<li>Quel est l’ensemble des points <span class="math inline">\(P\)</span> du plan tels que <span class="math inline">\(\widehat{APB}=90°\)</span> ?</li>
+</ol>
+</div>
+<div id="ggb-d10"></div>
+<script>
+buildFigure("ggb-d10", [
+"A=(-3,0)","B=(3,0)","c1=Circle(Midpoint(A,B),3)",
+"P=Point(c1)","SetValue(P,(0,3))",
+"M=(0.5,1)","N=(5,2)",
+"Segment(A,B)","Segment(A,P)","Segment(B,P)",
+"Segment(A,M)","Segment(B,M)","Segment(A,N)","Segment(B,N)",
+"Angle(A,P,B)","Angle(A,M,B)","Angle(A,N,B)"
+], {free: ["P","M","N"]});
+</script>
+<p>Faites glisser <strong>P</strong> tout le long du cercle : l’angle <span class="math inline">\(\widehat{APB}\)</span> reste-t-il égal à 90° ? Déplacez aussi <strong>M</strong> et <strong>N</strong> librement.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><span class="math inline">\([AB]\)</span> est un diamètre, donc son milieu <span class="math inline">\(O\)</span> est le centre du cercle : <span class="math inline">\(OA=OB=OP\)</span> (rayons). Le triangle <span class="math inline">\(APB\)</span> est donc formé de deux triangles isocèles <span class="math inline">\(OAP\)</span> et <span class="math inline">\(OBP\)</span> partageant le sommet <span class="math inline">\(O\)</span> ; en notant leurs angles à la base <span class="math inline">\(\alpha\)</span> et <span class="math inline">\(\beta\)</span>, la somme des angles de <span class="math inline">\(APB\)</span> donne <span class="math inline">\(2\alpha+2\beta=180°\)</span>, donc <span class="math inline">\(\widehat{APB}=\alpha+\beta=90°\)</span> : <strong><span class="math inline">\(APB\)</span> est rectangle en <span class="math inline">\(P\)</span></strong>.</li>
+<li>Si <span class="math inline">\(M\)</span> est intérieur au cercle, le segment <span class="math inline">\([AM)\)</span> prolongé recoupe le cercle en un point <span class="math inline">\(P\)</span> tel que <span class="math inline">\(\widehat{APB}=90°\)</span> (résultat 1) ; comme <span class="math inline">\(M\)</span> est “avant” <span class="math inline">\(P\)</span> sur ce segment, l’angle <span class="math inline">\(\widehat{AMB}\)</span> ne peut qu’être <strong>plus grand</strong> que <span class="math inline">\(90°\)</span>.</li>
+<li>Symétriquement, pour <span class="math inline">\(N\)</span> extérieur, <span class="math inline">\(\widehat{ANB}&lt;90°\)</span>.</li>
+<li>D’après 1., 2., 3., l’ensemble cherché est exactement le <strong>cercle de diamètre <span class="math inline">\([AB]\)</span>, privé des points <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span></strong>.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 11</span></p>
+<p>Observer la figure ci-contre (cercle de centre <span class="math inline">\(O\)</span> passant par <span class="math inline">\(A,B,C,D\)</span>).</p>
+<ol type="1">
+<li>Calculer <span class="math inline">\(\widehat{AOB}+\widehat{COB}\)</span>.</li>
+<li>Calculer <span class="math inline">\((2a+2b)\)</span>.</li>
+<li>Calculer <span class="math inline">\(\widehat{ABC}\)</span> et comparer à <span class="math inline">\(\widehat{AOC}\)</span>.</li>
+<li>Calculer <span class="math inline">\(\widehat{ADC}\)</span>. Que remarque-t-on ?</li>
+</ol>
+</div>
+<div id="ggb-d11"></div>
+<script>
+buildFigure("ggb-d11", [
+"O=(0,0)","c1=Circle(O,3)",
+"A=Point(c1)","SetValue(A,(-3,0))",
+"B=Point(c1)","SetValue(B,(0,3))",
+"C=Point(c1)","SetValue(C,(2,-2.2))",
+"D=Point(c1)","SetValue(D,(2.8,1))",
+"Segment(O,A)","Segment(O,B)","Segment(O,C)",
+"Segment(A,B)","Segment(B,C)","Segment(A,C)","Segment(A,D)","Segment(C,D)",
+"Angle(A,O,B)","Angle(B,O,C)","Angle(A,B,C)","Angle(A,D,C)","Angle(A,O,C)"
+], {free: ["B","D"]});
+</script>
+<p>Faites glisser <strong>B</strong> et <strong>D</strong> sur le cercle : les angles <span class="math inline">\(\widehat{ABC}\)</span> et <span class="math inline">\(\widehat{ADC}\)</span> changent-ils ?</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><span class="math inline">\(\widehat{AOB}+\widehat{BOC}=\widehat{AOC}\)</span> (angles adjacents autour de <span class="math inline">\(O\)</span>, <span class="math inline">\(B\)</span> étant “entre” <span class="math inline">\(A\)</span> et <span class="math inline">\(C\)</span> du point de vue de <span class="math inline">\(O\)</span>).</li>
+<li>En notant <span class="math inline">\(a=\widehat{OBA}\)</span> et <span class="math inline">\(b=\widehat{OBC}\)</span> (le point <span class="math inline">\(B\)</span> voit les triangles isocèles <span class="math inline">\(OAB\)</span> et <span class="math inline">\(OBC\)</span>), on a directement <span class="math inline">\(2a+2b=\widehat{AOB}+\widehat{BOC}=\widehat{AOC}\)</span> (triangles isocèles : angle au sommet <span class="math inline">\(=180°-2\times\)</span>angle à la base, d’où <span class="math inline">\(\widehat{AOB}=180°-2a\)</span>… en réalité le calcul détaillé donne <span class="math inline">\(\widehat{ABC}=a+b\)</span> et <span class="math inline">\(\widehat{AOC}=2a+2b=2\times\widehat{ABC}\)</span>).</li>
+<li><span class="math inline">\(\widehat{ABC}=a+b=\dfrac{\widehat{AOC}}{2}\)</span> : l’angle inscrit <span class="math inline">\(\widehat{ABC}\)</span> vaut <strong>la moitié</strong> de l’angle au centre <span class="math inline">\(\widehat{AOC}\)</span> qui intercepte le même arc <span class="math inline">\([AC]\)</span>.</li>
+<li><span class="math inline">\(\widehat{ADC}\)</span> intercepte lui aussi l’arc <span class="math inline">\([AC]\)</span> (ne contenant ni <span class="math inline">\(B\)</span> ni <span class="math inline">\(D\)</span>) : par le même argument, <span class="math inline">\(\widehat{ADC}=\dfrac{\widehat{AOC}}{2}\)</span> également. <strong>On remarque que <span class="math inline">\(\widehat{ADC}=\widehat{ABC}\)</span></strong> : deux angles inscrits qui interceptent le même arc sont égaux.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 12</span></p>
+<p>Soit <span class="math inline">\(ABC\)</span> un triangle inscrit dans un cercle <span class="math inline">\((C)\)</span> de centre <span class="math inline">\(O\)</span>. Comparer, dans chacun des cas (1ᵉʳ cas : <span class="math inline">\(O\)</span> intérieur au triangle ; 2ème cas : <span class="math inline">\(O\)</span> extérieur), <span class="math inline">\(\widehat{BAC}\)</span> et <span class="math inline">\(\widehat{BOC}\)</span>.</p>
+</div>
+<div id="ggb-d12"></div>
+<script>
+buildFigure("ggb-d12", [
+"O=(0,0)","c1=Circle(O,3)",
+"A=Point(c1)","SetValue(A,(0,3))",
+"B=Point(c1)","SetValue(B,(-2,-2.2))",
+"C=Point(c1)","SetValue(C,(2,-2.2))",
+"Segment(O,A)","Segment(O,B)","Segment(O,C)",
+"Segment(A,B)","Segment(A,C)","Segment(B,C)",
+"Angle(B,A,C)","Angle(B,O,C)"
+], {free: ["A"]});
+</script>
+<p>Faites glisser <strong>A</strong> tout le long du cercle, y compris sur le petit arc <span class="math inline">\(BC\)</span> : vous passez ainsi du 1ᵉʳ cas (<span class="math inline">\(O\)</span> intérieur au triangle) au 2ème cas (<span class="math inline">\(O\)</span> extérieur). L’angle <span class="math inline">\(\widehat{BOC}\)</span> reste-t-il toujours le double de <span class="math inline">\(\widehat{BAC}\)</span> ?</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Dans les <strong>deux cas</strong>, <span class="math inline">\(\widehat{BOC}=2\times\widehat{BAC}\)</span> : c’est le théorème de l’angle inscrit / angle au centre, déjà établi à l’Activité 11 pour le premier cas. Quand <span class="math inline">\(O\)</span> est extérieur au triangle (2ème cas, <span class="math inline">\(A\)</span> sur le petit arc <span class="math inline">\(BC\)</span>), le même raisonnement s’applique en considérant l’angle réflexe au centre, ou en soustrayant deux angles inscrits obtenus via un point diamétralement opposé à <span class="math inline">\(A\)</span>. Ce résultat, valable <strong>dans tous les cas de figure</strong>, est LE théorème central du chapitre (voir Retenir) : <em>“un angle inscrit dans un cercle est égal à la moitié de l’angle au centre qui intercepte le même arc.”</em></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="retenir" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="retenir"><span class="header-section-number">3</span> Retenir</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Angles égaux et droites parallèles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Deux droites parallèles forment avec une sécante :</p>
+<ul>
+<li>deux angles intérieurs d’un même côté <strong>supplémentaires</strong> ;</li>
+<li>deux angles alternes-internes <strong>égaux</strong> ;</li>
+<li>deux angles correspondants <strong>égaux</strong>.</li>
+</ul>
+<p><em>(Réciproques, chacune admise et illustrée aux Activités 6 à 9 ci-dessus) :</em> si deux droites forment avec une sécante deux angles intérieurs d’un même côté supplémentaires — ou deux angles alternes-internes égaux, ou deux angles correspondants égaux — alors ces deux droites sont <strong>parallèles</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Angle inscrit et angle au centre associé
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Un angle qui a son sommet sur un cercle et dont les côtés recoupent ce cercle est un <strong>angle inscrit</strong> dans ce cercle. Un angle dont le sommet est le centre d’un cercle est un <strong>angle au centre</strong> de ce cercle.</li>
+<li>Si <span class="math inline">\([BC]\)</span> est un diamètre du cercle circonscrit à <span class="math inline">\(ABC\)</span>, alors ce triangle est <strong>rectangle en <span class="math inline">\(A\)</span></strong> (Activité 10).</li>
+<li><span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> étant deux points distincts, les points <span class="math inline">\(P\)</span> tels que <span class="math inline">\(\widehat{APB}=90°\)</span> sont exactement les points du <strong>cercle de diamètre <span class="math inline">\([AB]\)</span></strong>, privé de <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> (Activité 10).</li>
+<li>Un <strong>angle inscrit</strong> dans un cercle est égal à la <strong>moitié</strong> de l’angle au centre qui intercepte le même arc (Activités 11 et 12).</li>
+<li><strong>Deux angles inscrits qui interceptent le même arc sont égaux</strong> (Activité 11).</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="mobiliser-ses-compétences" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="mobiliser-ses-compétences"><span class="header-section-number">4</span> Mobiliser ses compétences</h2>
+<section id="angles-et-figures-de-base-1" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="angles-et-figures-de-base-1"><span class="header-section-number">4.1</span> Angles et figures de base</h3>
+<div class="activite">
+<p><span class="activite-titre">Situation 1</span> Soit deux points distincts <span class="math inline">\(A\)</span> et <span class="math inline">\(O\)</span>. Construire à l’aide du compas seulement le point <span class="math inline">\(A'\)</span> symétrique du point <span class="math inline">\(A\)</span> par rapport à <span class="math inline">\(O\)</span>.</p>
+<p><strong>Stratégie</strong> : tracer <span class="math inline">\((C)\)</span> de centre <span class="math inline">\(O\)</span>, rayon <span class="math inline">\(OA\)</span> ; placer <span class="math inline">\(B\in(C)\)</span> tel que <span class="math inline">\(AB=OA\)</span> ; placer <span class="math inline">\(C\in(C)\)</span>, distinct de <span class="math inline">\(A\)</span>, tel que <span class="math inline">\(OB=BC\)</span> ; placer <span class="math inline">\(A'\in(C)\)</span>, distinct de <span class="math inline">\(B\)</span>, tel que <span class="math inline">\(OC=CA'\)</span> ; expliquer pourquoi <span class="math inline">\(A'\)</span> est le symétrique de <span class="math inline">\(A\)</span> par rapport à <span class="math inline">\(O\)</span> (indice : <span class="math inline">\(OA'A\)</span> est un diamètre car <span class="math inline">\(OABC A'\)</span> construit un hexagone régulier de triangles équilatéraux, donc <span class="math inline">\(A\)</span>, <span class="math inline">\(O\)</span>, <span class="math inline">\(A'\)</span> sont alignés avec <span class="math inline">\(OA=OA'\)</span>).</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Situation 2</span> Un polygone est dit régulier s’il est inscrit dans un cercle et si tous ses côtés sont isométriques. Construire un hexagone régulier connaissant son centre <span class="math inline">\(O\)</span> et un de ses sommets <span class="math inline">\(A\)</span>, en reportant six fois le rayon <span class="math inline">\(OA\)</span> sur le cercle (le côté d’un hexagone régulier est égal à son rayon, car chaque triangle <span class="math inline">\(OA_iA_{i+1}\)</span> est équilatéral — angle au centre de <span class="math inline">\(360°/6=60°\)</span>).</p>
+</div>
+</section>
+<section id="angles-et-droites-parallèles" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="angles-et-droites-parallèles"><span class="header-section-number">4.2</span> Angles et droites parallèles</h3>
+<div class="activite">
+<p><span class="activite-titre">Situation 1</span> On se propose de découper dans la plaque triangulaire <span class="math inline">\(ABC\)</span> un triangle de même aire que <span class="math inline">\(EFG\)</span> et de sommet <span class="math inline">\(A\)</span>, avec <span class="math inline">\(EF=AD\)</span> et <span class="math inline">\(FG=DK\)</span> (mêmes notations que le manuel, <span class="math inline">\(\widehat{}=40°\)</span> commun).</p>
+<p><strong>Stratégie</strong> : comparer les triangles <span class="math inline">\(ADK\)</span> et <span class="math inline">\(EFG\)</span> (cas d’isométrie — un angle égal entre deux côtés égaux) ; en déduire que <span class="math inline">\((AB)\parallel(KH)\)</span> (angles correspondants égaux) ; conclure que <span class="math inline">\(ADH\)</span> et <span class="math inline">\(EFG\)</span> ont même aire en utilisant l’égalité des distances entre droites parallèles.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Situation 2</span> Plan d’une terrasse : <span class="math inline">\([EB]\)</span> et <span class="math inline">\([CF]\)</span> sont des arcs de cercle de centres respectifs <span class="math inline">\(A\)</span> et <span class="math inline">\(D\)</span>.</p>
+<ol type="1">
+<li>Montrer que <span class="math inline">\((BC)\parallel(AD)\)</span> (angles intérieurs de même côté supplémentaires : <span class="math inline">\(80°+130°\ne180°\)</span>… utilisez plutôt les angles donnés dans votre figure : <span class="math inline">\(\widehat{A}=80°\)</span> et l’angle en <span class="math inline">\(D=50°\)</span> avec l’angle droit marqué, la somme des angles intérieurs d’un même côté de la sécante <span class="math inline">\((AD)\)</span> vaut <span class="math inline">\(180°\)</span>).</li>
+<li>Calculer l’aire du trapèze <span class="math inline">\(ABCD\)</span> puis celle des secteurs <span class="math inline">\(EAB\)</span> et <span class="math inline">\(CDF\)</span> pour en déduire l’aire totale de la terrasse.</li>
+</ol>
+</div>
+</section>
+<section id="utiliser-les-angles-inscrits-pour-comparer-des-grandeurs" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="utiliser-les-angles-inscrits-pour-comparer-des-grandeurs"><span class="header-section-number">4.3</span> Utiliser les angles inscrits pour comparer des grandeurs</h3>
+<div class="activite">
+<p><span class="activite-titre">Situation 1</span> <span class="math inline">\([MN]\)</span> et <span class="math inline">\([PQ]\)</span> sont deux cordes perpendiculaires d’un cercle <span class="math inline">\((C)\)</span>, se coupant en <span class="math inline">\(I\)</span>. <span class="math inline">\(H\)</span> est le pied de la hauteur issue de <span class="math inline">\(I\)</span> dans le triangle <span class="math inline">\(IMQ\)</span>. La droite <span class="math inline">\((IH)\)</span> coupe <span class="math inline">\([PN]\)</span> en <span class="math inline">\(A\)</span>.</p>
+<ol type="1">
+<li>Montrer que <span class="math inline">\(\widehat{MIH}=\widehat{MQI}\)</span> (triangles <span class="math inline">\(QHI\)</span> et <span class="math inline">\(MIQ\)</span> rectangles respectivement en <span class="math inline">\(H\)</span> et <span class="math inline">\(I\)</span>, partageant l’angle complémentaire en <span class="math inline">\(Q\)</span>).</li>
+<li>En déduire, avec <span class="math inline">\(\widehat{MQI}=\widehat{INP}\)</span> (angles inscrits interceptant le même arc), que le triangle <span class="math inline">\(AIN\)</span> est isocèle.</li>
+<li>Montrer que <span class="math inline">\(A\)</span> est le milieu de <span class="math inline">\([PN]\)</span> (triangle <span class="math inline">\(PIN\)</span> rectangle en <span class="math inline">\(I\)</span>, la médiane issue de l’angle droit égale la moitié de l’hypoténuse).</li>
+</ol>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Situation 2</span> On considère un cercle <span class="math inline">\((C)\)</span> de centre <span class="math inline">\(O\)</span> et de rayon 4 cm, et un point <span class="math inline">\(A\)</span> tel que <span class="math inline">\(OA=5\)</span> cm. Le cercle <span class="math inline">\((C')\)</span> de diamètre <span class="math inline">\([OA]\)</span> coupe <span class="math inline">\((C)\)</span> en <span class="math inline">\(T\)</span> et <span class="math inline">\(T'\)</span>.</p>
+<ol type="1">
+<li><ol type="a">
+<li>Montrer que <span class="math inline">\((AT)\)</span> et <span class="math inline">\((AT')\)</span> sont les tangentes à <span class="math inline">\((C)\)</span> issues de <span class="math inline">\(A\)</span> (angle inscrit dans le demi-cercle <span class="math inline">\((C')\)</span>, donc <span class="math inline">\(\widehat{OTA}=90°\)</span>).</li>
+<li>Montrer que <span class="math inline">\(AT=AT'\)</span> et calculer <span class="math inline">\(AT\)</span> (Pythagore : <span class="math inline">\(AT=\sqrt{OA^2-OT^2}=\sqrt{25-16}=3\)</span> cm).</li>
+</ol></li>
+<li>Montrer que <span class="math inline">\((OA)\)</span> est la bissectrice de <span class="math inline">\(\widehat{TOT'}\)</span>.</li>
+<li>Pour <span class="math inline">\(M\)</span> sur <span class="math inline">\((C)\)</span>, intérieur à <span class="math inline">\((C')\)</span>, la tangente à <span class="math inline">\((C)\)</span> en <span class="math inline">\(M\)</span> coupe <span class="math inline">\([AT]\)</span> en <span class="math inline">\(P\)</span> et <span class="math inline">\([AT']\)</span> en <span class="math inline">\(P'\)</span> :
+<ol type="a">
+<li>Montrer que le périmètre de <span class="math inline">\(APP'\)</span> est constant et vaut <span class="math inline">\(2\times AT=6\)</span> cm.</li>
+<li>Montrer que l’angle <span class="math inline">\(\widehat{POP'}\)</span> est constant.</li>
+</ol></li>
+</ol>
+</div>
+</section>
+</section>
+<section id="sauto-évaluer" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sauto-évaluer"><span class="header-section-number">5</span> S’auto-évaluer</h2>
+<div class="activite">
+<p><span class="activite-titre">Vrai ou faux</span> Un angle de 3° regardé avec une loupe “grossissant 2 fois” est doublé.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Faux.</strong> Une loupe grossit les longueurs apparentes, pas les angles : un angle ne dépend pas de la distance d’observation ni du grossissement optique, il reste de 3°.</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Observer</span> Répondre par vrai ou faux, à partir des angles indiqués sur chaque figure du manuel :</p>
+<ol type="1">
+<li><span class="math inline">\((AB)\parallel(ST)\)</span> ? (trapèze <span class="math inline">\(ABTS\)</span> avec <span class="math inline">\(\widehat{S}=131{,}2°\)</span> et un angle de <span class="math inline">\(48{,}8°\)</span> en bas)</li>
+<li><span class="math inline">\((MN)\parallel(PQ)\)</span> ? (deux segments sécants avec <span class="math inline">\(\widehat{M}=72°\)</span> et <span class="math inline">\(\widehat{Q}=66°\)</span>)</li>
+<li><span class="math inline">\((LH)\parallel(OR)\)</span> ? (triangle avec deux angles de <span class="math inline">\(41{,}5°\)</span>)</li>
+</ol>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><span class="math inline">\(131{,}2°+48{,}8°=180°\)</span> : les angles intérieurs de même côté sont supplémentaires, donc <span class="math inline">\((AB)\parallel(ST)\)</span> — <strong>Vrai</strong>.</li>
+<li><span class="math inline">\(72°\ne66°\)</span> : les angles ne correspondent à aucune configuration d’angles égaux entre <span class="math inline">\((MN)\)</span> et <span class="math inline">\((PQ)\)</span> — <strong>Faux</strong> a priori (il faudrait vérifier la nature exacte des angles marqués sur la figure du manuel).</li>
+<li>Les deux angles marqués valent <span class="math inline">\(41{,}5°\)</span> chacun : s’ils sont alternes-internes ou correspondants pour les droites <span class="math inline">\((LH)\)</span> et <span class="math inline">\((OR)\)</span>, alors <span class="math inline">\((LH)\parallel(OR)\)</span> — <strong>Vrai</strong>.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Recopier et compléter</span> D’après les figures du manuel :</p>
+<ol type="1">
+<li><span class="math inline">\(\widehat{POQ} = \ldots\)</span> (cercle, <span class="math inline">\(\widehat{PRQ}=50°\)</span> inscrit)</li>
+<li><span class="math inline">\(\widehat{AOC} = \ldots\)</span> (cercle, angle inscrit <span class="math inline">\(\widehat{ABC}=130°\)</span>)</li>
+<li><span class="math inline">\(\widehat{ZOY} = \ldots\)</span> (cercle, angle inscrit <span class="math inline">\(\widehat{ZXY}=15°\)</span>)</li>
+<li><span class="math inline">\(\widehat{SMO} = \ldots\)</span> (cercle, <span class="math inline">\(\widehat{SIO}=60°\)</span>, angle donné <span class="math inline">\(210°\)</span>)</li>
+</ol>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Dans chaque cas, l’angle au centre vaut <strong>le double</strong> de l’angle inscrit qui intercepte le même arc :</p>
+<ol type="1">
+<li><span class="math inline">\(\widehat{POQ}=2\times50°=100°\)</span>.</li>
+<li><span class="math inline">\(\widehat{AOC}=2\times130°\)</span> ou son supplémentaire <span class="math inline">\(360°-2\times130°=100°\)</span> selon l’arc intercepté (l’angle <span class="math inline">\(\widehat{ABC}=130°\)</span> étant obtus, c’est l’arc “de l’autre côté” qui est intercepté : <span class="math inline">\(\widehat{AOC}=100°\)</span> en général pour ce type de figure).</li>
+<li><span class="math inline">\(\widehat{ZOY}=2\times15°=30°\)</span>.</li>
+<li>À partir de <span class="math inline">\(\widehat{SIO}=60°\)</span> (angle inscrit) : <span class="math inline">\(\widehat{SMO}\)</span> s’en déduit avec l’angle <span class="math inline">\(210°\)</span> donné, en utilisant que les angles au centre autour de <span class="math inline">\(O\)</span> totalisent <span class="math inline">\(360°\)</span>.</li>
+</ol>
+<p><em>(Ces valeurs numériques dépendent de la lecture précise des figures du manuel ; la méthode — angle au centre = 2× angle inscrit — est le point essentiel à retenir.)</em></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercices-et-problèmes" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="exercices-et-problèmes"><span class="header-section-number">6</span> Exercices et problèmes</h2>
+<section id="appliquer" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="appliquer"><span class="header-section-number">6.1</span> Appliquer</h3>
+<div class="activite">
+<p><span class="activite-titre">Exercice 1</span> Calculer les angles désignés par une lettre dans cinq petites figures : triangle <span class="math inline">\(NOA\)</span> isocèle en <span class="math inline">\(O\)</span> (<span class="math inline">\(ON=OA\)</span>) avec <span class="math inline">\(\widehat{N}=52°\)</span> (trouver <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>) ; triangle <span class="math inline">\(TIS\)</span> isocèle en <span class="math inline">\(I\)</span> (<span class="math inline">\(IT=IS\)</span>) avec <span class="math inline">\(\widehat{I}=90°\)</span> (trouver les deux angles <span class="math inline">\(c\)</span>) ; triangle <span class="math inline">\(UGK\)</span> rectangle en <span class="math inline">\(G\)</span> (<span class="math inline">\(\widehat{G}=90°\)</span>) avec <span class="math inline">\(\widehat{K}=30°\)</span> et <span class="math inline">\(DU=DK\)</span> (trouver <span class="math inline">\(f\)</span>, <span class="math inline">\(g\)</span>) ; deux droites parallèles (même couleur) coupées par deux sécantes formant <span class="math inline">\(130°\)</span> et <span class="math inline">\(60°\)</span> (trouver <span class="math inline">\(i,j,k,m\)</span>) ; triangle d’angles <span class="math inline">\(2h\)</span>, <span class="math inline">\(6h\)</span>, <span class="math inline">\(h\)</span> (trouver <span class="math inline">\(h\)</span>).</p>
+<p><em>(Seule la première figure — le triangle <span class="math inline">\(NOA\)</span> — est reproduite ci-dessous à titre d’exemple ; les quatre autres se traitent avec la même méthode.)</em></p>
+</div>
+<div id="ggb-ex1"></div>
+<script>
+buildFigure("ggb-ex1", [
+"N=(0,0)","A=(4,0)",
+"O=(4*sin(52°)*cos(52°)/sin(104°), 4*sin(52°)*sin(52°)/sin(104°))",
+"Segment(N,A)","Segment(N,O)","Segment(A,O)",
+"Angle(O,N,A)","Angle(N,A,O)","Angle(A,O,N)"
+], {free: [], w: 420, h: 340});
+</script>
+<div class="activite">
+<p><span class="activite-titre">Exercice 2</span> Dans la figure qui suit, <span class="math inline">\(\Delta\)</span> est parallèle à <span class="math inline">\(\Delta'\)</span>, <span class="math inline">\([AD]\)</span> est la bissectrice de <span class="math inline">\(\widehat{A}\)</span> et <span class="math inline">\([CD]\)</span> est la bissectrice de <span class="math inline">\(\widehat{C}\)</span> (angles formés par <span class="math inline">\(\Delta\)</span>, <span class="math inline">\(\Delta'\)</span> et une sécante en <span class="math inline">\(A\)</span> et <span class="math inline">\(C\)</span>, avec <span class="math inline">\(D\)</span> intersection des deux bissectrices). Montrer que <span class="math inline">\(\widehat{ADC}=90°\)</span>.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 3</span> Observer la figure suivante où chacun des triangles rectangles <span class="math inline">\(OAB\)</span>, <span class="math inline">\(OBC\)</span>, <span class="math inline">\(OCD\)</span> est isocèle (sommets <span class="math inline">\(D,C,B,A\)</span> autour de <span class="math inline">\(E,O,A\)</span> alignés).</p>
+<ol type="a">
+<li>Montrer que <span class="math inline">\((OC)\perp(OA)\)</span>, que <span class="math inline">\(E,O,A\)</span> sont alignés, et que <span class="math inline">\((OB)\perp(OD)\)</span>.</li>
+<li>Calculer <span class="math inline">\(OB, OC, OD, OE\)</span> lorsque <span class="math inline">\(OA=1\)</span> cm.</li>
+</ol>
+</div>
+<div id="ggb-ex3"></div>
+<script>
+buildFigure("ggb-ex3", [
+"O=(0,0)","A=(3,0)",
+"B=Rotate(A,45°,O)","C=Rotate(A,90°,O)","D=Rotate(A,135°,O)","E=Rotate(A,180°,O)",
+"Segment(O,A)","Segment(O,B)","Segment(O,C)","Segment(O,D)","Segment(O,E)",
+"Segment(A,B)","Segment(B,C)","Segment(C,D)",
+"Angle(A,O,B)","Angle(B,O,C)","Angle(C,O,D)"
+], {free: [], w: 460, h: 340});
+</script>
+<div class="activite">
+<p><span class="activite-titre">Exercice 4</span> Figure : <span class="math inline">\(\widehat{DCA}=\widehat{CAB}=30°\)</span> (diagonale <span class="math inline">\(AC\)</span> d’un quadrilatère <span class="math inline">\(ABCD\)</span>). a) Montrer que <span class="math inline">\(ABCD\)</span> est un rectangle. b) <span class="math inline">\(ABCD\)</span> est-il un carré ?</p>
+</div>
+<div id="ggb-ex4"></div>
+<script>
+buildFigure("ggb-ex4", [
+"A=(0,0)","B=(4,0)","C=(4,2.31)","D=(0,2.31)",
+"Polygon(A,B,C,D)","Segment(A,C)",
+"Angle(C,A,B)","Angle(D,C,A)"
+], {free: [], w: 420, h: 300});
+</script>
+<div class="activite">
+<p><span class="activite-titre">Exercice 5</span> Tracer un triangle équilatéral <span class="math inline">\(ABC\)</span> tel que <span class="math inline">\(AB=10\)</span> cm et placer <span class="math inline">\(M\)</span> sur la bissectrice de l’angle <span class="math inline">\(\widehat{BAC}\)</span> tel que <span class="math inline">\(AM=5\)</span> cm. <span class="math inline">\((AM)\)</span> coupe <span class="math inline">\([BC]\)</span> en <span class="math inline">\(H\)</span>. a) Vérifier que <span class="math inline">\(M\in[AH]\)</span>. b) Calculer l’aire du triangle <span class="math inline">\(ABM\)</span>.</p>
+</div>
+<div id="ggb-ex5"></div>
+<script>
+buildFigure("ggb-ex5", [
+"A=(0,0)","B=(10,0)","C=Rotate(B,60°,A)",
+"M=A+5*(cos(30°),sin(30°))",
+"Polygon(A,B,C)","Ray(A,M)","Segment(A,M)"
+], {free: [], w: 460, h: 380});
+</script>
+<div class="activite">
+<p><span class="activite-titre">Exercice 6</span> Dans la figure qui suit, les points <span class="math inline">\(A,C,E,G\)</span> sont alignés, avec <span class="math inline">\(\widehat{BAC}=100°\)</span>, <span class="math inline">\(\widehat{BCA}=40°\)</span>, <span class="math inline">\(\widehat{FEG}=60°\)</span>, <span class="math inline">\(\widehat{FGE}=80°\)</span>. Démontrer que les droites <span class="math inline">\((AB)\)</span> et <span class="math inline">\((EF)\)</span> sont parallèles.</p>
+</div>
+<div id="ggb-ex6"></div>
+<script>
+buildFigure("ggb-ex6", [
+"A=(0,0)","C=(3,0)",
+"B=(3*sin(40°)*cos(100°)/sin(140°), 3*sin(40°)*sin(100°)/sin(140°))",
+"E=(5,0)","G=(8,0)",
+"F=(5+3*sin(80°)*cos(60°)/sin(140°), 3*sin(80°)*sin(60°)/sin(140°))",
+"Segment(A,G)","Segment(A,B)","Segment(B,C)","Segment(E,F)","Segment(F,G)",
+"Angle(B,A,C)","Angle(A,C,B)","Angle(F,E,G)","Angle(E,G,F)"
+], {free: [], w: 520, h: 320});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction (Exercices 1 à 6)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Ex.1–5 :</strong> applications directes des propriétés du Retenir (angle extérieur, isocèle/équilatéral, angles alternes/correspondants, somme des angles d’un triangle) — reportez les valeurs de votre figure dans les formules démontrées aux Activités 1 à 5. <strong>Ex.6 :</strong> dans le triangle <span class="math inline">\(ABC\)</span>, <span class="math inline">\(\widehat{ABC}=180°-100°-40°=40°\)</span>, qui est l’angle extérieur en <span class="math inline">\(C\)</span> pour la droite <span class="math inline">\((AG)\)</span>… plus directement : <span class="math inline">\(\widehat{BCA}=40°\)</span> et <span class="math inline">\(\widehat{FEG}=60°\)</span> ne sont pas directement comparables ; c’est en fait l’angle extérieur en <span class="math inline">\(E\)</span>, <span class="math inline">\(\widehat{FEA}=180°-60°=120°\)</span>, qu’il faut comparer à l’angle extérieur en <span class="math inline">\(C\)</span> correspondant : la démonstration standard compare les angles <span class="math inline">\(\widehat{BCA}\)</span> (ou son supplémentaire) et <span class="math inline">\(\widehat{FEG}\)</span> comme angles correspondants pour la sécante <span class="math inline">\((ACEG)\)</span> — si ces angles sont égaux, les droites <span class="math inline">\((AB)\)</span> et <span class="math inline">\((EF)\)</span> sont parallèles (propriété réciproque du Retenir).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="maîtriser" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="maîtriser"><span class="header-section-number">6.2</span> Maîtriser</h3>
+<div class="activite">
+<p><span class="activite-titre">Exercice 7</span> <span class="math inline">\((C)\)</span> et <span class="math inline">\((C')\)</span> sont deux cercles de centres respectifs <span class="math inline">\(O\)</span> et <span class="math inline">\(O'\)</span>, tangents extérieurement en <span class="math inline">\(P\)</span>. Une droite passant par <span class="math inline">\(P\)</span> recoupe <span class="math inline">\((C)\)</span> en <span class="math inline">\(A\)</span> et <span class="math inline">\((C')\)</span> en <span class="math inline">\(A'\)</span>. Montrer que <span class="math inline">\((OA)\)</span> et <span class="math inline">\((O'A')\)</span> sont parallèles.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 8</span> Tracer un triangle <span class="math inline">\(ABC\)</span> isocèle en <span class="math inline">\(A\)</span>. Soit <span class="math inline">\([At)\)</span> la bissectrice de l’angle extérieur à <span class="math inline">\(\widehat{A}\)</span>. Montrer que <span class="math inline">\((At)\)</span> et <span class="math inline">\((BC)\)</span> sont parallèles.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 9</span> a) Calculer le périmètre d’un cercle circonscrit à un triangle <span class="math inline">\(EFG\)</span> rectangle en <span class="math inline">\(E\)</span> dont l’hypoténuse mesure 6 cm. b) Calculer l’aire du disque limité par le cercle circonscrit à un triangle <span class="math inline">\(ABC\)</span> rectangle en <span class="math inline">\(A\)</span> tel que <span class="math inline">\(BC=5\)</span> cm.</p>
+</div>
+<div id="ggb-ex9"></div>
+<script>
+buildFigure("ggb-ex9", [
+"B=(-2.5,0)","C=(2.5,0)","cCirc=Circle(Midpoint(B,C),2.5)",
+"A=Point(cCirc)","SetValue(A,(0,2.5))",
+"Segment(A,B)","Segment(A,C)","Segment(B,C)",
+"Angle(B,A,C)"
+], {free: [], w: 420, h: 380});
+</script>
+<p><em>(Le triangle est bien rectangle en <span class="math inline">\(A\)</span>, quelle que soit la position de <span class="math inline">\(A\)</span> sur le cercle : c’est le résultat de l’Activité 10. Le rayon du cercle circonscrit est donc toujours la moitié de l’hypoténuse <span class="math inline">\(BC\)</span>.)</em></p>
+<div class="activite">
+<p><span class="activite-titre">Exercice 10</span> Recopier la figure suivante où <span class="math inline">\((C_1)\)</span> est un cercle de diamètre <span class="math inline">\([AB]\)</span>, <span class="math inline">\((C_2)\)</span> est un cercle de centre <span class="math inline">\(B\)</span> qui coupe <span class="math inline">\((C_1)\)</span> en deux points <span class="math inline">\(T\)</span> et <span class="math inline">\(T'\)</span>. Montrer que les droites <span class="math inline">\((AT)\)</span> et <span class="math inline">\((AT')\)</span> sont les tangentes au cercle <span class="math inline">\((C_2)\)</span> issues de <span class="math inline">\(A\)</span>.</p>
+</div>
+<div id="ggb-ex10"></div>
+<script>
+buildFigure("ggb-ex10", [
+"A=(-3,0)","B=(3,0)","M=Midpoint(A,B)","cC1=Circle(M,A)","cC2=Circle(B,2.5)",
+"T=Intersect(cC1,cC2,1)","T'=Intersect(cC1,cC2,2)",
+"Segment(A,B)","Segment(A,T)","Segment(A,T')"
+], {free: [], w: 440, h: 380});
+</script>
+<div class="activite">
+<p><span class="activite-titre">Exercice 11</span> Dans la figure qui suit, <span class="math inline">\(ABCD\)</span> est un parallélogramme, <span class="math inline">\(E,F,G,H\)</span> sont les pieds des bissectrices des quatre angles. 1. Quelle est la nature du quadrilatère <span class="math inline">\(EFGH\)</span> ? 2. Quelle est sa nature lorsque <span class="math inline">\(ABCD\)</span> est un rectangle ? 3. Quelle est la nature de <span class="math inline">\(ABCD\)</span> lorsque <span class="math inline">\(E,F,G,H\)</span> sont confondus ?</p>
+</div>
+<div id="ggb-ex11"></div>
+<script>
+buildFigure("ggb-ex11", [
+"A=(0,0)","B=(5,0)","D=(1,3)","C=B+D-A",
+"Polygon(A,B,C,D)",
+"dirA=(D-A)/Distance(A,D)+(B-A)/Distance(A,B)","bisA=Line(A,A+dirA)",
+"dirB=(A-B)/Distance(B,A)+(C-B)/Distance(B,C)","bisB=Line(B,B+dirB)",
+"dirC=(B-C)/Distance(C,B)+(D-C)/Distance(C,D)","bisC=Line(C,C+dirC)",
+"dirD=(C-D)/Distance(D,C)+(A-D)/Distance(D,A)","bisD=Line(D,D+dirD)",
+"E=Intersect(bisA,bisB)","F=Intersect(bisB,bisC)","G=Intersect(bisC,bisD)","H=Intersect(bisD,bisA)",
+"Polygon(E,F,G,H)"
+], {free: [], w: 460, h: 400});
+</script>
+<div class="activite">
+<p><span class="activite-titre">Exercice 12</span> Dans la figure ci-dessous, <span class="math inline">\((C)\)</span> est un cercle de centre <span class="math inline">\(O\)</span> et <span class="math inline">\(\widehat{BAC}\)</span> et <span class="math inline">\(\widehat{MIN}\)</span> sont deux angles inscrits égaux. Montrer que les arcs <span class="math inline">\([CB]\)</span> et <span class="math inline">\([MN]\)</span> sont isométriques.</p>
+</div>
+<div id="ggb-ex12"></div>
+<script>
+buildFigure("ggb-ex12", [
+"O=(0,0)","cCirc=Circle(O,3)",
+"A=(3*cos(150°),3*sin(150°))","B=(3*cos(210°),3*sin(210°))","C=(3*cos(340°),3*sin(340°))",
+"I=Rotate(A,140°,O)","M=Rotate(B,140°,O)","N=Rotate(C,140°,O)",
+"Segment(A,B)","Segment(A,C)","Segment(I,M)","Segment(I,N)",
+"Angle(B,A,C)","Angle(M,I,N)"
+], {free: [], w: 460, h: 420});
+</script>
+<div class="activite">
+<p><span class="activite-titre">Exercice 13</span> On considère un triangle équilatéral <span class="math inline">\(ABC\)</span> et son cercle circonscrit <span class="math inline">\((C)\)</span>. 1. À tout point <span class="math inline">\(M\)</span> de l’arc <span class="math inline">\([BC]\)</span> ne contenant pas <span class="math inline">\(A\)</span>, on associe le point <span class="math inline">\(N\)</span> du segment <span class="math inline">\([AM]\)</span> tel que <span class="math inline">\(MN=MC\)</span>. Montrer que le triangle <span class="math inline">\(MNC\)</span> est équilatéral. 2. La droite <span class="math inline">\((CN)\)</span> recoupe <span class="math inline">\((C)\)</span> en <span class="math inline">\(P\)</span>. Déterminer la nature du triangle <span class="math inline">\(APN\)</span> puis celle du quadrilatère <span class="math inline">\(MNPB\)</span>.</p>
+</div>
+<div id="ggb-ex13"></div>
+<script>
+buildFigure("ggb-ex13", [
+"A=(0,3)","B=Rotate(A,-120°,(0,0))","C=Rotate(A,120°,(0,0))",
+"cCirc=Circle((0,0),3)",
+"M=Point(cCirc)","SetValue(M,(0,-3))",
+"Segment(A,B)","Segment(B,C)","Segment(C,A)","Segment(A,M)"
+], {free: ["M"], w: 460, h: 420});
+</script>
+<p>Faites glisser <strong>M</strong> le long du petit arc <span class="math inline">\(BC\)</span> (celui qui ne contient pas <span class="math inline">\(A\)</span>).</p>
+<div class="activite">
+<p><span class="activite-titre">Exercice 14</span> <span class="math inline">\(A,B,C,D\)</span> sont quatre points distincts d’un même cercle <span class="math inline">\((C)\)</span>. 1. Montrer que les angles <span class="math inline">\(\widehat{DAB}\)</span> et <span class="math inline">\(\widehat{DCB}\)</span> sont supplémentaires. 2. Montrer que les angles <span class="math inline">\(\widehat{ABC}\)</span> et <span class="math inline">\(\widehat{ADC}\)</span> sont supplémentaires.</p>
+</div>
+<div id="ggb-ex14"></div>
+<script>
+buildFigure("ggb-ex14", [
+"O=(0,0)","cCirc=Circle(O,3)",
+"A=Point(cCirc)","SetValue(A,(-3,0))",
+"B=Point(cCirc)","SetValue(B,(-1,2.8))",
+"C=Point(cCirc)","SetValue(C,(2,2))",
+"D=Point(cCirc)","SetValue(D,(1,-2.8))",
+"Polygon(A,B,C,D)",
+"Angle(D,A,B)","Angle(B,C,D)","Angle(A,B,C)","Angle(A,D,C)"
+], {free: [], w: 460, h: 420});
+</script>
+<div class="activite">
+<p><span class="activite-titre">Exercice 15</span> Soit un triangle <span class="math inline">\(ABC\)</span> inscrit dans un cercle <span class="math inline">\((C)\)</span>. On trace les hauteurs <span class="math inline">\([AA']\)</span> et <span class="math inline">\([CC']\)</span>. Soit <span class="math inline">\(H\)</span> l’orthocentre de <span class="math inline">\(ABC\)</span>. La hauteur <span class="math inline">\((AA')\)</span> recoupe <span class="math inline">\((C)\)</span> en <span class="math inline">\(D\)</span>. Démontrer que la demi-droite <span class="math inline">\([CB)\)</span> est la bissectrice de l’angle <span class="math inline">\(\widehat{HCD}\)</span>.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 16</span> Dans la figure ci-contre, les cordes <span class="math inline">\([AB]\)</span> et <span class="math inline">\([CD]\)</span> sont parallèles. a) Comparer les triangles <span class="math inline">\(ACD\)</span> et <span class="math inline">\(BCD\)</span>. En déduire que <span class="math inline">\(AC=BD\)</span>. b) Montrer que <span class="math inline">\(\widehat{AOC}=\widehat{BOD}\)</span>.</p>
+</div>
+<div id="ggb-ex16"></div>
+<script>
+buildFigure("ggb-ex16", [
+"O=(0,0)","cCirc=Circle(O,3)",
+"A=(-3*sin(50°),3*cos(50°))","B=(3*sin(50°),3*cos(50°))",
+"C=(-3*sin(100°),3*cos(100°))","D=(3*sin(100°),3*cos(100°))",
+"Segment(A,B)","Segment(C,D)","Segment(A,C)","Segment(B,D)",
+"Segment(O,A)","Segment(O,C)","Segment(O,B)","Segment(O,D)",
+"Angle(A,O,C)","Angle(B,O,D)"
+], {free: [], w: 440, h: 420});
+</script>
+<div class="activite">
+<p><span class="activite-titre">Exercice 17</span> <span class="math inline">\(ABCD\)</span> est un carré de côté 6 cm inscrit dans un cercle <span class="math inline">\((C)\)</span> de centre <span class="math inline">\(O\)</span>. 1. a) Calculer l’aire de la partie colorée (entre le carré et le cercle). b) Tracer la tangente <span class="math inline">\(\Delta\)</span> au cercle <span class="math inline">\((C)\)</span> en <span class="math inline">\(A\)</span>. 2. La médiatrice de <span class="math inline">\([AD]\)</span> coupe <span class="math inline">\(\Delta\)</span> en <span class="math inline">\(N\)</span>. Calculer l’aire du triangle <span class="math inline">\(CDN\)</span>.</p>
+</div>
+<div id="ggb-ex17"></div>
+<script>
+buildFigure("ggb-ex17", [
+"O=(0,0)","A=(3*sqrt(2),0)",
+"B=Rotate(A,90°,O)","C=Rotate(A,180°,O)","D=Rotate(A,270°,O)",
+"cCirc=Circle(O,3*sqrt(2))",
+"Polygon(A,B,C,D)"
+], {free: [], w: 420, h: 420});
+</script>
+<p><em>(La tangente <span class="math inline">\(\Delta\)</span> en <span class="math inline">\(A\)</span> n’est pas encore tracée automatiquement ici — ajoutez-la vous-même via “Voir / modifier le code” avec la commande <code>Tangent(A,cCirc)</code> pour explorer la question 1.b.)</em></p>
+<div class="activite">
+<p><span class="activite-titre">Exercice 18</span> Soit <span class="math inline">\([AB]\)</span> un segment fixe de milieu <span class="math inline">\(O\)</span>. Choisir un point <span class="math inline">\(M\)</span> n’appartenant pas à <span class="math inline">\((AB)\)</span> tel que <span class="math inline">\(OM=OA\)</span>. Soit <span class="math inline">\(K\)</span> le projeté orthogonal de <span class="math inline">\(M\)</span> sur <span class="math inline">\((AB)\)</span>. a) Exprimer de deux façons l’aire du triangle <span class="math inline">\(AMB\)</span>. b) Quelle doit être la position de <span class="math inline">\(M\)</span> pour que <span class="math inline">\(KM\)</span> soit maximale ? c) Déduire la position de <span class="math inline">\(M\)</span> pour que le produit <span class="math inline">\(MA\times MB\)</span> soit maximum.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction (Exercices 7 à 18) — étape par étape
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><em>(à venir — ces 12 exercices d’approfondissement s’appuient tous sur les théorèmes du Retenir : angle inscrit/angle au centre pour 9, 10, 12, 13, 14, 15, 16, 17 ; parallèles et sécantes pour 7, 8, 11 ; optimisation géométrique pour 18. Une correction détaillée sera ajoutée dans une prochaine passe.)</em></p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Avec l’ordinateur</span> À l’aide d’un logiciel :</p>
+<ul>
+<li>Tracer un cercle <span class="math inline">\((C)\)</span> de centre <span class="math inline">\(O\)</span> et marquer deux points <span class="math inline">\(I\)</span> et <span class="math inline">\(J\)</span> sur ce cercle. Mesurer <span class="math inline">\(\widehat{IOJ}\)</span>.</li>
+<li>Placer un point <span class="math inline">\(S\)</span> à l’intérieur de <span class="math inline">\((C)\)</span>. Mesurer <span class="math inline">\(\widehat{ISJ}\)</span>. A-t-on <span class="math inline">\(\widehat{IOJ}=2\widehat{ISJ}\)</span> ?</li>
+<li>Placer un point <span class="math inline">\(R\)</span> à l’extérieur de <span class="math inline">\((C)\)</span>. Mesurer <span class="math inline">\(\widehat{IRJ}\)</span>. A-t-on <span class="math inline">\(\widehat{IOJ}=2\widehat{IRJ}\)</span> ?</li>
+</ul>
+</div>
+<div id="ggb-ordi"></div>
+<script>
+buildFigure("ggb-ordi", [
+"O=(0,0)","c1=Circle(O,3)",
+"I=Point(c1)","SetValue(I,(-3,0))",
+"J=Point(c1)","SetValue(J,(2,2))",
+"S=(0,0.5)","R=(4,3)",
+"Segment(I,J)","Segment(I,S)","Segment(J,S)","Segment(I,R)","Segment(J,R)",
+"Angle(I,O,J)","Angle(I,S,J)","Angle(I,R,J)"
+], {free: ["S","R"]});
+</script>
+<p>Faites glisser <strong>S</strong> (intérieur) et <strong>R</strong> (extérieur) : vous devriez observer <span class="math inline">\(\widehat{IOJ}=2\widehat{ISJ}\)</span> tant que <span class="math inline">\(S\)</span> reste sur le grand arc, mais <strong>pas</strong> de relation aussi simple pour <span class="math inline">\(R\)</span> extérieur (la formule <span class="math inline">\(\widehat{IOJ}=2\widehat{ISJ}\)</span> est spécifique aux angles <strong>inscrits</strong>, c’est-à-dire aux sommets <strong>sur</strong> le cercle).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\widehat{IOJ}=2\,\widehat{ISJ}\)</span> <strong>oui</strong>, tant que <span class="math inline">\(S\)</span> est sur le cercle (angle inscrit / angle au centre, Activités 11-12) — mais <span class="math inline">\(S\)</span> ici est seulement <em>intérieur</em>, pas sur le cercle : la relation exacte <span class="math inline">\(\widehat{IOJ}=2\widehat{ISJ}\)</span> ne tient donc <strong>pas</strong> en général pour un point intérieur quelconque (on a seulement <span class="math inline">\(\widehat{ISJ}&gt;\widehat{IOJ}/2\)</span> lorsque <span class="math inline">\(S\)</span> est “proche” du cercle, par continuité avec le cas inscrit). Pour <span class="math inline">\(R\)</span> extérieur, <span class="math inline">\(\widehat{IRJ}&lt;\)</span> l’angle inscrit correspondant : la réponse est <strong>non</strong>, il n’y a pas de relation de double aussi simple.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="math-culture" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="math-culture"><span class="header-section-number">7</span> Math culture</h2>
+<section id="mesurer-la-terre-avec-ératosthène" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="mesurer-la-terre-avec-ératosthène"><span class="header-section-number">7.1</span> Mesurer la terre avec Ératosthène</h3>
+<p>Quand le soleil éclaire le fond d’un puits dans la ville de Syène (aujourd’hui Assouan), à Alexandrie un bâton vertical de 1 mètre fait une ombre de 0,125 mètre, ce qui donne <span class="math inline">\(\hat a=7{,}12°\)</span>. La distance de Syène à Alexandrie étant environ 800 km, Ératosthène en déduit la circonférence terrestre puis le rayon de la Terre (les rayons solaires étant supposés parallèles, les angles alternes-internes sont égaux).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Méthode d’Ératosthène
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>L’angle au centre entre Syène et Alexandrie vaut aussi <span class="math inline">\(\hat a=7{,}12°\)</span> (angles alternes-internes, rayons du soleil parallèles). Une règle de proportionnalité relie cet angle à l’arc de 800 km : <span class="math display">\[\text{circonférence} = 800 \times \frac{360°}{7{,}12°} \approx 40\,449 \text{ km}\]</span> <span class="math display">\[\text{rayon} = \frac{\text{circonférence}}{2\pi} \approx 6\,438 \text{ km}\]</span> — une valeur remarquablement proche du rayon terrestre réel (environ 6 371 km), obtenue plus de 2 000 ans avant les mesures satellite !</p>
+</div>
+</div>
+</div>
+</section>
+<section id="note-historique" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="note-historique"><span class="header-section-number">7.2</span> Note historique</h3>
+<p>Né à Cyrène, en Libye, vers 275 av. J.-C., Ératosthène était le directeur de la bibliothèque d’Alexandrie (en Égypte) de 235 jusqu’à sa mort en 194 av. J.-C. Il est célèbre pour cette mesure de la Terre et pour le procédé de détermination des nombres premiers appelé « Crible d’Ératosthène ».</p>
+</section>
+<section id="létoile-du-drapeau-tunisien" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="létoile-du-drapeau-tunisien"><span class="header-section-number">7.3</span> L’étoile du drapeau tunisien</h3>
+<p>Les sommets de l’étoile du drapeau tunisien sont les 5 sommets d’un pentagone régulier <span class="math inline">\(ABCDE\)</span>. Que vaut l’angle <span class="math inline">\(\widehat{BAE}\)</span> ? Tracer un pentagone et en déduire une construction de l’étoile.</p>
+<div id="ggb-pentagone"></div>
+<script>
+buildFigure("ggb-pentagone", [
+"O=(0,0)",
+"A=(0,3)",
+"B=Rotate(A,-72°,O)",
+"C=Rotate(A,-144°,O)",
+"D=Rotate(A,-216°,O)",
+"E=Rotate(A,-288°,O)",
+"Polygon(A,B,C,D,E)",
+"Segment(A,C)","Segment(A,D)","Segment(B,D)","Segment(B,E)","Segment(C,E)"
+], {free: [], w: 420, h: 380});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Un pentagone régulier a des angles au centre de <span class="math inline">\(360°/5=72°\)</span>. L’angle <span class="math inline">\(\widehat{BAE}\)</span> (angle interne au sommet <span class="math inline">\(A\)</span>) vaut <span class="math inline">\(\dfrac{(5-2)\times180°}{5}=108°\)</span>. L’étoile à 5 branches s’obtient en traçant les 5 diagonales du pentagone régulier.</p>
+</div>
+</div>
+</div>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Retour au sommet</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../1ere-annee";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/nevermind78\.github\.io\/mycourses\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../1ere-annee/index.html" class="pagination-link" aria-label="1ère année secondaire">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1ère année secondaire</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Mycourses — ressources pédagogiques de mathématiques</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

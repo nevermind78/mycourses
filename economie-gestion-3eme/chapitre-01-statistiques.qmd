@@ -319,6 +319,29 @@ function gsgApplyAxisLabels(id, api) {
   try { api.setAxisLabels(1, lbl[0] || "", lbl[1] || ""); } catch (e) {}
 }
 
+// Les cellules de texte du tableur (ex. "Centre", "Moyenne"...) restent
+// bien affichées DANS leur cellule, mais GeoGebra les crée aussi comme
+// objets "visible" dans la vue Graphique (contrairement aux cellules
+// numériques, invisibles par défaut) : sans ceci, leur contenu s'empile
+// en texte illisible à l'origine du repère. ShowLabel/SetLabelVisible ne
+// suffit pas ici (ça ne masque que le nom "A1:", pas le texte lui-même) ;
+// seul api.setVisible(...) (natif, pas evalCommand) cache l'objet de la
+// vue Graphique sans toucher à son affichage dans le tableur.
+// Restreint aux objets de type "text" (pas juste au nom en forme de
+// cellule, ex. "A1") : nos propres points nommés M1, G1, G2... auraient
+// sinon pu être masqués par erreur s'ils partagent un nom de cellule.
+var GSG_CELL_NAME_RE = /^[A-Z]+[0-9]+$/;
+
+function gsgHideCellObjects(api) {
+  var n = api.getObjectNumber();
+  for (var i = 0; i < n; i++) {
+    var name = api.getObjectName(i);
+    if (GSG_CELL_NAME_RE.test(name) && api.getObjectType(name) === "text") {
+      try { api.setVisible(name, false); } catch (e) {}
+    }
+  }
+}
+
 // SetColor(...) via evalCommand ne modifie pas fiablement la couleur des
 // objets statistiques (Histogram, BoxPlot...) : on utilise les méthodes
 // natives de l'API (setColor / setFilling), appelées après la
@@ -338,6 +361,7 @@ function gsgReset(id) {
   api.newConstruction();
   try { api.setPerspective(GSG_PERSPECTIVE_XML); } catch (e) {}
   gsRunCommands(api, GSG.initCmds[id]);
+  gsgHideCellObjects(api);
   gsgApplyStyle(id, api);
   gsgApplyView(id, api);
   gsgApplyAxisLabels(id, api);
@@ -359,6 +383,7 @@ function gsgApplyCode(id) {
   api.newConstruction();
   try { api.setPerspective(GSG_PERSPECTIVE_XML); } catch (e) {}
   gsRunCommands(api, lines);
+  gsgHideCellObjects(api);
   gsgApplyStyle(id, api);
   gsgApplyView(id, api);
   gsgApplyAxisLabels(id, api);
@@ -425,6 +450,7 @@ function buildSheetGraph(id, commands, opts) {
         GSG.apis[id] = api;
         try { api.setPerspective(GSG_PERSPECTIVE_XML); } catch (e) {}
         gsRunCommands(api, commands);
+        gsgHideCellObjects(api);
         gsgApplyStyle(id, api);
         gsgApplyView(id, api);
         gsgApplyAxisLabels(id, api);

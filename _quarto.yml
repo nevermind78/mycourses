@@ -51,6 +51,9 @@ website:
         - section: "Travaux géométriques"
           contents:
             - 1ere-annee/chapitre-01-angles.qmd
+        - section: "Travaux numériques"
+          contents:
+            - 1ere-annee/chapitre-09-activites-numeriques-1.qmd
     - title: "3ème Sciences Techniques"
       style: docked
       collapse-level: 1

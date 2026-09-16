@@ -20,7 +20,7 @@ subtitle: "Mathématiques — Manuel scolaire (Centre National Pédagogique, Tun
 
 | Chapitre | Titre | Statut |
 |:--:|---|:--:|
-| 9 | Activités numériques I | à venir |
+| 9 | [Activités numériques I](chapitre-09-activites-numeriques-1.qmd) | ✅ en ligne |
 | 10 | Activités numériques II | à venir |
 | 11 | Activités algébriques | à venir |
 | 12 | Fonctions linéaires | à venir |

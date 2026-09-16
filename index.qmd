@@ -48,9 +48,9 @@ points, utilisation des TIC).
 
 ::: {.g-col-12 .g-col-md-6 .manuel-card}
 ### 📐 1ère année secondaire {.unnumbered .unlisted}
-Chapitre 1 : **Angles** (angles et figures de base, droites parallèles,
-angles inscrits et angles au centre) — 12 figures **GeoGebra**
-interactives.
+Chapitre 1 : **Angles** (12 figures **GeoGebra** interactives). Chapitre 9 :
+**Activités numériques I** (division euclidienne, PGCD, PPCM, nombres
+premiers, droite réelle) — figures GeoGebra et tableur interactif.
 
 [Ouvrir le manuel →](1ere-annee/index.qmd)
 :::

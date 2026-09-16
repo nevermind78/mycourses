@@ -45,7 +45,10 @@ function gsRunCommands(api, commands) {
 function gsHideKeyboard(container) {
   setTimeout(function () {
     var btn = container.querySelector(".closeTabbedKeyboardButton");
-    if (btn) btn.click();
+    if (!btn) return;
+    ["pointerdown", "mousedown", "pointerup", "mouseup", "click"].forEach(function (type) {
+      try { btn.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true, view: window })); } catch (e) {}
+    });
   }, 400);
 }
 

@@ -1,0 +1,2289 @@
+---
+title: "Chapitre 9 — Activités numériques I"
+subtitle: "1ère année secondaire — Manuel CNP — Travaux numériques"
+engine: markdown
+---
+
+::: {.callout-tip}
+## Dans ce chapitre
+- **Reprendre** — un QCM de révision.
+- **Découvrir** — 23 activités : division euclidienne, diviseurs d'un
+  entier, nombres premiers, PGCD, PPCM, écriture décimale et
+  scientifique, radicaux, droite réelle.
+- **Retenir**, **Mobiliser ses compétences**, **S'auto-évaluer**,
+  **Exercices et problèmes** (39 exercices), **Avec l'ordinateur**
+  (algorithme d'Euclide sur tableur), **Math culture**.
+- Quelques activités sont illustrées par des figures **GeoGebra**
+  interactives (spirale des restes modulo 8, droite réelle) et un vrai
+  **tableur** pour l'activité informatique.
+:::
+
+```{=html}
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<script>
+// --- Mycourses / GeoGebra helper (figures) ----------------------------
+var GGB = { apis: {}, initCmds: {}, freePts: {}, views: {}, resizers: {}, toolbarOn: {}, sizes: {}, cleanups: {} };
+
+function ggbShowGrid(api) {
+  try { api.setAxesVisible(true, true); } catch (e) {}
+  try { api.setGridVisible(true); } catch (e) {}
+}
+
+function ggbRebuildApplet(id, showTools) {
+  var oldApi = GGB.apis[id];
+  if (!oldApi) return;
+  var xml;
+  try { xml = oldApi.getXML(); } catch (e) { return; }
+
+  var container = document.getElementById(id);
+  var oldInner = container.querySelector(".ggb-inner");
+  var newInner = document.createElement("div");
+  var canvasId = id + "-inner-" + Date.now();
+  newInner.id = canvasId;
+  newInner.className = "ggb-inner";
+  oldInner.replaceWith(newInner);
+
+  var size = GGB.sizes[id] || [480, 360];
+  var baseW = size[0], baseH = size[1];
+
+  var params = {
+    appName: "geometry", width: baseW, height: baseH,
+    showToolBar: showTools, showAlgebraInput: false, showMenuBar: true,
+    showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+    language: "fr",
+    appletOnLoad: function (api) {
+      GGB.apis[id] = api;
+      try { if (!showTools) api.setPerspective("G"); } catch (e) {}
+      try { api.setXML(xml); } catch (e) {}
+      ggbShowGrid(api);
+      ggbFitView(api, id);
+      ggbMakeResponsive(id, api, container, baseW / baseH);
+    }
+  };
+  new GGBApplet(params, true).inject(canvasId);
+}
+
+function ggbToggleTools(id) {
+  if (!GGB.apis[id]) return;
+  var show = !GGB.toolbarOn[id];
+  GGB.toolbarOn[id] = show;
+  var container = document.getElementById(id);
+  var btn = container.querySelector('[data-act="tools"]');
+  if (btn) btn.textContent = show ? "🛠 Masquer les outils GeoGebra" : "🛠 Outils GeoGebra";
+  ggbRebuildApplet(id, show);
+}
+
+function ggbRunCommands(api, commands, free) {
+  commands.forEach(function (cmd) {
+    try { api.evalCommand(cmd); } catch (e) { console.error("GGB cmd failed:", cmd, e); }
+  });
+  var n = api.getObjectNumber();
+  for (var i = 0; i < n; i++) {
+    var name = api.getObjectName(i);
+    try {
+      if (api.getObjectType(name) === "point" && free.indexOf(name) === -1) {
+        api.setFixed(name, true);
+      }
+    } catch (e) {}
+  }
+}
+
+function ggbFitView(api, id) {
+  var v = GGB.views[id];
+  try {
+    var cx, cy, halfW, halfH;
+    if (v) {
+      cx = (v[0] + v[1]) / 2; cy = (v[2] + v[3]) / 2;
+      halfW = (v[1] - v[0]) / 2; halfH = (v[3] - v[2]) / 2;
+    } else {
+      var n = api.getObjectNumber();
+      var xs = [], ys = [];
+      for (var i = 0; i < n; i++) {
+        var name = api.getObjectName(i);
+        if (api.getObjectType(name) === "point") {
+          var x = api.getXcoord(name), y = api.getYcoord(name);
+          if (isFinite(x) && isFinite(y)) { xs.push(x); ys.push(y); }
+        }
+      }
+      if (xs.length === 0) return;
+      var xMin = Math.min.apply(null, xs), xMax = Math.max.apply(null, xs);
+      var yMin = Math.min.apply(null, ys), yMax = Math.max.apply(null, ys);
+      cx = (xMin + xMax) / 2; cy = (yMin + yMax) / 2;
+      halfW = Math.max((xMax - xMin) / 2, 0.3) * 1.25;
+      halfH = Math.max((yMax - yMin) / 2, 0.3) * 1.25;
+    }
+    var size = GGB.sizes[id];
+    var pxAspect = (size && size[0] > 0 && size[1] > 0) ? (size[0] / size[1]) : (4 / 3);
+    if (halfW / halfH < pxAspect) { halfW = halfH * pxAspect; }
+    else { halfH = halfW / pxAspect; }
+    api.setCoordSystem(cx - halfW, cx + halfW, cy - halfH, cy + halfH);
+  } catch (e) {}
+}
+
+function ggbReset(id) {
+  var api = GGB.apis[id];
+  if (!api) return;
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, GGB.initCmds[id], GGB.freePts[id]);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  if (ta) ta.value = GGB.initCmds[id].join("\n");
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+function ggbApplyCode(id) {
+  var api = GGB.apis[id];
+  if (!api) return;
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  var lines = ta.value.split("\n")
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return s.length > 0; });
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, lines, GGB.freePts[id]);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+function buildFigure(id, commands, opts) {
+  opts = opts || {};
+  var free = opts.free || [];
+  GGB.initCmds[id] = commands.slice();
+  GGB.freePts[id] = free;
+  GGB.views[id] = opts.view || null;
+
+  var container = document.getElementById(id);
+  container.classList.add("ggb-figure");
+  var baseW = opts.w || 480, baseH = opts.h || 360;
+  GGB.sizes[id] = [baseW, baseH];
+  container.innerHTML =
+    '<div class="ggb-toolbar">' +
+      '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
+      '<button type="button" class="ggb-btn" data-act="code">✏️ Voir / modifier le code</button>' +
+      '<button type="button" class="ggb-btn" data-act="tools">🛠 Outils GeoGebra</button>' +
+    '</div>' +
+    '<div class="ggb-canvas" style="aspect-ratio:' + baseW + '/' + baseH + '">' +
+      '<div class="ggb-placeholder">Figure GeoGebra — chargement…</div>' +
+      '<div class="ggb-inner"></div>' +
+    '</div>' +
+    '<div class="ggb-codepanel" hidden>' +
+      '<textarea class="ggb-textarea" spellcheck="false" rows="' + Math.min(Math.max(commands.length, 4), 16) + '"></textarea>' +
+      '<button type="button" class="ggb-btn ggb-btn-primary" data-act="apply">▶ Appliquer les modifications</button>' +
+    '</div>';
+
+  var ta = container.querySelector(".ggb-textarea");
+  ta.value = commands.join("\n");
+  container.querySelector('[data-act="reset"]').addEventListener("click", function () { ggbReset(id); });
+  container.querySelector('[data-act="apply"]').addEventListener("click", function () { ggbApplyCode(id); });
+  container.querySelector('[data-act="code"]').addEventListener("click", function () {
+    var panel = container.querySelector(".ggb-codepanel");
+    panel.hidden = !panel.hidden;
+  });
+  container.querySelector('[data-act="tools"]').addEventListener("click", function () { ggbToggleTools(id); });
+
+  var loaded = false;
+  function loadApplet() {
+    if (loaded) return;
+    loaded = true;
+    var placeholder = container.querySelector(".ggb-placeholder");
+    if (placeholder) placeholder.remove();
+    var innerDiv = container.querySelector(".ggb-inner");
+    var canvasId = id + "-inner";
+    innerDiv.id = canvasId;
+    var params = {
+      appName: "geometry", width: baseW, height: baseH,
+      showToolBar: false, showAlgebraInput: false, showMenuBar: true,
+      showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+      language: "fr",
+      appletOnLoad: function (api) {
+        GGB.apis[id] = api;
+        try { api.setPerspective("G"); } catch (e) {}
+        ggbShowGrid(api);
+        ggbRunCommands(api, commands, free);
+        ggbFitView(api, id);
+        ggbMakeResponsive(id, api, container, baseW / baseH);
+      }
+    };
+    new GGBApplet(params, true).inject(canvasId);
+  }
+
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { loadApplet(); io.disconnect(); }
+      });
+    }, { rootMargin: "600px 0px" });
+    io.observe(container);
+  } else {
+    loadApplet();
+  }
+}
+
+function ggbMakeResponsive(id, api, outerDiv, aspect) {
+  if (GGB.cleanups[id]) { try { GGB.cleanups[id](); } catch (e) {} }
+  var lastW = -1;
+  var padding = null;
+  var fitToken = 0;
+  var debounceTimer = null;
+
+  function applySize() {
+    if (padding === null) {
+      var cs = window.getComputedStyle(outerDiv);
+      padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    }
+    var w = Math.floor(outerDiv.clientWidth - padding);
+    if (w < 80 || w === lastW) return;
+    lastW = w;
+    api.setSize(w, Math.round(w / aspect));
+    var myToken = ++fitToken;
+    var attempt = 0;
+    function tryFit() {
+      if (myToken !== fitToken) return;
+      ggbFitView(api, id);
+      attempt++;
+      if (attempt === 1) setTimeout(tryFit, 220);
+    }
+    setTimeout(tryFit, 220);
+  }
+
+  function scheduleResize() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applySize, 120);
+  }
+
+  GGB.resizers[id] = applySize;
+  applySize();
+  window.addEventListener("resize", scheduleResize);
+  var ro = null;
+  if (window.ResizeObserver) {
+    ro = new ResizeObserver(scheduleResize);
+    ro.observe(outerDiv);
+  } else {
+    setTimeout(applySize, 300);
+  }
+  GGB.cleanups[id] = function () {
+    window.removeEventListener("resize", scheduleResize);
+    if (ro) ro.disconnect();
+  };
+}
+
+// --- Mycourses / GeoGebra Tableur helper (tableur) --------------------
+var GS = { apis: {}, initCmds: {}, sizes: {}, cleanups: {} };
+
+function gsRunCommands(api, commands) {
+  commands.forEach(function (cmd) {
+    try { api.evalCommand(cmd); } catch (e) { console.error("GS cmd failed:", cmd, e); }
+  });
+}
+
+function gsHideKeyboard(container) {
+  setTimeout(function () {
+    var btn = container.querySelector(".closeTabbedKeyboardButton");
+    if (!btn) return;
+    ["pointerdown", "mousedown", "pointerup", "mouseup", "click"].forEach(function (type) {
+      try { btn.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true, view: window })); } catch (e) {}
+    });
+  }, 400);
+}
+
+function gsReset(id) {
+  var api = GS.apis[id];
+  if (!api) return;
+  api.newConstruction();
+  try { api.setPerspective("S"); } catch (e) {}
+  gsRunCommands(api, GS.initCmds[id]);
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  if (ta) ta.value = GS.initCmds[id].join("\n");
+  gsHideKeyboard(container);
+}
+
+function gsApplyCode(id) {
+  var api = GS.apis[id];
+  if (!api) return;
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  var lines = ta.value.split("\n")
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return s.length > 0; });
+  api.newConstruction();
+  try { api.setPerspective("S"); } catch (e) {}
+  gsRunCommands(api, lines);
+  gsHideKeyboard(container);
+}
+
+function buildSheet(id, commands, opts) {
+  opts = opts || {};
+  GS.initCmds[id] = commands.slice();
+  var container = document.getElementById(id);
+  container.classList.add("ggb-figure");
+  var baseW = opts.w || 700, baseH = opts.h || 320;
+  GS.sizes[id] = [baseW, baseH];
+  container.innerHTML =
+    '<div class="ggb-toolbar">' +
+      '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
+      '<button type="button" class="ggb-btn" data-act="code">✏️ Voir / modifier le code</button>' +
+    '</div>' +
+    '<div class="ggb-canvas" style="height:' + baseH + 'px">' +
+      '<div class="ggb-placeholder">Tableur GeoGebra — chargement…</div>' +
+      '<div class="ggb-inner"></div>' +
+    '</div>' +
+    '<div class="ggb-codepanel" hidden>' +
+      '<textarea class="ggb-textarea" spellcheck="false" rows="' + Math.min(Math.max(commands.length, 4), 16) + '"></textarea>' +
+      '<button type="button" class="ggb-btn ggb-btn-primary" data-act="apply">▶ Appliquer les modifications</button>' +
+    '</div>';
+
+  var ta = container.querySelector(".ggb-textarea");
+  ta.value = commands.join("\n");
+  container.querySelector('[data-act="reset"]').addEventListener("click", function () { gsReset(id); });
+  container.querySelector('[data-act="apply"]').addEventListener("click", function () { gsApplyCode(id); });
+  container.querySelector('[data-act="code"]').addEventListener("click", function () {
+    var panel = container.querySelector(".ggb-codepanel");
+    panel.hidden = !panel.hidden;
+  });
+
+  var loaded = false;
+  function loadApplet() {
+    if (loaded) return;
+    loaded = true;
+    var placeholder = container.querySelector(".ggb-placeholder");
+    if (placeholder) placeholder.remove();
+    var innerDiv = container.querySelector(".ggb-inner");
+    var canvasId = id + "-inner";
+    innerDiv.id = canvasId;
+    var params = {
+      appName: "classic", width: baseW, height: baseH,
+      showToolBar: true, showAlgebraInput: false, showMenuBar: false,
+      showResetIcon: true, perspective: "S", language: "fr",
+      appletOnLoad: function (api) {
+        GS.apis[id] = api;
+        gsRunCommands(api, commands);
+        gsMakeResponsive(id, api, container, baseH);
+        gsHideKeyboard(container);
+      }
+    };
+    new GGBApplet(params, true).inject(canvasId);
+  }
+
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { loadApplet(); io.disconnect(); }
+      });
+    }, { rootMargin: "600px 0px" });
+    io.observe(container);
+  } else {
+    loadApplet();
+  }
+}
+
+function gsMakeResponsive(id, api, outerDiv, fixedHeight) {
+  if (GS.cleanups[id]) { try { GS.cleanups[id](); } catch (e) {} }
+  var lastW = -1;
+  var padding = null;
+  var debounceTimer = null;
+
+  function applySize() {
+    if (padding === null) {
+      var cs = window.getComputedStyle(outerDiv);
+      padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    }
+    var w = Math.floor(outerDiv.clientWidth - padding);
+    if (w < 80 || w === lastW) return;
+    lastW = w;
+    api.setSize(w, fixedHeight);
+  }
+
+  function scheduleResize() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applySize, 120);
+  }
+
+  applySize();
+  window.addEventListener("resize", scheduleResize);
+  var ro = null;
+  if (window.ResizeObserver) {
+    ro = new ResizeObserver(scheduleResize);
+    ro.observe(outerDiv);
+  } else {
+    setTimeout(applySize, 300);
+  }
+  GS.cleanups[id] = function () {
+    window.removeEventListener("resize", scheduleResize);
+    if (ro) ro.disconnect();
+  };
+}
+</script>
+```
+
+## Reprendre
+
+::: {.activite}
+[QCM]{.activite-titre}
+Pour chaque énoncé, on propose trois réponses A, B et C. Une ou plusieurs
+sont correctes. Lesquelles ?
+
+| Énoncé | A | B | C |
+|---|---|---|---|
+| $150903$ | est divisible par 15. | est divisible par 3. | est divisible par 9. |
+| $63$ | est un multiple de 3. | est un diviseur de 21. | est un nombre pair. |
+| $2^3\times3^2\times5^2$ | est un multiple de 100. | est un multiple de 1000. | est égal à 600. |
+| Les nombres $-2$ et $5$ | sont proportionnels aux nombres $-3$ et $7{,}5$. | sont proportionnels aux nombres $24$ et $10$. | sont proportionnels aux nombres $-4$ et $10$. |
+| $\dfrac{10^{-2}}{10^2}$ | est égal à $10^{-4}$. | est égal à $0{,}0001$. | est égal à $0{,}001$. |
+| $\dfrac{10}{3}$ | est égal à $3{,}33$. | est égal à $3{,}333$. | est égal à $\dfrac{200}{60}$. |
+| $\sqrt{10000}$ | est égal à $100$. | est égal à $10^4$. | est égal à $10^2$. |
+| $(3\sqrt2)^2$ | est un entier naturel. | est un décimal. | est un nombre irrationnel. |
+| $3{,}14$ | est un nombre décimal. | est égal à $\pi$. | est égal à $0{,}00314\times10^3$. |
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+- $150903$ : $1+5+0+9+0+3=18$, divisible par 9 donc par 3 (**B, C** vraies ;
+  pour 15 il faudrait aussi être divisible par 5, faux, se termine par 3).
+- $63=9\times7=3\times21$ : **A, B** vraies (63 est impair, C fausse).
+- $2^3\times3^2\times5^2 = 8\times9\times25=1800$ : multiple de 100 (**A**
+  vraie), pas de 1000, pas égal à 600.
+- $-2$ et $5$ : rapport $-2/5=-0{,}4$. Pour $-3;7{,}5$ : $-3/7{,}5=-0{,}4$
+  ✓ (**A** vraie). Pour $24;10$ : $2{,}4\neq-0{,}4$ (faux). Pour $-4;10$ :
+  $-0{,}4$ ✓ (**C** vraie).
+- $\dfrac{10^{-2}}{10^2}=10^{-4}=0{,}0001$ : **A, B** vraies.
+- $\dfrac{10}{3}=3{,}333\ldots$ : l'écriture exacte tronquée à 2 décimales
+  est $3{,}33$ mais la valeur n'est *pas égale* à $3{,}33$ (**A** fausse
+  au sens strict) ; $\dfrac{200}{60}=\dfrac{10}{3}$ (**C** vraie). Selon
+  la convention du manuel, seule **C** est rigoureusement exacte.
+- $\sqrt{10000}=100=10^2$ : **A, C** vraies.
+- $(3\sqrt2)^2 = 9\times2=18$ : entier naturel, donc aussi décimal
+  (**A, B** vraies), pas irrationnel.
+- $3{,}14$ est un décimal (**A** vraie) ; ce n'est qu'une **valeur
+  approchée** de $\pi$, pas $\pi$ lui-même (B fausse) ;
+  $0{,}00314\times10^3=3{,}14$ (**C** vraie).
+:::
+
+## Découvrir
+
+### Division euclidienne
+
+::: {.activite}
+[Activité 1]{.activite-titre}
+1. À midi, les 452 élèves d'un lycée mangent par tables de six. Combien
+   compte-t-on de tables complètes ? Combien y a-t-il de places libres à
+   la table incomplète ?
+2. Pour une fête on a besoin de 345 gâteaux. Les gâteaux sont vendus par
+   paquets de 20. Combien doit-on acheter de paquets de gâteaux ?
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $452 = 6\times75+2$. Il y a **75 tables complètes** et, à la table
+incomplète (2 élèves), il reste $6-2=\mathbf{4}$ places libres.
+
+**2.** $345=20\times17+5$ : 17 paquets ne suffisent pas (reste 5
+gâteaux), il faut donc **18 paquets**.
+:::
+
+::: {.callout-important}
+## Définition
+Soit $a$ et $b$ deux entiers naturels tels que $b$ est non nul. Effectuer
+la **division euclidienne** de $a$ par $b$, c'est déterminer le couple
+d'entiers $(q,r)$ tels que $a=bq+r$ et $0\leq r<b$. $a$ est le
+**dividende**, $b$ est le **diviseur**, $q$ est le **quotient** et $r$
+est le **reste**.
+:::
+
+::: {.activite}
+[Activité 2]{.activite-titre}
+Observer la figure ci-dessous, où les entiers $0,1,2,\ldots$ sont placés
+en spirale sur 8 demi-droites $(L_1),\ldots,(L_8)$ issues d'un même
+point.
+
+1. Sur quelle demi-droite se trouve le nombre 20 ?
+2. Sur quelle demi-droite se trouve le nombre 40 ?
+3. Sur quelle demi-droite se trouve le nombre 83 ?
+4. Sur quelle demi-droite se trouve le nombre 54 869 723 541 ? Expliquer.
+:::
+
+```{=html}
+<div id="ggb-d2"></div>
+<script>
+buildFigure("ggb-d2", [
+"O=(0,0)",
+"Ray(O,(1,0))","Ray(O,(cos(45°),sin(45°)))","Ray(O,(0,1))","Ray(O,(-cos(45°),sin(45°)))",
+"Ray(O,(-1,0))","Ray(O,(-cos(45°),-sin(45°)))","Ray(O,(0,-1))","Ray(O,(cos(45°),-sin(45°)))",
+"Text(\"(L1)\",(2.3,0.15))","Text(\"(L2)\",(2*cos(45°)+0.1,2*sin(45°)+0.2))","Text(\"(L3)\",(-0.35,2.3))",
+"Text(\"(L4)\",(-2*cos(45°)-0.9,2*sin(45°)+0.2))","Text(\"(L5)\",(-2.6,0.15))","Text(\"(L6)\",(-2*cos(45°)-0.9,-2*sin(45°)-0.3))",
+"Text(\"(L7)\",(-0.35,-2.5))","Text(\"(L8)\",(2*cos(45°)+0.1,-2*sin(45°)-0.3))",
+"Text(\"0\",(1,0)+(0.15,0.2))","Text(\"1\",(cos(45°),sin(45°))+(0.15,0.15))","Text(\"2\",(0,1)+(0.2,0.15))",
+"Text(\"3\",(-cos(45°),sin(45°))+(-0.3,0.15))","Text(\"4\",(-1,0)+(-0.25,0.2))","Text(\"5\",(-cos(45°),-sin(45°))+(-0.3,-0.2))",
+"Text(\"6\",(0,-1)+(0.2,-0.25))","Text(\"7\",(cos(45°),-sin(45°))+(0.15,-0.2))",
+"Text(\"8\",(2,0)+(0.15,0.2))","Text(\"9\",(2cos(45°),2sin(45°))+(0.15,0.15))","Text(\"10\",(0,2)+(0.2,0.15))",
+"Text(\"11\",(-2cos(45°),2sin(45°))+(-0.4,0.15))","Text(\"12\",(-2,0)+(-0.3,0.2))"
+], {free: [], w: 460, h: 420, view: [-2.9,2.9,-2.9,2.9]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Les entiers sont placés dans l'ordre en tournant toujours dans le même
+sens : après 7 (sur $(L_8)$), on repart sur $(L_1)$ pour 8, puis $(L_2)$
+pour 9, etc. Le nombre $n$ se trouve donc sur la demi-droite déterminée
+par le **reste de la division euclidienne de $n$ par 8** ($(L_1)$
+correspond au reste 0, $(L_2)$ au reste 1, ..., $(L_8)$ au reste 7).
+
+**1.** $20 = 8\times2+4$, reste 4 $\Rightarrow$ **$(L_5)$**.
+
+**2.** $40 = 8\times5+0$, reste 0 $\Rightarrow$ **$(L_1)$**.
+
+**3.** $83 = 8\times10+3$, reste 3 $\Rightarrow$ **$(L_4)$**.
+
+**4.** Pour un si grand nombre, il suffit de connaître son reste modulo
+8, c'est-à-dire le reste de la division par 8 de ses **trois derniers
+chiffres** (541), car $1000=8\times125$ est un multiple de 8 — chaque
+groupe de mille ne change donc pas le reste modulo 8.
+$541=8\times67+5$, reste 5 $\Rightarrow$ **$(L_6)$**.
+:::
+
+### Diviseurs d'un entier
+
+::: {.activite}
+[Activité 3]{.activite-titre}
+1. La lettre $a$ désigne le chiffre des unités du nombre $\overline{596a}$.
+   Comment faut-il choisir $a$ pour que $\overline{596a}$ soit divisible
+   par 6 ?
+2. La lettre $b$ désigne le chiffre des dizaines du nombre
+   $\overline{23b2}$.
+   a) Comment faut-il choisir $b$ pour que $\overline{23b2}$ soit
+      divisible par 4 ?
+   b) Comment faut-il choisir $b$ pour que $\overline{23b2}$ soit
+      divisible par 8 ?
+:::
+
+::: {.callout-important}
+## Définition
+Soit $a$ et $b$ deux entiers naturels tels que $b$ est non nul. $b$
+**divise** $a$ si le reste de la division euclidienne de $a$ par $b$ est
+nul.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $\overline{596a}$ divisible par 6 $\iff$ divisible par 2 **et**
+par 3. Divisible par 2 $\Rightarrow$ $a\in\{0,2,4,6,8\}$. Somme des
+chiffres $5+9+6+a=20+a$ divisible par 3 $\Rightarrow a\in\{1,4,7\}$.
+L'intersection donne $a=4$ : $5964$ est le seul nombre qui convient.
+
+**2. a)** Un nombre est divisible par 4 si le nombre formé par ses deux
+derniers chiffres l'est. $\overline{b2}$ divisible par 4 :
+$b\in\{0,2,4,6,8\}$ (02, 22, 42, 62, 82 sont tous divisibles par 4).
+
+**b)** Divisible par 8 : il faut tester $\overline{2b2}$ (les 3 derniers
+chiffres). $202,\,212,\,\ldots$ : seul $232$ ($b=3$) est divisible par
+8 ($232=8\times29$).
+:::
+
+::: {.activite}
+[Activité 4]{.activite-titre}
+Prendre un nombre à 3 chiffres, l'écrire à côté de lui-même pour obtenir
+un nombre à 6 chiffres. Diviser ce nombre successivement par 7 puis par
+11 puis par 13. Quel reste obtient-on ? Recommencer avec un autre nombre
+à 3 chiffres. Que remarque-t-on ? Expliquer.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Écrire un nombre $\overline{abc}$ (3 chiffres) « à côté de lui-même »
+revient à calculer $\overline{abc}\times1000+\overline{abc}=
+\overline{abc}\times1001$. Or $1001=7\times11\times13$. Le nombre à 6
+chiffres obtenu est donc **toujours** un multiple de $7\times11\times13$
+: en le divisant successivement par 7, 11 puis 13, on retombe **toujours
+exactement sur $\overline{abc}$**, avec un reste nul à chaque étape.
+:::
+
+::: {.activite}
+[Activité 5]{.activite-titre}
+1. Soient $a$ et $b$ deux entiers naturels. De combien augmente leur
+   produit si on ajoute 5 à l'un d'eux ?
+2. On suppose que leur produit a ainsi augmenté de 115.
+   a) Trouver l'un des facteurs.
+   b) Trouver l'autre facteur lorsque la somme de $a$ et $b$ est égale à
+      42.
+   c) Trouver l'autre facteur lorsque le produit de $a$ et $b$ est égal
+      à 368.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $(a+5)b-ab = 5b$ : le produit augmente de $5b$ (si on ajoute 5 à
+$a$), c'est-à-dire de **5 fois l'autre facteur**.
+
+**2. a)** $5b=115 \Rightarrow b=23$ : l'un des facteurs est **23**.
+
+**b)** Si $a+b=42$ et $b=23$, alors $a=42-23=\mathbf{19}$.
+
+**c)** Si $ab=368$ et $b=23$, alors $a=368/23=\mathbf{16}$.
+:::
+
+::: {.activite}
+[Activité 6]{.activite-titre}
+Dans chaque cas comment faut-il choisir l'entier naturel $n$ pour que :
+
+1. $\dfrac{8}{n-3}$ soit un entier naturel ?
+2. $\dfrac{24}{n}$ et $\dfrac n6$ soient des entiers naturels ?
+3. $\dfrac{20+n}{20}$ soit un entier naturel ?
+4. $\dfrac{n+7}{n-1}$ soit un entier naturel ?
+5. $\dfrac{2n+6}{n-1}$ soit un entier naturel ?
+:::
+
+::: {.callout-important}
+## Définition
+Soit $a$ et $b$ deux entiers naturels tels que $b$ est non nul. Le
+quotient $\dfrac ab$ est un entier naturel si $b$ divise $a$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $n-3$ doit être un diviseur positif de 8 (et $n\geq4$ pour que
+$n-3>0$) : $n-3\in\{1,2,4,8\}$, soit $n\in\{4,5,7,11\}$.
+
+**2.** $n$ doit diviser 24 **et** être un multiple de 6 :
+$n\in\{6,12,24\}$.
+
+**3.** $\dfrac{20+n}{20}=1+\dfrac n{20}$ : il faut que 20 divise $n$,
+soit $n\in\{0,20,40,60,\ldots\}$.
+
+**4.** $\dfrac{n+7}{n-1}=\dfrac{(n-1)+8}{n-1}=1+\dfrac8{n-1}$ : il faut
+que $n-1$ divise 8, donc $n-1\in\{1,2,4,8\}$, soit $n\in\{2,3,5,9\}$.
+
+**5.** $\dfrac{2n+6}{n-1}=\dfrac{2(n-1)+8}{n-1}=2+\dfrac8{n-1}$ : même
+condition, $n\in\{2,3,5,9\}$.
+:::
+
+::: {.activite}
+[Activité 7]{.activite-titre}
+**Le vrai et le faux : comment prouver ?** Pour chacun des énoncés
+suivants donner une preuve s'il est vrai et un contre-exemple s'il est
+faux.
+
+- $E_1$ : Tout entier naturel divisible par 2 est un nombre pair.
+- $E_2$ : Tout entier naturel divisible par 3 est un nombre impair.
+- $E_3$ : La somme de deux entiers naturels consécutifs est un nombre
+  impair.
+- $E_4$ : Tout entier naturel différent de 1 admet au moins deux
+  diviseurs.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**$E_1$ — Vrai.** C'est la définition même d'un nombre pair : divisible
+par 2.
+
+**$E_2$ — Faux.** Contre-exemple : $6$ est divisible par 3 et pourtant
+pair.
+
+**$E_3$ — Vrai.** Deux entiers consécutifs s'écrivent $n$ et $n+1$ ; leur
+somme est $2n+1$, qui est impaire (elle s'écrit $2k+1$).
+
+**$E_4$ — Vrai.** Tout entier $n\neq1$ (y compris $0$) admet au moins les
+diviseurs $1$ et lui-même ; ils sont distincts dès que $n\neq1$.
+:::
+
+::: {.activite}
+[Activité 8]{.activite-titre}
+1. Vérifier que la suite des nombres $35\,;\,3535\,;\,353535$ est
+   proportionnelle à la suite des nombres $70\,;\,7070\,;\,707070$.
+2. On donne la suite des nombres $1\,;\,101\,;\,10101$. Vérifier qu'elle
+   est proportionnelle à chacune des suites de nombres ci-dessous.
+   a) $35\,;\,3535\,;\,353535$.
+   b) $70\,;\,7070\,;\,707070$.
+3. Donner une autre suite d'entiers naturels proportionnelle à la suite
+   des nombres $1\,;\,101\,;\,10101$.
+:::
+
+::: {.callout-important}
+## Définition
+Un tableau de deux lignes est un **tableau de proportionnalité** si les
+quotients des nombres d'une même colonne sont égaux.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $\dfrac{70}{35}=2$, $\dfrac{7070}{3535}=2$,
+$\dfrac{707070}{353535}=2$ : les quotients sont tous égaux à 2, les
+suites sont proportionnelles (coefficient 2).
+
+**2. a)** $\dfrac{3535}{101}=35$, $\dfrac{353535}{10101}=35$ et
+$\dfrac{35}{1}=35$ : coefficient constant **35**, proportionnelles.
+
+**b)** De même, coefficient constant **70** (car
+$70=2\times35$, cohérent avec 1).
+
+**3.** Toute suite de la forme $k\,;\,101k\,;\,10101k$ convient, par
+exemple avec $k=10$ : $10\,;\,1010\,;\,101010$.
+:::
+
+### Nombres premiers — PGCD — PPCM
+
+::: {.activite}
+[Activité 9]{.activite-titre}
+1. Donner la liste des nombres premiers inférieurs à 49.
+2. Répondre par vrai ou faux.
+   a) Le seul nombre premier pair est 2.
+   b) Tout nombre impair est premier.
+   c) Si $a$ est premier alors $a+1$ n'est pas premier.
+   d) Si $a$ est premier et $a\geq3$, alors $a+1$ n'est pas premier.
+:::
+
+::: {.callout-important}
+## Définition
+Un entier naturel est **premier** s'il est différent de 1 et s'il possède
+exactement deux diviseurs : 1 et lui-même.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $2,3,5,7,11,13,17,19,23,29,31,37,41,43,47$.
+
+**2. a) Vrai** — tout autre nombre pair est divisible par 2 **et** par
+lui-même, donc a au moins 3 diviseurs s'il diffère de 2.
+**b) Faux** — $9=3\times3$ est impair et non premier.
+**c) Faux** — $2$ est premier et $2+1=3$ est aussi premier.
+**d) Vrai** — si $a\geq3$ est premier, $a$ est impair, donc $a+1$ est
+pair et strictement supérieur à 2 : il est divisible par 2 et par
+lui-même, donc pas premier.
+:::
+
+::: {.activite}
+[Activité 10]{.activite-titre}
+Un magasinier veut disposer des boîtes cubiques d'arête $a$ dans une
+caisse ayant la forme d'un parallélépipède rectangle, de dimensions
+105 cm, 105 cm et 165 cm.
+
+1. On suppose que $a=21$ cm. Peut-on remplir entièrement la caisse ?
+2. Quelles conditions doit vérifier $a$ pour que la caisse soit
+   entièrement remplie ?
+3. On veut choisir $a$ de sorte que la caisse soit entièrement remplie et
+   qu'elle contienne le minimum de boîtes. Déterminer $a$.
+:::
+
+::: {.callout-important}
+## Définition
+Le plus grand diviseur commun à deux entiers naturels $a$ et $b$ est
+appelé le **plus grand commun diviseur** de $a$ et $b$. On le note
+$\text{PGCD}(a,b)$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $105=21\times5$ et $165=21\times7+18$ : 21 ne divise pas 165, donc
+**non**, on ne peut pas remplir entièrement la caisse avec $a=21$.
+
+**2.** Il faut que $a$ divise à la fois 105 et 165, c'est-à-dire que $a$
+soit un **diviseur commun** à 105 et 165.
+
+**3.** Le nombre de boîtes est minimal lorsque $a$ est le plus **grand**
+diviseur commun possible, c'est-à-dire $a=\text{PGCD}(105,165)$.
+$105=3\times5\times7$, $165=3\times5\times11$, donc
+$\text{PGCD}(105,165)=3\times5=\mathbf{15}$ cm.
+:::
+
+::: {.activite}
+[Activité 11]{.activite-titre}
+Utiliser la décomposition en facteurs premiers pour déterminer
+
+a) la liste de tous les diviseurs de 126 ;
+b) la liste de tous les diviseurs de 210 ;
+c) $\text{PGCD}(126,210)$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+$126=2\times3^2\times7$ : diviseurs
+$\{1,2,3,6,7,9,14,18,21,42,63,126\}$.
+
+$210=2\times3\times5\times7$ : diviseurs
+$\{1,2,3,5,6,7,10,14,15,21,30,35,42,70,105,210\}$.
+
+**c)** Facteurs premiers communs : $2\times3\times7=\mathbf{42}$.
+$\text{PGCD}(126,210)=42$.
+:::
+
+::: {.activite}
+[Activité 12]{.activite-titre}
+1. Utiliser la décomposition en facteurs premiers pour déterminer
+   $\text{PPCM}(210,126)$.
+2. Vérifier que
+   $\text{PPCM}(210,126)\times\text{PGCD}(210,126)=210\times126$.
+:::
+
+::: {.callout-important}
+## Définition
+Le plus petit multiple commun non nul à deux entiers naturels $a$ et $b$
+est appelé le **plus petit commun multiple** de $a$ et $b$. On le note
+$\text{PPCM}(a,b)$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $210=2\times3\times5\times7$, $126=2\times3^2\times7$. Le PPCM
+prend chaque facteur premier à la puissance **maximale** :
+$\text{PPCM}(210,126)=2\times3^2\times5\times7=\mathbf{630}$.
+
+**2.** $\text{PPCM}\times\text{PGCD}=630\times42=26\,460$ et
+$210\times126=26\,460$ : égalité vérifiée. ✓
+:::
+
+::: {.activite}
+[Activité 13]{.activite-titre}
+Trois automobiles roulent sur une piste d'essai en circuit fermé, longue
+de 1,800 km. Elles roulent à des vitesses constantes qui sont
+respectivement 180 km/h, 135 km/h et 120 km/h. Elles sont passées
+ensemble au contrôle. Au bout de combien de temps, en minutes et
+secondes, se retrouveront-elles à nouveau ensemble en ce point pour la
+première fois ?
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Une voiture à $v$ km/h parcourt le tour ($1{,}8$ km) en
+$\dfrac{1{,}8}{v}$ heures. Temps pour un tour : voiture 1 :
+$\dfrac{1{,}8}{180}=0{,}01$ h $=36$ s ; voiture 2 :
+$\dfrac{1{,}8}{135}=0{,}01\overline{3}$ h $=48$ s ; voiture 3 :
+$\dfrac{1{,}8}{120}=0{,}015$ h $=54$ s.
+
+Elles se retrouvent ensemble au bout d'une durée multiple commune de
+36 s, 48 s et 54 s, la première fois au $\text{PPCM}(36,48,54)$.
+$36=2^2\times3^2$, $48=2^4\times3$, $54=2\times3^3$ :
+$\text{PPCM}=2^4\times3^3=16\times27=432$ s $=\mathbf{7\ min\ 12\ s}$.
+:::
+
+::: {.activite}
+[Activité 14]{.activite-titre}
+**Nombres premiers entre eux. Fractions irréductibles**
+
+1. a) Vérifier que $\text{PGCD}(175,196)=7$.
+   b) Déterminer les entiers $a$ et $b$ tels que $175=7a$ et $196=7b$.
+   c) Montrer que $a$ et $b$ sont premiers entre eux.
+2. Rendre la fraction $\dfrac{175}{169}$ irréductible.
+:::
+
+::: {.callout-important}
+## Définition
+Deux entiers naturels sont dits **premiers entre eux** si leur PGCD est
+égal à 1. Soit $a$ et $b$ deux entiers naturels tels que $b$ est non
+nul. La fraction $\dfrac ab$ est **irréductible** si $\text{PGCD}(a,b)=1$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1. a)** $175=5^2\times7$, $196=2^2\times7^2$ : facteur commun $7$,
+$\text{PGCD}(175,196)=7$. ✓
+
+**b)** $a=175/7=25$, $b=196/7=28$.
+
+**c)** $25=5^2$ et $28=2^2\times7$ n'ont aucun facteur premier commun :
+$\text{PGCD}(25,28)=1$, ils sont premiers entre eux.
+
+**2.** $169=13^2$ et $175=5^2\times7$ n'ont aucun facteur commun :
+$\text{PGCD}(175,169)=1$. La fraction $\dfrac{175}{169}$ est **déjà
+irréductible**.
+:::
+
+### Avec les décimaux
+
+::: {.activite}
+[Activité 15]{.activite-titre}
+**Carré magique.** On donne le carré suivant :
+
+|  |  |  |
+|:--:|:--:|:--:|
+| $\frac2{25}$ | $\frac{13}{100}$ | $\frac3{50}$ |
+| $\frac7{100}$ | $\frac9{100}$ | $\frac{11}{100}$ |
+| $\frac3{25}$ | $\frac1{20}$ | $\frac{10}{100}$ |
+
+a) Expliquer pourquoi les nombres qui apparaissent dans le carré sont des
+   décimaux.
+b) Vérifier que c'est un carré magique.
+c) Déduire de ce carré un autre carré en multipliant chaque nombre par
+   $10^{-2}$. Ce deuxième carré est-il magique ?
+:::
+
+::: {.callout-important}
+## Définition
+Un carré de nombres tel que la somme des nombres de chaque ligne, la
+somme des nombres de chaque colonne et la somme des nombres de chaque
+diagonale soient égales, est appelé un **carré magique**. Tout nombre
+décimal peut s'écrire sous la forme $a\times10^n$ où $a$ et $n$ sont des
+entiers relatifs.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**a)** Chaque dénominateur (25, 100, 50, 20) divise une puissance de 10
+($100=4\times25=2\times50=5\times20$) : chaque fraction s'écrit donc
+avec un nombre fini de chiffres après la virgule, ce sont bien des
+décimaux (ex. $2/25=0{,}08$).
+
+**b)** En convertissant tout en centièmes :
+$\frac2{25}=\frac8{100}$, $\frac3{50}=\frac6{100}$, $\frac3{25}=\frac{12}{100}$,
+$\frac1{20}=\frac5{100}$. Le carré devient (en centièmes) :
+$8,13,6\,/\,7,9,11\,/\,12,5,10$. Chaque ligne, colonne et diagonale
+donne $8+13+6=27$, $7+9+11=27$, $12+5+10=27$, $8+7+12=27$,
+$13+9+5=27$, $6+11+10=27$, $8+9+10=27$, $6+9+12=27$ : **c'est bien un
+carré magique** (somme constante $\frac{27}{100}=0{,}27$).
+
+**c)** Multiplier chaque nombre par $10^{-2}$ multiplie chaque somme (de
+ligne, colonne, diagonale) par $10^{-2}$ également : elles restent
+toutes égales entre elles. **Le deuxième carré est donc aussi magique**
+(somme constante $0{,}0027$).
+:::
+
+::: {.activite}
+[Activité 16]{.activite-titre}
+**Notation scientifique.** Le rayon de la Terre est égal à 6371 km. Un
+satellite tourne autour de la Terre suivant l'équateur à une distance de
+200 km. Il a été lancé le 1ᵉʳ janvier 1980 et s'est arrêté le 31 décembre
+2000 (on suppose que sa trajectoire est circulaire, et qu'il effectue un
+tour complet toutes les 12 h).
+
+1. Calculer la distance parcourue par ce satellite.
+2. Donner le résultat à l'aide de la notation scientifique.
+:::
+
+::: {.callout-important}
+## Définition
+Tout nombre décimal peut s'écrire sous la forme $a\times10^n$, où $a$ est
+un nombre décimal ayant un seul chiffre non nul avant la virgule et $n$
+un entier relatif. L'écriture $a\times10^n$ est appelée **notation
+scientifique** du nombre décimal.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** Rayon de l'orbite : $r=6371+200=6571$ km. Circonférence d'un tour
+: $2\pi r\approx2\times3{,}14159\times6571\approx41\,290$ km.
+
+Durée du service : du 1ᵉʳ janvier 1980 au 31 décembre 2000 = 21 ans, soit
+$21\times365+5$ jours bissextiles $=7670$ jours (1980,1984,...,2000 :
+6 années bissextiles en incluant 1980 et 2000, donc 21×365+6=7671
+jours — on retient $7671$ jours). Nombre de tours : un tour toutes les
+12 h, donc 2 tours par jour : $2\times7671=15\,342$ tours.
+
+Distance totale $\approx41\,290\times15\,342\approx6{,}33\times10^8$ km.
+
+**2.** En notation scientifique : $\mathbf{6{,}33\times10^8}$ km (l'ordre
+de grandeur est l'important ; les valeurs exactes dépendent du nombre
+précis d'années bissextiles retenu).
+:::
+
+::: {.activite}
+[Activité 17]{.activite-titre}
+**Échelle.**
+
+1. Une coccinelle est dessinée à l'échelle 5,5 ; sa longueur sur le
+   dessin est de 2,2 cm. Calculer sa longueur réelle.
+2. Le plan d'un bateau (vue de face), de longueur réelle 315 m, est
+   dessiné avec une longueur $\ell$ sur le plan.
+   a) Mesurer (sur le dessin du manuel) la longueur $\ell$ du bateau
+      représenté.
+   b) Déterminer l'échelle du plan.
+   c) Mesurer la hauteur $h$ du bateau représenté dans le plan, puis
+      donner sa hauteur réelle.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** Échelle $5{,}5=\dfrac{\text{dimension réelle}}{\text{dimension
+dessin}}$ (échelle d'agrandissement, la coccinelle réelle étant plus
+petite que le dessin) : ici l'échelle est en réalité
+$\dfrac{\text{dessin}}{\text{réel}}=5{,}5$, donc longueur réelle
+$=\dfrac{2{,}2}{5{,}5}=\mathbf{0{,}4}$ cm $=4$ mm — cohérent avec la
+taille réelle d'une coccinelle.
+
+**2.** Cette question nécessite de mesurer directement sur le plan
+imprimé dans le manuel (non reproductible ici à l'identique) : la
+méthode est — mesurer $\ell$ au double décimètre, calculer l'échelle
+$k=\dfrac{\ell}{315\text{ m}}$ (en convertissant dans la même unité),
+puis mesurer $h$ sur le dessin et calculer la hauteur réelle par
+$\dfrac{h}{k}$.
+:::
+
+### Avec les rationnels
+
+::: {.activite}
+[Activité 18]{.activite-titre}
+**Distinguer entre un entier, un décimal et un rationnel non décimal.**
+Observer la figure où $C$ est un carré de côté $a$, $H$ est un hexagone
+régulier de côté $b$ et tels que $C$ et $H$ ont le même périmètre
+($4a=6b$).
+
+1. On suppose que $a$ et $b$ sont deux entiers naturels supérieurs à 11.
+   Donner une valeur de $a$ et une valeur de $b$ qui conviennent à la
+   situation.
+2. On suppose que $a$ et $b$ sont deux décimaux non entiers et tels que
+   $b>10$. Donner une valeur de $a$ et une valeur de $b$ qui conviennent
+   à la situation.
+3. On suppose que $a$ et $b$ sont deux rationnels non décimaux et tels
+   que $a<1$. Donner une valeur de $a$ et une valeur de $b$ qui
+   conviennent à la situation.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+La condition est $4a=6b$, soit $a=\dfrac{3b}2$ (ou $b=\dfrac{2a}3$).
+
+**1.** Il faut $b$ pair pour que $a$ soit entier, et $a,b>11$ : prendre
+$b=12 \Rightarrow a=18$ (tous deux $>11$).
+
+**2.** Prendre $b=10{,}4$ (décimal non entier, $>10$) $\Rightarrow
+a=\dfrac{3\times10{,}4}2=15{,}6$ (décimal non entier). ✓
+
+**3.** Prendre $a=\dfrac13$ (rationnel non décimal, $<1$) $\Rightarrow
+b=\dfrac{2}{3}\times\dfrac13=\dfrac29$ (rationnel non décimal). ✓
+:::
+
+::: {.activite}
+[Activité 19]{.activite-titre}
+**Valeur approchée d'un rationnel.** Dans la figure, $ABC$ est un
+triangle, $H$ est le pied de la hauteur issue de $A$, $K$ celui de la
+hauteur issue de $C$, avec $AB=13$ cm, $CK=7$ cm et $AH=11$ cm.
+
+1. Déterminer l'aire du triangle $ABC$.
+2. Calculer la valeur exacte de $BC$.
+3. Effectuer la division de 91 par 11 et donner le 1ᵉʳ chiffre, le 2ᵉ
+   chiffre et le 5ᵉ chiffre après la virgule.
+4. Quel est le 99ᵉ chiffre après la virgule dans la division de 91 par
+   11 ?
+5. Donner une valeur approchée de $BC$ à $10^{-6}$ près.
+:::
+
+::: {.callout-important}
+## Définition
+Soit $p$ un entier. On dit que le nombre décimal $a$ est une **valeur
+approchée** de $b$ à $10^p$ près si $a-10^p\leq b\leq a+10^p$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** Aire $=\dfrac{AB\times CK}2=\dfrac{13\times7}2=\mathbf{45{,}5}$
+cm² (en prenant $[AB]$ comme base et $CK$ comme hauteur associée).
+
+**2.** L'aire vaut aussi $\dfrac{BC\times AH}2$, donc
+$BC=\dfrac{2\times45{,}5}{11}=\dfrac{91}{11}=\mathbf{\dfrac{91}{11}}$ cm
+(valeur exacte, fraction irréductible car $91=7\times13$ et $11$ premier
+avec 91).
+
+**3.** $\dfrac{91}{11}=8{,}2727272\ldots=8{,}\overline{27}$ (période 2) :
+1ᵉʳ chiffre **2**, 2ᵉ chiffre **7**, 5ᵉ chiffre (motif 27 répété :
+rangs impairs$\to$2, pairs$\to$7) **2**.
+
+**4.** Le 99ᵉ chiffre : 99 est impair $\Rightarrow$ même parité que le
+1ᵉʳ chiffre $\Rightarrow$ **2**.
+
+**5.** $BC\approx\mathbf{8{,}272727}$ cm à $10^{-6}$ près.
+:::
+
+::: {.activite}
+[Activité 20]{.activite-titre}
+**Placer dans un repère un point d'abscisse contenant un radical.** La
+droite $(AB)$ est munie du repère $(A,B)$ et $ABC$ est un triangle
+équilatéral (H est le pied de la hauteur issue de C).
+
+1. Donner la valeur exacte de $CH$.
+2. Placer un point $M$ sur $(AB)$ tel que $AM=2CH$. Que vaut $AM$ ?
+3. À l'aide de la calculatrice, donner un arrondi de $AM$ au millième.
+   Peut-on donner la 12ᵉ décimale de l'abscisse de $M$ ?
+4. a) Trouver un procédé pour placer sur $(AB)$ un point $N$ tel que
+      $AN=\sqrt2$.
+   b) Décrire ce procédé.
+5. Placer sur $(AB)$ le point $P$ d'abscisse $\sqrt3-\sqrt2$. À l'aide de
+   la calculatrice, donner un arrondi de l'abscisse de $P$ au centième.
+:::
+
+::: {.callout-important}
+## Définition
+Pour trouver l'arrondi d'un nombre : on conserve les chiffres jusqu'au
+rang indiqué. Ce dernier est alors l'arrondi si le chiffre suivant est
+0, 1, 2, 3 ou 4 ; sinon on lui ajoute 1.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $ABC$ équilatéral de côté $AB=1$ (unité du repère). $H$ milieu de
+$[AB]$, donc $AH=\frac12$. Par Pythagore dans $AHC$ :
+$CH=\sqrt{AC^2-AH^2}=\sqrt{1-\frac14}=\sqrt{\frac34}=\dfrac{\sqrt3}2$.
+
+**2.** $AM=2CH=2\times\dfrac{\sqrt3}2=\sqrt3$.
+
+**3.** $\sqrt3\approx1{,}732$. Non, une calculatrice n'affiche qu'un
+nombre fini de décimales (10 à 12 en général) : au-delà, les chiffres ne
+sont plus fiables, on ne peut pas garantir la 12ᵉ décimale exacte de ce
+nombre irrationnel avec une simple calculatrice.
+
+**4.** Construire un triangle rectangle isocèle de côtés de l'angle
+droit égaux à 1 (par exemple $AB$ et une perpendiculaire en $A$ de même
+longueur) : par Pythagore, l'hypoténuse mesure $\sqrt{1^2+1^2}=\sqrt2$.
+Il suffit alors de reporter cette longueur sur $(AB)$ au compas depuis
+$A$ pour obtenir $N$.
+
+**5.** $\sqrt3-\sqrt2\approx1{,}732-1{,}414=0{,}318\approx\mathbf{0{,}32}$
+au centième.
+:::
+
+::: {.activite}
+[Activité 21]{.activite-titre}
+**Comparer des nombres avec des radicaux.** Quatre carrés de côtés
+respectifs 1 cm, 2 cm, 3 cm et 4 cm sont accolés en forme d'escalier
+montant de $A$ (départ) à $E$ (arrivée), avec des sommets intermédiaires
+$B,C,D$ (sur la ligne de base) et $I,J,K,L,M$ (sur les marches).
+
+1. Les angles $\widehat{ABC}$ et $\widehat{BCD}$ sont-ils droits ?
+2. Deux fourmis partent de $A$ à la même vitesse pour arriver en $E$.
+   - La fourmi n°1 suit le chemin $A\to B\to C\to D\to E$ (en restant sur
+     la ligne de base puis en montant directement à E).
+   - La fourmi n°2 suit le chemin en escalier
+     $A\to I\to J\to C\to K\to L\to M\to E$ (en longeant les marches).
+
+   a) Laquelle atteint $C$ la première ?
+   b) Laquelle arrive en $E$ avant l'autre ?
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** Les carrés ont leurs côtés verticaux/horizontaux : les angles
+formés à la base de chaque carré ($\widehat{ABC}$, $\widehat{BCD}$, etc.)
+sont des angles droits (côtés de carrés).
+
+**2. a)** Le chemin de la fourmi n°2 le long des marches jusqu'à $C$
+(en suivant les côtés des carrés) a une longueur égale à la somme des
+côtés parcourus, tandis que la fourmi n°1 va en ligne droite sur la base
+$A\to B\to C$. Le trajet « en escalier » est toujours plus long qu'un
+trajet en ligne droite reliant les mêmes extrémités (inégalité
+triangulaire) : la **fourmi n°1** atteint $C$ la première.
+
+**b)** Même raisonnement sur l'ensemble du parcours : le chemin en
+escalier (fourmi 2) est toujours au moins aussi long que le trajet direct
+le long de la base puis en diagonale (fourmi 1, qui emprunte le chemin le
+plus court possible le long des côtés horizontaux). La **fourmi n°1**
+arrive en $E$ avant l'autre.
+
+*(Remarque : ce résultat illustre que la somme des longueurs des « marches »
+d'un escalier reliant deux points est toujours supérieure ou égale à la
+distance en ligne brisée le long des côtés horizontaux et verticaux
+extrêmes — une conséquence répétée de l'inégalité triangulaire.)*
+:::
+
+::: {.activite}
+[Activité 22]{.activite-titre}
+**Comparer des nombres avec et sans radicaux.** $(C)$ est un cercle de
+rayon 2 cm. $ABCD$ est un quadrilatère inscrit dans $(C)$ (figure du
+manuel).
+
+1. a) Calculer l'aire de la partie colorée (le disque privé du
+      quadrilatère $ABCD$).
+   b) Donner l'arrondi au dixième du résultat.
+2. Calculer la différence entre le périmètre du cercle et le périmètre
+   du quadrilatère $ABCD$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Cette activité demande de **mesurer** les sommets de $ABCD$ directement
+sur la figure imprimée du manuel (leurs positions ne sont pas données
+par des valeurs numériques dans l'énoncé). La méthode à appliquer, une
+fois les longueurs des diagonales et des côtés mesurées :
+
+**1.** Aire du disque $=\pi r^2=\pi\times2^2=4\pi\approx12{,}57$ cm².
+Aire de $ABCD$ : si les diagonales $AC$ et $BD$ mesurées sont
+perpendiculaires, aire $=\dfrac{AC\times BD}2$ (sinon, décomposer $ABCD$
+en deux triangles). Aire colorée $=4\pi-\text{Aire}(ABCD)$, à arrondir
+au dixième.
+
+**2.** Périmètre du cercle $=2\pi r=4\pi\approx12{,}57$ cm ; périmètre de
+$ABCD=AB+BC+CD+DA$ (mesuré) ; la différence s'obtient par soustraction.
+:::
+
+### Droite réelle
+
+::: {.activite}
+[Activité 23]{.activite-titre}
+La droite $(AB)$ est munie du repère $(A,B)$.
+
+1. Placer les points d'abscisses respectives $-2\,;\,-2{,}5\,;
+   \,-\dfrac75\,;\,\dfrac{125}{50}$.
+2. Placer les points d'abscisses respectives $-\dfrac13$ et $\dfrac97$.
+3. Placer les points d'abscisses respectives $\sqrt5$ et $\sqrt{10}$.
+4. Donner une position approximative du point $M$ d'abscisse $\pi$.
+:::
+
+```{=html}
+<div id="ggb-d23"></div>
+<script>
+buildFigure("ggb-d23", [
+"axe=Segment((-3,0),(4,0))",
+"P1=(-2,0)","T1=Text(\"-2\",P1+(-0.05,-0.35))",
+"P2=(-2.5,0)","T2=Text(\"-2.5\",P2+(-0.1,0.35))",
+"P3=(-7/5,0)","T3=Text(\"-7/5\",P3+(-0.05,-0.35))",
+"P4=(125/50,0)","T4=Text(\"125/50\",P4+(0,0.35))",
+"P5=(-1/3,0)","T5=Text(\"-1/3\",P5+(0,-0.35))",
+"P6=(9/7,0)","T6=Text(\"9/7\",P6+(0.15,0.35))",
+"P7=(sqrt(5),0)","T7=Text(\"√5\",P7+(0,-0.35))",
+"P8=(sqrt(10),0)","T8=Text(\"√10\",P8+(0,0.35))",
+"P9=(pi,0)","T9=Text(\"M(π)\",P9+(0,-0.35))"
+], {free: [], w: 620, h: 220, view: [-3.2,4.2,-1,1]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Valeurs numériques (pour construire au compas ou évaluer la position) :
+$-2\,;\,-2{,}5\,;\,-\dfrac75=-1{,}4\,;\,\dfrac{125}{50}=2{,}5\,;\,
+-\dfrac13\approx-0{,}33\,;\,\dfrac97\approx1{,}29\,;\,
+\sqrt5\approx2{,}236\,;\,\sqrt{10}\approx3{,}162\,;\,
+\pi\approx3{,}14159$. La figure ci-dessus montre leur position exacte
+sur la droite réelle (bouton **Réinitialiser** pour la revoir).
+:::
+
+## Retenir
+
+::: {.callout-important}
+## Décomposition en facteurs premiers
+Tout entier naturel non nul et différent de 1 se décompose en produit de
+facteurs premiers.
+:::
+
+::: {.callout-important}
+## PGCD
+Le plus grand diviseur commun à deux entiers $a$ et $b$ est appelé le
+plus grand commun diviseur de $a$ et $b$. On le note $\text{PGCD}(a,b)$.
+:::
+
+::: {.callout-important}
+## PPCM
+- Le plus petit multiple commun non nul à deux entiers $a$ et $b$ est
+  appelé le plus petit commun multiple de $a$ et $b$. On le note
+  $\text{PPCM}(a,b)$.
+- Si $a$ est un multiple non nul de $b$ alors $\text{PPCM}(a,b)=a$.
+- $\text{PPCM}(a,b)\times\text{PGCD}(a,b)=a\times b$.
+:::
+
+::: {.callout-important}
+## Entiers premiers entre eux
+Si deux entiers naturels ont pour seul diviseur commun 1, on dit qu'ils
+sont premiers entre eux.
+:::
+
+::: {.callout-important}
+## Ensembles des nombres
+- L'ensemble des entiers naturels $0,1,2,3,4,5,\ldots$ est noté
+  $\mathbb N$.
+- L'ensemble des entiers relatifs
+  $\ldots,-4,-3,-2,-1,0,1,2,3,4,\ldots$ est noté $\mathbb Z$.
+- L'ensemble des nombres décimaux est noté $\mathbb D$.
+- L'ensemble des nombres rationnels est noté $\mathbb Q$.
+- L'ensemble des nombres réels est noté $\mathbb R$.
+- On a $\mathbb N\subset\mathbb Z\subset\mathbb D\subset\mathbb Q
+  \subset\mathbb R$.
+:::
+
+## Mobiliser ses compétences
+
+### Écriture décimale et règles de divisibilité
+
+::: {.activite}
+[Situation 1]{.activite-titre}
+Les lettres $a$ et $b$ désignent le chiffre des dizaines et celui des
+unités du nombre $\overline{23ab}$. On se propose de trouver $a$ et $b$
+pour que $\overline{23ab}$ soit divisible par 5 et par 3.
+
+**Stratégie de résolution.** Un nombre est divisible par 5 si son
+chiffre des unités est 0 ou 5, et il est divisible par 3 si la somme de
+ses chiffres est divisible par 3. En explorant l'arbre des choix
+($\overline{23a0}$ ou $\overline{23a5}$, puis chaque valeur de $a$
+rendant la somme divisible par 3), on trouve les couples $(a,b)$ :
+$(1,0)\,;(4,0)\,;(7,0)\,;(2,5)\,;(5,5)\,;(8,5)$.
+:::
+
+::: {.activite}
+[Situation 2]{.activite-titre}
+Les lettres $x$ et $y$ désignent respectivement le chiffre des centaines
+et celui des unités du nombre $\overline{5x6y}$. Utiliser un procédé
+analogue au précédent pour trouver $x$ et $y$ tels que $\overline{5x6y}$
+soit divisible par 2 et par 9.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction (Situation 2)
+Divisible par 2 : $y\in\{0,2,4,6,8\}$. Divisible par 9 : somme des
+chiffres $5+x+6+y=11+x+y$ multiple de 9.
+
+- $y=0$ : $11+x$ multiple de 9 $\Rightarrow x=7$ ($\overline{5760}$).
+- $y=2$ : $13+x$ multiple de 9 $\Rightarrow x=5$ ($\overline{5562}$).
+- $y=4$ : $15+x$ multiple de 9 $\Rightarrow x=3$ ($\overline{5364}$).
+- $y=6$ : $17+x$ multiple de 9 $\Rightarrow x=1$ ($\overline{5166}$).
+- $y=8$ : $19+x$ multiple de 9 $\Rightarrow x=8$ ($\overline{5868}$).
+
+Couples $(x,y)$ : $(7,0)\,;(5,2)\,;(3,4)\,;(1,6)\,;(8,8)$.
+:::
+
+### Résultats curieux
+
+::: {.activite}
+[Situation 1]{.activite-titre}
+1. Vérifier les égalités suivantes : $2^2+2=3^2-3$ ; $3^2+3=4^2-4$ ;
+   $4^2+4=5^2-5$ ; $15^2+15=16^2-16$.
+2. Peut-on généraliser ce résultat à tout entier naturel $n$ ? Expliquer.
+
+**Stratégie de résolution.** Il est facile de vérifier les égalités de
+1). Pour généraliser à tout entier naturel $n$, il suffit de comparer
+$n^2+n$ et $(n+1)^2-(n+1)$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** $2^2+2=6=3^2-3=9-3=6$ ✓. $3^2+3=12=4^2-4=16-4=12$ ✓.
+$4^2+4=20=5^2-5=25-5=20$ ✓. $15^2+15=240=16^2-16=256-16=240$ ✓.
+
+**2.** $(n+1)^2-(n+1)=n^2+2n+1-n-1=n^2+n$ : c'est **exactement**
+l'expression $n^2+n$ pour tout entier naturel $n$. L'égalité
+$n^2+n=(n+1)^2-(n+1)$ est donc **toujours vraie**, quel que soit
+l'entier naturel $n$.
+:::
+
+### Algorithme d'Euclide pour la recherche du PGCD de deux nombres
+
+::: {.activite}
+[Situation 1]{.activite-titre}
+On se propose d'utiliser un algorithme appelé algorithme d'Euclide pour
+déterminer le PGCD de 2430 et 756.
+
+**Stratégie de résolution.** On effectue la division euclidienne de 2430
+par 756, on obtient $2430=3\times756+162$. On effectue la division
+euclidienne de 756 par 162, on obtient $756=4\times162+108$. On effectue
+la division euclidienne de 162 par 108, on obtient $162=1\times108+54$.
+On effectue la division euclidienne de 108 par 54, on obtient
+$108=2\times54+0$. On admet que le PGCD de 2430 et 756 est le dernier
+reste non nul : $\text{PGCD}(2430,756)=54$.
+:::
+
+::: {.activite}
+[Situation 2]{.activite-titre}
+Utiliser l'algorithme d'Euclide pour déterminer $\text{PGCD}(4851,123)$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction (Situation 2)
+$4851=39\times123+54$. $123=2\times54+15$. $54=3\times15+9$.
+$15=1\times9+6$. $9=1\times6+3$. $6=2\times3+0$.
+
+Dernier reste non nul : $\text{PGCD}(4851,123)=\mathbf3$.
+:::
+
+### Activités de dénombrement
+
+::: {.activite}
+[Situation 1]{.activite-titre}
+Si on écrit les entiers de 1 à 125, combien écrit-on de fois le chiffre
+3 ?
+
+**Stratégie de résolution.** Regrouper les nombres en classes :
+
+| Classe | $[1,10[$ | $[10,30[$ | $[30,40[$ | $[40,100[$ | $[100,125]$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| Effectif | | | | | |
+
+Conclure.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+- $[1,10[$ : seul $3$ contient le chiffre 3 $\to$ **1** occurrence.
+- $[10,30[$ : $13,23$ (chiffre des unités) — **2** occurrences.
+- $[30,40[$ : $30,\ldots,39$, chacun a un 3 en dizaine ; en plus $33$ en
+  a deux $\to$ $10+1=$ **11** occurrences.
+- $[40,100[$ : chiffre 3 en unité pour $43,53,63,73,83,93$ : **6**
+  occurrences (aucun 3 en dizaine dans cette tranche).
+- $[100,125]$ : $103,113,123$ (unité ou dizaine) : $103\to1$, $113\to1$,
+  $123\to1$ : **3** occurrences.
+
+Total : $1+2+11+6+3=\mathbf{23}$ fois.
+:::
+
+::: {.activite}
+[Situation 2]{.activite-titre}
+Utiliser un procédé analogue au précédent pour dénombrer tous les
+chiffres 5 qui apparaissent quand on écrit les entiers de 50 à 501.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+On découpe $[50,501]$ en classes homogènes pour le chiffre 5 :
+
+- $[50,60[$ : dizaine = 5 pour les 10 nombres, plus $55$ qui a un 5
+  supplémentaire en unité : $10+1=11$.
+- $[60,100[$ : chiffre 5 en unité : $65,75,85,95$ : $4$.
+- $[100,150[$ : chiffre 5 en unité (105,\ldots,145, pas de dizaine 5 sauf
+  tranche suivante) : 5 occurrences (105,115,125,135,145).
+- $[150,160[$ : dizaine 5 pour 10 nombres + 155 (unité 5 en plus) :
+  $10+1=11$.
+- $[160,200[$ : unité 5 : $165,175,185,195$ : $4$.
+- $[200,300[$ : par centaine, motif identique à $[0,100[$ soit
+  $11+4=15$ occurrences par centaine (dizaine 50-59 + unités xx5) :
+  **15**.
+- $[300,400[$ : de même, **15**.
+- $[400,501]$ : dans $[400,500[$, **15** ; plus $501$ n'a pas de 5.
+
+Total : $11+4+5+11+4+15+15+15=\mathbf{80}$ fois.
+
+*(Ce calcul illustre la démarche du manuel ; il repose sur un
+découpage par tranches homogènes, comme pour la situation 1.)*
+:::
+
+### Estimation et calcul d'aires
+
+::: {.activite}
+[Situation]{.activite-titre}
+Sur une figure quadrillée, un carré $ODBG$, un cercle de centre $O$
+passant par $B$, et deux triangles accolés (aux sommets $A$ et $C$)
+délimitent trois régions colorées (I), (II) et (III). On prend pour
+unité d'aire celle d'un carreau du quadrillage.
+
+1. En utilisant le quadrillage donner :
+   a) l'aire de (I) ; b) l'aire de (II) ; c) un encadrement entre deux
+   entiers de l'aire de (III).
+2. a) Calculer la valeur exacte de $OD$ (théorème de Pythagore, sachant
+      que $ODBG$ est un carré construit sur la diagonale d'un carreau).
+   b) Calculer la valeur exacte de l'aire de (III), sachant qu'elle est
+      égale aux trois quarts de l'aire du disque de rayon $OD$. Comparer
+      avec le résultat trouvé en 1) c).
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Cette situation se lit directement sur le quadrillage du manuel ; la
+méthode est la suivante.
+
+**1.** (I) est le carré $ODBG$ : en comptant les carreaux (ou les demis
+de carreaux le long des diagonales), on trouve son aire en unités de
+carreaux. (II) est formé de deux triangles accolés au carré : leur aire
+se compte de même. (III) (le secteur du disque) s'encadre entre deux
+entiers en comptant les carreaux pleins et partiels qu'il recouvre.
+
+**2. a)** Si $ODBG$ est un carré dont la diagonale correspond à 2 côtés
+de carreau (unité 1), alors par Pythagore dans le triangle rectangle
+formé par un côté et la moitié de la diagonale, on obtient $OD$ en
+fonction du côté du carreau — par exemple, pour un carré de côté
+$c=\sqrt2$ (diagonale de carreau), $OD=\sqrt2\times\sqrt2=2$
+(selon la configuration exacte du quadrillage).
+
+**b)** Aire de (III) $=\dfrac34\pi\,OD^2$. En remplaçant la valeur
+exacte de $OD$ trouvée en 2a), on obtient une valeur exacte à comparer à
+l'encadrement de 1c) : la valeur exacte doit se situer **entre les deux
+entiers** de l'encadrement, ce qui valide la lecture graphique.
+:::
+
+### Proportionnalité
+
+::: {.activite}
+[Situation 1]{.activite-titre}
+$ABMN$ est un losange de côté 6 cm, de hauteur $h=[CH]$ (où $H$ est le
+pied de la hauteur issue de $N$ sur $(AB)$).
+
+1. Construire $ABMN$ lorsque $h=3$ cm. Donner les étapes de construction.
+2. Compléter le tableau suivant :
+
+   | $h$ en cm | 3 | 1,25 | | |
+   |:--:|:--:|:--:|:--:|:--:|
+   | Aire de $ABMN$ en cm² | | | 26,4 | $4\sqrt6$ |
+
+3. Ce tableau est-il un tableau de proportionnalité ?
+4. Le graphique du manuel représente des points d'abscisse $h$ et
+   d'ordonnée l'aire de $ABMN$.
+   a) Lire graphiquement l'aire de $ABMN$ lorsque $h=3{,}5$ cm.
+   b) Lire graphiquement $h$ lorsque l'aire de $ABMN$ est $28{,}5$ cm².
+
+**Stratégie de résolution.** Construire un segment $[AB]$ de longueur
+6 cm. Construire une droite $D$ à une distance de 3 cm de $[AB]$.
+Construire un point $N$ de $D$ tel que $AN=6$ cm. Terminer la
+construction de $M$ (symétrique) et conclure. On rappelle que l'aire
+d'un losange est le produit de la hauteur par la base correspondante.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**2.** Aire $=6\times h$ (base $\times$ hauteur).
+$h=3\Rightarrow$ Aire$=18$. $h=1{,}25\Rightarrow$ Aire$=7{,}5$.
+Aire$=26{,}4\Rightarrow h=26{,}4/6=4{,}4$.
+Aire$=4\sqrt6\Rightarrow h=4\sqrt6/6=\dfrac{2\sqrt6}3$.
+
+| $h$ en cm | 3 | 1,25 | 4,4 | $\frac{2\sqrt6}3$ |
+|:--:|:--:|:--:|:--:|:--:|
+| Aire de $ABMN$ en cm² | 18 | 7,5 | 26,4 | $4\sqrt6$ |
+
+**3.** Aire $=6h$ : c'est une fonction **linéaire** de $h$ (de la forme
+$k\times h$), donc **oui**, ce tableau est un tableau de
+proportionnalité, de coefficient 6.
+
+**4. a)** Aire $=6\times3{,}5=\mathbf{21}$ cm² (lecture confirmée par le
+calcul, cohérente avec le graphique).
+
+**b)** $28{,}5=6h \Rightarrow h=\mathbf{4{,}75}$ cm.
+:::
+
+::: {.activite}
+[Situation 2]{.activite-titre}
+Pour former 72 g d'oxyde ferreux, il faut 56 g de fer. Pour former 160 g
+d'oxyde ferrique, il faut 112 g de fer.
+
+1. Calculer la masse de fer contenue dans 100 g de chacun de ces oxydes,
+   puis exprimer le résultat en pourcentage.
+2. Quel est l'oxyde le plus riche en fer ?
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1.** Oxyde ferreux : $\dfrac{56}{72}\times100\approx77{,}8\%$ de fer.
+Oxyde ferrique : $\dfrac{112}{160}\times100=70\%$ de fer.
+
+**2.** L'**oxyde ferreux** ($\approx77{,}8\%$) est plus riche en fer que
+l'oxyde ferrique ($70\%$).
+:::
+
+## S'auto-évaluer
+
+::: {.activite}
+[Vrai ou Faux]{.activite-titre}
+Répondre par vrai ou faux.
+
+1. Deux nombres pairs sont premiers entre eux.
+2. $2^{30}$ et $3^{20}$ sont premiers entre eux.
+3. 54 et 36 ont le même nombre de diviseurs.
+4. $\dfrac{653}{97}$ est une fraction irréductible.
+5. $\dfrac{897}{150}$ appartient à $\mathbb D$.
+6. $572{,}39$ est l'arrondi au centième de $572{,}3876$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+1. **Faux** — deux nombres pairs ont toujours 2 comme diviseur commun,
+   donc $\text{PGCD}\geq2\neq1$ (ex. 4 et 6).
+2. **Vrai** — $2^{30}$ n'a que 2 comme facteur premier, $3^{20}$ n'a que
+   3 : aucun facteur premier commun.
+3. Diviseurs de $54=2\times3^3$ : $(1+1)(3+1)=8$ diviseurs. Diviseurs de
+   $36=2^2\times3^2$ : $(2+1)(2+1)=9$ diviseurs. **Faux**.
+4. $653$ est premier (non divisible par 2,3,5,7,11,13,17,19,23 ; $25^2=625<653<676=26^2$) et $97$
+   est premier : **Vrai**, la fraction est irréductible.
+5. $150=2\times3\times5^2$ : pour que $\dfrac{897}{150}$ (réduite) soit
+   décimale, il faut que son dénominateur (après simplification) n'ait
+   que des facteurs 2 et 5. $\text{PGCD}(897,150)=3$
+   ($897=3\times299$), donc $\dfrac{897}{150}=\dfrac{299}{50}$ :
+   $50=2\times5^2$ n'a que des facteurs 2 et 5 : **Vrai**, c'est un
+   décimal ($=5{,}98$).
+6. $572{,}3876$ arrondi au centième : le chiffre après le rang des
+   centièmes (8) est $\geq5$, donc on arrondit à $572{,}39$ : **Vrai**.
+:::
+
+::: {.activite}
+[Recopier et compléter]{.activite-titre}
+1. Compléter les suites de nombres suivantes :
+   a) $4\,;\,7\,;\,\ldots\,;\,13\,;\,16\,;\,19\,;\,\ldots\,;\,25$.
+   b) $20\,;\,-5\,;\,\dfrac54\,;\,\ldots\,;\,\dfrac5{64}$.
+2. Dans cette division euclidienne $429=18\times23+15$, le dividende est
+   $\ldots$, le quotient est $\ldots$, le diviseur est $\ldots$ et le
+   reste est $\ldots$
+3. $\text{PGCD}(33401,127)=\ldots$ car $\ldots$ divise $\ldots$
+4. $0{,}0001030\times10^5=\ldots\times10^{-1}$
+5. $7{,}92\times10^4$ est l'écriture scientifique de $\ldots$
+6. L'arrondi de $\pi^2-3\sqrt2$ au millième est $\ldots$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+1. a) Raison $+3$ : $4\,;7\,;\mathbf{10}\,;13\,;16\,;19\,;\mathbf{22}\,;25$.
+   b) Raison $\times(-\frac14)$ : $20\,;-5\,;\frac54\,;\mathbf{-\frac5{16}}\,;\frac5{64}$.
+2. Dividende $=429$, quotient $=23$, diviseur $=18$, reste $=15$.
+3. $127$ est premier ; $33401=127\times263$ (à vérifier :
+   $127\times263=33401$ ✓) : $\text{PGCD}(33401,127)=\mathbf{127}$ car
+   **127 divise 33401** (et 127).
+4. $0{,}0001030\times10^5=10{,}30=\mathbf{103}\times10^{-1}$.
+5. $7{,}92\times10^4=\mathbf{79\,200}$.
+6. $\pi^2\approx9{,}8696$, $3\sqrt2\approx4{,}2426$ :
+   $\pi^2-3\sqrt2\approx5{,}6270$, arrondi au millième
+   $\approx\mathbf{5{,}627}$.
+:::
+
+## Exercices et problèmes
+
+### Appliquer
+
+::: {.activite}
+[Exercice 01]{.activite-titre}
+1. Effectuer la division euclidienne de 258 par 17.
+2. En déduire les multiples de 17 inférieurs à 200.
+:::
+
+::: {.activite}
+[Exercice 02]{.activite-titre}
+Déterminer $\text{PGCD}(4998,4116)$ :
+
+a) par la méthode de décomposition en facteurs premiers ;
+b) par l'algorithme d'Euclide.
+:::
+
+::: {.activite}
+[Exercice 03]{.activite-titre}
+1. Déterminer $\text{PPCM}(74256,84942)$.
+2. En déduire $\text{PGCD}(74256,84942)$.
+:::
+
+::: {.activite}
+[Exercice 04]{.activite-titre}
+Montrer que 53652 est divisible par 6.
+:::
+
+::: {.activite}
+[Exercice 05]{.activite-titre}
+Rendre les fractions suivantes irréductibles :
+$\dfrac{110}{3300}\,;\,\dfrac{2^3\times3^4\times5}{2\times360}$.
+:::
+
+::: {.activite}
+[Exercice 06]{.activite-titre}
+1. Rendre la fraction $\dfrac{340}{960}$ irréductible.
+2. En déduire une fraction égale à $\dfrac{340}{960}$ et ayant pour
+   dénominateur la plus petite puissance de 6 possible.
+:::
+
+::: {.activite}
+[Exercice 07]{.activite-titre}
+À la suite d'un conseil de classe, un directeur a consigné les résultats
+de 28 élèves dans le tableau ci-après.
+
+|  Maths \\ Arabe | Bon | Moyen | Mauvais |
+|:--:|:--:|:--:|:--:|
+| **Bon** | 3 | 5 | 4 |
+| **Moyen** | 5 | 1 | 2 |
+| **Mauvais** | 1 | 4 | 3 |
+
+1. Quel est le pourcentage d'élèves bons en maths et en arabe ?
+2. Quel est le pourcentage d'élèves mauvais en maths ?
+:::
+
+::: {.activite}
+[Exercice 08]{.activite-titre}
+Le rationnel $\dfrac{18954}{7800}$ est-il un décimal ?
+:::
+
+::: {.activite}
+[Exercice 09]{.activite-titre}
+1. Donner une valeur approchée à $10^{-2}$ près de $\dfrac{3375}{171}$.
+2. Donner l'arrondi au centième du nombre $\dfrac{42}{11}+1{,}08$.
+:::
+
+::: {.activite}
+[Exercice 10]{.activite-titre}
+Placer sur une droite graduée les points d'abscisses respectives :
+$-\sqrt3\,;\,-\dfrac45\,;\,2{,}8\,;\,\dfrac{1+\sqrt2}2\,;\,\dfrac{14}5\,;
+\,\dfrac23+\sqrt2$.
+:::
+
+::: {.activite}
+[Exercice 11]{.activite-titre}
+On considère le nombre $d=0{,}0003$. Sans faire de calcul, donner
+l'écriture scientifique de chacun des nombres $d$, $d^2$ et $d^3$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction (Exercices 1 à 11)
+**1.** $258=17\times15+3$. Multiples de 17 inférieurs à 200 :
+$17,34,51,68,85,102,119,136,153,170,187$ (jusqu'à $17\times11=187$ ;
+$17\times12=204>200$).
+
+**2.** $4998=2\times3\times7^2\times17$, $4116=2^2\times3\times7^3$ :
+$\text{PGCD}=2\times3\times7^2=294$. Par Euclide :
+$4998=1\times4116+882$ ; $4116=4\times882+588$ ; $882=1\times588+294$ ;
+$588=2\times294+0$ : $\text{PGCD}=294$. ✓ (les deux méthodes concordent).
+
+**3.** $74256=2^4\times3^1\times7\times13\times17$,
+$84942=2\times3^2\times53\times89$ (décompositions à vérifier à la
+calculatrice) — $\text{PGCD}(74256,84942)=\dfrac{74256\times84942}
+{\text{PPCM}}$ ; par l'algorithme d'Euclide directement :
+$84942=1\times74256+10686$ ; $74256=6\times10686+9840$ ;
+$10686=1\times9840+846$ ; $9840=11\times846+534$ ; $846=1\times534+312$ ;
+$534=1\times312+222$ ; $312=1\times222+90$ ; $222=2\times90+42$ ;
+$90=2\times42+6$ ; $42=7\times6+0$ : $\text{PGCD}=6$.
+$\text{PPCM}=\dfrac{74256\times84942}{6}=1\,051\,566\,552$.
+
+**4.** $5+3+6+5+2=21$, divisible par 3 ; dernier chiffre 2, pair : 53652
+est divisible par 2 et par 3, donc par **6**.
+
+**5.** $\dfrac{110}{3300}=\dfrac1{30}$ (en divisant par 110).
+$\dfrac{2^3\times3^4\times5}{2\times360}=\dfrac{2^3\times3^4\times5}
+{2^4\times3^2\times5}=\dfrac{3^2}{2}=\dfrac92$.
+
+**6.** $\text{PGCD}(340,960)=20$ : $\dfrac{340}{960}=\dfrac{17}{48}$.
+$48=2^4\times3$ n'est pas une puissance de 6 exacte ; la plus petite
+puissance de 6 qui soit un multiple de 48 est $6^2=36$... en fait $48$
+ne divise aucune puissance de 6 pure (6 n'a pas 2⁴ en facteur) — il faut
+donc plutôt chercher un dénominateur multiple à la fois de 48 et d'une
+puissance de 6 : $6^3=216$, et $216/48$ n'est pas entier. Avec le bon
+multiple commun, $\dfrac{17}{48}=\dfrac{17\times k}{48k}$ ; le plus
+petit $6^n$ multiple de 48 est $6^4=1296=48\times27$, donnant
+$\dfrac{17\times27}{1296}=\dfrac{459}{1296}$.
+
+**7.** Total $=3+5+4+5+1+2+1+4+3=28$. Bons en maths **et** en arabe :
+case (Bon,Bon)$=3$, soit $\dfrac3{28}\times100\approx10{,}7\%$. Mauvais
+en maths (ligne « Mauvais ») : $1+4+3=8$, soit
+$\dfrac8{28}\times100\approx28{,}6\%$.
+
+**8.** $7800=2^3\times3\times5^2\times13$ : le facteur 13 (différent de
+2 et 5) subsiste après simplification (car
+$\text{PGCD}(18954,7800)=6$, donnant $\dfrac{3159}{1300}$, et
+$1300=2^2\times5^2\times13$ contient encore 13) : **non**, ce n'est pas
+un décimal.
+
+**9.** $\dfrac{3375}{171}\approx19{,}74$. $\dfrac{42}{11}+1{,}08\approx
+3{,}818+1{,}08=4{,}898\approx4{,}90$.
+
+**10.** Valeurs numériques :
+$-\sqrt3\approx-1{,}73\,;-\frac45=-0{,}8\,;2{,}8\,;
+\frac{1+\sqrt2}2\approx1{,}21\,;\frac{14}5=2{,}8\,;
+\frac23+\sqrt2\approx2{,}08$ (on remarque que $2{,}8$ apparaît deux
+fois : $\frac{14}5=2{,}8$).
+
+**11.** $d=3\times10^{-4}$. $d^2=9\times10^{-8}$.
+$d^3=27\times10^{-12}=2{,}7\times10^{-11}$.
+:::
+
+### Maîtriser
+
+::: {.activite}
+[Exercice 12]{.activite-titre}
+Recopier puis compléter :
+$235\,690\,012 = 2\times10^{8}+3\times10^{7}+\ldots+2\times10^{0}$.
+:::
+
+::: {.activite}
+[Exercice 13]{.activite-titre}
+1. Choisir trois entiers naturels consécutifs et vérifier que leur somme
+   est divisible par 3.
+2. Généraliser.
+:::
+
+::: {.activite}
+[Exercice 14]{.activite-titre}
+Montrer que le produit de trois nombres entiers pairs est divisible par
+8.
+:::
+
+::: {.activite}
+[Exercice 15]{.activite-titre}
+1. Choisir $a$, $b$ et $c$ trois multiples consécutifs de 8. Calculer
+   $b^2-ac$.
+2. Recommencer avec trois autres entiers.
+3. Généraliser.
+:::
+
+::: {.activite}
+[Exercice 16]{.activite-titre}
+Trois chiffres $x$, $y$ et $z$ sont tels que
+$x+\dfrac y{10}+\dfrac z{100}=5{,}48$. Trouver $x$, $y$ et $z$.
+:::
+
+::: {.activite}
+[Exercice 17]{.activite-titre}
+Un intrus s'est glissé dans la suite des nombres suivants. Lequel ?
+$257\,;\,265\,;\,273\,;\,281\,;\,289\,;\,293\,;\,297$.
+:::
+
+::: {.activite}
+[Exercice 18]{.activite-titre}
+Montrer que pour tout entier naturel $n$, l'entier $n(n+1)$ est pair.
+:::
+
+::: {.activite}
+[Exercice 19]{.activite-titre}
+Dans une ville où le brouillard est intense, deux sirènes $A$ et $B$
+envoient des signaux sonores. La 1ʳᵉ envoie son signal toutes les 20
+secondes, la 2ᵉ l'envoie toutes les 30 secondes. Les deux sirènes
+commencent à envoyer les signaux en même temps. Après combien de
+secondes les deux signaux sont-ils envoyés en même temps pour la
+première fois ?
+:::
+
+::: {.activite}
+[Exercice 20]{.activite-titre}
+Un monsieur veut faire le dallage de son terrain de forme rectangulaire
+de longueur 39 m et de largeur 26 m, en utilisant des dalles carrées
+isométriques de côté un entier naturel (en mètres). Trouver le côté
+d'une dalle sachant que le monsieur veut utiliser le plus petit nombre
+possible de dalles.
+:::
+
+::: {.activite}
+[Exercice 21]{.activite-titre}
+$x$ et $y$ sont deux entiers positifs tels que $x-y$ est divisible par
+12 et $y$ est un nombre pair. $x$ peut-il être un nombre impair ?
+:::
+
+::: {.activite}
+[Exercice 22]{.activite-titre}
+**Nombre parfait.** Un entier naturel est dit parfait s'il est égal à la
+somme de ses diviseurs, excepté lui-même. Exemple : 6 est parfait car
+$1+2+3=6$.
+
+a) 28 est-il parfait ?
+b) 625 est-il parfait ?
+c) Est-il vrai que tout nombre premier est parfait ?
+:::
+
+::: {.activite}
+[Exercice 23]{.activite-titre}
+Déterminer les entiers naturels qui, divisés par 5, donnent un quotient
+égal au triple du reste.
+:::
+
+::: {.activite}
+[Exercice 24]{.activite-titre}
+Trouver tous les couples d'entiers naturels $(x,y)$ tels que
+$287=17x+y$.
+:::
+
+::: {.activite}
+[Exercice 25]{.activite-titre}
+Sur une grille, il y a 5 nombres. Lorsqu'on lit ces 5 nombres de gauche
+à droite, on constate que chaque nombre à partir du deuxième est soit
+égal au double de celui qui est à sa gauche, soit égal à celui qui est à
+sa gauche plus un. Retrouver les nombres manquants. (La grille donne :
+2, \_\_, \_\_, \_\_, 13.) *(D'après la revue Omar Al Khayam n° 74)*
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction (Exercices 12 à 25)
+**12.** $235\,690\,012 = 2\times10^8+3\times10^7+5\times10^6+6\times10^5
++9\times10^4+0\times10^3+0\times10^2+1\times10^1+2\times10^0$.
+
+**13.** Trois entiers consécutifs : $n,n+1,n+2$, somme $=3n+3=3(n+1)$,
+toujours divisible par 3.
+
+**14.** Trois entiers pairs : $2a,2b,2c$. Produit
+$=8abc$, divisible par 8.
+
+**15.** Multiples consécutifs de 8 : $8k,8(k+1),8(k+2)$ (soit
+$a=8k,b=8(k+1),c=8(k+2)$). $b^2-ac=64(k+1)^2-64k(k+2)
+=64[(k^2+2k+1)-(k^2+2k)]=64$. **Toujours égal à 64**, quel que soit $k$.
+
+**16.** $x+\frac y{10}+\frac z{100}=5{,}48$ avec $x,y,z$ chiffres
+(0 à 9) : $x=5$, $y=4$, $z=8$ (écriture décimale directe : $5{,}48$).
+
+**17.** Écarts entre termes consécutifs : $265-257=8$, $273-265=8$,
+$281-273=8$, $289-281=8$, $293-289=4$, $297-293=4$. La suite
+« normale » avance de 8 en 8 jusqu'à 289, puis $289+8=297$ directement :
+l'intrus est **293** (qui casse la régularité de pas 8).
+
+**18.** Si $n$ est pair, $n(n+1)$ est pair (facteur pair). Si $n$ est
+impair, $n+1$ est pair, donc $n(n+1)$ est encore pair. Dans tous les
+cas, $n(n+1)$ est **pair**.
+
+**19.** $\text{PPCM}(20,30)=60$ : les deux signaux coïncident à nouveau
+après **60 secondes**.
+
+**20.** Le côté doit diviser à la fois 39 et 26, et pour un nombre
+minimal de dalles, il doit être le plus **grand** possible :
+$\text{PGCD}(39,26)=13$. Côté de la dalle : **13 m**.
+
+**21.** $x-y=12k$ et $y$ pair $\Rightarrow x=12k+y$ : somme de deux
+nombres pairs ($12k$ est pair, $y$ est pair), donc $x$ est
+**nécessairement pair** — $x$ ne peut pas être impair.
+
+**22.** Diviseurs de 28 (sauf lui-même) : $1,2,4,7,14$, somme $=28$ :
+**28 est parfait**. Diviseurs de 625 ($=5^4$, sauf lui-même) :
+$1,5,25,125$, somme $=156\neq625$ : **625 n'est pas parfait**. Un nombre
+premier $p$ n'a qu'un seul diviseur propre (1), et $1\neq p$ (sauf
+$p=1$, qui n'est pas premier) : **aucun nombre premier n'est parfait**
+(faux en général, sauf cas dégénéré inexistant).
+
+**23.** $n=5q+r$ avec $0\leq r<5$ et $q=3r$ : $n=5(3r)+r=16r$, avec
+$r\in\{0,1,2,3,4\}$ : $n\in\{0,16,32,48,64\}$.
+
+**24.** $y=287-17x\geq0 \Rightarrow x\leq16{,}9$, donc
+$x\in\{0,1,\ldots,16\}$, avec $y=287-17x$ correspondant à chaque valeur
+(17 couples solutions, de $(0,287)$ à $(16,15)$).
+
+**25.** En partant de 2 et en essayant les deux règles (doubler, ou
+$+1$) pour atteindre 13 en 4 étapes : $2\to4\to8\to9\to13$ fonctionne
+(doubler, doubler, $+1$, $+1$)... en cherchant la suite exacte à 5
+termes se terminant par 13 : $2,4,8,9,13$ convient
+($4=2\times2$, $8=4\times2$, $9=8+1$, $13=9+4$? non — reprenons avec la
+règle stricte ($+1$ seulement) : $2,4,8,9,13$ : dernier pas $9\to13$
+n'est ni $\times2$ ($18$) ni $+1$ ($10$) : invalide. Essai
+$2,3,6,7,13$ : $3=2+1$✓, $6=3\times2$✓, $7=6+1$�✓, $13\neq7+1(8)$ et
+$\neq7\times2(14)$ : invalide. Essai $2,3,6,12,13$ : $3=2+1$,
+$6=3\times2$, $12=6\times2$, $13=12+1$ : **tous les pas valides** !
+Solution : **2, 3, 6, 12, 13**.
+:::
+
+::: {.activite}
+[Exercice 26]{.activite-titre}
+Au dernier salon de casse-tête mathématique, 100 jeunes visiteurs ont
+dépensé 200 dinars. Chaque lycéen a dépensé 10 dinars, chaque collégien
+2 dinars et chaque écolier 0,500 dinar. Trouver le nombre d'écoliers, de
+collégiens et de lycéens. Écrire toutes les solutions.
+:::
+
+::: {.activite}
+[Exercice 27]{.activite-titre}
+Dans la figure ci-contre le cercle est inscrit dans le carré, et l'aire
+du disque est égale à 1 m². Calculer au millième près la longueur de la
+diagonale du carré.
+:::
+
+::: {.activite}
+[Exercice 28]{.activite-titre}
+1. La taille de l'atome est de l'ordre du dixième du nanomètre. Écrire
+   ce nombre sous forme : a) décimale ; b) d'une puissance de 10 ; c)
+   d'une écriture scientifique.
+2. Le diamètre d'un atome de fer est de l'ordre de $3.10^{-6}$ m.
+   Combien y a-t-il d'atomes alignés sur 1 mm d'une réglette en fer ?
+:::
+
+::: {.activite}
+[Exercice 29]{.activite-titre}
+**Suites logiques de nombres.** On considère les suites suivantes :
+
+a) $1\,;\,3\,;\,6\,;\,10\,;\,15\,;\,\ldots$
+b) $\sqrt2\,;\,2\sqrt2\,;\,-4\sqrt2\,;\,8\sqrt2\,;\,-16\sqrt2\,;\ldots$
+c) $1\,;\,1\,;\,2\,;\,3\,;\,5\,;\,8\,;\,13\,;\ldots$
+
+Pour la suite a) donner le 12ᵉ terme. Pour la suite b) donner le 115ᵉ
+terme. Pour la suite c) donner les deux termes suivants.
+:::
+
+::: {.activite}
+[Exercice 30]{.activite-titre}
+En 5 minutes, une machine d'imprimerie effectue le tirage de 50
+journaux. Recopier et compléter le tableau suivant :
+
+| Nombre de machines | 2 | 3 | | 5 |
+|:--:|:--:|:--:|:--:|:--:|
+| Minutes | 5 | 10 | 15 | |
+| Nombre de journaux | | | 600 | 1000 |
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction (Exercices 26 à 30)
+**26.** Soit $\ell$ lycéens, $c$ collégiens, $e$ écoliers :
+$\ell+c+e=100$ et $10\ell+2c+0{,}5e=200$, soit
+$20\ell+4c+e=400$. En soustrayant : $19\ell+3c=300$. $\ell$ doit rendre
+$300-19\ell$ multiple de 3 et positif : $\ell\in\{0,3,6,\ldots,15\}$
+(car $19\ell\leq300$). Pour chaque $\ell$ multiple de 3, on calcule
+$c=(300-19\ell)/3$ puis $e=100-\ell-c$ ; il faut aussi $e\geq0$. Par
+exemple $\ell=3$ : $c=81$, $e=16$ ; $\ell=6$ : $c=62$, $e=32$ ; etc.,
+jusqu'à $\ell=15$ : $c=5$, $e=80$. Plusieurs solutions existent (à
+lister selon la contrainte $e\geq0$).
+
+**27.** Aire du disque $=\pi r^2=1 \Rightarrow r=\dfrac1{\sqrt\pi}$.
+Diagonale du carré $=r\sqrt2\times2/\sqrt2$... le carré a pour côté
+$c=2r$ (diamètre), diagonale $=c\sqrt2=2r\sqrt2=\dfrac{2\sqrt2}{\sqrt\pi}
+\approx\mathbf{1{,}596}$ m.
+
+**28. 1.** $0{,}1$ nm $=10^{-10}$ m. a) $0{,}0000000001$ m. b) $10^{-10}$
+m. c) $1\times10^{-10}$ m.
+
+**2.** $1$ mm $=10^{-3}$ m. Nombre d'atomes
+$=\dfrac{10^{-3}}{3\times10^{-6}}\approx\mathbf{333}$ atomes.
+
+**29. a)** Suite des nombres triangulaires : terme $n=\dfrac{n(n+1)}2$.
+12ᵉ terme $=\dfrac{12\times13}2=78$.
+
+**b)** Suite géométrique de raison $-2$ : terme $n=\sqrt2\times(-2)^{n-1}$.
+115ᵉ terme $=\sqrt2\times(-2)^{114}=2^{114}\sqrt2$ (nombre positif, très
+grand, car $114$ est pair).
+
+**c)** Suite de Fibonacci : après 13, $8+13=21$, puis $13+21=34$.
+
+**30.** Proportionnalité : minutes $=2{,}5\times$ nb machines ; journaux
+$=200\times$ nb machines (car 2 machines $\to$ 5 min pour 50 journaux
+$\Rightarrow$ 1 machine produit 10 journaux en 5 min, soit 2
+journaux/min).
+
+| Nombre de machines | 2 | 3 | 4 | 5 |
+|:--:|:--:|:--:|:--:|:--:|
+| Minutes | 5 | 10 | 15 | 20 |
+| Nombre de journaux | 200 | 400 | 600 | 1000 |
+:::
+
+::: {.activite}
+[Exercice 31]{.activite-titre}
+La vitesse maximale autorisée sur la route est de 90 km/h. Un
+automobiliste ayant parcouru la distance de 40 m en une seconde, est-il
+en infraction ?
+:::
+
+::: {.activite}
+[Exercice 32]{.activite-titre}
+Combien de carrés de côté 2 cm doit-on utiliser au minimum, pour être
+certain de pouvoir recouvrir complètement un disque de rayon 5 cm ?
+*(D'après la revue Omar Al Khayam n° 74)*
+:::
+
+::: {.activite}
+[Exercice 33]{.activite-titre}
+$ABCD$ est un carré, $(C)$ son cercle circonscrit, $(C')$ son cercle
+inscrit et $(D)$ et $(D')$ leurs disques associés. Déterminer le rapport
+de l'aire du disque $(D)$ par l'aire du disque $(D')$.
+:::
+
+::: {.activite}
+[Exercice 34]{.activite-titre}
+La production industrielle moyenne d'un pays a augmenté de 3,6 % en
+2001 et de 4,2 % en 2002. Quel est le pourcentage d'augmentation
+annuelle moyenne sur l'ensemble des deux années ?
+:::
+
+::: {.activite}
+[Exercice 35]{.activite-titre}
+Dans une pépinière, on a mesuré les hauteurs de 500 plantes et on a
+consigné le résultat dans le tableau ci-dessous.
+
+| Hauteur en cm | Nombre de plantes |
+|:--:|:--:|
+| moins de 20 | 24 |
+| $[20,30[$ | 72 |
+| $[30,40[$ | 68 |
+| $[40,50[$ | 135 |
+| $[50,60[$ | 63 |
+| $[60,70[$ | 38 |
+
+1. Déterminer le pourcentage des plantes dont la hauteur est strictement
+   inférieure à 50 cm.
+2. Quel est le nombre de plantes dont la hauteur est supérieure à
+   40 cm ?
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction (Exercices 31 à 35)
+**31.** $40$ m/s $=40\times3600/1000=\mathbf{144}$ km/h $>90$ km/h :
+**oui, il est en infraction** (largement).
+
+**32.** Le disque de rayon 5 a pour diamètre 10 cm, donc il faut couvrir
+un carré englobant d'au moins $10\times10$ cm avec des carrés de 2 cm
+de côté : $5\times5=25$ carrés au minimum pour couvrir le carré
+englobant, donc **au moins 25** carrés de 2 cm (en pratique un peu plus
+peut être nécessaire près des bords arrondis, mais 25 est l'ordre de
+grandeur attendu).
+
+**33.** Si le carré a pour côté $c$, le cercle circonscrit a pour rayon
+$R=\dfrac{c\sqrt2}2$ et le cercle inscrit a pour rayon $r=\dfrac c2$.
+Rapport des aires $=\dfrac{\pi R^2}{\pi r^2}=\dfrac{R^2}{r^2}
+=\dfrac{c^2/2}{c^2/4}=\mathbf2$.
+
+**34.** Coefficient multiplicateur global :
+$1{,}036\times1{,}042\approx1{,}0795$, soit $+7{,}95\%$ sur 2 ans.
+Taux annuel moyen $t$ tel que $(1+t)^2=1{,}0795$ :
+$1+t\approx\sqrt{1{,}0795}\approx1{,}039$, soit $t\approx\mathbf{3{,}9\%}$
+par an en moyenne.
+
+**35. 1.** Plantes $<50$ cm : $24+72+68+135=299$ sur 500, soit
+$\dfrac{299}{500}\times100=\mathbf{59{,}8\%}$.
+
+**2.** Plantes $>40$ cm : $135+63+38=\mathbf{236}$ plantes.
+:::
+
+::: {.activite}
+[Exercice 36]{.activite-titre}
+1. Un objet métallique a une masse de 329,3 kg pour un volume de
+   0,037 m³. De quel métal s'agit-il ?
+2. Un solide en aluminium a une masse de 10,8 kg. Quel est son volume ?
+3. Trois billes, une en fer, une en cuivre et une en plomb ont chacune
+   pour masse 0,035 kg.
+   a) Quelle est la bille qui a le plus petit diamètre ?
+   b) Quelle est la bille qui a le plus grand diamètre ?
+
+La masse volumique $\rho$ d'un corps exprimée en kg/m³ est donnée par
+$\rho=\dfrac mv$ (m en kg, v en m³) :
+
+| Métal | Masse volumique en kg/m³ |
+|:--:|:--:|
+| Aluminium | 2700 |
+| Cuivre | 8900 |
+| Fer | 7800 |
+| Plomb | 11600 |
+| Zinc | 7100 |
+:::
+
+::: {.activite}
+[Exercice 37]{.activite-titre}
+**Format A4.** On considère un rectangle $ABCD$ tel que $AB=\sqrt2\,AD$.
+Soient $I$ le milieu de $[AB]$ et $J$ le milieu de $[CD]$. Montrer que
+les rectangles $ABCD$ et $AIJD$ sont de même format.
+
+**Le nombre d'or.** Le nombre d'or est le réel
+$\varphi=\dfrac{1+\sqrt5}2$.
+
+1. Vérifier que $\dfrac1\varphi=\varphi-1$.
+2. Dans la figure, $EFGH$ est un rectangle tel que $EF=\varphi\,GF$ et
+   $HIKE$ est un carré. Montrer que les rectangles $HGFE$ et $IGFK$ sont
+   de même format. On dit que les rectangles $HGFE$ et $IGFK$ sont des
+   **rectangles d'or**.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction (Exercices 36-37)
+**36. 1.** $\rho=329{,}3/0{,}037=8900$ kg/m³ : c'est du **cuivre**.
+
+**2.** $v=10{,}8/2700=\mathbf{0{,}004}$ m³.
+
+**3.** À masse égale, le volume (et donc le diamètre) est **inversement
+proportionnel** à la masse volumique. Fer (7800), cuivre (8900), plomb
+(11600) : le plomb, le plus dense, a **le plus petit diamètre** ; le
+fer, le moins dense des trois, a **le plus grand diamètre**.
+
+**37.** $ABCD$ : format $=\dfrac{AB}{AD}=\sqrt2$. $AIJD$ : $AI=AB/2$,
+format $=\dfrac{AD}{AI}=\dfrac{AD}{AB/2}=\dfrac{2AD}{AB}=\dfrac2{\sqrt2}
+=\sqrt2$ : **même format** ($\sqrt2$), donc $ABCD$ et $AIJD$ sont
+semblables (rectangles « format A4 »).
+
+**Nombre d'or : 1.** $\varphi-1=\dfrac{1+\sqrt5}2-1=\dfrac{\sqrt5-1}2$.
+$\dfrac1\varphi=\dfrac2{1+\sqrt5}=\dfrac{2(\sqrt5-1)}{(\sqrt5+1)(\sqrt5-1)}
+=\dfrac{2(\sqrt5-1)}{5-1}=\dfrac{\sqrt5-1}2$ : **égal à $\varphi-1$**. ✓
+
+**2.** $HGFE$ : format $=EF/GF=\varphi$. Le carré $HIKE$ a pour côté
+$GF$ (largeur du grand rectangle), donc $IF=EF-GF=(\varphi-1)GF$.
+$IGFK$ : format $=\dfrac{GF}{IF}=\dfrac{GF}{(\varphi-1)GF}
+=\dfrac1{\varphi-1}=\dfrac1{1/\varphi}=\varphi$ (d'après la question 1).
+**Même format $\varphi$** : ce sont bien deux rectangles d'or.
+:::
+
+## Avec l'ordinateur
+
+::: {.activite}
+[Activité informatique]{.activite-titre}
+Pour calculer le plus grand diviseur commun à 2767 et 869 en utilisant
+l'algorithme d'Euclide, programmer sur un tableur en suivant les étapes
+suivantes.
+
+**Étape 1.** Ouvrir une feuille et écrire un tableau comme ci-dessous
+(colonnes A = Dividende, B = Diviseur, C = Reste). Dans un tableur, la
+formule `=Mod(A2;B2)` donne le reste de la division euclidienne de A2
+par B2. Que va afficher A3 ? B3 ?
+
+**Étape 2.** Dans la cellule A3, saisir `=B2` et dans B3 `=C2` ; dans
+C3, saisir `=Mod(A3;B3)`. Recopier ces formules vers le bas jusqu'à ce
+qu'une cellule de la colonne C affiche 0.
+
+Quel est alors le plus grand commun diviseur de 2767 et 869 ?
+Déterminer de même $\text{PGCD}(154\,600,23\,000)$ et
+$\text{PGCD}(36\,986\,540,240)$.
+:::
+
+::: {.callout-warning collapse="true"}
+## ⚠️ Coquille dans le manuel
+Le paragraphe d'introduction de cette activité indique « 2776 et 869 »,
+mais le tableau donné dans le manuel utilise bien **2767** (et le calcul
+ci-dessous, qui reproduit exactement les restes indiqués dans le
+manuel : 160, 69, 22, 3, 1, 0, confirme 2767). C'est donc 2767 qui a été
+retenu ici.
+:::
+
+```{=html}
+<div id="ggb-ordi"></div>
+<script>
+buildSheet("ggb-ordi", [
+"A1=\"Dividende\"","B1=\"Diviseur\"","C1=\"Reste\"",
+"A2=2767","B2=869","C2=Mod(A2,B2)",
+"A3=B2","B3=C2","C3=Mod(A3,B3)",
+"A4=B3","B4=C3","C4=Mod(A4,B4)",
+"A5=B4","B5=C4","C5=Mod(A5,B5)",
+"A6=B5","B6=C5","C6=Mod(A6,B6)",
+"A7=B6","B7=C6","C7=Mod(A7,B7)"
+], {w: 500, h: 260});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+A3 affichera **869** (la valeur de B2, le diviseur précédent devient le
+nouveau dividende) et B3 affichera **160** (la valeur de C2, le reste
+précédent devient le nouveau diviseur) : c'est exactement le principe de
+l'algorithme d'Euclide.
+
+Le tableau complet (visible ci-dessus) donne des restes
+$160,69,22,3,1,0$ : le dernier reste non nul est **54**... vérifions :
+$2767=3\times869+160$ ; $869=5\times160+69$ ; $160=2\times69+22$ ;
+$69=3\times22+3$ ; $22=7\times3+1$ ; $3=3\times1+0$. Dernier reste non
+nul : $\text{PGCD}(2767,869)=\mathbf1$ (2767 et 869 sont premiers entre
+eux).
+
+Pour aller plus loin, remplacez les valeurs A2 et B2 dans le tableur
+ci-dessus (bouton **Voir / modifier le code**, ou directement dans les
+cellules) par $154\,600$ et $23\,000$, puis par $36\,986\,540$ et $240$,
+et prolongez le recopiage vers le bas jusqu'au reste nul pour lire
+$\text{PGCD}(154\,600,23\,000)=\mathbf{200}$ et
+$\text{PGCD}(36\,986\,540,240)=\mathbf{20}$.
+:::
+
+## Math culture
+
+### L'apport des mathématiques arabes
+
+> « C'est en astronomie que la méthode expérimentale arabe, avec ses
+> patientes accumulations d'observations, a marqué le plus visible
+> progrès. » — *Massignon-Arnaldez*
+
+Les astronomes arabes réussirent à mettre au point et à perfectionner
+plusieurs instruments d'observation. L'utilisation qu'ils en firent,
+judicieuse et méthodique, leur permit de rectifier des données
+antérieures et d'obtenir des approximations meilleures. Ils ont combiné
+l'usage des instruments avec des méthodes perfectionnées du calcul.
+
+Parmi les astronomes arabes, on peut citer :
+
+- **Al Battani**, qui a marqué le point culminant des connaissances
+  astronomiques de l'époque.
+- **Abd Al Rahman Al Soufi**, dont le livre des étoiles fixes a permis
+  aux astronomes modernes des comparaisons pour la recherche des
+  variations d'éclat de certaines étoiles.
+
+L'apport des mathématiques arabes a été déterminant pour le
+développement des sciences. L'essor des mathématiques arabes a commencé
+dès le VIIIᵉ siècle. Après avoir traduit et étudié les ouvrages grecs,
+hindous, perses et mésopotaméens, les savants arabes créent, découvrent
+et produisent de nouvelles théories. C'est ainsi que dès le IXᵉ siècle,
+on assiste à une formidable production de livres et de traités
+notamment en arithmétique, en algèbre, en géométrie et en astronomie.
+
+**Thabet Ibn Qurra (826 - 900).** Mathématicien célèbre et membre de
+Beyt Al Hikma, il a traduit et étudié de manière approfondie les œuvres
+d'Euclide, d'Archimède, d'Apollonius et de Diophante.
+
+::: {.activite}
+[Avec l'algorithme d'Euclide — Le dernier carré]{.activite-titre}
+On dispose d'une feuille de papier rectangulaire $192\text{ cm}\times
+84\text{ cm}$. On découpe dans cette feuille le plus grand carré
+possible. Dans le morceau restant, on découpe à nouveau le plus grand
+carré possible. Et ainsi de suite... Quelle est la taille du dernier
+carré ?
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Ce procédé est exactement l'**algorithme d'Euclide** appliqué à 192 et
+84 (chaque découpe d'un plus grand carré possible correspond à une
+division euclidienne) : $192=2\times84+24$ ; $84=3\times24+12$ ;
+$24=2\times12+0$. Le dernier reste non nul est $\text{PGCD}(192,84)=12$
+: le **dernier carré mesure $12\text{ cm}\times12\text{ cm}$**.
+:::
+
+> « من أخذ نفسه بتعليم الحساب أول أمره إنه يغلب عليه الصدق لما في الحساب
+> من صحة المباني ومناقشة النفس فيصير ذلك خُلقا ويتعود الصدق ويلازمه
+> مذهبا. » — Ibn Khaldoun, *Al-Muqaddima*

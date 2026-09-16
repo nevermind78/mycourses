@@ -2078,6 +2078,32 @@ Répartition de 300 membres d'un club sportif selon taille $x_i$ (cm) et poids $
 Déterminer les distributions des effectifs marginaux selon la taille, puis selon le poids.
 :::
 
+Le tableau à double entrée est saisi tel quel (tailles en ligne,
+poids en colonne). Complétez les distributions marginales :
+
+- en **K2:K8**, l'effectif marginal de chaque taille : `=Sum(B2:J2)` en **K2**, puis idem ligne par ligne ;
+- en **B9:J9**, l'effectif marginal de chaque poids : `=Sum(B2:B8)` en **B9**, puis idem colonne par colonne.
+
+```{=html}
+<div id="gs-c2b-a1"></div>
+<script>
+buildSheet("gs-c2b-a1", [
+"A1=\"Taille\"","B1=60","C1=62.5","D1=65","E1=67.5","F1=70","G1=72.5","H1=75","I1=77.5","J1=80","K1=\"Total\"",
+"A2=160","B2=4","C2=3","D2=2","E2=0","F2=0","G2=0","H2=0","I2=0","J2=0",
+"A3=165","B3=0","C3=7","D3=17","E3=8","F3=1","G3=0","H3=0","I3=0","J3=0",
+"A4=170","B4=0","C4=2","D4=20","E4=30","F4=17","G4=4","H4=1","I4=0","J4=0",
+"A5=175","B5=0","C5=0","D5=7","E5=28","F5=36","G5=16","H5=5","I5=1","J5=0",
+"A6=180","B6=0","C6=0","D6=1","E6=6","F6=19","G6=22","H6=10","I6=4","J6=2",
+"A7=185","B7=0","C7=0","D7=0","E7=0","F7=4","G7=3","H7=8","I7=5","J7=1",
+"A8=190","B8=0","C8=0","D8=0","E8=0","F8=0","G8=2","H8=0","I8=2","J8=2",
+"A9=\"Total\""
+], {w: 900, h: 300});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 # Activité 1 — table à double entrée sous forme de triplets (taille, poids, effectif)
 donnees = [
@@ -2104,6 +2130,7 @@ for (taille, poids, effectif) in donnees:
     effectif_par_poids[index] = effectif_par_poids[index] + effectif
 print("effectif par poids :", effectif_par_poids)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -2134,6 +2161,28 @@ Distribution marginale selon le **poids** :
 Déterminer les effectifs et fréquences marginales de $X$ et $Y$ (taille et bénéfice mensuel moyen d'entreprises).
 :::
 
+Le tableau à double entrée est saisi tel quel. Complétez :
+
+- en **E2:E4**, l'effectif marginal de $X$ : `=Sum(B2:D2)` en **E2**, etc. ;
+- en **B5:D5**, l'effectif marginal de $Y$ : `=Sum(B2:B4)` en **B5**, etc. ;
+- en **F2:F4**, la fréquence marginale de $X$ : `=E2/10`, etc.
+
+```{=html}
+<div id="gs-c2b-a3"></div>
+<script>
+buildSheet("gs-c2b-a3", [
+"A1=\"X / Y\"","B1=\"[10;20[\"","C1=\"[20;30[\"","D1=\"[30;35[\"","E1=\"Total\"","F1=\"Fréq. X\"",
+"A2=10","B2=2","C2=0","D2=0",
+"A3=30","B3=1","C3=2","D3=0",
+"A4=60","B4=0","C4=1","D4=4",
+"A5=\"Total\""
+], {w: 620, h: 220});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 X = [10, 30, 60]
 Y_centres = [15, 25, 32.5]  # centres des classes [10;20[, [20;30[, [30;35[
@@ -2160,6 +2209,7 @@ print("effectif marginal de Y :", effectif_Y)
 # ✏️ Fréquences marginales = effectif marginal / n (à calculer avec une
 #    boucle, comme les effectifs ci-dessus).
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -2179,6 +2229,30 @@ fréquences 30 %, 30 %, 40 %.
 
 Distributions et fréquences marginales de $C$ et $S$, puis [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} et [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} de $S$.
 :::
+
+Le tableau est saisi tel quel, avec les centres de classe de $S$ en
+ligne 4 pour le calcul. Complétez :
+
+- en **E2:E3**, l'effectif marginal de $C$ : `=Sum(B2:D2)`, `=Sum(B3:D3)` ;
+- en **B4:D4** (déjà les centres), et en **B5:D5**, l'effectif marginal de $S$ : `=Sum(B2:B3)`, etc. ;
+- en **F2**, la moyenne de $S$ : `=Mean(B4:D4,B5:D5)` ;
+- en **F3**, l'écart type de $S$ : `=SD(B4:D4,B5:D5)`.
+
+```{=html}
+<div id="gs-c2b-a4"></div>
+<script>
+buildSheet("gs-c2b-a4", [
+"A1=\"Cat. / S\"","B1=\"[200;500[\"","C1=\"[500;800[\"","D1=\"[800;1000[\"","E1=\"Total\"","F1=\"S\"",
+"A2=\"Ouvrier\"","B2=170","C2=100","D2=0",
+"A3=\"Cadre\"","B3=0","C3=10","D3=20",
+"A4=\"Centre\"","B4=350","C4=650","D4=900",
+"A5=\"Total\"","F2=\"Moy. S\"","F3=\"Éc. S\""
+], {w: 720, h: 260});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 centres_S = [350, 650, 900]
@@ -2210,6 +2284,7 @@ for i in range(3):
 ecart_type_S = (somme_carres / n) ** 0.5
 (moyenne_S, ecart_type_S)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -2232,6 +2307,42 @@ $$\bar{S} = \frac{350\times170+650\times110+900\times20}{300} \approx 496{,}7 \t
 
 À chaque effectif non nul $n_{ij}$, on associe le point pondéré $M_{ij}(x_i,y_j)$. L'ensemble de ces points pondérés constitue le **nuage de points** de la série double ; $G(\bar X,\bar Y)$ en est le point moyen.
 :::
+
+Les 9 couples $(x_i,y_j)$ d'effectif non nul sont saisis en colonnes
+**A**/**B**/**C** ; les points sont déjà tracés avec une taille
+proportionnelle à leur effectif, et $G$ (en bleu) est calculé
+automatiquement. Complétez :
+
+- en **E1**, l'abscisse de $G$ : `=Mean(A2:A10,C2:C10)` ;
+- en **E2**, l'ordonnée de $G$ : `=Mean(B2:B10,C2:C10)`.
+
+```{=html}
+<div id="gsg-c2b-a5"></div>
+<script>
+buildSheetGraph("gsg-c2b-a5", [
+"A1=\"xi\"","B1=\"yj\"","C1=\"nij\"",
+"A2=2","B2=2","C2=1","A3=2","B3=3","C3=3",
+"A4=3","B4=3","C4=2","A5=3","B5=4","C5=1",
+"A6=4","B6=2","C6=1","A7=4","B7=3","C7=4","A8=4","B8=4","C8=4",
+"A9=5","B9=2","C9=2","A10=5","B10=3","C10=1","A11=5","B11=4","C11=2",
+"E1=\"Xg\"","E2=\"Yg\"",
+"M1=(A2,B2)","SetPointSize(M1,10)","ShowLabel(M1,false)",
+"M2=(A3,B3)","SetPointSize(M2,16)","ShowLabel(M2,false)",
+"M3=(A4,B4)","SetPointSize(M3,12)","ShowLabel(M3,false)",
+"M4=(A5,B5)","SetPointSize(M4,10)","ShowLabel(M4,false)",
+"M5=(A6,B6)","SetPointSize(M5,10)","ShowLabel(M5,false)",
+"M6=(A7,B7)","SetPointSize(M6,18)","ShowLabel(M6,false)",
+"M7=(A8,B8)","SetPointSize(M7,18)","ShowLabel(M7,false)",
+"M8=(A9,B9)","SetPointSize(M8,12)","ShowLabel(M8,false)",
+"M9=(A10,B10)","SetPointSize(M9,10)","ShowLabel(M9,false)",
+"M10=(A11,B11)","SetPointSize(M10,12)","ShowLabel(M10,false)",
+"G=(Mean(A2:A11,C2:C11),Mean(B2:B11,C2:C11))","SetPointSize(G,7)","ShowLabel(G,false)"
+], {w: 620, h: 380, view: [1,6,1,5], style: [["G",11,110,153]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 import matplotlib.pyplot as plt
@@ -2278,6 +2389,7 @@ plt.xlabel("nombre de personnes")
 plt.ylabel("nombre de pièces")
 plt.show()
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -2302,6 +2414,30 @@ Répartition de véhicules selon leur puissance $X$ (chevaux) et la durée pneum
 2. Déterminer les distributions marginales des effectifs de $X$ et de $Y$.
 3. Construire le nuage de points de cette série et placer le point moyen $G$.
 :::
+
+Le tableau est saisi tel quel. Complétez :
+
+- en **F1**, l'effectif total : `=Sum(B2:D4)` ;
+- en **F2**, le sous-total (puissance $\le3$ et durée $\ge20$, soit les 4 cellules en bas à droite de la colonne [15;20[) : `=Sum(C2:D3)` ;
+- en **F3**, la proportion : `=F2/F1` ;
+- en **E2:E4**, l'effectif marginal de $X$ : `=Sum(B2:D2)`, etc. ;
+- en **B5:D5**, l'effectif marginal de $Y$ : `=Sum(B2:B4)`, etc.
+
+```{=html}
+<div id="gs-c2b-a6"></div>
+<script>
+buildSheet("gs-c2b-a6", [
+"A1=\"X / Y\"","B1=\"[15;20[\"","C1=\"[20;25[\"","D1=\"[25;30[\"","E1=\"Total\"","F1=\"n total\"",
+"A2=2","B2=0","C2=5","D2=25","F2=\"Sous-tot.\"",
+"A3=3","B3=8","C3=20","D3=3","F3=\"Prop.\"",
+"A4=4","B4=30","C4=7","D4=2",
+"A5=\"Total\""
+], {w: 720, h: 260});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 X = [2, 3, 4]
@@ -2333,6 +2469,7 @@ for j in range(3):
         effectif_Y[j] = effectif_Y[j] + table[i][j]
 print("effectif_X :", effectif_X, " effectif_Y :", effectif_Y)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -2363,6 +2500,32 @@ Le nuage suivant représente la série statistique double donnant la répartitio
 | [4,4 ; 5[ | | | | | |
 :::
 
+Reportez dans la grille ci-dessous les effectifs lus sur le graphique
+du manuel (à la place des 0), exactement comme dans le tableau
+ci-dessus. Complétez ensuite les distributions marginales et le point
+moyen, comme à l'Activité 1 :
+
+- en **G2:G6**, l'effectif marginal du poids : `=Sum(B2:F2)`, etc. ;
+- en **B7:F7**, l'effectif marginal de la taille : `=Sum(B2:B6)`, etc.
+
+```{=html}
+<div id="gs-c2b-a7"></div>
+<script>
+buildSheet("gs-c2b-a7", [
+"A1=\"Poids/Taille\"","B1=44","C1=47","D1=50","E1=53","F1=56","G1=\"Total\"",
+"A2=\"2-2.6\"","B2=0","C2=0","D2=0","E2=0","F2=0",
+"A3=\"2.6-3.2\"","B3=0","C3=0","D3=0","E3=0","F3=0",
+"A4=\"3.2-3.8\"","B4=0","C4=0","D4=0","E4=0","F4=0",
+"A5=\"3.8-4.4\"","B5=0","C5=0","D5=0","E5=0","F5=0",
+"A6=\"4.4-5\"","B6=0","C6=0","D6=0","E6=0","F6=0",
+"A7=\"Total\""
+], {w: 820, h: 260});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 # Activité 7 — recopiez ici les effectifs lus sur le graphique du manuel,
 # sous la même forme que l'Activité 1 (données groupées) :
@@ -2373,6 +2536,7 @@ donnees = []
 #    point moyen du nuage, avec les mêmes boucles que l'Activité 1.
 donnees
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -2397,6 +2561,34 @@ Répartition de 25 élèves selon le nombre de séances de cinéma $X$ (mois pr�
 
 Classer les couples par $X$ croissant (puis $Y$ croissant), partager $[0;25[$ en 5 classes d'amplitude 5, dresser le tableau à double entrée, puis construire le nuage de points et son point moyen.
 :::
+
+Le tableau à double entrée déjà classé (résultat de l'étape 1)
+est saisi ci-dessous, avec les centres de classe de $Y$ en ligne 8 pour
+le calcul du point moyen. Complétez :
+
+- en **G2:G6**, l'effectif marginal de $X$ : `=Sum(B2:F2)`, etc. ;
+- en **B7:F7**, l'effectif marginal de $Y$ : `=Sum(B2:B6)`, etc. ;
+- en **I1**, $\bar X$ : `=Mean(A2:A6,G2:G6)` ;
+- en **I2**, $\bar Y$ : `=Mean(B8:F8,B7:F7)`.
+
+```{=html}
+<div id="gs-c2b-a8"></div>
+<script>
+buildSheet("gs-c2b-a8", [
+"A1=\"X / Y\"","B1=\"[0;5[\"","C1=\"[5;10[\"","D1=\"[10;15[\"","E1=\"[15;20[\"","F1=\"[20;25[\"","G1=\"Total\"","I1=\"Xg\"",
+"A2=0","B2=3","C2=2","D2=1","E2=0","F2=1","I2=\"Yg\"",
+"A3=1","B3=3","C3=3","D3=2","E3=1","F3=1",
+"A4=2","B4=2","C4=0","D4=1","E4=0","F4=1",
+"A5=3","B5=1","C5=0","D5=0","E5=0","F5=0",
+"A6=4","B6=2","C6=1","D6=0","E6=0","F6=0",
+"A7=\"Total\"",
+"A8=\"Centre Y\"","B8=2.5","C8=7.5","D8=12.5","E8=17.5","F8=22.5"
+], {w: 900, h: 280});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 X = [2,1,4,0,1,4,1,2,0,1,0,1,2,0,1,2,0,1,1,0,4,1,3,0,1]
@@ -2428,6 +2620,7 @@ for i in range(n):
 for ligne in table:
     print(ligne)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape

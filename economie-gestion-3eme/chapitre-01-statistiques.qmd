@@ -237,12 +237,25 @@ function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
 // du tableur (perspective "SG") : sert à construire des histogrammes,
 // diagrammes en boîte, polygones des effectifs cumulés, etc. directement
 // à partir des données saisies, en plus des calculs de cellules.
-var GSG = { apis: {}, initCmds: {}, views: {}, cleanups: {} };
+var GSG = { apis: {}, initCmds: {}, views: {}, styles: {}, cleanups: {} };
 
 function gsgApplyView(id, api) {
   var v = GSG.views[id];
   if (!v) return;
   try { api.setCoordSystem(v[0], v[1], v[2], v[3]); } catch (e) {}
+}
+
+// SetColor(...) via evalCommand ne modifie pas fiablement la couleur des
+// objets statistiques (Histogram, BoxPlot...) : on utilise les méthodes
+// natives de l'API (setColor / setFilling), appelées après la
+// construction, pour distinguer par exemple deux histogrammes superposés.
+function gsgApplyStyle(id, api) {
+  var styles = GSG.styles[id];
+  if (!styles) return;
+  styles.forEach(function (s) {
+    try { api.setColor(s[0], s[1], s[2], s[3]); } catch (e) {}
+    if (s.length > 4) { try { api.setFilling(s[0], s[4]); } catch (e) {} }
+  });
 }
 
 function gsgReset(id) {
@@ -251,6 +264,7 @@ function gsgReset(id) {
   api.newConstruction();
   try { api.setPerspective("SG"); } catch (e) {}
   gsRunCommands(api, GSG.initCmds[id]);
+  gsgApplyStyle(id, api);
   gsgApplyView(id, api);
   var container = document.getElementById(id);
   var ta = container.querySelector(".ggb-textarea");
@@ -269,6 +283,7 @@ function gsgApplyCode(id) {
   api.newConstruction();
   try { api.setPerspective("SG"); } catch (e) {}
   gsRunCommands(api, lines);
+  gsgApplyStyle(id, api);
   gsgApplyView(id, api);
   gsHideKeyboard(container);
 }
@@ -277,6 +292,7 @@ function buildSheetGraph(id, commands, opts) {
   opts = opts || {};
   GSG.initCmds[id] = commands.slice();
   GSG.views[id] = opts.view || null;
+  GSG.styles[id] = opts.style || null;
 
   var container = document.getElementById(id);
   container.classList.add("ggb-figure");
@@ -322,6 +338,7 @@ function buildSheetGraph(id, commands, opts) {
       appletOnLoad: function (api) {
         GSG.apis[id] = api;
         gsRunCommands(api, commands);
+        gsgApplyStyle(id, api);
         gsgApplyView(id, api);
         gsgMakeResponsive(id, api, container, baseH, function () { gsgApplyView(id, api); });
         gsHideKeyboard(container);
@@ -1374,6 +1391,32 @@ Précipitations [moyennes]{.def tabindex="0" data-tip="La somme des valeurs pond
 Construire les diagrammes en boîte des deux séries sur une graduation commune ; déterminer la ville où les précipitations sont les plus régulières.
 :::
 
+Les deux séries sont saisies dans le tableur (colonnes **A** et **B**) ;
+les diagrammes en boîte se construisent directement depuis ces colonnes
+et sont déjà tracés (superposés, $V_1$ en haut). Complétez le résumé
+numérique :
+
+- en **D1** et **D2**, la moyenne de $V_1$ puis de $V_2$ : `=Mean(A2:A13)` et `=Mean(B2:B13)` ;
+- en **D3** et **D4**, l'écart type de $V_1$ puis de $V_2$ : `=SD(A2:A13)` et `=SD(B2:B13)`.
+
+```{=html}
+<div id="gsg-c1b-a1"></div>
+<script>
+buildSheetGraph("gsg-c1b-a1", [
+"A1=\"V1\"","B1=\"V2\"",
+"A2=80","B2=165","A3=95","B3=149","A4=68","B4=97","A5=64","B5=76",
+"A6=77","B6=55","A7=87","B7=40","A8=127","B8=20","A9=122","B9=20",
+"A10=84","B10=50","A11=88","B11=78","A12=67","B12=157","A13=76","B13=169",
+"D1=\"Moy. V1\"","D2=\"Moy. V2\"","D3=\"Éc. V1\"","D4=\"Éc. V2\"",
+"bpv1=BoxPlot(2,1,A2:A13)","ShowLabel(bpv1,false)",
+"bpv2=BoxPlot(0,1,B2:B13)","ShowLabel(bpv2,false)"
+], {w: 820, h: 280, view: [10,180,-1,4]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 import matplotlib.pyplot as plt
 
@@ -1391,6 +1434,7 @@ plt.show()
 #    votre lecture graphique (la ville la plus "régulière" a le plus petit
 #    écart type).
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -1414,6 +1458,30 @@ Durée de vie (en 100 h) de 200 lampes électriques :
 
 Un autre lot a pour moyenne 1400 h et écart type 140 h : quelle usine semble la plus performante ?
 :::
+
+L'histogramme est déjà construit à partir des classes (en centaines
+d'heures). Complétez le résumé numérique :
+
+- en **D1**, la moyenne : `=Mean(A2:A9,B2:B9)` ;
+- en **D2**, l'écart type : `=SD(A2:A9,B2:B9)`.
+
+Pensez à multiplier les résultats par 100 pour obtenir des heures.
+
+```{=html}
+<div id="gsg-c1b-a2"></div>
+<script>
+buildSheetGraph("gsg-c1b-a2", [
+"A1=\"Centre\"","B1=\"Effectif\"",
+"A2=11.5","B2=6","A3=12.5","B3=14","A4=13.5","B4=25","A5=14.5","B5=75",
+"A6=15.5","B6=80","A7=16.5","B7=10","A8=17.5","B8=8","A9=18.5","B9=2",
+"D1=\"Moyenne\"","D2=\"Éc. type\"",
+"hist2b=Histogram({11,12,13,14,15,16,17,18,19},{6,14,25,75,80,10,8,2})","ShowLabel(hist2b,false)"
+], {w: 820, h: 300, view: [10.5,19.5,-6,90]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 # Activité 2
@@ -1439,6 +1507,7 @@ autre_moyenne = 1400
 autre_ecart_type = 140
 (moyenne_heures, ecart_type_heures)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -1463,6 +1532,25 @@ Deux tireurs X et Y, 25 tirs chacun :
 
 Comparer les écarts types pour déterminer le tireur le plus régulier.
 :::
+
+Les effectifs de X et Y sont saisis dans le tableur. Complétez :
+
+- en **D1** et **D2**, la moyenne de X puis de Y : `=Mean(A2:A6,B2:B6)` et `=Mean(A2:A6,C2:C6)` ;
+- en **D3** et **D4**, l'écart type de X puis de Y : `=SD(A2:A6,B2:B6)` et `=SD(A2:A6,C2:C6)`.
+
+```{=html}
+<div id="gs-c1b-a3"></div>
+<script>
+buildSheet("gs-c1b-a3", [
+"A1=\"Points\"","B1=\"X\"","C1=\"Y\"",
+"A2=0","B2=2","C2=4","A3=10","B3=5","C3=4","A4=20","B4=6","C4=6","A5=30","B5=7","C5=4","A6=50","B6=5","C6=7",
+"D1=\"Moy. X\"","D2=\"Moy. Y\"","D3=\"Éc. X\"","D4=\"Éc. Y\""
+], {w: 620, h: 220});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 # Activité 3
@@ -1490,6 +1578,7 @@ def ecart_type_pondere(valeurs, effectifs):
 print("X : moyenne =", moyenne_ponderee(points, effectif_X), " écart type =", ecart_type_pondere(points, effectif_X))
 print("Y : moyenne =", moyenne_ponderee(points, effectif_Y), " écart type =", ecart_type_pondere(points, effectif_Y))
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -1512,6 +1601,30 @@ Rémunérations mensuelles (centaines de dinars) de 40 hommes et 40 femmes :
 
 Calculer le **coefficient de variation** $\dfrac{\sigma}{\bar{x}}$ de chaque série : pour comparer deux séries d'unités différentes ou de moyennes très différentes, il vaut mieux comparer leurs coefficients de variation que leurs écarts types.
 :::
+
+Les deux histogrammes (Hommes en bleu, Femmes en orange) sont déjà
+superposés à partir des classes. Complétez le résumé numérique, puis
+calculez vous-même le coefficient de variation ($=$ écart type $\div$
+moyenne) de chaque série :
+
+- en **E1**/**E2**, la moyenne des hommes/femmes : `=Mean(A2:A5,B2:B5)` et `=Mean(A2:A5,C2:C5)` ;
+- en **E3**/**E4**, l'écart type des hommes/femmes : `=SD(A2:A5,B2:B5)` et `=SD(A2:A5,C2:C5)`.
+
+```{=html}
+<div id="gsg-c1b-a4"></div>
+<script>
+buildSheetGraph("gsg-c1b-a4", [
+"A1=\"Centre\"","B1=\"Hommes\"","C1=\"Femmes\"",
+"A2=1","B2=6","C2=25","A3=3","B3=10","C3=10","A4=5","B4=22","C4=5","A5=7","B5=2","C5=0",
+"E1=\"Moy. H\"","E2=\"Moy. F\"","E3=\"Éc. H\"","E4=\"Éc. F\"",
+"histH=Histogram({0,2,4,6,8},{6,10,22,2})","ShowLabel(histH,false)",
+"histF=Histogram({0,2,4,6,8},{25,10,5,0})","ShowLabel(histF,false)"
+], {w: 820, h: 300, view: [-0.5,8.5,-4,28], style: [["histH",20,90,160,0.35],["histF",224,123,0,0.35]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 # Activité 4
@@ -1543,6 +1656,7 @@ s_f = ecart_type_pondere(centres, femmes)
 print("hommes : moyenne =", m_h, " écart type =", s_h, " CV =", s_h / m_h)
 print("femmes : moyenne =", m_f, " écart type =", s_f, " CV =", s_f / m_f)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape

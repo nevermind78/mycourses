@@ -2680,6 +2680,8 @@ Modifiez librement les effectifs (ligne 2) ou les salaires (ligne 3) : la
 formule en **D4** recalcule instantanément le salaire moyen, exactement
 comme dans le manuel.
 
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 Voici le **même calcul en Python**, pour comparer les deux approches :
 
 ```{pyodide}
@@ -2725,6 +2727,7 @@ else:
     feedback = {"correct": False, "message": "Salaire moyen = (somme des effectif x salaire) / (somme des effectifs)."}
 feedback
 ```
+:::
 
 ::: {.callout-tip}
 En changeant les effectifs (ligne 2) et en diminuant certains salaires (ligne 3) dans le tableur ci-dessus, montrez qu'il est possible d'**augmenter** le salaire moyen global — c'est le paradoxe de Simpson appliqué aux salaires, retrouvé dans l'exercice 2 ci-dessous (avec son propre tableur).
@@ -2746,6 +2749,29 @@ $S_1$: 3, 4, 5, 8, 9, 12, 13, 15, 16, 50. $S_2$ = $S_1$ privée de la valeur 50.
 2. Quelle caractéristique cet exemple met-il en évidence ?
 :::
 
+$S_1$ et $S_2$ sont saisies en colonnes **A** et **B** ; les diagrammes
+en boîte sont déjà construits ($S_1$ en haut). Complétez le résumé
+numérique :
+
+- en **D1**/**D2**, la moyenne de $S_1$/$S_2$ : `=Mean(A2:A11)` et `=Mean(B2:B10)` ;
+- en **D3**/**D4**, l'écart type de $S_1$/$S_2$ : `=SD(A2:A11)` et `=SD(B2:B10)`.
+
+```{=html}
+<div id="gsg-ex1"></div>
+<script>
+buildSheetGraph("gsg-ex1", [
+"A1=\"S1\"","B1=\"S2\"",
+"A2=3","B2=3","A3=4","B3=4","A4=5","B4=5","A5=8","B5=8","A6=9","B6=9",
+"A7=12","B7=12","A8=13","B8=13","A9=15","B9=15","A10=16","B10=16","A11=50",
+"D1=\"Moy. S1\"","D2=\"Moy. S2\"","D3=\"Éc. S1\"","D4=\"Éc. S2\"",
+"bp1=BoxPlot(2,1,A2:A11)","ShowLabel(bp1,false)",
+"bp2=BoxPlot(0,1,B2:B10)","ShowLabel(bp2,false)"
+], {w: 820, h: 280, view: [0,53,-1,4]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 Vérifiez au moins les deux moyennes :
 
 ```{pyodide}
@@ -2812,6 +2838,7 @@ def mediane(liste):
 print("S1 : étendue =", etendue(S1), " écart type =", ecart_type(S1), " médiane =", mediane(S1))
 print("S2 : étendue =", etendue(S2), " écart type =", ecart_type(S2), " médiane =", mediane(S2))
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -2931,6 +2958,38 @@ manuel annonce 40 paquets — coquille probable de l'édition papier) ; les
 calculs ci-dessous se basent sur les 39 valeurs réellement fournies.
 :::
 
+Les deux échantillons sont saisis en colonnes **A** et **B** ; les
+diagrammes en boîte se construisent directement depuis ces colonnes et
+sont déjà tracés (Machine 1 en haut). Complétez :
+
+- en **D1**/**D2**, la moyenne de la machine 1 / 2 : `=Mean(A2:A40)` et `=Mean(B2:B37)`.
+
+::: {.callout-warning collapse="true"}
+## ⚠️ À propos des formules `Q1(...)` / `Q3(...)` du tableur
+Comme à l'exercice précédent, les formules toutes faites `Q1(...)` et
+`Q3(...)` utilisent une interpolation différente de la méthode du cours
+(rang immédiatement supérieur à $n/4$ ou $3n/4$) : pour rester cohérent
+avec la **règle des quartiles**, mieux vaut les calculer « à la main »
+comme dans l'exercice Python ci-dessous.
+:::
+
+```{=html}
+<div id="gsg-ex3"></div>
+<script>
+buildSheetGraph("gsg-ex3", [
+"A1=\"Machine1\"","B1=\"Machine2\"",
+"A2=256","A3=259","A4=260","A5=260","A6=261","A7=261","A8=261","A9=261","A10=262","A11=262","A12=262","A13=262","A14=263","A15=263","A16=263","A17=264","A18=264","A19=264","A20=264","A21=265","A22=265","A23=265","A24=265","A25=265","A26=266","A27=266","A28=266","A29=266","A30=266","A31=266","A32=267","A33=267","A34=268","A35=269","A36=269","A37=270","A38=270","A39=271","A40=273",
+"B2=260","B3=262","B4=263","B5=264","B6=264","B7=265","B8=266","B9=266","B10=267","B11=268","B12=268","B13=268","B14=269","B15=269","B16=269","B17=269","B18=269","B19=269","B20=270","B21=270","B22=271","B23=271","B24=271","B25=271","B26=272","B27=272","B28=272","B29=273","B30=273","B31=274","B32=276","B33=276","B34=277","B35=277","B36=279","B37=280",
+"D1=\"Moy. M1\"","D2=\"Moy. M2\"",
+"bp1=BoxPlot(2,1,A2:A40)","ShowLabel(bp1,false)",
+"bp2=BoxPlot(0,1,B2:B37)","ShowLabel(bp2,false)"
+], {w: 820, h: 280, view: [250,285,-1,4]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 import matplotlib.pyplot as plt
 
@@ -2964,6 +3023,7 @@ plt.title("Comparaison des deux machines")
 plt.tight_layout()
 plt.show()
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -2992,6 +3052,30 @@ Salaires annuels $X$ (milliers de dinars) et ancienneté $Y$ du personnel d'une 
 
 Distributions marginales de $X$ et $Y$, moyenne et [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} des salaires.
 :::
+
+Le tableau est saisi tel quel, avec les centres de classe de $X$ en
+colonne **F**. Complétez :
+
+- en **F2:F4** (déjà remplis) et **G2:G4**, l'effectif marginal de $X$ : `=Sum(B2:E2)`, etc. ;
+- en **B5:E5**, l'effectif marginal de $Y$ : `=Sum(B2:B4)`, etc. ;
+- en **G1**, la moyenne de $X$ : `=Mean(F2:F4,G2:G4)` ;
+- en **G6**, l'écart type de $X$ : `=SD(F2:F4,G2:G4)`.
+
+```{=html}
+<div id="gs-ex4"></div>
+<script>
+buildSheet("gs-ex4", [
+"A1=\"X / Y\"","B1=\"[0;5[\"","C1=\"[5;10[\"","D1=\"[10;15[\"","E1=\"[15;20[\"","F1=\"Centre\"","G1=\"Moy. X\"",
+"A2=\"[5;10[\"","B2=5","C2=78","D2=2","E2=1","F2=7.5",
+"A3=\"[10;15[\"","B3=3","C3=4","D3=3","E3=3","F3=12.5",
+"A4=\"[15;20[\"","B4=0","C4=1","D4=3","E4=6","F4=17.5",
+"A5=\"Total\"","G5=\"Total X\"","G6=\"Éc. X\""
+], {w: 780, h: 260});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 centres_X = [7.5, 12.5, 17.5]
@@ -3028,6 +3112,7 @@ for i in range(3):
 ecart_type_X = (somme_carres / n) ** 0.5
 (moyenne_X, ecart_type_X)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape

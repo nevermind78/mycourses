@@ -134,6 +134,51 @@
   margin-bottom: 0.4rem;
 }
 
+/* Mots clés statistiques : info-bulle affichant la définition au survol
+   (souris) ou au focus (clavier / tactile), sans dépendre du "title"
+   natif du navigateur (trop lent, non stylable). */
+.def {
+  border-bottom: 1px dotted var(--mc-blue);
+  cursor: help;
+  position: relative;
+  outline: none;
+}
+.def:hover, .def:focus-visible {
+  background: #eef6fa;
+}
+.def:hover::after, .def:focus-visible::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  background: #172230;
+  color: #f4f7f9;
+  padding: 0.55rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.45;
+  white-space: normal;
+  width: max-content;
+  max-width: 260px;
+  box-shadow: 0 8px 20px -6px rgba(10, 20, 30, 0.4);
+  z-index: 60;
+  pointer-events: none;
+}
+.def:hover::before, .def:focus-visible::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 3px);
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #172230;
+  z-index: 60;
+  pointer-events: none;
+}
+
 /* Cartes "Manuels disponibles" (page d'accueil) */
 .manuel-card {
   border: 1px solid #e6ecf0;

@@ -10,7 +10,7 @@ pyodide:
 
 ::: {.callout-tip}
 ## Dans ce chapitre
-- **I. Série statistique simple** — résumé (moyenne, médiane, variance, écart type, quartiles, boîte de dispersion) et comparaison de séries.
+- **I. Série statistique simple** — résumé ([moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}, [variance]{.def tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne."}, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."}, [quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."}, boîte de dispersion) et comparaison de séries.
 - **II. Série statistique double** — nuage de points, point moyen, distributions et fréquences marginales.
 - **Utilisation des TIC** — un vrai tableur (le même principe qu'Excel).
 - **Exercices et problèmes**, **Math culture**.
@@ -203,7 +203,7 @@ Une série de notes de dix élèves d'une classe est donnée dans le tableau sui
 |---|---|---|---|---|---|
 | $n_i$ | 3 | 1 | 4 | 1 | 1 |
 
-1. Un élève a obtenu 8. Cette note est supérieure **a/** au mode **b/** à la médiane **c/** à la moyenne.
+1. Un élève a obtenu 8. Cette note est supérieure **a/** au [mode]{.def tabindex="0" data-tip="La valeur du caractère qui a le plus grand effectif : la valeur la plus fréquente."} **b/** à la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} **c/** à la [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}.
 2. Sur 1000 candidats à un concours, 500 ont été reçus. La moyenne des notes obtenues est 9,437 et la médiane 9,241. Si un candidat a été admis, alors il a obtenu une note **a/** supérieure à 10 **b/** supérieure à 9,437 **c/** supérieure à 9,241.
 :::
 
@@ -231,10 +231,10 @@ buildSheet("gs-a1", [
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-1. **Moyenne** : $\bar{x} = \dfrac{2\times3+8\times1+9\times4+10\times1+19\times1}{10} = \dfrac{79}{10} = 7{,}9$.
+1. **[Moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}** : $\bar{x} = \dfrac{2\times3+8\times1+9\times4+10\times1+19\times1}{10} = \dfrac{79}{10} = 7{,}9$.
 2. **Liste triée** (10 notes) : 2, 2, 2, 8, 9, 9, 9, 9, 10, 19.
-3. **Médiane** : $n=10$ est pair, $M_e = \dfrac{x_5+x_6}{2} = \dfrac{9+9}{2} = 9$.
-4. **Mode** : la valeur la plus fréquente est $9$ (effectif 4).
+3. **[Médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}** : $n=10$ est pair, $M_e = \dfrac{x_5+x_6}{2} = \dfrac{9+9}{2} = 9$.
+4. **[Mode]{.def tabindex="0" data-tip="La valeur du caractère qui a le plus grand effectif : la valeur la plus fréquente."}** : la valeur la plus fréquente est $9$ (effectif 4).
 5. La note 8 est donc **supérieure à la moyenne** (7,9) mais **pas** au mode ni à la médiane (tous deux égaux à 9). → réponse **c**.
 6. Les 500 admis sont ceux dont la note fait partie de la **moitié supérieure** : le seuil qui sépare exactement la population en deux est la **médiane**, pas la moyenne. → réponse **c** (supérieure à 9,241).
 :::
@@ -244,9 +244,9 @@ buildSheet("gs-a1", [
 
 1. Dites, en justifiant vos réponses, si les affirmations suivantes sont vraies ou fausses.
    - a/ Dans toute série statistique, la moyenne est comprise entre la valeur minimale et la valeur maximale.
-   - b/ Dans toute série statistique, l'écart type est toujours inférieur à la variance.
-   - c/ Si l'on ajoute un même réel $k$ positif à toutes les valeurs, alors l'intervalle interquartile est augmenté de $k$.
-2. Onze élèves ont passé un test : moyenne 10,5 ; médiane 9 ; étendue 12. Dire, si possible, si les affirmations suivantes sont vraies ou fausses : cinq élèves ont plus de 9 ; cinq élèves ont moins de 10,5 ; il y a 15 points d'écart entre la note la plus haute et la plus basse ; le groupe est hétérogène.
+   - b/ Dans toute série statistique, l'[écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} est toujours inférieur à la [variance]{.def tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne."}.
+   - c/ Si l'on ajoute un même réel $k$ positif à toutes les valeurs, alors l'intervalle inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} est augmenté de $k$.
+2. Onze élèves ont passé un test : moyenne 10,5 ; médiane 9 ; [étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."} 12. Dire, si possible, si les affirmations suivantes sont vraies ou fausses : cinq élèves ont plus de 9 ; cinq élèves ont moins de 10,5 ; il y a 15 points d'écart entre la note la plus haute et la plus basse ; le groupe est hétérogène.
 :::
 
 **Données du test (question 2) :** $n=11$ élèves, moyenne $=10{,}5$,
@@ -259,28 +259,28 @@ L'étendue est-elle bien note_max $-$ note_min $=15$, ou une autre valeur ?
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-**1. a/ Vrai.** La moyenne est une somme pondérée des valeurs : elle ne peut
+**1. a/ Vrai.** La [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} est une somme pondérée des valeurs : elle ne peut
 jamais dépasser la plus grande valeur ni être inférieure à la plus petite.
 
-**1. b/ Faux, en général.** L'écart type est $\sqrt{\text{variance}}$. Si la
-variance est supérieure à 1, l'écart type est *plus petit* qu'elle
+**1. b/ Faux, en général.** L'[écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} est $\sqrt{\text{variance}}$. Si la
+[variance]{.def tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne."} est supérieure à 1, l'écart type est *plus petit* qu'elle
 (ex. variance $=16$, écart type $=4$) ; mais si la variance est inférieure à
 1, c'est l'inverse (ex. variance $=0{,}25$, écart type $=0{,}5 > 0{,}25$).
 L'affirmation n'est donc pas toujours vraie.
 
 **1. c/ Vrai, avec précision.** Ajouter $k$ à toutes les valeurs déplace
-chaque quartile de $k$ : le nouvel intervalle est $[Q_1+k\,;\,Q_3+k]$. En
+chaque [quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} de $k$ : le nouvel intervalle est $[Q_1+k\,;\,Q_3+k]$. En
 revanche, la *largeur* de cet intervalle — l'écart interquartile
 $Q_3-Q_1$ — ne change pas.
 
-**2.** Avec $n=11$ (impair), la médiane est la valeur du 6ᵉ élève une fois
+**2.** Avec $n=11$ (impair), la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} est la valeur du 6ᵉ élève une fois
 la série triée : il y a donc bien 5 élèves de rang inférieur et 5 de rang
 supérieur au 6ᵉ, mais rien n'empêche plusieurs élèves d'avoir exactement la
 note médiane (9). On ne peut donc pas affirmer avec certitude que "cinq
 élèves ont **plus** de 9" (**indéterminé**).
 De même, la **moyenne** n'est pas une statistique de rang : elle ne permet
 pas de savoir combien d'élèves sont en dessous d'elle (**indéterminé**).
-En revanche, l'énoncé donne l'étendue $=12$, donc l'écart entre la note la
+En revanche, l'énoncé donne l'[étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."} $=12$, donc l'écart entre la note la
 plus haute et la plus basse vaut **12, pas 15** : l'affirmation est
 **fausse**. Quant à l'hétérogénéité du groupe, on ne peut pas la déduire
 avec certitude de ces seuls indicateurs (**indéterminé**, même si une
@@ -326,7 +326,7 @@ buildSheet("gs-a3", [
 11 valeurs). La valeur 8 occupe donc les rangs 6 à 9.
 
 **1.** En ajoutant $y$ valeurs $x$ (avec $x>9$) à la fin de la série, l'effectif
-total devient $n = 11+y$. La médiane reste égale à 8 tant que le ou les rangs
+total devient $n = 11+y$. La [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} reste égale à 8 tant que le ou les rangs
 du milieu restent compris entre 6 et 9. En étudiant les deux cas ($n$ pair ou
 impair), on trouve que cela reste vrai pour $y \in \{0,1,2,3,4,5,6\}$ — au-delà
 (par exemple $y=7$), le rang médian sort de la zone occupée par la valeur 8.
@@ -340,7 +340,7 @@ On vérifie que $x=10>9$, cohérent avec sa position dans le tableau.
 ::: {.activite}
 [Activité 4]{.activite-titre}
 
-1. Dans une classe de 10 garçons et 20 filles, la taille moyenne des garçons est 1,7 m et celle des filles 1,61 m. Quelle est la taille moyenne de la classe ?
+1. Dans une classe de 10 garçons et 20 filles, la taille [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} des garçons est 1,7 m et celle des filles 1,61 m. Quelle est la taille moyenne de la classe ?
 2. Dans une autre classe de 28 élèves, la taille moyenne des garçons est 1,68 m, celle des filles 1,60 m et celle des 28 élèves 1,66 m. Combien y a-t-il de garçons et de filles ?
 :::
 
@@ -392,7 +392,7 @@ Il y a donc **21 garçons et 7 filles**.
 
 $x_i$: 2, 3, 5, 6, 7, 8, 9, 10, 12, 15, 16, 18, 19 avec $n_i$: 1,1,1,3,1,1,3,2,3,1,2,1,1.
 
-1. Déterminer la médiane, la moyenne et l'étendue de cette série.
+1. Déterminer la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}, la [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} et l'[étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."} de cette série.
 2. Changer des données pour avoir une médiane égale à 10 sans changer ni la moyenne ni l'étendue de la série.
 :::
 
@@ -418,16 +418,16 @@ buildSheet("gs-a5", [
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-**1.** $n = 21$ (impair) : la médiane est la valeur de rang $\frac{21+1}{2}=11$.
+**1.** $n = 21$ (impair) : la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} est la valeur de rang $\frac{21+1}{2}=11$.
 Effectifs cumulés : 2→1, 3→2, 5→3, 6→6, 7→7, 8→8, **9→11**. La valeur de
 rang 11 est donc $M_e = 9$.
 $$\bar{x} = \frac{2+3+5+18+7+8+27+20+36+15+32+18+19}{21} = \frac{210}{21} = 10$$
-Étendue $= 19-2 = 17$.
+[Étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."} $= 19-2 = 17$.
 
 **2.** Il existe plusieurs solutions. Une façon simple : transformer **une**
 des trois valeurs 9 en 10 (le rang médian tombe alors dans le groupe des
 10, donc $M_e$ devient 10), puis compenser en transformant **une** des
-trois valeurs 12 en 11 (on retire 1 et on ajoute 1 à la somme : la moyenne
+trois valeurs 12 en 11 (on retire 1 et on ajoute 1 à la somme : la [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}
 ne change pas). Nouvelle série :
 $x_i$: 2,3,5,6,7,8,**9**,**10**,**11**,12,15,16,18,19 avec
 $n_i$: 1,1,1,3,1,1,**2**,**3**,**1**,**2**,1,2,1,1 (min et max inchangés,
@@ -467,7 +467,7 @@ buildSheet("gs-a6", [
 ## ✅ Correction — étape par étape
 **2.** Soit $n$ le nombre d'élèves. La somme totale vaut $n \times 10{,}5$.
 En retirant uniquement la note la plus haute (18), il reste $n-1$ élèves
-dont la moyenne est 10,2 :
+dont la [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} est 10,2 :
 $$n\times10{,}5 - 18 = (n-1)\times10{,}2 \;\Longrightarrow\; 0{,}3n = 7{,}8 \;\Longrightarrow\; n = 26$$
 
 **1.** Somme totale $=26\times10{,}5=273$. En retirant 3 et 18 :
@@ -475,7 +475,7 @@ nouvelle somme $=273-3-18=252$, nouvel effectif $=24$, donc
 **nouvelle moyenne** $=\dfrac{252}{24}=10{,}5$ : **elle ne change pas**
 (propriété du problème : $3+18=21=2\times10{,}5$, la moyenne des deux
 valeurs retirées est justement égale à la moyenne globale).
-Pour la médiane : avec $n=26$ (pair), $M_e$ est la moyenne des rangs 13 et
+Pour la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} : avec $n=26$ (pair), $M_e$ est la moyenne des rangs 13 et
 14. En retirant le minimum et le maximum (un de chaque côté), le rang 13
 devient le nouveau rang 12 et le rang 14 le nouveau rang 13 : la
 **médiane reste donc 12** elle aussi. *(Résultat général : retirer une
@@ -502,8 +502,8 @@ Répartition de 100 ménages selon leurs dépenses mensuelles :
 | [400,500[ | 20 |
 | [500,600[ | 15 |
 
-1. Calculer la médiane et la moyenne de cette série.
-2. Calculer la variance et l'écart type de cette série.
+1. Calculer la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} et la [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} de cette série.
+2. Calculer la [variance]{.def tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne."} et l'[écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} de cette série.
 :::
 
 Complétez le calcul de la moyenne (remplacez le tiret par la bonne formule), puis cliquez sur **Run Code**.
@@ -533,7 +533,7 @@ moyenne
 ::: { .hint exercise="ex_moyenne_1" }
 ::: { .callout-note collapse="false" }
 ## Indice
-La moyenne pondérée s'écrit $\bar{x} = \dfrac{\sum n_i x_i}{\sum n_i}$, donc ici `somme / n`.
+La [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} pondérée s'écrit $\bar{x} = \dfrac{\sum n_i x_i}{\sum n_i}$, donc ici `somme / n`.
 :::
 :::
 
@@ -565,7 +565,7 @@ else:
 feedback
 ```
 
-Complétez maintenant vous-même la variance et l'écart type (question 2) :
+Complétez maintenant vous-même la [variance]{.def tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne."} et l'[écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} (question 2) :
 
 ```{pyodide}
 # Activité 1 — variance et écart type
@@ -594,20 +594,20 @@ ecart_type = variance ** 0.5
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-Médiane : effectifs cumulés 15, 35, 65, 85, 100 → le rang $\frac{100}{2}=50$
+[Médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} : effectifs cumulés 15, 35, 65, 85, 100 → le rang $\frac{100}{2}=50$
 tombe dans la classe [300,400[ (cumulé avant $=35$) : par interpolation
 $M_e = 300 + \dfrac{50-35}{30}\times100 = 350$.
 
-Moyenne $\bar{x} = \dfrac{150\times15+250\times20+350\times30+450\times20+550\times15}{100}=\dfrac{35\,000}{100}=350$.
+[Moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} $\bar{x} = \dfrac{150\times15+250\times20+350\times30+450\times20+550\times15}{100}=\dfrac{35\,000}{100}=350$.
 
-Variance $=\dfrac{15(150-350)^2+20(250-350)^2+30(350-350)^2+20(450-350)^2+15(550-350)^2}{100}=\dfrac{1\,600\,000}{100}=16\,000$.
+[Variance]{.def tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne."} $=\dfrac{15(150-350)^2+20(250-350)^2+30(350-350)^2+20(450-350)^2+15(550-350)^2}{100}=\dfrac{1\,600\,000}{100}=16\,000$.
 
-Écart type $=\sqrt{16\,000}\approx126{,}5$ dinars.
+[Écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} $=\sqrt{16\,000}\approx126{,}5$ dinars.
 :::
 
 ::: {.callout-note}
 ## Résumé visuel ou numérique
-Le résumé d'une série statistique peut être **visuel** (représentation graphique) ou **numérique** (calcul de paramètres : moyenne, médiane, variance, écart type, quartiles).
+Le résumé d'une série statistique peut être **visuel** (représentation graphique) ou **numérique** (calcul de paramètres : [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}, [variance]{.def tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne."}, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."}, [quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."}).
 :::
 
 ::: {.activite}
@@ -653,8 +653,8 @@ ecart_type = variance ** 0.5
 ## ✅ Correction — étape par étape
 Sur les 40 mesures : $\bar{x} \approx 4{,}925$ cm et $\sigma \approx 0{,}20$ cm.
 
-1. $4{,}925 \in [4{,}88\,;5{,}12]$ : **oui**, la moyenne est correcte.
-2. $0{,}20 \in [0{,}13\,;0{,}25]$ : **oui**, l'écart type est correct aussi.
+1. $4{,}925 \in [4{,}88\,;5{,}12]$ : **oui**, la [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} est correcte.
+2. $0{,}20 \in [0{,}13\,;0{,}25]$ : **oui**, l'[écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} est correct aussi.
 3. Les deux critères sont respectés : on peut **poursuivre la production**
 sans régler la machine.
 :::
@@ -670,7 +670,7 @@ Diamètres (mm) de billes d'acier :
 
 1. Déterminer les fréquences cumulées croissantes.
 2. Représenter le polygone des fréquences cumulées croissantes.
-3. Estimer graphiquement la médiane $M_e$, puis calculer $\bar{X}$ et $\sigma$.
+3. Estimer graphiquement la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} $M_e$, puis calculer $\bar{X}$ et $\sigma$.
 :::
 
 ```{pyodide}
@@ -780,7 +780,7 @@ Taux d'hémoglobine (g/L) de 60 adultes :
 160 160 160 163 164 164 165 166 168 168 170 172 172 176 179
 ```
 
-D'après le cours : minimum 105, maximum 179, $Q_1=133$, médiane $M_e=149{,}5$, $Q_3=158$.
+D'après le cours : minimum 105, maximum 179, $Q_1=133$, [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} $M_e=149{,}5$, $Q_3=158$.
 :::
 
 ::: {.callout-note}
@@ -856,14 +856,14 @@ plt.show()
 $n=60$ est multiple de 4, donc $Q_1$ a le rang $\frac{60}{4}=15$ et $Q_3$ le
 rang $\frac{3\times60}{4}=45$. Dans la liste triée, la 15ᵉ valeur est 133 et
 la 45ᵉ vaut 158 : on retrouve bien $Q_1=133$ et $Q_3=158$. Comme $n$ est
-pair, la médiane est la moyenne des valeurs de rangs 30 et 31 :
+pair, la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} est la [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} des valeurs de rangs 30 et 31 :
 $M_e=\dfrac{149+150}{2}=149{,}5$.
 :::
 
 ::: {.callout-important}
 ## Remarques
-- La dispersion est plus étalée à gauche de la médiane sur cet exemple.
-- On résume souvent une série par le couple **(moyenne, écart type)** — sensible aux valeurs extrêmes — ou par le couple **(médiane, écart interquartile)** — moins sensible, mais un peu plus délicat à calculer.
+- La dispersion est plus étalée à gauche de la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} sur cet exemple.
+- On résume souvent une série par le couple **([moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."})** — sensible aux valeurs extrêmes — ou par le couple **(médiane, écart inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."})** — moins sensible, mais un peu plus délicat à calculer.
 :::
 
 ::: {.activite}
@@ -890,7 +890,7 @@ maximum = None
 Cette activité s'appuie sur la lecture d'un diagramme imprimé dans le
 manuel (non reproduit ici). La méthode reste la même que pour l'Activité 5 :
 lire directement min, $Q_1$, $M_e$, $Q_3$, max sur les bornes de la boîte et
-des moustaches, puis calculer l'écart interquartile $Q_3-Q_1$. Par
+des moustaches, puis calculer l'écart inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} $Q_3-Q_1$. Par
 définition des quartiles, **au moins 25 %** des valeurs sont inférieures ou
 égales à $Q_1$, et **au moins 75 %** sont inférieures ou égales à $Q_3$ :
 reportez les bornes lues (15 et 35 sur l'axe) à la place de $Q_1$ et $Q_3$
@@ -904,7 +904,7 @@ pour compléter les phrases.
 |---|---|---|---|---|---|---|---|---|
 | nombre d'employés | 130 | 350 | 210 | 130 | 90 | 50 | 30 | 10 |
 
-Étendue, prime moyenne, quartiles, médiane, puis représenter la boîte de dispersion.
+[Étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."}, prime [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, quartiles, [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}, puis représenter la boîte de dispersion.
 :::
 
 ```{pyodide}
@@ -937,7 +937,7 @@ print("effectifs cumulés :", effectifs_cumules)
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-$n=1000$, étendue $=525-125=400$.
+$n=1000$, [étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."} $=525-125=400$.
 $$\text{prime moyenne} = \frac{150\times130+\dots+500\times10}{1000} = 251 \text{ dinars}$$
 Effectifs cumulés : 130, 480, 690, 820, 910, 960, 990, 1000.
 
@@ -960,7 +960,7 @@ $Q_1\approx192$ et $Q_3\approx298$, et le trait médian à $M_e\approx230$.
 |---|---|---|---|---|---|
 | effectif | 40 | 50 | 10 | 4 | 1 |
 
-$S_1$ est cette série ; $S_2$ est $S_1$ privée du salaire le plus élevé. Comparer moyennes, médianes, étendues, écarts types et écarts interquartiles de $S_1$ et $S_2$ : quels paramètres sont sensibles à la valeur extrême ?
+$S_1$ est cette série ; $S_2$ est $S_1$ privée du salaire le plus élevé. Comparer [moyennes]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, [médianes]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}, étendues, [écarts types]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} et écarts inter[quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} de $S_1$ et $S_2$ : quels paramètres sont sensibles à la valeur extrême ?
 :::
 
 ```{pyodide}
@@ -989,13 +989,13 @@ print("moyenne S2 :", moyenne_ponderee(salaire, effectif_S2))
 ## ✅ Correction — étape par étape
 | | $S_1$ (n=105) | $S_2$ (n=104, sans 5,8) |
 |---|---|---|
-| moyenne | 1,41 | 1,36 |
-| médiane | 1,4 | 1,4 |
-| étendue | 4,8 | 1,7 |
-| écart type | 0,60 | 0,42 |
+| [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} | 1,41 | 1,36 |
+| [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} | 1,4 | 1,4 |
+| [étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."} | 4,8 | 1,7 |
+| [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} | 0,60 | 0,42 |
 | $Q_1$ ; $Q_3$ | 1 ; 1,4 | 1 ; 1,4 |
 
-La **médiane** et les **quartiles** ne changent pas (ou presque pas) : ce
+La **médiane** et les **[quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."}** ne changent pas (ou presque pas) : ce
 sont des statistiques de rang, peu sensibles à une valeur extrême isolée.
 En revanche, la **moyenne**, l'**étendue** et l'**écart type** chutent
 nettement une fois le salaire 5,8 retiré : ce sont les paramètres
@@ -1007,7 +1007,7 @@ sensibles aux valeurs extrêmes.
 ::: {.activite}
 [Activité 1]{.activite-titre}
 
-Précipitations moyennes mensuelles (mm) de deux villes :
+Précipitations [moyennes]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} mensuelles (mm) de deux villes :
 
 | mois | J | F | M | A | M | J | J | A | S | O | N | D |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -1037,7 +1037,7 @@ plt.show()
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-$V_1$ : moyenne $\approx86{,}3$ mm, écart type $\approx19{,}3$ mm.
+$V_1$ : [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} $\approx86{,}3$ mm, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} $\approx19{,}3$ mm.
 $V_2$ : moyenne $\approx89{,}7$ mm, écart type $\approx54{,}3$ mm.
 
 Les deux villes ont une pluviométrie moyenne annuelle voisine, mais
@@ -1088,8 +1088,8 @@ autre_ecart_type = 140
 $\bar{X}\approx14{,}78$ (centaines d'heures) $\approx1478$ h, et
 $\sigma\approx1{,}25$ (centaines d'heures) $\approx125$ h.
 
-L'autre usine a une durée de vie moyenne plus faible (1400 h $<$ 1478 h)
-mais surtout un écart type plus élevé (140 h $>$ 125 h) : ses lampes sont à
+L'autre usine a une durée de vie [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} plus faible (1400 h $<$ 1478 h)
+mais surtout un [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} plus élevé (140 h $>$ 125 h) : ses lampes sont à
 la fois moins performantes en moyenne et moins régulières. **La première
 usine (celle du tableau) semble donc la plus performante.**
 :::
@@ -1136,7 +1136,7 @@ print("Y : moyenne =", moyenne_ponderee(points, effectif_Y), " écart type =", e
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-X : moyenne $=25{,}2$ points, écart type $\approx15{,}3$.
+X : [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} $=25{,}2$ points, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} $\approx15{,}3$.
 Y : moyenne $=25{,}2$ points, écart type $\approx17{,}9$.
 
 Les deux tireurs ont la **même moyenne**, mais X a un écart type plus
@@ -1192,8 +1192,8 @@ print("femmes : moyenne =", m_f, " écart type =", s_f, " CV =", s_f / m_f)
 Hommes : $\bar{x}=4$, $\sigma\approx1{,}61$, $CV=\sigma/\bar{x}\approx0{,}40$.
 Femmes : $\bar{x}=2$, $\sigma\approx1{,}41$, $CV\approx0{,}71$.
 
-L'écart type des hommes est plus grand en valeur absolue, mais leur
-rémunération moyenne l'est aussi ; une fois rapporté à la moyenne, ce sont
+L'[écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} des hommes est plus grand en valeur absolue, mais leur
+rémunération [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} l'est aussi ; une fois rapporté à la moyenne, ce sont
 les **femmes** qui ont le coefficient de variation le plus élevé : leurs
 rémunérations sont donc, *relativement*, plus dispersées.
 :::
@@ -1205,7 +1205,7 @@ rémunérations sont donc, *relativement*, plus dispersées.
 ::: {.callout-note}
 ## Définitions
 - Dans un repère orthogonal, l'ensemble des points $M_i(x_i;y_i)$ est le **nuage de points** associé à la série statistique double $(X,Y)$.
-- Si $\bar{X}$ est la moyenne des $x_i$ et $\bar{Y}$ la moyenne des $y_i$, le point $G(\bar{X},\bar{Y})$ est le **point moyen** du nuage.
+- Si $\bar{X}$ est la [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} des $x_i$ et $\bar{Y}$ la moyenne des $y_i$, le point $G(\bar{X},\bar{Y})$ est le **point moyen** du nuage.
 :::
 
 La représentation graphique des couples $(x_i;y_i)$ donne une première idée sur une **corrélation** éventuelle entre $X$ et $Y$ : les points peuvent se regrouper autour d'une droite (*relation affine*), d'une parabole (*relation parabolique*), ou ne présenter *aucune relation* apparente.
@@ -1228,7 +1228,7 @@ Production d'olives à huile et de céréales (milliers de tonnes), 10 gouvernor
 | Gafsa | 18,5 | 1,11 |
 | Médenine | 22,4 | 0,01 |
 
-Quelle est la population étudiée ? Les deux caractères ? Moyenne et écart type de chacun ?
+Quelle est la population étudiée ? Les deux caractères ? Moyenne et [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} de chacun ?
 :::
 
 Construisons le nuage de points et son point moyen $G$ :
@@ -1286,8 +1286,8 @@ sont $X=$ production d'olives à huile et $Y=$ production de céréales
 (en milliers de tonnes).
 
 $\bar{X}\approx47{,}48$, $\sigma_X\approx39{,}29$ ;
-$\bar{Y}\approx73{,}74$, $\sigma_Y\approx110{,}20$ — l'écart type de $Y$
-est très supérieur à sa propre moyenne : la production de céréales est
+$\bar{Y}\approx73{,}74$, $\sigma_Y\approx110{,}20$ — l'[écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} de $Y$
+est très supérieur à sa propre [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} : la production de céréales est
 extrêmement dispersée d'un gouvernorat à l'autre (Béja à 349,1 contre
 Sfax à 0,18). Point moyen : $G(47{,}48\,;\,73{,}74)$.
 :::
@@ -1348,7 +1348,7 @@ Balance commerciale alimentaire de la Tunisie (millions de dinars), à partir de
 |---|---|---|---|---|---|---|
 | exportation $y_i$ | 548,7 | 706,8 | 628,2 | 669,9 | 471,5 | 669,5 |
 
-Construire le nuage, déterminer les moyennes, le point moyen et les écarts types.
+Construire le nuage, déterminer les [moyennes]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, le point moyen et les [écarts types]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."}.
 :::
 
 ```{pyodide}
@@ -1376,7 +1376,7 @@ y_moy = somme_y / n
 ## ✅ Correction — étape par étape
 $\bar{X}=833{,}4$, $\sigma_X\approx92{,}4$ ;
 $\bar{Y}\approx615{,}8$, $\sigma_Y\approx81{,}2$ (en millions de dinars).
-Point moyen $G(833{,}4\,;\,615{,}8)$ : la Tunisie importe en moyenne plus
+Point moyen $G(833{,}4\,;\,615{,}8)$ : la Tunisie importe en [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} plus
 qu'elle n'exporte sur cette période (balance déficitaire).
 :::
 
@@ -1404,7 +1404,7 @@ production_moy = somme_prod / n
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-Avec les valeurs lues sur le graphique, la production moyenne est
+Avec les valeurs lues sur le graphique, la production [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} est
 $\bar{Y}\approx682$ tonnes, pour une année moyenne $\bar{X}=5{,}5$ (soit
 entre 1999 et 2000). Le point moyen est donc environ $G(5{,}5\,;\,682)$.
 *(Les valeurs exactes dépendent de la lecture graphique ; seule la méthode
@@ -1451,7 +1451,7 @@ G2 = (moyenne(N2_x), moyenne(N2_y))
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-$G_1=(64\,;\,60)$ (moyenne des 6 premiers pays), $G_2\approx(67{,}67\,;\,64{,}33)$
+$G_1=(64\,;\,60)$ ([moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} des 6 premiers pays), $G_2\approx(67{,}67\,;\,64{,}33)$
 (moyenne des 6 derniers). Coefficient directeur :
 $$a=\frac{64{,}33-60}{67{,}67-64}\approx1{,}18 \qquad b = 60-1{,}18\times64\approx-15{,}6$$
 soit $(G_1G_2)$ : $y\approx1{,}18x-15{,}6$.
@@ -1589,7 +1589,7 @@ fréquences 30 %, 30 %, 40 %.
 | ouvrier | 170 | 100 | 0 |
 | cadre | 0 | 10 | 20 |
 
-Distributions et fréquences marginales de $C$ et $S$, puis moyenne et écart type de $S$.
+Distributions et fréquences marginales de $C$ et $S$, puis [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} et [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} de $S$.
 :::
 
 ```{pyodide}
@@ -1753,7 +1753,7 @@ aux cases (2 ; [20;25[)=5, (2 ; [25;30[)=25, (3 ; [20;25[)=20,
 (3 ; [25;30[)=3, soit $5+25+20+3=53$. **Proportion $=\dfrac{53}{100}=53\%$.**
 2. Effectif marginal de $X$ : 30 (2 CV), 31 (3 CV), 39 (4 CV).
 Effectif marginal de $Y$ : 38 ([15;20[), 32 ([20;25[), 30 ([25;30[).
-3. Moyennes : $\bar{X}=3{,}09$ CV, $\bar{Y}=22{,}1$ (milliers de km) :
+3. [Moyennes]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} : $\bar{X}=3{,}09$ CV, $\bar{Y}=22{,}1$ (milliers de km) :
 $G(3{,}09\,;\,22{,}1)$.
 :::
 
@@ -1961,7 +1961,7 @@ $$\text{salaire moyen} = \frac{101\,250}{300}=337{,}5 \text{ dinars.}$$
 [Exercice 1]{.activite-titre}
 $S_1$: 3, 4, 5, 8, 9, 12, 13, 15, 16, 50. $S_2$ = $S_1$ privée de la valeur 50.
 
-1. Calculer étendue, écart type, écart interquartile, moyenne et médiane de chacune des deux séries.
+1. Calculer [étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."}, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."}, écart inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."}, [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} et [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} de chacune des deux séries.
 2. Quelle caractéristique cet exemple met-il en évidence ?
 :::
 
@@ -2036,12 +2036,12 @@ print("S2 : étendue =", etendue(S2), " écart type =", ecart_type(S2), " média
 ## ✅ Correction — étape par étape
 | | $S_1$ (n=10) | $S_2$ (n=9) |
 |---|---|---|
-| moyenne | 13,5 | 9,44 |
-| médiane | 10,5 | 9 |
-| étendue | 47 | 13 |
-| écart type | 12,91 | 4,55 |
+| [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} | 13,5 | 9,44 |
+| [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} | 10,5 | 9 |
+| [étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."} | 47 | 13 |
+| [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} | 12,91 | 4,55 |
 | $Q_1$ ; $Q_3$ | 5 ; 15 | 5 ; 13 |
-| écart interquartile | 10 | 8 |
+| écart inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} | 10 | 8 |
 
 **2.** La moyenne, l'étendue et l'écart type chutent très fortement quand
 on retire la valeur 50, alors que la médiane et l'écart interquartile
@@ -2114,7 +2114,7 @@ jspreadsheet(document.getElementById('ex2-spreadsheet'), {
 | **global $m$** | **337,50** | **339,00** |
 
 Les deux PDG ont raison : $E_1$ paie mieux **chaque catégorie**
-séparément (327,78 > 325 et 425 > 412,5), mais $E_2$ a une **moyenne
+séparément (327,78 > 325 et 425 > 412,5), mais $E_2$ a une **[moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}
 globale** plus élevée (339 > 337,5). L'explication : $E_2$ emploie une
 proportion de cadres bien plus grande ($\frac{80}{500}=16\%$) que $E_1$
 ($\frac{30}{300}=10\%$) — or les cadres sont mieux payés. Cette différence
@@ -2141,7 +2141,7 @@ Une entreprise conditionne du café (réglage 265 g) sur deux machines.
 277 277 279 280
 ```
 
-Calculer les quartiles de chaque échantillon, comparer les écarts interquartiles, construire les diagrammes en boîte : quelle machine est la plus appropriée ?
+Calculer les [quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} de chaque échantillon, comparer les écarts interquartiles, construire les diagrammes en boîte : quelle machine est la plus appropriée ?
 :::
 
 ::: {.callout-caution collapse="false"}
@@ -2187,12 +2187,12 @@ plt.show()
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
 Machine 1 ($n=39$, non multiple de 4) : $Q_1=262$, $Q_3=266$, écart
-interquartile $=4$.
+inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} $=4$.
 Machine 2 ($n=36$, multiple de 4) : $Q_1=267$, $Q_3=272$, écart
 interquartile $=5$.
 
 La machine 1 a un écart interquartile plus faible : ses paquets sont plus
-homogènes en poids autour de sa médiane. Sa moyenne ($\approx264{,}5$ g)
+homogènes en poids autour de sa [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}. Sa [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} ($\approx264{,}5$ g)
 est aussi plus proche du réglage visé (265 g) que celle de la machine 2
 ($270$ g, qui sur-dose systématiquement). **La machine 1 semble la plus
 appropriée** pour ce réglage.
@@ -2209,7 +2209,7 @@ Salaires annuels $X$ (milliers de dinars) et ancienneté $Y$ du personnel d'une 
 | [10;15[ | 3 | 4 | 3 | 3 |
 | [15;20[ | 0 | 1 | 3 | 6 |
 
-Distributions marginales de $X$ et $Y$, moyenne et écart type des salaires.
+Distributions marginales de $X$ et $Y$, moyenne et [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} des salaires.
 :::
 
 ```{pyodide}
@@ -2298,7 +2298,7 @@ print(f"G = ({annee_moy} ; {conso_moy})")
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-Année moyenne $\approx1961$, consommation moyenne $\approx69\,692$
+Année [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} $\approx1961$, consommation moyenne $\approx69\,692$
 milliers de tonnes : $G(1961\,;\,69\,692)$. Le nuage montre une nette
 tendance croissante (relation approximativement affine, voire un peu
 accélérée après 1970), cohérente avec la croissance de la population et de
@@ -2443,7 +2443,7 @@ plt.show()
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-$G(4{,}5\,;\,28{,}5)$ (moyenne des 10 points).
+$G(4{,}5\,;\,28{,}5)$ ([moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} des 10 points).
 $G_1=(2\,;\,6)$ (moyenne des 5 premiers), $G_2=(7\,;\,51)$ (moyenne des 5
 derniers).
 $$a = \frac{51-6}{7-2} = 9, \qquad b = 6 - 9\times2 = -12$$
@@ -2485,7 +2485,7 @@ print("G1 =", G1, " G2 =", G2, " droite : y = %.3f x + %.3f" % (a, b))
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-$G_1=(2{,}45\,;\,59)$ (moyenne des 4 premières années),
+$G_1=(2{,}45\,;\,59)$ ([moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} des 4 premières années),
 $G_2=(3{,}65\,;\,72{,}5)$ (moyenne des 4 dernières).
 $$a = \frac{72{,}5-59}{3{,}65-2{,}45} = \frac{13{,}5}{1{,}2} = 11{,}25, \qquad b = 59-11{,}25\times2{,}45 \approx 31{,}44$$
 $(G_1G_2)$ : $y\approx11{,}25x+31{,}44$. Le coefficient directeur positif
@@ -2548,7 +2548,7 @@ faut retenir pour l'examen.
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
-$G_1=(9975\,;\,1337{,}5)$ (moyenne de $P_1..P_4$),
+$G_1=(9975\,;\,1337{,}5)$ ([moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} de $P_1..P_4$),
 $G_2=(24425\,;\,3562{,}5)$ (moyenne de $P_5..P_8$).
 $$a = \frac{3562{,}5-1337{,}5}{24425-9975} = \frac{2225}{14450} \approx 0{,}154, \qquad b = 1337{,}5-0{,}154\times9975 \approx -198{,}4$$
 On obtient donc $(G_1G_2)$ : $y\approx0{,}154x-198{,}4$ à partir des

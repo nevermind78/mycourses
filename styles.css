@@ -354,6 +354,17 @@ div.callout.callout-style-default.callout-correction {
   font-size: 0.9rem;
   font-style: italic;
 }
+/* Légende des axes (remplace le titre d'axe natif de GeoGebra, qui
+   reste ancré à l'extrémité de l'axe et finit par-dessus le dessin dès
+   qu'on zoome ou déplace la vue) : un titre de figure fixe, sous le
+   graphique, indépendant du zoom. */
+.ggb-caption {
+  margin: 0.4rem 0 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: #56636f;
+  text-align: center;
+}
 .ggb-codepanel {
   margin-top: 0.6rem;
   border-top: 1px dashed #c7d2d9;

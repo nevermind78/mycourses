@@ -3134,6 +3134,32 @@ Consommation mondiale de sucre (milliers de tonnes) :
 *(Source : Centre d'études et de documentation du sucre, novembre 2000.)* Représenter cette série chronologique par un nuage de points et déterminer le point moyen (arrondi à l'unité).
 :::
 
+Les 15 points sont déjà placés depuis les colonnes **A**/**B**, avec
+$G$ en bleu. Complétez :
+
+- en **D1**, l'année moyenne : `=Mean(A2:A16)` ;
+- en **D2**, la consommation moyenne : `=Mean(B2:B16)`.
+
+```{=html}
+<div id="gsg-ex5"></div>
+<script>
+buildSheetGraph("gsg-ex5", [
+"A1=\"Année\"","B1=\"Conso\"",
+"A2=1900","B2=8130","A3=1910","B3=12269","A4=1920","B4=13024","A5=1930","B5=24274","A6=1940","B6=26704",
+"A7=1950","B7=29404","A8=1960","B8=49298","A9=1970","B9=70480","A10=1978","B10=122931","A11=1980","B11=88646",
+"A12=1994","B12=112954","A13=1995","B13=116590","A14=1996","B14=120032","A15=1998","B15=124417","A16=1999","B16=126221",
+"D1=\"Année moy.\"","D2=\"Conso moy.\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)",
+"M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
+"M11=(A12,B12)","ShowLabel(M11,false)","M12=(A13,B13)","ShowLabel(M12,false)","M13=(A14,B14)","ShowLabel(M13,false)","M14=(A15,B15)","ShowLabel(M14,false)","M15=(A16,B16)","ShowLabel(M15,false)",
+"G=(Mean(A2:A16),Mean(B2:B16))","SetPointSize(G,6)","ShowLabel(G,false)"
+], {w: 820, h: 380, view: [1895,2005,-8000,135000], style: [["G",11,110,153]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 import matplotlib.pyplot as plt
 
@@ -3161,6 +3187,7 @@ plt.show()
 
 print(f"G = ({annee_moy} ; {conso_moy})")
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -3175,6 +3202,30 @@ la consommation mondiales sur le XXᵉ siècle.
 [Exercice 6]{.activite-titre}
 Entreprise de 450 salariés : 3 femmes pour 2 hommes. Les 22 cadres se répartissent également entre les deux sexes ; parmi les 72 agents, un homme pour deux femmes. Le reste est employé. Dresser le tableau des effectifs selon catégorie professionnelle et sexe, avec les effectifs marginaux.
 :::
+
+Une fois les effectifs déterminés à la main (voir la méthode dans
+l'exercice Python), saisissez-les dans le tableur pour vérifier les
+totaux : complétez **B2:C4** avec vos valeurs, puis :
+
+- en **D2:D4**, le total par catégorie : `=Sum(B2:C2)`, etc. ;
+- en **B5:C5**, le total par sexe : `=Sum(B2:B4)`, etc. (doit redonner 180 et 270) ;
+- en **D5**, l'effectif total : `=Sum(B2:C4)` (doit redonner 450).
+
+```{=html}
+<div id="gs-ex6"></div>
+<script>
+buildSheet("gs-ex6", [
+"A1=\"Catégorie\"","B1=\"Hommes\"","C1=\"Femmes\"","D1=\"Total\"",
+"A2=\"Cadre\"","B2=0","C2=0",
+"A3=\"Agent\"","B3=0","C3=0",
+"A4=\"Employé\"","B4=0","C4=0",
+"A5=\"Total\""
+], {w: 560, h: 220});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 n_total = 450
@@ -3198,6 +3249,7 @@ print("cadres H/F :", cadres_h, cadres_f)
 print("agents H/F :", agents_h, agents_f)
 print("employés H/F :", employes_h, employes_f)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -3227,6 +3279,31 @@ $180-11-24=145$ hommes, $270-11-48=211$ femmes.
 Sachant que l'échantillon comptait 50% d'élèves de 13–15 ans, 30% de 15–18 ans et 20% de 18–20 ans, retrouver le tableau des fréquences puis les fréquences marginales des deux distributions.
 :::
 
+Le tableau des pourcentages *par tranche d'âge* est saisi tel quel, avec
+les poids de chaque tranche en colonne **F**. Complétez le tableau des
+fréquences **globales** (ligne par ligne) :
+
+- en **B7:E7**, la ligne [13;15[ pondérée : `=B2*$F2` en **B7**, puis copiez vers la droite ;
+- de même en **B8:E8** et **B9:E9** pour les deux autres tranches (`*$F3`, `*$F4`) ;
+- en **B10:E10**, les fréquences marginales par nombre de livres : `=Sum(B7:B9)`, etc.
+
+```{=html}
+<div id="gs-ex7"></div>
+<script>
+buildSheet("gs-ex7", [
+"A1=\"Âge/Livres\"","B1=0","C1=1","D1=\"2-3\"","E1=\"4+\"","F1=\"Poids\"",
+"A2=\"[13;15[\"","B2=7","C2=22","D2=40","E2=31","F2=0.5",
+"A3=\"[15;18[\"","B3=12","C3=33","D3=35","E3=20","F3=0.3",
+"A4=\"[18;20[\"","B4=26","C4=37","D4=27","E4=10","F4=0.2",
+"A6=\"Fréq. globales\"",
+"A7=\"[13;15[\"","A8=\"[15;18[\"","A9=\"[18;20[\"","A10=\"Marg.\""
+], {w: 720, h: 320});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 poids_age = [0.50, 0.30, 0.20]  # proportions de chaque tranche d'âge
 table_pct = [
@@ -3252,6 +3329,7 @@ for j in range(4):
         marg_livres[j] = marg_livres[j] + table_freq[i][j]
 print("fréquences marginales (nombre de livres) :", marg_livres)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -3278,6 +3356,33 @@ Fréquences marginales "nombre de livres" : 12,3 % (0) ; 28,3 % (1) ;
 
 Point moyen du nuage $(X,Y)$ ; $N_1$ = points $M_1,\dots,M_5$, $N_2$ = points $M_6,\dots,M_{10}$. Points moyens $G_1$, $G_2$ ; équation réduite de $(G_1G_2)$.
 :::
+
+Les 10 points, $G_1$ (orange), $G_2$ (vert) et la droite $(G_1G_2)$
+sont déjà construits — observez qu'elle ne suit pas du tout la forme
+réelle (parabolique) du nuage. Complétez :
+
+- en **D1**, l'abscisse de $G$ : `=Mean(A2:A11)` ;
+- en **D2**, l'ordonnée de $G$ : `=Mean(B2:B11)`.
+
+```{=html}
+<div id="gsg-ex8"></div>
+<script>
+buildSheetGraph("gsg-ex8", [
+"A1=\"xi\"","B1=\"yi\"",
+"A2=0","B2=0","A3=1","B3=1","A4=2","B4=4","A5=3","B5=9","A6=4","B6=16",
+"A7=5","B7=25","A8=6","B8=36","A9=7","B9=49","A10=8","B10=64","A11=9","B11=81",
+"D1=\"Xg\"","D2=\"Yg\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)",
+"M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
+"G1=(Mean(A2:A6),Mean(B2:B6))","SetPointSize(G1,6)","ShowLabel(G1,false)",
+"G2=(Mean(A7:A11),Mean(B7:B11))","SetPointSize(G2,6)","ShowLabel(G2,false)",
+"droiteG=Line(G1,G2)"
+], {w: 720, h: 420, view: [-1,10,-10,90], style: [["G1",224,123,0],["G2",76,140,43]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 import matplotlib.pyplot as plt
@@ -3306,6 +3411,7 @@ plt.scatter(xi, yi, color="#d6006e")
 plt.title("Nuage (x, x²) — pas une relation affine !")
 plt.show()
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -3332,6 +3438,28 @@ Chiffre d'affaires $y_i$ selon les frais de publicité $x_i$ (millions de dinars
 Points moyens $G_1$ (4 premières années) et $G_2$ (4 dernières) ; équation de $(G_1G_2)$.
 :::
 
+Les 8 points, $G_1$ (orange), $G_2$ (vert) et la droite de Mayer sont
+déjà construits.
+
+```{=html}
+<div id="gsg-ex9"></div>
+<script>
+buildSheetGraph("gsg-ex9", [
+"A1=\"Xi\"","B1=\"Yi\"",
+"A2=2","B2=52","A3=2.3","B3=59","A4=2.6","B4=60","A5=2.9","B5=65",
+"A6=3.2","B6=70","A7=3.5","B7=72","A8=3.8","B8=73","A9=4.1","B9=75",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)",
+"M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)",
+"G1=(Mean(A2:A5),Mean(B2:B5))","SetPointSize(G1,6)","ShowLabel(G1,false)",
+"G2=(Mean(A6:A9),Mean(B6:B9))","SetPointSize(G2,6)","ShowLabel(G2,false)",
+"droiteG=Line(G1,G2)"
+], {w: 620, h: 380, view: [1.7,4.4,45,80], style: [["G1",224,123,0],["G2",76,140,43]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 Xi = [2, 2.3, 2.6, 2.9, 3.2, 3.5, 3.8, 4.1]
 Yi = [52, 59, 60, 65, 70, 72, 73, 75]
@@ -3348,6 +3476,7 @@ a = (G2[1] - G1[1]) / (G2[0] - G1[0])
 b = G1[1] - a * G1[0]
 print("G1 =", G1, " G2 =", G2, " droite : y = %.3f x + %.3f" % (a, b))
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -3371,6 +3500,32 @@ PNB (€/habitant) et nombre d'hôpitaux (pour 1 million d'habitants) de 8 pays 
 
 Point moyen $G$ ; sous-nuages $\{P_1..P_4\}$ et $\{P_5..P_8\}$, points moyens $G_1$, $G_2$. Démontrer que la **droite de Mayer** $(G_1G_2)$ a pour équation $y = 0{,}13x + 159$.
 :::
+
+Les 8 points, $G_1$ (orange), $G_2$ (vert), $G$ (bleu) et la droite de
+Mayer sont déjà construits. Complétez :
+
+- en **D1**/**D2**, les coordonnées de $G$ : `=Mean(A2:A9)` et `=Mean(B2:B9)`.
+
+```{=html}
+<div id="gsg-ex10"></div>
+<script>
+buildSheetGraph("gsg-ex10", [
+"A1=\"PNB\"","B1=\"Hôpitaux\"",
+"A2=5100","B2=620","A3=7800","B3=1080","A4=11200","B4=1550","A5=15800","B5=2100",
+"A6=20100","B6=3000","A7=22500","B7=3250","A8=26200","B8=3800","A9=28900","B9=4200",
+"D1=\"Xg\"","D2=\"Yg\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)",
+"M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)",
+"G1=(Mean(A2:A5),Mean(B2:B5))","SetPointSize(G1,6)","ShowLabel(G1,false)",
+"G2=(Mean(A6:A9),Mean(B6:B9))","SetPointSize(G2,6)","ShowLabel(G2,false)",
+"G=(Mean(A2:A9),Mean(B2:B9))","SetPointSize(G,6)","ShowLabel(G,false)",
+"droiteG=Line(G1,G2)"
+], {w: 720, h: 420, view: [3000,31000,0,4800], style: [["G1",224,123,0],["G2",76,140,43],["G",11,110,153]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 import matplotlib.pyplot as plt
@@ -3403,6 +3558,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 ```
+:::
 
 ::: {.callout-caution collapse="false"}
 En reprenant exactement les valeurs imprimées dans le manuel, le calcul

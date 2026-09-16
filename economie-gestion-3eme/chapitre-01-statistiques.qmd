@@ -1702,7 +1702,29 @@ Production d'olives à huile et de céréales (milliers de tonnes), 10 gouvernor
 Quelle est la population étudiée ? Les deux caractères ? Moyenne et [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} de chacun ?
 :::
 
-Construisons le nuage de points et son point moyen $G$ :
+Construisons le nuage de points et son point moyen $G$ (en bleu, plus
+gros) : les données sont saisies en colonnes **A** et **B**, les points
+$M_i$ et $G$ se construisent directement depuis ces colonnes.
+Complétez le résumé numérique :
+
+- en **D1**/**D2**, la moyenne des olives / céréales : `=Mean(A2:A11)` et `=Mean(B2:B11)` ;
+- en **D3**/**D4**, l'écart type des olives / céréales : `=SD(A2:A11)` et `=SD(B2:B11)`.
+
+```{=html}
+<div id="gsg-c2-a1"></div>
+<script>
+buildSheetGraph("gsg-c2-a1", [
+"A1=\"Olives\"","B1=\"Céréales\"",
+"A2=11.6","B2=16","A3=12.8","B3=209.24","A4=18.9","B4=349.1","A5=46.4","B5=79.03","A6=45.2","B6=0.18","A7=140","B7=0.18","A8=84","B8=52.64","A9=75","B9=29.92","A10=18.5","B10=1.11","A11=22.4","B11=0.01",
+"D1=\"Moy. X\"","D2=\"Moy. Y\"","D3=\"Éc. X\"","D4=\"Éc. Y\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
+"G=(Mean(A2:A11),Mean(B2:B11))","SetPointSize(G,6)","ShowLabel(G,false)"
+], {w: 820, h: 340, view: [-5,155,-20,360], style: [["G",11,110,153]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 import matplotlib.pyplot as plt
@@ -1749,6 +1771,7 @@ n = len(olives)
 #    chaque liste avec une boucle for accumulant les carrés des écarts.
 
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -1775,6 +1798,28 @@ Notes en économie ($x_i$) et en maths ($y_i$) de 10 élèves :
 Placer les points $M_i(x_i;y_i)$, calculer $\bar{X}$, $\bar{Y}$, puis placer $G(\bar{X},\bar{Y})$.
 :::
 
+Les points sont déjà placés depuis les colonnes **A** et **B**, avec
+$G$ en bleu. Complétez :
+
+- en **D1**, $\bar X$ : `=Mean(A2:A11)` ;
+- en **D2**, $\bar Y$ : `=Mean(B2:B11)`.
+
+```{=html}
+<div id="gsg-c2-a2"></div>
+<script>
+buildSheetGraph("gsg-c2-a2", [
+"A1=\"xi\"","B1=\"yi\"",
+"A2=5","B2=6","A3=7","B3=7","A4=9","B4=8","A5=9","B5=10","A6=10","B6=11","A7=10","B7=13","A8=11","B8=10","A9=12","B9=13","A10=13","B10=12","A11=14","B11=16",
+"D1=\"X-barre\"","D2=\"Y-barre\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
+"G=(Mean(A2:A11),Mean(B2:B11))","SetPointSize(G,6)","ShowLabel(G,false)"
+], {w: 620, h: 340, view: [3,17,4,18], style: [["G",11,110,153]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 import matplotlib.pyplot as plt
 
@@ -1800,6 +1845,7 @@ plt.show()
 
 print(f"G = ({x_moy:.1f} ; {y_moy:.1f})")
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -1822,6 +1868,27 @@ Balance commerciale alimentaire de la Tunisie (millions de dinars), à partir de
 Construire le nuage, déterminer les [moyennes]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, le point moyen et les [écarts types]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."}.
 :::
 
+Le nuage et le point moyen $G$ sont déjà construits. Complétez :
+
+- en **D1**/**D2**, la moyenne des importations / exportations : `=Mean(A2:A7)` et `=Mean(B2:B7)` ;
+- en **D3**/**D4**, l'écart type des importations / exportations : `=SD(A2:A7)` et `=SD(B2:B7)`.
+
+```{=html}
+<div id="gsg-c2-a3"></div>
+<script>
+buildSheetGraph("gsg-c2-a3", [
+"A1=\"Import\"","B1=\"Export\"",
+"A2=802.5","B2=548.7","A3=670.9","B3=706.8","A4=782.4","B4=628.2","A5=887.6","B5=669.9","A6=940","B6=471.5","A7=917","B7=669.5",
+"D1=\"Moy. X\"","D2=\"Moy. Y\"","D3=\"Éc. X\"","D4=\"Éc. Y\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)",
+"G=(Mean(A2:A7),Mean(B2:B7))","SetPointSize(G,6)","ShowLabel(G,false)"
+], {w: 720, h: 340, view: [630,970,430,750], style: [["G",11,110,153]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 importation = [802.5, 670.9, 782.4, 887.6, 940, 917]
 exportation = [548.7, 706.8, 628.2, 669.9, 471.5, 669.5]
@@ -1842,6 +1909,7 @@ y_moy = somme_y / n
 #    par n, puis racine carrée).
 (x_moy, y_moy)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -1855,6 +1923,26 @@ qu'elle n'exporte sur cette période (balance déficitaire).
 [Activité 4]{.activite-titre}
 Un nuage de points donne la production annuelle (tonnes) d'une entreprise depuis 1995 (année 1995 numérotée 1, etc.). Reconstituer le tableau statistique, la production moyenne et le point moyen.
 :::
+
+Reportez en colonne **B** vos propres lectures du graphique du manuel
+(des valeurs plausibles sont pré-remplies) : le nuage et le point moyen
+$G$ se mettent à jour automatiquement.
+
+```{=html}
+<div id="gsg-c2-a4"></div>
+<script>
+buildSheetGraph("gsg-c2-a4", [
+"A1=\"Année\"","B1=\"Production\"",
+"A2=1","B2=600","A3=2","B3=700","A4=3","B4=650","A5=4","B5=900","A6=5","B6=800","A7=6","B7=950","A8=7","B8=100","A9=8","B9=510","A10=9","B10=700","A11=10","B11=910",
+"D1=\"Année moy.\"","D2=\"Prod. moy.\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
+"G=(Mean(A2:A11),Mean(B2:B11))","SetPointSize(G,6)","ShowLabel(G,false)"
+], {w: 720, h: 340, view: [0,12,0,1050], style: [["G",11,110,153]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 # Activité 4 — valeurs lues (approximativement) sur le graphique du manuel
@@ -1872,6 +1960,7 @@ annee_moy = somme_annee / n
 production_moy = somme_prod / n
 (annee_moy, production_moy)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -1894,6 +1983,33 @@ Rang IDH et rang PNB de 12 pays en 1995 :
 
 $N_1$ = points $M_1,\dots,M_6$, $N_2$ = points restants. Calculer $G_1$, $G_2$, une équation de $(G_1G_2)$, et expliquer pourquoi cette droite passe par $G$.
 :::
+
+Les 12 points sont déjà placés ; $G_1$ (moyenne des 6 premiers, en
+orange), $G_2$ (moyenne des 6 derniers, en vert) et la droite
+$(G_1G_2)$ sont déjà construits. Vérifiez qu'elle passe bien par le
+point moyen global $G$ (en bleu) :
+
+- en **D1**, l'abscisse de $G$ : `=Mean(A2:A13)` ;
+- en **D2**, l'ordonnée de $G$ : `=Mean(B2:B13)`.
+
+```{=html}
+<div id="gsg-c2-a5"></div>
+<script>
+buildSheetGraph("gsg-c2-a5", [
+"A1=\"IDH\"","B1=\"PNB\"",
+"A2=11","B2=12","A3=32","B3=36","A4=110","B4=122","A5=62","B5=10","A6=8","B6=9","A7=161","B7=171","A8=6","B8=13","A9=3","B9=3","A10=132","B10=140","A11=10","B11=19","A12=112","B12=97","A13=143","B13=114",
+"D1=\"Xg\"","D2=\"Yg\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)","M11=(A12,B12)","ShowLabel(M11,false)","M12=(A13,B13)","ShowLabel(M12,false)",
+"G1=(Mean(A2:A7),Mean(B2:B7))","SetPointSize(G1,6)","ShowLabel(G1,false)",
+"G2=(Mean(A8:A13),Mean(B8:B13))","SetPointSize(G2,6)","ShowLabel(G2,false)",
+"G=(Mean(A2:A13),Mean(B2:B13))","SetPointSize(G,6)","ShowLabel(G,false)",
+"droiteG=Line(G1,G2)"
+], {w: 820, h: 420, view: [-15,180,-15,190], style: [["G1",224,123,0],["G2",76,140,43],["G",11,110,153]]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 rang_idh = [11, 32, 110, 62, 8, 161, 6, 3, 132, 10, 112, 143]
@@ -1919,6 +2035,7 @@ G2 = (moyenne(N2_x), moyenne(N2_y))
 #    puis l'ordonnée à l'origine b = yG1 - a * xG1.
 (G1, G2)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape

@@ -245,7 +245,7 @@ buildSheet("gs-a1", [
 1. Dites, en justifiant vos réponses, si les affirmations suivantes sont vraies ou fausses.
    - a/ Dans toute série statistique, la moyenne est comprise entre la valeur minimale et la valeur maximale.
    - b/ Dans toute série statistique, l'[écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} est toujours inférieur à la [variance]{.def tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne."}.
-   - c/ Si l'on ajoute un même réel $k$ positif à toutes les valeurs, alors l'intervalle inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} est augmenté de $k$.
+   - c/ Si l'on ajoute un même réel $k$ positif à toutes les valeurs, alors l'intervalle [interquartile]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."} est augmenté de $k$.
 2. Onze élèves ont passé un test : moyenne 10,5 ; médiane 9 ; [étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."} 12. Dire, si possible, si les affirmations suivantes sont vraies ou fausses : cinq élèves ont plus de 9 ; cinq élèves ont moins de 10,5 ; il y a 15 points d'écart entre la note la plus haute et la plus basse ; le groupe est hétérogène.
 :::
 
@@ -270,7 +270,7 @@ L'affirmation n'est donc pas toujours vraie.
 
 **1. c/ Vrai, avec précision.** Ajouter $k$ à toutes les valeurs déplace
 chaque [quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} de $k$ : le nouvel intervalle est $[Q_1+k\,;\,Q_3+k]$. En
-revanche, la *largeur* de cet intervalle — l'écart interquartile
+revanche, la *largeur* de cet intervalle — l'écart [interquartile]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."}
 $Q_3-Q_1$ — ne change pas.
 
 **2.** Avec $n=11$ (impair), la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} est la valeur du 6ᵉ élève une fois
@@ -863,7 +863,7 @@ $M_e=\dfrac{149+150}{2}=149{,}5$.
 ::: {.callout-important}
 ## Remarques
 - La dispersion est plus étalée à gauche de la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} sur cet exemple.
-- On résume souvent une série par le couple **([moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."})** — sensible aux valeurs extrêmes — ou par le couple **(médiane, écart inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."})** — moins sensible, mais un peu plus délicat à calculer.
+- On résume souvent une série par le couple **([moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."})** — sensible aux valeurs extrêmes — ou par le couple **(médiane, écart [interquartile]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."})** — moins sensible, mais un peu plus délicat à calculer.
 :::
 
 ::: {.activite}
@@ -890,8 +890,8 @@ maximum = None
 Cette activité s'appuie sur la lecture d'un diagramme imprimé dans le
 manuel (non reproduit ici). La méthode reste la même que pour l'Activité 5 :
 lire directement min, $Q_1$, $M_e$, $Q_3$, max sur les bornes de la boîte et
-des moustaches, puis calculer l'écart inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} $Q_3-Q_1$. Par
-définition des quartiles, **au moins 25 %** des valeurs sont inférieures ou
+des moustaches, puis calculer l'écart [interquartile]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."} $Q_3-Q_1$. Par
+définition des [quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."}, **au moins 25 %** des valeurs sont inférieures ou
 égales à $Q_1$, et **au moins 75 %** sont inférieures ou égales à $Q_3$ :
 reportez les bornes lues (15 et 35 sur l'axe) à la place de $Q_1$ et $Q_3$
 pour compléter les phrases.
@@ -960,7 +960,7 @@ $Q_1\approx192$ et $Q_3\approx298$, et le trait médian à $M_e\approx230$.
 |---|---|---|---|---|---|
 | effectif | 40 | 50 | 10 | 4 | 1 |
 
-$S_1$ est cette série ; $S_2$ est $S_1$ privée du salaire le plus élevé. Comparer [moyennes]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, [médianes]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}, étendues, [écarts types]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} et écarts inter[quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} de $S_1$ et $S_2$ : quels paramètres sont sensibles à la valeur extrême ?
+$S_1$ est cette série ; $S_2$ est $S_1$ privée du salaire le plus élevé. Comparer [moyennes]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, [médianes]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}, étendues, [écarts types]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} et écarts [interquartiles]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."} de $S_1$ et $S_2$ : quels paramètres sont sensibles à la valeur extrême ?
 :::
 
 ```{pyodide}
@@ -1961,7 +1961,7 @@ $$\text{salaire moyen} = \frac{101\,250}{300}=337{,}5 \text{ dinars.}$$
 [Exercice 1]{.activite-titre}
 $S_1$: 3, 4, 5, 8, 9, 12, 13, 15, 16, 50. $S_2$ = $S_1$ privée de la valeur 50.
 
-1. Calculer [étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."}, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."}, écart inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."}, [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} et [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} de chacune des deux séries.
+1. Calculer [étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."}, [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."}, écart [interquartile]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."}, [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."} et [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} de chacune des deux séries.
 2. Quelle caractéristique cet exemple met-il en évidence ?
 :::
 
@@ -2041,13 +2041,13 @@ print("S2 : étendue =", etendue(S2), " écart type =", ecart_type(S2), " média
 | [étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."} | 47 | 13 |
 | [écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} | 12,91 | 4,55 |
 | $Q_1$ ; $Q_3$ | 5 ; 15 | 5 ; 13 |
-| écart inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} | 10 | 8 |
+| écart [interquartile]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."} | 10 | 8 |
 
 **2.** La moyenne, l'étendue et l'écart type chutent très fortement quand
 on retire la valeur 50, alors que la médiane et l'écart interquartile
 bougent à peine : cet exemple illustre la **sensibilité aux valeurs
 extrêmes** des paramètres basés sur la moyenne, par opposition à la
-robustesse des paramètres basés sur les rangs (médiane, quartiles).
+robustesse des paramètres basés sur les rangs (médiane, [quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."}).
 :::
 
 ::: {.activite}
@@ -2141,7 +2141,7 @@ Une entreprise conditionne du café (réglage 265 g) sur deux machines.
 277 277 279 280
 ```
 
-Calculer les [quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} de chaque échantillon, comparer les écarts interquartiles, construire les diagrammes en boîte : quelle machine est la plus appropriée ?
+Calculer les [quartiles]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} de chaque échantillon, comparer les écarts [interquartiles]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."}, construire les diagrammes en boîte : quelle machine est la plus appropriée ?
 :::
 
 ::: {.callout-caution collapse="false"}
@@ -2187,7 +2187,7 @@ plt.show()
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
 Machine 1 ($n=39$, non multiple de 4) : $Q_1=262$, $Q_3=266$, écart
-inter[quartile]{.def tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart)."} $=4$.
+[interquartile]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."} $=4$.
 Machine 2 ($n=36$, multiple de 4) : $Q_1=267$, $Q_3=272$, écart
 interquartile $=5$.
 

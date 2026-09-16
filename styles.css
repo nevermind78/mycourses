@@ -299,6 +299,22 @@ div.callout.callout-style-default.callout-correction {
   padding: 0.6rem;
   background: #fbfdfe;
 }
+/* Bouton "Plein écran" maison (API Fullscreen du navigateur) : la figure
+   entière (tableur + graphique) remplit l'écran pour une lecture
+   confortable des histogrammes, boîtes à moustaches, nuages de points. */
+.ggb-figure:fullscreen,
+.ggb-figure.ggb-figure-fullscreen {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow: auto;
+}
+.ggb-figure:fullscreen .ggb-canvas,
+.ggb-figure.ggb-figure-fullscreen .ggb-canvas {
+  flex: 1 1 auto;
+  width: 100%;
+}
 .ggb-toolbar {
   display: flex;
   gap: 0.5rem;

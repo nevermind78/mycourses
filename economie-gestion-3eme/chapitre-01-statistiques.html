@@ -460,10 +460,13 @@ function gsMakeResponsive(id, api, outerDiv, fixedHeight) {
 // Comme gsMakeResponsive, mais réapplique la fenêtre (setCoordSystem) après
 // chaque redimensionnement : GeoGebra conserve l'échelle pixels/unité (pas
 // la plage de coordonnées) lors d'un setSize, donc réduire la largeur
-// "zoome" sinon involontairement sur la vue Graphique.
+// "zoome" sinon involontairement sur la vue Graphique. La hauteur cible
+// (GSG.heights[id]) est mutable : le mode plein écran l'agrandit
+// temporairement pour profiter de tout l'écran.
 function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
   if (GS.cleanups[id]) { try { GS.cleanups[id](); } catch (e) {} }
-  var lastW = -1;
+  GSG.heights[id] = fixedHeight;
+  var lastW = -1, lastH = -1;
   var padding = null;
   var debounceTimer = null;
 
@@ -473,9 +476,10 @@ function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
       padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
     }
     var w = Math.floor(outerDiv.clientWidth - padding);
-    if (w < 80 || w === lastW) return;
-    lastW = w;
-    api.setSize(w, fixedHeight);
+    var h = GSG.heights[id];
+    if (w < 80 || (w === lastW && h === lastH)) return;
+    lastW = w; lastH = h;
+    api.setSize(w, h);
     applyView();
   }
 
@@ -485,6 +489,7 @@ function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
   }
 
   applySize();
+  GSG.applySize[id] = applySize;
   window.addEventListener("resize", scheduleResize);
   var ro = null;
   if (window.ResizeObserver) {
@@ -504,7 +509,7 @@ function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
 // du tableur (perspective "SG") : sert à construire des histogrammes,
 // diagrammes en boîte, polygones des effectifs cumulés, etc. directement
 // à partir des données saisies, en plus des calculs de cellules.
-var GSG = { apis: {}, initCmds: {}, views: {}, styles: {}, axisLabels: {}, cleanups: {} };
+var GSG = { apis: {}, initCmds: {}, views: {}, styles: {}, axisLabels: {}, cleanups: {}, heights: {}, applySize: {} };
 
 function gsgApplyView(id, api) {
   var v = GSG.views[id];
@@ -513,15 +518,66 @@ function gsgApplyView(id, api) {
 }
 
 // La vue Graphique n'a pas d'usage de construction ici (elle affiche
-// seulement le résultat : histogramme, boîte, nuage...) : sans ceci, cliquer
-// dedans fait basculer toute la barre d'outils vers les outils de géométrie
-// (point, droite, cercle...), ce qui n'a pas de sens pour un simple graphique
-// de lecture. On verrouille donc la même barre d'outils "Tableur" (curseur,
-// statistiques, groupement, somme) quelle que soit la vue qui a le focus.
+// seulement le résultat : histogramme, boîte, nuage...). Deux problèmes
+// corrigés en donnant une perspective XML complète (plutôt que le simple
+// code "SG") à la construction :
+// 1) sans ceci, cliquer dans la vue Graphique fait basculer toute la barre
+//    d'outils vers les outils de géométrie (point, droite, cercle...), qui
+//    n'ont pas d'usage pour un simple graphique de lecture — on fixe donc
+//    la barre d'outils globale ET celle de la vue Tableur sur les mêmes
+//    outils (curseur, statistiques, groupement, somme) ;
+// 2) le partage par défaut de la largeur entre Tableur et Graphique laisse
+//    la vue Graphique trop étroite (les nombres des axes se chevauchent) :
+//    le "divider" ci-dessous donne davantage de place au Graphique.
 var GSG_TOOLBAR = "0 || 2020 , 2021 , 2022 || 2001 , 2003 , 2002 , 2004 , 2005 || 2040 , 2041 , 2042 , 2044 , 2043";
+var GSG_DIVIDER = 0.32;
+var GSG_PERSPECTIVE_XML =
+  '<perspective id="tmp"><panes><pane location="" divider="' + GSG_DIVIDER + '" orientation="1"/></panes>' +
+  '<views>' +
+  '<view id="1" visible="true" inframe="false" stylebar="false" location="1" size="150" window="100,100,600,400"/>' +
+  '<view id="4" toolbar="' + GSG_TOOLBAR + '" visible="true" inframe="false" stylebar="false" location="3" size="410" window="100,100,600,400"/>' +
+  '</views>' +
+  '<toolbar show="true" items="' + GSG_TOOLBAR + '" position="1" help="false"/></perspective>';
 
 function gsgApplyToolbar(api) {
   try { api.setCustomToolBar(GSG_TOOLBAR); } catch (e) {}
+}
+
+// Bouton "Plein écran" maison : le showFullscreenButton natif de GeoGebra
+// (dessiné sur son propre canevas, pas un vrai bouton du DOM) s'est révélé
+// peu fiable selon la taille/le navigateur. On implémente donc notre
+// propre bouton, basé sur l'API Fullscreen standard du navigateur, qui
+// agrandit toute la figure (tableur + graphique) — vérifiable et fiable.
+GSG.baseHeights = {};
+
+function gsgFullscreenElement() {
+  return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || null;
+}
+
+function gsgToggleFullscreen(id, container) {
+  if (gsgFullscreenElement() === container) {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    else if (document.msExitFullscreen) document.msExitFullscreen();
+  } else {
+    if (container.requestFullscreen) container.requestFullscreen();
+    else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+    else if (container.msRequestFullscreen) container.msRequestFullscreen();
+  }
+}
+
+function gsgOnFullscreenChange(id, container) {
+  if (!container.querySelector) return;
+  if (!GSG.apis[id] || !document.getElementById(id) || document.getElementById(id) !== container) return;
+  var isFs = gsgFullscreenElement() === container;
+  container.classList.toggle("ggb-figure-fullscreen", isFs);
+  var btn = container.querySelector('[data-act="fullscreen"]');
+  if (btn) btn.textContent = isFs ? "✕ Fermer le plein écran" : "⛶ Plein écran";
+  var newHeight = isFs ? Math.max(420, window.innerHeight - 110) : GSG.baseHeights[id];
+  GSG.heights[id] = newHeight;
+  var canvas = container.querySelector(".ggb-canvas");
+  if (canvas) canvas.style.height = newHeight + "px";
+  if (GSG.applySize[id]) setTimeout(GSG.applySize[id], 60);
 }
 
 function gsgApplyAxisLabels(id, api) {
@@ -547,7 +603,7 @@ function gsgReset(id) {
   var api = GSG.apis[id];
   if (!api) return;
   api.newConstruction();
-  try { api.setPerspective("SG"); } catch (e) {}
+  try { api.setPerspective(GSG_PERSPECTIVE_XML); } catch (e) {}
   gsRunCommands(api, GSG.initCmds[id]);
   gsgApplyStyle(id, api);
   gsgApplyView(id, api);
@@ -568,7 +624,7 @@ function gsgApplyCode(id) {
     .map(function (s) { return s.trim(); })
     .filter(function (s) { return s.length > 0; });
   api.newConstruction();
-  try { api.setPerspective("SG"); } catch (e) {}
+  try { api.setPerspective(GSG_PERSPECTIVE_XML); } catch (e) {}
   gsRunCommands(api, lines);
   gsgApplyStyle(id, api);
   gsgApplyView(id, api);
@@ -587,10 +643,12 @@ function buildSheetGraph(id, commands, opts) {
   var container = document.getElementById(id);
   container.classList.add("ggb-figure");
   var baseW = opts.w || 820, baseH = opts.h || 340;
+  GSG.baseHeights[id] = baseH;
   container.innerHTML =
     '<div class="ggb-toolbar">' +
       '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
       '<button type="button" class="ggb-btn" data-act="code">✏️ Voir / modifier le code</button>' +
+      '<button type="button" class="ggb-btn" data-act="fullscreen">⛶ Plein écran</button>' +
     '</div>' +
     '<div class="ggb-canvas" style="height:' + baseH + 'px">' +
       '<div class="ggb-placeholder">Tableur + graphique GeoGebra — chargement…</div>' +
@@ -609,6 +667,10 @@ function buildSheetGraph(id, commands, opts) {
     var panel = container.querySelector(".ggb-codepanel");
     panel.hidden = !panel.hidden;
   });
+  container.querySelector('[data-act="fullscreen"]').addEventListener("click", function () {
+    gsgToggleFullscreen(id, container);
+  });
+  document.addEventListener("fullscreenchange", function () { gsgOnFullscreenChange(id, container); });
 
   var loaded = false;
   function loadApplet() {
@@ -624,16 +686,20 @@ function buildSheetGraph(id, commands, opts) {
     var params = {
       appName: "classic", width: baseW, height: baseH,
       showToolBar: true, showAlgebraInput: false, showMenuBar: false,
-      showResetIcon: true, showFullscreenButton: true,
+      showResetIcon: true, showFullscreenButton: false,
       perspective: "SG", language: "fr",
       appletOnLoad: function (api) {
         GSG.apis[id] = api;
+        try { api.setPerspective(GSG_PERSPECTIVE_XML); } catch (e) {}
         gsRunCommands(api, commands);
         gsgApplyStyle(id, api);
         gsgApplyView(id, api);
         gsgApplyAxisLabels(id, api);
         gsgApplyToolbar(api);
-        gsgMakeResponsive(id, api, container, baseH, function () { gsgApplyView(id, api); });
+        gsgMakeResponsive(id, api, container, baseH, function () {
+          gsgApplyView(id, api);
+          gsgApplyToolbar(api);
+        });
         gsHideKeyboard(container);
       }
     };

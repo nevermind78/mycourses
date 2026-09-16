@@ -281,7 +281,7 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>I. Série statistique simple</strong> — résumé (moyenne, médiane, variance, écart type, quartiles, boîte de dispersion) et comparaison de séries.</li>
+<li><strong>I. Série statistique simple</strong> — résumé (<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span>, <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span>, <span class="def" tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne.">variance</span>, <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span>, <span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartiles</span>, boîte de dispersion) et comparaison de séries.</li>
 <li><strong>II. Série statistique double</strong> — nuage de points, point moyen, distributions et fréquences marginales.</li>
 <li><strong>Utilisation des TIC</strong> — un vrai tableur (le même principe qu’Excel).</li>
 <li><strong>Exercices et problèmes</strong>, <strong>Math culture</strong>.</li>
@@ -487,7 +487,7 @@ function gsMakeResponsive(id, api, outerDiv, fixedHeight) {
 </table>
 </div>
 <ol type="1">
-<li>Un élève a obtenu 8. Cette note est supérieure <strong>a/</strong> au mode <strong>b/</strong> à la médiane <strong>c/</strong> à la moyenne.</li>
+<li>Un élève a obtenu 8. Cette note est supérieure <strong>a/</strong> au <span class="def" tabindex="0" data-tip="La valeur du caractère qui a le plus grand effectif : la valeur la plus fréquente.">mode</span> <strong>b/</strong> à la <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> <strong>c/</strong> à la <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span>.</li>
 <li>Sur 1000 candidats à un concours, 500 ont été reçus. La moyenne des notes obtenues est 9,437 et la médiane 9,241. Si un candidat a été admis, alors il a obtenu une note <strong>a/</strong> supérieure à 10 <strong>b/</strong> supérieure à 9,437 <strong>c/</strong> supérieure à 9,241.</li>
 </ol>
 </div>
@@ -518,10 +518,10 @@ buildSheet("gs-a1", [
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><strong>Moyenne</strong> : <span class="math inline">\(\bar{x} = \dfrac{2\times3+8\times1+9\times4+10\times1+19\times1}{10} = \dfrac{79}{10} = 7{,}9\)</span>.</li>
+<li><strong><span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">Moyenne</span></strong> : <span class="math inline">\(\bar{x} = \dfrac{2\times3+8\times1+9\times4+10\times1+19\times1}{10} = \dfrac{79}{10} = 7{,}9\)</span>.</li>
 <li><strong>Liste triée</strong> (10 notes) : 2, 2, 2, 8, 9, 9, 9, 9, 10, 19.</li>
-<li><strong>Médiane</strong> : <span class="math inline">\(n=10\)</span> est pair, <span class="math inline">\(M_e = \dfrac{x_5+x_6}{2} = \dfrac{9+9}{2} = 9\)</span>.</li>
-<li><strong>Mode</strong> : la valeur la plus fréquente est <span class="math inline">\(9\)</span> (effectif 4).</li>
+<li><strong><span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">Médiane</span></strong> : <span class="math inline">\(n=10\)</span> est pair, <span class="math inline">\(M_e = \dfrac{x_5+x_6}{2} = \dfrac{9+9}{2} = 9\)</span>.</li>
+<li><strong><span class="def" tabindex="0" data-tip="La valeur du caractère qui a le plus grand effectif : la valeur la plus fréquente.">Mode</span></strong> : la valeur la plus fréquente est <span class="math inline">\(9\)</span> (effectif 4).</li>
 <li>La note 8 est donc <strong>supérieure à la moyenne</strong> (7,9) mais <strong>pas</strong> au mode ni à la médiane (tous deux égaux à 9). → réponse <strong>c</strong>.</li>
 <li>Les 500 admis sont ceux dont la note fait partie de la <strong>moitié supérieure</strong> : le seuil qui sépare exactement la population en deux est la <strong>médiane</strong>, pas la moyenne. → réponse <strong>c</strong> (supérieure à 9,241).</li>
 </ol>
@@ -534,10 +534,10 @@ buildSheet("gs-a1", [
 <li>Dites, en justifiant vos réponses, si les affirmations suivantes sont vraies ou fausses.
 <ul>
 <li>a/ Dans toute série statistique, la moyenne est comprise entre la valeur minimale et la valeur maximale.</li>
-<li>b/ Dans toute série statistique, l’écart type est toujours inférieur à la variance.</li>
-<li>c/ Si l’on ajoute un même réel <span class="math inline">\(k\)</span> positif à toutes les valeurs, alors l’intervalle interquartile est augmenté de <span class="math inline">\(k\)</span>.</li>
+<li>b/ Dans toute série statistique, l’<span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> est toujours inférieur à la <span class="def" tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne.">variance</span>.</li>
+<li>c/ Si l’on ajoute un même réel <span class="math inline">\(k\)</span> positif à toutes les valeurs, alors l’intervalle inter<span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartile</span> est augmenté de <span class="math inline">\(k\)</span>.</li>
 </ul></li>
-<li>Onze élèves ont passé un test : moyenne 10,5 ; médiane 9 ; étendue 12. Dire, si possible, si les affirmations suivantes sont vraies ou fausses : cinq élèves ont plus de 9 ; cinq élèves ont moins de 10,5 ; il y a 15 points d’écart entre la note la plus haute et la plus basse ; le groupe est hétérogène.</li>
+<li>Onze élèves ont passé un test : moyenne 10,5 ; médiane 9 ; <span class="def" tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min).">étendue</span> 12. Dire, si possible, si les affirmations suivantes sont vraies ou fausses : cinq élèves ont plus de 9 ; cinq élèves ont moins de 10,5 ; il y a 15 points d’écart entre la note la plus haute et la plus basse ; le groupe est hétérogène.</li>
 </ol>
 </div>
 <p><strong>Données du test (question 2) :</strong> <span class="math inline">\(n=11\)</span> élèves, moyenne <span class="math inline">\(=10{,}5\)</span>, médiane <span class="math inline">\(=9\)</span>, étendue <span class="math inline">\(=12\)</span>.</p>
@@ -554,10 +554,10 @@ buildSheet("gs-a1", [
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>1. a/ Vrai.</strong> La moyenne est une somme pondérée des valeurs : elle ne peut jamais dépasser la plus grande valeur ni être inférieure à la plus petite.</p>
-<p><strong>1. b/ Faux, en général.</strong> L’écart type est <span class="math inline">\(\sqrt{\text{variance}}\)</span>. Si la variance est supérieure à 1, l’écart type est <em>plus petit</em> qu’elle (ex. variance <span class="math inline">\(=16\)</span>, écart type <span class="math inline">\(=4\)</span>) ; mais si la variance est inférieure à 1, c’est l’inverse (ex. variance <span class="math inline">\(=0{,}25\)</span>, écart type <span class="math inline">\(=0{,}5 &gt; 0{,}25\)</span>). L’affirmation n’est donc pas toujours vraie.</p>
-<p><strong>1. c/ Vrai, avec précision.</strong> Ajouter <span class="math inline">\(k\)</span> à toutes les valeurs déplace chaque quartile de <span class="math inline">\(k\)</span> : le nouvel intervalle est <span class="math inline">\([Q_1+k\,;\,Q_3+k]\)</span>. En revanche, la <em>largeur</em> de cet intervalle — l’écart interquartile <span class="math inline">\(Q_3-Q_1\)</span> — ne change pas.</p>
-<p><strong>2.</strong> Avec <span class="math inline">\(n=11\)</span> (impair), la médiane est la valeur du 6ᵉ élève une fois la série triée : il y a donc bien 5 élèves de rang inférieur et 5 de rang supérieur au 6ᵉ, mais rien n’empêche plusieurs élèves d’avoir exactement la note médiane (9). On ne peut donc pas affirmer avec certitude que “cinq élèves ont <strong>plus</strong> de 9” (<strong>indéterminé</strong>). De même, la <strong>moyenne</strong> n’est pas une statistique de rang : elle ne permet pas de savoir combien d’élèves sont en dessous d’elle (<strong>indéterminé</strong>). En revanche, l’énoncé donne l’étendue <span class="math inline">\(=12\)</span>, donc l’écart entre la note la plus haute et la plus basse vaut <strong>12, pas 15</strong> : l’affirmation est <strong>fausse</strong>. Quant à l’hétérogénéité du groupe, on ne peut pas la déduire avec certitude de ces seuls indicateurs (<strong>indéterminé</strong>, même si une étendue de 12 sur une échelle de notes suggère une certaine dispersion).</p>
+<p><strong>1. a/ Vrai.</strong> La <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> est une somme pondérée des valeurs : elle ne peut jamais dépasser la plus grande valeur ni être inférieure à la plus petite.</p>
+<p><strong>1. b/ Faux, en général.</strong> L’<span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> est <span class="math inline">\(\sqrt{\text{variance}}\)</span>. Si la <span class="def" tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne.">variance</span> est supérieure à 1, l’écart type est <em>plus petit</em> qu’elle (ex. variance <span class="math inline">\(=16\)</span>, écart type <span class="math inline">\(=4\)</span>) ; mais si la variance est inférieure à 1, c’est l’inverse (ex. variance <span class="math inline">\(=0{,}25\)</span>, écart type <span class="math inline">\(=0{,}5 &gt; 0{,}25\)</span>). L’affirmation n’est donc pas toujours vraie.</p>
+<p><strong>1. c/ Vrai, avec précision.</strong> Ajouter <span class="math inline">\(k\)</span> à toutes les valeurs déplace chaque <span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartile</span> de <span class="math inline">\(k\)</span> : le nouvel intervalle est <span class="math inline">\([Q_1+k\,;\,Q_3+k]\)</span>. En revanche, la <em>largeur</em> de cet intervalle — l’écart interquartile <span class="math inline">\(Q_3-Q_1\)</span> — ne change pas.</p>
+<p><strong>2.</strong> Avec <span class="math inline">\(n=11\)</span> (impair), la <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> est la valeur du 6ᵉ élève une fois la série triée : il y a donc bien 5 élèves de rang inférieur et 5 de rang supérieur au 6ᵉ, mais rien n’empêche plusieurs élèves d’avoir exactement la note médiane (9). On ne peut donc pas affirmer avec certitude que “cinq élèves ont <strong>plus</strong> de 9” (<strong>indéterminé</strong>). De même, la <strong>moyenne</strong> n’est pas une statistique de rang : elle ne permet pas de savoir combien d’élèves sont en dessous d’elle (<strong>indéterminé</strong>). En revanche, l’énoncé donne l’<span class="def" tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min).">étendue</span> <span class="math inline">\(=12\)</span>, donc l’écart entre la note la plus haute et la plus basse vaut <strong>12, pas 15</strong> : l’affirmation est <strong>fausse</strong>. Quant à l’hétérogénéité du groupe, on ne peut pas la déduire avec certitude de ces seuls indicateurs (<strong>indéterminé</strong>, même si une étendue de 12 sur une échelle de notes suggère une certaine dispersion).</p>
 </div>
 </div>
 </div>
@@ -621,7 +621,7 @@ buildSheet("gs-a3", [
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Effectifs cumulés</strong> (sans <span class="math inline">\(x\)</span>) : 6→2, 7,5→5, 8→9, 8,5→10, 9→11 (pour 11 valeurs). La valeur 8 occupe donc les rangs 6 à 9.</p>
-<p><strong>1.</strong> En ajoutant <span class="math inline">\(y\)</span> valeurs <span class="math inline">\(x\)</span> (avec <span class="math inline">\(x&gt;9\)</span>) à la fin de la série, l’effectif total devient <span class="math inline">\(n = 11+y\)</span>. La médiane reste égale à 8 tant que le ou les rangs du milieu restent compris entre 6 et 9. En étudiant les deux cas (<span class="math inline">\(n\)</span> pair ou impair), on trouve que cela reste vrai pour <span class="math inline">\(y \in \{0,1,2,3,4,5,6\}\)</span> — au-delà (par exemple <span class="math inline">\(y=7\)</span>), le rang médian sort de la zone occupée par la valeur 8.</p>
+<p><strong>1.</strong> En ajoutant <span class="math inline">\(y\)</span> valeurs <span class="math inline">\(x\)</span> (avec <span class="math inline">\(x&gt;9\)</span>) à la fin de la série, l’effectif total devient <span class="math inline">\(n = 11+y\)</span>. La <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> reste égale à 8 tant que le ou les rangs du milieu restent compris entre 6 et 9. En étudiant les deux cas (<span class="math inline">\(n\)</span> pair ou impair), on trouve que cela reste vrai pour <span class="math inline">\(y \in \{0,1,2,3,4,5,6\}\)</span> — au-delà (par exemple <span class="math inline">\(y=7\)</span>), le rang médian sort de la zone occupée par la valeur 8.</p>
 <p><strong>2.</strong> Avec <span class="math inline">\(y=2\)</span>, l’effectif total est <span class="math inline">\(11+2=13\)</span>. <span class="math display">\[\text{somme} = 6\times2+7{,}5\times3+8\times4+8{,}5\times1+9\times1 = 84\]</span> <span class="math display">\[\text{moyenne} = \frac{84+2x}{13} = 8 \;\Longrightarrow\; 84+2x = 104 \;\Longrightarrow\; x = 10\]</span> On vérifie que <span class="math inline">\(x=10&gt;9\)</span>, cohérent avec sa position dans le tableau.</p>
 </div>
 </div>
@@ -629,7 +629,7 @@ buildSheet("gs-a3", [
 <div class="activite">
 <p><span class="activite-titre">Activité 4</span></p>
 <ol type="1">
-<li>Dans une classe de 10 garçons et 20 filles, la taille moyenne des garçons est 1,7 m et celle des filles 1,61 m. Quelle est la taille moyenne de la classe ?</li>
+<li>Dans une classe de 10 garçons et 20 filles, la taille <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> des garçons est 1,7 m et celle des filles 1,61 m. Quelle est la taille moyenne de la classe ?</li>
 <li>Dans une autre classe de 28 élèves, la taille moyenne des garçons est 1,68 m, celle des filles 1,60 m et celle des 28 élèves 1,66 m. Combien y a-t-il de garçons et de filles ?</li>
 </ol>
 </div>
@@ -672,7 +672,7 @@ buildSheet("gs-a4-2", [
 <p><span class="activite-titre">Activité 5</span></p>
 <p><span class="math inline">\(x_i\)</span>: 2, 3, 5, 6, 7, 8, 9, 10, 12, 15, 16, 18, 19 avec <span class="math inline">\(n_i\)</span>: 1,1,1,3,1,1,3,2,3,1,2,1,1.</p>
 <ol type="1">
-<li>Déterminer la médiane, la moyenne et l’étendue de cette série.</li>
+<li>Déterminer la <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span>, la <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> et l’<span class="def" tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min).">étendue</span> de cette série.</li>
 <li>Changer des données pour avoir une médiane égale à 10 sans changer ni la moyenne ni l’étendue de la série.</li>
 </ol>
 </div>
@@ -705,8 +705,8 @@ buildSheet("gs-a5", [
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>1.</strong> <span class="math inline">\(n = 21\)</span> (impair) : la médiane est la valeur de rang <span class="math inline">\(\frac{21+1}{2}=11\)</span>. Effectifs cumulés : 2→1, 3→2, 5→3, 6→6, 7→7, 8→8, <strong>9→11</strong>. La valeur de rang 11 est donc <span class="math inline">\(M_e = 9\)</span>. <span class="math display">\[\bar{x} = \frac{2+3+5+18+7+8+27+20+36+15+32+18+19}{21} = \frac{210}{21} = 10\]</span> Étendue <span class="math inline">\(= 19-2 = 17\)</span>.</p>
-<p><strong>2.</strong> Il existe plusieurs solutions. Une façon simple : transformer <strong>une</strong> des trois valeurs 9 en 10 (le rang médian tombe alors dans le groupe des 10, donc <span class="math inline">\(M_e\)</span> devient 10), puis compenser en transformant <strong>une</strong> des trois valeurs 12 en 11 (on retire 1 et on ajoute 1 à la somme : la moyenne ne change pas). Nouvelle série : <span class="math inline">\(x_i\)</span>: 2,3,5,6,7,8,<strong>9</strong>,<strong>10</strong>,<strong>11</strong>,12,15,16,18,19 avec <span class="math inline">\(n_i\)</span>: 1,1,1,3,1,1,<strong>2</strong>,<strong>3</strong>,<strong>1</strong>,<strong>2</strong>,1,2,1,1 (min et max inchangés, donc l’étendue reste 17).</p>
+<p><strong>1.</strong> <span class="math inline">\(n = 21\)</span> (impair) : la <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> est la valeur de rang <span class="math inline">\(\frac{21+1}{2}=11\)</span>. Effectifs cumulés : 2→1, 3→2, 5→3, 6→6, 7→7, 8→8, <strong>9→11</strong>. La valeur de rang 11 est donc <span class="math inline">\(M_e = 9\)</span>. <span class="math display">\[\bar{x} = \frac{2+3+5+18+7+8+27+20+36+15+32+18+19}{21} = \frac{210}{21} = 10\]</span> <span class="def" tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min).">Étendue</span> <span class="math inline">\(= 19-2 = 17\)</span>.</p>
+<p><strong>2.</strong> Il existe plusieurs solutions. Une façon simple : transformer <strong>une</strong> des trois valeurs 9 en 10 (le rang médian tombe alors dans le groupe des 10, donc <span class="math inline">\(M_e\)</span> devient 10), puis compenser en transformant <strong>une</strong> des trois valeurs 12 en 11 (on retire 1 et on ajoute 1 à la somme : la <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> ne change pas). Nouvelle série : <span class="math inline">\(x_i\)</span>: 2,3,5,6,7,8,<strong>9</strong>,<strong>10</strong>,<strong>11</strong>,12,15,16,18,19 avec <span class="math inline">\(n_i\)</span>: 1,1,1,3,1,1,<strong>2</strong>,<strong>3</strong>,<strong>1</strong>,<strong>2</strong>,1,2,1,1 (min et max inchangés, donc l’étendue reste 17).</p>
 </div>
 </div>
 </div>
@@ -740,8 +740,8 @@ buildSheet("gs-a6", [
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>2.</strong> Soit <span class="math inline">\(n\)</span> le nombre d’élèves. La somme totale vaut <span class="math inline">\(n \times 10{,}5\)</span>. En retirant uniquement la note la plus haute (18), il reste <span class="math inline">\(n-1\)</span> élèves dont la moyenne est 10,2 : <span class="math display">\[n\times10{,}5 - 18 = (n-1)\times10{,}2 \;\Longrightarrow\; 0{,}3n = 7{,}8 \;\Longrightarrow\; n = 26\]</span></p>
-<p><strong>1.</strong> Somme totale <span class="math inline">\(=26\times10{,}5=273\)</span>. En retirant 3 et 18 : nouvelle somme <span class="math inline">\(=273-3-18=252\)</span>, nouvel effectif <span class="math inline">\(=24\)</span>, donc <strong>nouvelle moyenne</strong> <span class="math inline">\(=\dfrac{252}{24}=10{,}5\)</span> : <strong>elle ne change pas</strong> (propriété du problème : <span class="math inline">\(3+18=21=2\times10{,}5\)</span>, la moyenne des deux valeurs retirées est justement égale à la moyenne globale). Pour la médiane : avec <span class="math inline">\(n=26\)</span> (pair), <span class="math inline">\(M_e\)</span> est la moyenne des rangs 13 et 14. En retirant le minimum et le maximum (un de chaque côté), le rang 13 devient le nouveau rang 12 et le rang 14 le nouveau rang 13 : la <strong>médiane reste donc 12</strong> elle aussi. <em>(Résultat général : retirer une seule valeur minimale et une seule valeur maximale d’une série ne change jamais sa médiane.)</em></p>
+<p><strong>2.</strong> Soit <span class="math inline">\(n\)</span> le nombre d’élèves. La somme totale vaut <span class="math inline">\(n \times 10{,}5\)</span>. En retirant uniquement la note la plus haute (18), il reste <span class="math inline">\(n-1\)</span> élèves dont la <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> est 10,2 : <span class="math display">\[n\times10{,}5 - 18 = (n-1)\times10{,}2 \;\Longrightarrow\; 0{,}3n = 7{,}8 \;\Longrightarrow\; n = 26\]</span></p>
+<p><strong>1.</strong> Somme totale <span class="math inline">\(=26\times10{,}5=273\)</span>. En retirant 3 et 18 : nouvelle somme <span class="math inline">\(=273-3-18=252\)</span>, nouvel effectif <span class="math inline">\(=24\)</span>, donc <strong>nouvelle moyenne</strong> <span class="math inline">\(=\dfrac{252}{24}=10{,}5\)</span> : <strong>elle ne change pas</strong> (propriété du problème : <span class="math inline">\(3+18=21=2\times10{,}5\)</span>, la moyenne des deux valeurs retirées est justement égale à la moyenne globale). Pour la <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> : avec <span class="math inline">\(n=26\)</span> (pair), <span class="math inline">\(M_e\)</span> est la moyenne des rangs 13 et 14. En retirant le minimum et le maximum (un de chaque côté), le rang 13 devient le nouveau rang 12 et le rang 14 le nouveau rang 13 : la <strong>médiane reste donc 12</strong> elle aussi. <em>(Résultat général : retirer une seule valeur minimale et une seule valeur maximale d’une série ne change jamais sa médiane.)</em></p>
 </div>
 </div>
 </div>
@@ -788,8 +788,8 @@ buildSheet("gs-a6", [
 </table>
 </div>
 <ol type="1">
-<li>Calculer la médiane et la moyenne de cette série.</li>
-<li>Calculer la variance et l’écart type de cette série.</li>
+<li>Calculer la <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> et la <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> de cette série.</li>
+<li>Calculer la <span class="def" tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne.">variance</span> et l’<span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> de cette série.</li>
 </ol>
 </div>
 <p>Complétez le calcul de la moyenne (remplacez le tiret par la bonne formule), puis cliquez sur <strong>Run Code</strong>.</p>
@@ -817,7 +817,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbW95ZW5uZV8xIn0s
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>La moyenne pondérée s’écrit <span class="math inline">\(\bar{x} = \dfrac{\sum n_i x_i}{\sum n_i}\)</span>, donc ici <code>somme / n</code>.</p>
+<p>La <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> pondérée s’écrit <span class="math inline">\(\bar{x} = \dfrac{\sum n_i x_i}{\sum n_i}\)</span>, donc ici <code>somme / n</code>.</p>
 </div>
 </div>
 </div>
@@ -844,7 +844,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbW95ZW5uZV8xIn0s
 <script type="exercise-check-ex_moyenne_1-contents">
 eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJleGVyY2lzZSI6ImV4X21veWVubmVfMSJ9LCJjb2RlIjoibiA9IDBcbmZvciBlZmZlY3RpZiBpbiBlZmZlY3RpZnM6XG4gICAgbiA9IG4gKyBlZmZlY3RpZlxuc29tbWUgPSAwXG5mb3IgaSBpbiByYW5nZShsZW4oY2VudHJlcykpOlxuICAgIHNvbW1lID0gc29tbWUgKyBjZW50cmVzW2ldICogZWZmZWN0aWZzW2ldXG5hdHRlbmR1ID0gc29tbWUgLyBuXG5mZWVkYmFjayA9IE5vbmVcbmlmIGFicyhyZXN1bHQgLSBhdHRlbmR1KSA8IDAuMDE6XG4gICAgZmVlZGJhY2sgPSB7XCJjb3JyZWN0XCI6IFRydWUsIFwibWVzc2FnZVwiOiBmXCJCcmF2bywgbGEgbW95ZW5uZSBlc3QgYmllbiB7YXR0ZW5kdX0gZGluYXJzLlwifVxuZWxzZTpcbiAgICBmZWVkYmFjayA9IHtcImNvcnJlY3RcIjogRmFsc2UsIFwibWVzc2FnZVwiOiBcIlbDqXJpZmllIDogbW95ZW5uZSA9IHNvbW1lIGRlcyAoY2VudHJlIHggZWZmZWN0aWYpIC8gZWZmZWN0aWYgdG90YWwuXCJ9XG5mZWVkYmFjayJ9
 </script>
-<p>Complétez maintenant vous-même la variance et l’écart type (question 2) :</p>
+<p>Complétez maintenant vous-même la <span class="def" tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne.">variance</span> et l’<span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> (question 2) :</p>
 <div>
 <div id="pyodide-4" class="exercise-cell">
 
@@ -865,10 +865,10 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgMSDigJQg
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Médiane : effectifs cumulés 15, 35, 65, 85, 100 → le rang <span class="math inline">\(\frac{100}{2}=50\)</span> tombe dans la classe [300,400[ (cumulé avant <span class="math inline">\(=35\)</span>) : par interpolation <span class="math inline">\(M_e = 300 + \dfrac{50-35}{30}\times100 = 350\)</span>.</p>
-<p>Moyenne <span class="math inline">\(\bar{x} = \dfrac{150\times15+250\times20+350\times30+450\times20+550\times15}{100}=\dfrac{35\,000}{100}=350\)</span>.</p>
-<p>Variance <span class="math inline">\(=\dfrac{15(150-350)^2+20(250-350)^2+30(350-350)^2+20(450-350)^2+15(550-350)^2}{100}=\dfrac{1\,600\,000}{100}=16\,000\)</span>.</p>
-<p>Écart type <span class="math inline">\(=\sqrt{16\,000}\approx126{,}5\)</span> dinars.</p>
+<p><span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">Médiane</span> : effectifs cumulés 15, 35, 65, 85, 100 → le rang <span class="math inline">\(\frac{100}{2}=50\)</span> tombe dans la classe [300,400[ (cumulé avant <span class="math inline">\(=35\)</span>) : par interpolation <span class="math inline">\(M_e = 300 + \dfrac{50-35}{30}\times100 = 350\)</span>.</p>
+<p><span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">Moyenne</span> <span class="math inline">\(\bar{x} = \dfrac{150\times15+250\times20+350\times30+450\times20+550\times15}{100}=\dfrac{35\,000}{100}=350\)</span>.</p>
+<p><span class="def" tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne.">Variance</span> <span class="math inline">\(=\dfrac{15(150-350)^2+20(250-350)^2+30(350-350)^2+20(450-350)^2+15(550-350)^2}{100}=\dfrac{1\,600\,000}{100}=16\,000\)</span>.</p>
+<p><span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">Écart type</span> <span class="math inline">\(=\sqrt{16\,000}\approx126{,}5\)</span> dinars.</p>
 </div>
 </div>
 </div>
@@ -882,7 +882,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgMSDigJQg
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Le résumé d’une série statistique peut être <strong>visuel</strong> (représentation graphique) ou <strong>numérique</strong> (calcul de paramètres : moyenne, médiane, variance, écart type, quartiles).</p>
+<p>Le résumé d’une série statistique peut être <strong>visuel</strong> (représentation graphique) ou <strong>numérique</strong> (calcul de paramètres : <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span>, <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span>, <span class="def" tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne.">variance</span>, <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span>, <span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartiles</span>).</p>
 </div>
 </div>
 <div class="activite">
@@ -920,8 +920,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgMlxuZGlh
 <div class="callout-body-container callout-body">
 <p>Sur les 40 mesures : <span class="math inline">\(\bar{x} \approx 4{,}925\)</span> cm et <span class="math inline">\(\sigma \approx 0{,}20\)</span> cm.</p>
 <ol type="1">
-<li><span class="math inline">\(4{,}925 \in [4{,}88\,;5{,}12]\)</span> : <strong>oui</strong>, la moyenne est correcte.</li>
-<li><span class="math inline">\(0{,}20 \in [0{,}13\,;0{,}25]\)</span> : <strong>oui</strong>, l’écart type est correct aussi.</li>
+<li><span class="math inline">\(4{,}925 \in [4{,}88\,;5{,}12]\)</span> : <strong>oui</strong>, la <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> est correcte.</li>
+<li><span class="math inline">\(0{,}20 \in [0{,}13\,;0{,}25]\)</span> : <strong>oui</strong>, l’<span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> est correct aussi.</li>
 <li>Les deux critères sont respectés : on peut <strong>poursuivre la production</strong> sans régler la machine.</li>
 </ol>
 </div>
@@ -974,7 +974,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgMlxuZGlh
 <ol type="1">
 <li>Déterminer les fréquences cumulées croissantes.</li>
 <li>Représenter le polygone des fréquences cumulées croissantes.</li>
-<li>Estimer graphiquement la médiane <span class="math inline">\(M_e\)</span>, puis calculer <span class="math inline">\(\bar{X}\)</span> et <span class="math inline">\(\sigma\)</span>.</li>
+<li>Estimer graphiquement la <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> <span class="math inline">\(M_e\)</span>, puis calculer <span class="math inline">\(\bar{X}\)</span> et <span class="math inline">\(\sigma\)</span>.</li>
 </ol>
 </div>
 <div>
@@ -1086,7 +1086,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNFxuYm9y
 134 135 138 138 138 138 141 142 144 145 146 148 148 148 149
 150 150 150 151 151 153 153 153 154 154 154 156 156 156 158
 160 160 160 163 164 164 165 166 168 168 170 172 172 176 179</code></pre>
-<p>D’après le cours : minimum 105, maximum 179, <span class="math inline">\(Q_1=133\)</span>, médiane <span class="math inline">\(M_e=149{,}5\)</span>, <span class="math inline">\(Q_3=158\)</span>.</p>
+<p>D’après le cours : minimum 105, maximum 179, <span class="math inline">\(Q_1=133\)</span>, <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> <span class="math inline">\(M_e=149{,}5\)</span>, <span class="math inline">\(Q_3=158\)</span>.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1159,7 +1159,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(n=60\)</span> est multiple de 4, donc <span class="math inline">\(Q_1\)</span> a le rang <span class="math inline">\(\frac{60}{4}=15\)</span> et <span class="math inline">\(Q_3\)</span> le rang <span class="math inline">\(\frac{3\times60}{4}=45\)</span>. Dans la liste triée, la 15ᵉ valeur est 133 et la 45ᵉ vaut 158 : on retrouve bien <span class="math inline">\(Q_1=133\)</span> et <span class="math inline">\(Q_3=158\)</span>. Comme <span class="math inline">\(n\)</span> est pair, la médiane est la moyenne des valeurs de rangs 30 et 31 : <span class="math inline">\(M_e=\dfrac{149+150}{2}=149{,}5\)</span>.</p>
+<p><span class="math inline">\(n=60\)</span> est multiple de 4, donc <span class="math inline">\(Q_1\)</span> a le rang <span class="math inline">\(\frac{60}{4}=15\)</span> et <span class="math inline">\(Q_3\)</span> le rang <span class="math inline">\(\frac{3\times60}{4}=45\)</span>. Dans la liste triée, la 15ᵉ valeur est 133 et la 45ᵉ vaut 158 : on retrouve bien <span class="math inline">\(Q_1=133\)</span> et <span class="math inline">\(Q_3=158\)</span>. Comme <span class="math inline">\(n\)</span> est pair, la <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> est la <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> des valeurs de rangs 30 et 31 : <span class="math inline">\(M_e=\dfrac{149+150}{2}=149{,}5\)</span>.</p>
 </div>
 </div>
 </div>
@@ -1174,8 +1174,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>La dispersion est plus étalée à gauche de la médiane sur cet exemple.</li>
-<li>On résume souvent une série par le couple <strong>(moyenne, écart type)</strong> — sensible aux valeurs extrêmes — ou par le couple <strong>(médiane, écart interquartile)</strong> — moins sensible, mais un peu plus délicat à calculer.</li>
+<li>La dispersion est plus étalée à gauche de la <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> sur cet exemple.</li>
+<li>On résume souvent une série par le couple <strong>(<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span>, <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span>)</strong> — sensible aux valeurs extrêmes — ou par le couple <strong>(médiane, écart inter<span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartile</span>)</strong> — moins sensible, mais un peu plus délicat à calculer.</li>
 </ul>
 </div>
 </div>
@@ -1206,7 +1206,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNiDigJQg
 </div>
 <div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Cette activité s’appuie sur la lecture d’un diagramme imprimé dans le manuel (non reproduit ici). La méthode reste la même que pour l’Activité 5 : lire directement min, <span class="math inline">\(Q_1\)</span>, <span class="math inline">\(M_e\)</span>, <span class="math inline">\(Q_3\)</span>, max sur les bornes de la boîte et des moustaches, puis calculer l’écart interquartile <span class="math inline">\(Q_3-Q_1\)</span>. Par définition des quartiles, <strong>au moins 25 %</strong> des valeurs sont inférieures ou égales à <span class="math inline">\(Q_1\)</span>, et <strong>au moins 75 %</strong> sont inférieures ou égales à <span class="math inline">\(Q_3\)</span> : reportez les bornes lues (15 et 35 sur l’axe) à la place de <span class="math inline">\(Q_1\)</span> et <span class="math inline">\(Q_3\)</span> pour compléter les phrases.</p>
+<p>Cette activité s’appuie sur la lecture d’un diagramme imprimé dans le manuel (non reproduit ici). La méthode reste la même que pour l’Activité 5 : lire directement min, <span class="math inline">\(Q_1\)</span>, <span class="math inline">\(M_e\)</span>, <span class="math inline">\(Q_3\)</span>, max sur les bornes de la boîte et des moustaches, puis calculer l’écart inter<span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartile</span> <span class="math inline">\(Q_3-Q_1\)</span>. Par définition des quartiles, <strong>au moins 25 %</strong> des valeurs sont inférieures ou égales à <span class="math inline">\(Q_1\)</span>, et <strong>au moins 75 %</strong> sont inférieures ou égales à <span class="math inline">\(Q_3\)</span> : reportez les bornes lues (15 et 35 sur l’axe) à la place de <span class="math inline">\(Q_1\)</span> et <span class="math inline">\(Q_3\)</span> pour compléter les phrases.</p>
 </div>
 </div>
 </div>
@@ -1253,7 +1253,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNiDigJQg
 </tbody>
 </table>
 </div>
-<p>Étendue, prime moyenne, quartiles, médiane, puis représenter la boîte de dispersion.</p>
+<p><span class="def" tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min).">Étendue</span>, prime <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span>, quartiles, <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span>, puis représenter la boîte de dispersion.</p>
 </div>
 <div>
 <div id="pyodide-13" class="exercise-cell">
@@ -1275,7 +1275,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgN1xuYm9y
 </div>
 <div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(n=1000\)</span>, étendue <span class="math inline">\(=525-125=400\)</span>. <span class="math display">\[\text{prime moyenne} = \frac{150\times130+\dots+500\times10}{1000} = 251 \text{ dinars}\]</span> Effectifs cumulés : 130, 480, 690, 820, 910, 960, 990, 1000.</p>
+<p><span class="math inline">\(n=1000\)</span>, <span class="def" tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min).">étendue</span> <span class="math inline">\(=525-125=400\)</span>. <span class="math display">\[\text{prime moyenne} = \frac{150\times130+\dots+500\times10}{1000} = 251 \text{ dinars}\]</span> Effectifs cumulés : 130, 480, 690, 820, 910, 960, 990, 1000.</p>
 <p>Rangs : <span class="math inline">\(Q_1=250\)</span> (classe [175;225[, cumul 130→480) ; <span class="math inline">\(M_e=500\)</span> (classe [225;275[, cumul 480→690) ; <span class="math inline">\(Q_3=750\)</span> (classe [275;325[, cumul 690→820).</p>
 <p><span class="math display">\[Q_1 = 175+\frac{250-130}{350}\times50 \approx 192{,}1 \qquad
 M_e = 225+\frac{500-480}{210}\times50 \approx 229{,}8 \qquad
@@ -1310,7 +1310,7 @@ Q_3 = 275+\frac{750-690}{130}\times50 \approx 298{,}1\]</span></p>
 </tbody>
 </table>
 </div>
-<p><span class="math inline">\(S_1\)</span> est cette série ; <span class="math inline">\(S_2\)</span> est <span class="math inline">\(S_1\)</span> privée du salaire le plus élevé. Comparer moyennes, médianes, étendues, écarts types et écarts interquartiles de <span class="math inline">\(S_1\)</span> et <span class="math inline">\(S_2\)</span> : quels paramètres sont sensibles à la valeur extrême ?</p>
+<p><span class="math inline">\(S_1\)</span> est cette série ; <span class="math inline">\(S_2\)</span> est <span class="math inline">\(S_1\)</span> privée du salaire le plus élevé. Comparer <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyennes</span>, <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médianes</span>, étendues, <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écarts types</span> et écarts inter<span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartiles</span> de <span class="math inline">\(S_1\)</span> et <span class="math inline">\(S_2\)</span> : quels paramètres sont sensibles à la valeur extrême ?</p>
 </div>
 <div>
 <div id="pyodide-14" class="exercise-cell">
@@ -1334,6 +1334,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgOFxuc2Fs
 <div class="callout-body-container callout-body">
 <div class="table-scroll-wrap">
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th></th>
@@ -1343,22 +1348,22 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgOFxuc2Fs
 </thead>
 <tbody>
 <tr class="odd">
-<td>moyenne</td>
+<td><span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span></td>
 <td>1,41</td>
 <td>1,36</td>
 </tr>
 <tr class="even">
-<td>médiane</td>
+<td><span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span></td>
 <td>1,4</td>
 <td>1,4</td>
 </tr>
 <tr class="odd">
-<td>étendue</td>
+<td><span class="def" tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min).">étendue</span></td>
 <td>4,8</td>
 <td>1,7</td>
 </tr>
 <tr class="even">
-<td>écart type</td>
+<td><span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span></td>
 <td>0,60</td>
 <td>0,42</td>
 </tr>
@@ -1370,7 +1375,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgOFxuc2Fs
 </tbody>
 </table>
 </div>
-<p>La <strong>médiane</strong> et les <strong>quartiles</strong> ne changent pas (ou presque pas) : ce sont des statistiques de rang, peu sensibles à une valeur extrême isolée. En revanche, la <strong>moyenne</strong>, l’<strong>étendue</strong> et l’<strong>écart type</strong> chutent nettement une fois le salaire 5,8 retiré : ce sont les paramètres sensibles aux valeurs extrêmes.</p>
+<p>La <strong>médiane</strong> et les <strong><span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartiles</span></strong> ne changent pas (ou presque pas) : ce sont des statistiques de rang, peu sensibles à une valeur extrême isolée. En revanche, la <strong>moyenne</strong>, l’<strong>étendue</strong> et l’<strong>écart type</strong> chutent nettement une fois le salaire 5,8 retiré : ce sont les paramètres sensibles aux valeurs extrêmes.</p>
 </div>
 </div>
 </div>
@@ -1379,7 +1384,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgOFxuc2Fs
 <h4 data-number="2.1.2" class="anchored" data-anchor-id="comparaison-de-séries"><span class="header-section-number">2.1.2</span> 2°) Comparaison de séries</h4>
 <div class="activite">
 <p><span class="activite-titre">Activité 1</span></p>
-<p>Précipitations moyennes mensuelles (mm) de deux villes :</p>
+<p>Précipitations <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyennes</span> mensuelles (mm) de deux villes :</p>
 <div class="table-scroll-wrap">
 <table class="caption-top table">
 <colgroup>
@@ -1470,7 +1475,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(V_1\)</span> : moyenne <span class="math inline">\(\approx86{,}3\)</span> mm, écart type <span class="math inline">\(\approx19{,}3\)</span> mm. <span class="math inline">\(V_2\)</span> : moyenne <span class="math inline">\(\approx89{,}7\)</span> mm, écart type <span class="math inline">\(\approx54{,}3\)</span> mm.</p>
+<p><span class="math inline">\(V_1\)</span> : <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> <span class="math inline">\(\approx86{,}3\)</span> mm, <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> <span class="math inline">\(\approx19{,}3\)</span> mm. <span class="math inline">\(V_2\)</span> : moyenne <span class="math inline">\(\approx89{,}7\)</span> mm, écart type <span class="math inline">\(\approx54{,}3\)</span> mm.</p>
 <p>Les deux villes ont une pluviométrie moyenne annuelle voisine, mais l’écart type de <span class="math inline">\(V_2\)</span> est presque trois fois plus grand que celui de <span class="math inline">\(V_1\)</span> : les précipitations de <span class="math inline">\(V_2\)</span> varient beaucoup plus fortement d’un mois à l’autre. <strong><span class="math inline">\(V_1\)</span> est donc la ville la plus régulière.</strong></p>
 </div>
 </div>
@@ -1542,7 +1547,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgMlxuY2Vu
 <div id="callout-23" class="callout-23-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(\bar{X}\approx14{,}78\)</span> (centaines d’heures) <span class="math inline">\(\approx1478\)</span> h, et <span class="math inline">\(\sigma\approx1{,}25\)</span> (centaines d’heures) <span class="math inline">\(\approx125\)</span> h.</p>
-<p>L’autre usine a une durée de vie moyenne plus faible (1400 h <span class="math inline">\(&lt;\)</span> 1478 h) mais surtout un écart type plus élevé (140 h <span class="math inline">\(&gt;\)</span> 125 h) : ses lampes sont à la fois moins performantes en moyenne et moins régulières. <strong>La première usine (celle du tableau) semble donc la plus performante.</strong></p>
+<p>L’autre usine a une durée de vie <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> plus faible (1400 h <span class="math inline">\(&lt;\)</span> 1478 h) mais surtout un <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> plus élevé (140 h <span class="math inline">\(&gt;\)</span> 125 h) : ses lampes sont à la fois moins performantes en moyenne et moins régulières. <strong>La première usine (celle du tableau) semble donc la plus performante.</strong></p>
 </div>
 </div>
 </div>
@@ -1603,7 +1608,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgM1xucG9p
 </div>
 <div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>X : moyenne <span class="math inline">\(=25{,}2\)</span> points, écart type <span class="math inline">\(\approx15{,}3\)</span>. Y : moyenne <span class="math inline">\(=25{,}2\)</span> points, écart type <span class="math inline">\(\approx17{,}9\)</span>.</p>
+<p>X : <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> <span class="math inline">\(=25{,}2\)</span> points, <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> <span class="math inline">\(\approx15{,}3\)</span>. Y : moyenne <span class="math inline">\(=25{,}2\)</span> points, écart type <span class="math inline">\(\approx17{,}9\)</span>.</p>
 <p>Les deux tireurs ont la <strong>même moyenne</strong>, mais X a un écart type plus petit : <strong>X est le tireur le plus régulier.</strong></p>
 </div>
 </div>
@@ -1663,7 +1668,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNFxuY2Vu
 <div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Hommes : <span class="math inline">\(\bar{x}=4\)</span>, <span class="math inline">\(\sigma\approx1{,}61\)</span>, <span class="math inline">\(CV=\sigma/\bar{x}\approx0{,}40\)</span>. Femmes : <span class="math inline">\(\bar{x}=2\)</span>, <span class="math inline">\(\sigma\approx1{,}41\)</span>, <span class="math inline">\(CV\approx0{,}71\)</span>.</p>
-<p>L’écart type des hommes est plus grand en valeur absolue, mais leur rémunération moyenne l’est aussi ; une fois rapporté à la moyenne, ce sont les <strong>femmes</strong> qui ont le coefficient de variation le plus élevé : leurs rémunérations sont donc, <em>relativement</em>, plus dispersées.</p>
+<p>L’<span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> des hommes est plus grand en valeur absolue, mais leur rémunération <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> l’est aussi ; une fois rapporté à la moyenne, ce sont les <strong>femmes</strong> qui ont le coefficient de variation le plus élevé : leurs rémunérations sont donc, <em>relativement</em>, plus dispersées.</p>
 </div>
 </div>
 </div>
@@ -1685,7 +1690,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNFxuY2Vu
 <div class="callout-body-container callout-body">
 <ul>
 <li>Dans un repère orthogonal, l’ensemble des points <span class="math inline">\(M_i(x_i;y_i)\)</span> est le <strong>nuage de points</strong> associé à la série statistique double <span class="math inline">\((X,Y)\)</span>.</li>
-<li>Si <span class="math inline">\(\bar{X}\)</span> est la moyenne des <span class="math inline">\(x_i\)</span> et <span class="math inline">\(\bar{Y}\)</span> la moyenne des <span class="math inline">\(y_i\)</span>, le point <span class="math inline">\(G(\bar{X},\bar{Y})\)</span> est le <strong>point moyen</strong> du nuage.</li>
+<li>Si <span class="math inline">\(\bar{X}\)</span> est la <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> des <span class="math inline">\(x_i\)</span> et <span class="math inline">\(\bar{Y}\)</span> la moyenne des <span class="math inline">\(y_i\)</span>, le point <span class="math inline">\(G(\bar{X},\bar{Y})\)</span> est le <strong>point moyen</strong> du nuage.</li>
 </ul>
 </div>
 </div>
@@ -1756,7 +1761,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNFxuY2Vu
 </tbody>
 </table>
 </div>
-<p>Quelle est la population étudiée ? Les deux caractères ? Moyenne et écart type de chacun ?</p>
+<p>Quelle est la population étudiée ? Les deux caractères ? Moyenne et <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> de chacun ?</p>
 </div>
 <p>Construisons le nuage de points et son point moyen <span class="math inline">\(G\)</span> :</p>
 <div>
@@ -1789,7 +1794,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoib2xpdmVzICAgPSBbMTEuNiwg
 <div id="callout-27" class="callout-27-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>La population est l’ensemble des <strong>10 gouvernorats</strong> ; les deux caractères sont <span class="math inline">\(X=\)</span> production d’olives à huile et <span class="math inline">\(Y=\)</span> production de céréales (en milliers de tonnes).</p>
-<p><span class="math inline">\(\bar{X}\approx47{,}48\)</span>, <span class="math inline">\(\sigma_X\approx39{,}29\)</span> ; <span class="math inline">\(\bar{Y}\approx73{,}74\)</span>, <span class="math inline">\(\sigma_Y\approx110{,}20\)</span> — l’écart type de <span class="math inline">\(Y\)</span> est très supérieur à sa propre moyenne : la production de céréales est extrêmement dispersée d’un gouvernorat à l’autre (Béja à 349,1 contre Sfax à 0,18). Point moyen : <span class="math inline">\(G(47{,}48\,;\,73{,}74)\)</span>.</p>
+<p><span class="math inline">\(\bar{X}\approx47{,}48\)</span>, <span class="math inline">\(\sigma_X\approx39{,}29\)</span> ; <span class="math inline">\(\bar{Y}\approx73{,}74\)</span>, <span class="math inline">\(\sigma_Y\approx110{,}20\)</span> — l’<span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> de <span class="math inline">\(Y\)</span> est très supérieur à sa propre <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> : la production de céréales est extrêmement dispersée d’un gouvernorat à l’autre (Béja à 349,1 contre Sfax à 0,18). Point moyen : <span class="math inline">\(G(47{,}48\,;\,73{,}74)\)</span>.</p>
 </div>
 </div>
 </div>
@@ -1885,7 +1890,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </tbody>
 </table>
 </div>
-<p>Construire le nuage, déterminer les moyennes, le point moyen et les écarts types.</p>
+<p>Construire le nuage, déterminer les <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyennes</span>, le point moyen et les <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écarts types</span>.</p>
 </div>
 <div>
 <div id="pyodide-22" class="exercise-cell">
@@ -1907,7 +1912,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0YXRpb24gPSBbODAy
 </div>
 <div id="callout-29" class="callout-29-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(\bar{X}=833{,}4\)</span>, <span class="math inline">\(\sigma_X\approx92{,}4\)</span> ; <span class="math inline">\(\bar{Y}\approx615{,}8\)</span>, <span class="math inline">\(\sigma_Y\approx81{,}2\)</span> (en millions de dinars). Point moyen <span class="math inline">\(G(833{,}4\,;\,615{,}8)\)</span> : la Tunisie importe en moyenne plus qu’elle n’exporte sur cette période (balance déficitaire).</p>
+<p><span class="math inline">\(\bar{X}=833{,}4\)</span>, <span class="math inline">\(\sigma_X\approx92{,}4\)</span> ; <span class="math inline">\(\bar{Y}\approx615{,}8\)</span>, <span class="math inline">\(\sigma_Y\approx81{,}2\)</span> (en millions de dinars). Point moyen <span class="math inline">\(G(833{,}4\,;\,615{,}8)\)</span> : la Tunisie importe en <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> plus qu’elle n’exporte sur cette période (balance déficitaire).</p>
 </div>
 </div>
 </div>
@@ -1934,7 +1939,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNCDigJQg
 </div>
 <div id="callout-30" class="callout-30-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Avec les valeurs lues sur le graphique, la production moyenne est <span class="math inline">\(\bar{Y}\approx682\)</span> tonnes, pour une année moyenne <span class="math inline">\(\bar{X}=5{,}5\)</span> (soit entre 1999 et 2000). Le point moyen est donc environ <span class="math inline">\(G(5{,}5\,;\,682)\)</span>. <em>(Les valeurs exactes dépendent de la lecture graphique ; seule la méthode — moyenne des abscisses, moyenne des ordonnées — est à retenir.)</em></p>
+<p>Avec les valeurs lues sur le graphique, la production <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> est <span class="math inline">\(\bar{Y}\approx682\)</span> tonnes, pour une année moyenne <span class="math inline">\(\bar{X}=5{,}5\)</span> (soit entre 1999 et 2000). Le point moyen est donc environ <span class="math inline">\(G(5{,}5\,;\,682)\)</span>. <em>(Les valeurs exactes dépendent de la lecture graphique ; seule la méthode — moyenne des abscisses, moyenne des ordonnées — est à retenir.)</em></p>
 </div>
 </div>
 </div>
@@ -2031,7 +2036,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicmFuZ19pZGggPSBbMTEsIDMy
 </div>
 <div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(G_1=(64\,;\,60)\)</span> (moyenne des 6 premiers pays), <span class="math inline">\(G_2\approx(67{,}67\,;\,64{,}33)\)</span> (moyenne des 6 derniers). Coefficient directeur : <span class="math display">\[a=\frac{64{,}33-60}{67{,}67-64}\approx1{,}18 \qquad b = 60-1{,}18\times64\approx-15{,}6\]</span> soit <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y\approx1{,}18x-15{,}6\)</span>.</p>
+<p><span class="math inline">\(G_1=(64\,;\,60)\)</span> (<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> des 6 premiers pays), <span class="math inline">\(G_2\approx(67{,}67\,;\,64{,}33)\)</span> (moyenne des 6 derniers). Coefficient directeur : <span class="math display">\[a=\frac{64{,}33-60}{67{,}67-64}\approx1{,}18 \qquad b = 60-1{,}18\times64\approx-15{,}6\]</span> soit <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y\approx1{,}18x-15{,}6\)</span>.</p>
 <p>Le point moyen global est <span class="math inline">\(G(65{,}83\,;\,62{,}17)\)</span>. Comme <span class="math inline">\(\bar X\)</span> (et <span class="math inline">\(\bar Y\)</span>) est la moyenne des 12 valeurs, on a <span class="math inline">\(\bar X = \dfrac{6\times\bar{X}_{N_1}+6\times\bar{X}_{N_2}}{12}=\dfrac{\bar{X}_{N_1}+\bar{X}_{N_2}}{2}\)</span> (car les deux sous-groupes ont le même effectif, 6) : <span class="math inline">\(G\)</span> est donc le <strong>milieu du segment <span class="math inline">\([G_1G_2]\)</span></strong>, ce qui prouve qu’il appartient à la droite <span class="math inline">\((G_1G_2)\)</span>.</p>
 </div>
 </div>
@@ -2344,7 +2349,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWCA9IFsxMCwgMzAsIDYwXVxu
 </tbody>
 </table>
 </div>
-<p>Distributions et fréquences marginales de <span class="math inline">\(C\)</span> et <span class="math inline">\(S\)</span>, puis moyenne et écart type de <span class="math inline">\(S\)</span>.</p>
+<p>Distributions et fréquences marginales de <span class="math inline">\(C\)</span> et <span class="math inline">\(S\)</span>, puis <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> et <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> de <span class="math inline">\(S\)</span>.</p>
 </div>
 <div>
 <div id="pyodide-27" class="exercise-cell">
@@ -2501,7 +2506,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWCA9IFsyLCAzLCA0XVxuWV9j
 <ol type="1">
 <li><span class="math inline">\(n_{\text{total}}=100\)</span>. Les voitures avec <span class="math inline">\(x\le3\)</span> et <span class="math inline">\(y\ge20\)</span> correspondent aux cases (2 ; [20;25[)=5, (2 ; [25;30[)=25, (3 ; [20;25[)=20, (3 ; [25;30[)=3, soit <span class="math inline">\(5+25+20+3=53\)</span>. <strong>Proportion <span class="math inline">\(=\dfrac{53}{100}=53\%\)</span>.</strong></li>
 <li>Effectif marginal de <span class="math inline">\(X\)</span> : 30 (2 CV), 31 (3 CV), 39 (4 CV). Effectif marginal de <span class="math inline">\(Y\)</span> : 38 ([15;20[), 32 ([20;25[), 30 ([25;30[).</li>
-<li>Moyennes : <span class="math inline">\(\bar{X}=3{,}09\)</span> CV, <span class="math inline">\(\bar{Y}=22{,}1\)</span> (milliers de km) : <span class="math inline">\(G(3{,}09\,;\,22{,}1)\)</span>.</li>
+<li><span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">Moyennes</span> : <span class="math inline">\(\bar{X}=3{,}09\)</span> CV, <span class="math inline">\(\bar{Y}=22{,}1\)</span> (milliers de km) : <span class="math inline">\(G(3{,}09\,;\,22{,}1)\)</span>.</li>
 </ol>
 </div>
 </div>
@@ -2902,7 +2907,7 @@ Astuce
 <div class="activite">
 <p><span class="activite-titre">Exercice 1</span> <span class="math inline">\(S_1\)</span>: 3, 4, 5, 8, 9, 12, 13, 15, 16, 50. <span class="math inline">\(S_2\)</span> = <span class="math inline">\(S_1\)</span> privée de la valeur 50.</p>
 <ol type="1">
-<li>Calculer étendue, écart type, écart interquartile, moyenne et médiane de chacune des deux séries.</li>
+<li>Calculer <span class="def" tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min).">étendue</span>, <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span>, écart inter<span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartile</span>, <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> et <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span> de chacune des deux séries.</li>
 <li>Quelle caractéristique cet exemple met-il en évidence ?</li>
 </ol>
 </div>
@@ -2944,6 +2949,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiUzEgPSBbMywgNCwgNSwgOCwg
 <div class="callout-body-container callout-body">
 <div class="table-scroll-wrap">
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th></th>
@@ -2953,22 +2963,22 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiUzEgPSBbMywgNCwgNSwgOCwg
 </thead>
 <tbody>
 <tr class="odd">
-<td>moyenne</td>
+<td><span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span></td>
 <td>13,5</td>
 <td>9,44</td>
 </tr>
 <tr class="even">
-<td>médiane</td>
+<td><span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span></td>
 <td>10,5</td>
 <td>9</td>
 </tr>
 <tr class="odd">
-<td>étendue</td>
+<td><span class="def" tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min).">étendue</span></td>
 <td>47</td>
 <td>13</td>
 </tr>
 <tr class="even">
-<td>écart type</td>
+<td><span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span></td>
 <td>12,91</td>
 <td>4,55</td>
 </tr>
@@ -2978,7 +2988,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiUzEgPSBbMywgNCwgNSwgOCwg
 <td>5 ; 13</td>
 </tr>
 <tr class="even">
-<td>écart interquartile</td>
+<td>écart inter<span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartile</span></td>
 <td>10</td>
 <td>8</td>
 </tr>
@@ -3117,7 +3127,7 @@ jspreadsheet(document.getElementById('ex2-spreadsheet'), {
 </tbody>
 </table>
 </div>
-<p>Les deux PDG ont raison : <span class="math inline">\(E_1\)</span> paie mieux <strong>chaque catégorie</strong> séparément (327,78 &gt; 325 et 425 &gt; 412,5), mais <span class="math inline">\(E_2\)</span> a une <strong>moyenne globale</strong> plus élevée (339 &gt; 337,5). L’explication : <span class="math inline">\(E_2\)</span> emploie une proportion de cadres bien plus grande (<span class="math inline">\(\frac{80}{500}=16\%\)</span>) que <span class="math inline">\(E_1\)</span> (<span class="math inline">\(\frac{30}{300}=10\%\)</span>) — or les cadres sont mieux payés. Cette différence de <em>composition</em> (plus de cadres, mieux payés, chez <span class="math inline">\(E_2\)</span>) suffit à faire basculer la moyenne globale, même si chaque catégorie individuelle est mieux payée chez <span class="math inline">\(E_1\)</span>. C’est le <strong>paradoxe de Simpson</strong>.</p>
+<p>Les deux PDG ont raison : <span class="math inline">\(E_1\)</span> paie mieux <strong>chaque catégorie</strong> séparément (327,78 &gt; 325 et 425 &gt; 412,5), mais <span class="math inline">\(E_2\)</span> a une <strong><span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> globale</strong> plus élevée (339 &gt; 337,5). L’explication : <span class="math inline">\(E_2\)</span> emploie une proportion de cadres bien plus grande (<span class="math inline">\(\frac{80}{500}=16\%\)</span>) que <span class="math inline">\(E_1\)</span> (<span class="math inline">\(\frac{30}{300}=10\%\)</span>) — or les cadres sont mieux payés. Cette différence de <em>composition</em> (plus de cadres, mieux payés, chez <span class="math inline">\(E_2\)</span>) suffit à faire basculer la moyenne globale, même si chaque catégorie individuelle est mieux payée chez <span class="math inline">\(E_1\)</span>. C’est le <strong>paradoxe de Simpson</strong>.</p>
 </div>
 </div>
 </div>
@@ -3131,7 +3141,7 @@ jspreadsheet(document.getElementById('ex2-spreadsheet'), {
 <pre><code>260 262 263 264 264 265 266 266 267 268 268 268 269 269 269 269
 269 269 270 270 271 271 271 271 272 272 272 273 273 274 276 276
 277 277 279 280</code></pre>
-<p>Calculer les quartiles de chaque échantillon, comparer les écarts interquartiles, construire les diagrammes en boîte : quelle machine est la plus appropriée ?</p>
+<p>Calculer les <span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartiles</span> de chaque échantillon, comparer les écarts interquartiles, construire les diagrammes en boîte : quelle machine est la plus appropriée ?</p>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="true" aria-label="Toggle callout">
@@ -3169,8 +3179,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div id="callout-46" class="callout-46-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Machine 1 (<span class="math inline">\(n=39\)</span>, non multiple de 4) : <span class="math inline">\(Q_1=262\)</span>, <span class="math inline">\(Q_3=266\)</span>, écart interquartile <span class="math inline">\(=4\)</span>. Machine 2 (<span class="math inline">\(n=36\)</span>, multiple de 4) : <span class="math inline">\(Q_1=267\)</span>, <span class="math inline">\(Q_3=272\)</span>, écart interquartile <span class="math inline">\(=5\)</span>.</p>
-<p>La machine 1 a un écart interquartile plus faible : ses paquets sont plus homogènes en poids autour de sa médiane. Sa moyenne (<span class="math inline">\(\approx264{,}5\)</span> g) est aussi plus proche du réglage visé (265 g) que celle de la machine 2 (<span class="math inline">\(270\)</span> g, qui sur-dose systématiquement). <strong>La machine 1 semble la plus appropriée</strong> pour ce réglage.</p>
+<p>Machine 1 (<span class="math inline">\(n=39\)</span>, non multiple de 4) : <span class="math inline">\(Q_1=262\)</span>, <span class="math inline">\(Q_3=266\)</span>, écart inter<span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartile</span> <span class="math inline">\(=4\)</span>. Machine 2 (<span class="math inline">\(n=36\)</span>, multiple de 4) : <span class="math inline">\(Q_1=267\)</span>, <span class="math inline">\(Q_3=272\)</span>, écart interquartile <span class="math inline">\(=5\)</span>.</p>
+<p>La machine 1 a un écart interquartile plus faible : ses paquets sont plus homogènes en poids autour de sa <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span>. Sa <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> (<span class="math inline">\(\approx264{,}5\)</span> g) est aussi plus proche du réglage visé (265 g) que celle de la machine 2 (<span class="math inline">\(270\)</span> g, qui sur-dose systématiquement). <strong>La machine 1 semble la plus appropriée</strong> pour ce réglage.</p>
 </div>
 </div>
 </div>
@@ -3213,7 +3223,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </tbody>
 </table>
 </div>
-<p>Distributions marginales de <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, moyenne et écart type des salaires.</p>
+<p>Distributions marginales de <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, moyenne et <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> des salaires.</p>
 </div>
 <div>
 <div id="pyodide-40" class="exercise-cell">
@@ -3326,7 +3336,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div id="callout-48" class="callout-48-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Année moyenne <span class="math inline">\(\approx1961\)</span>, consommation moyenne <span class="math inline">\(\approx69\,692\)</span> milliers de tonnes : <span class="math inline">\(G(1961\,;\,69\,692)\)</span>. Le nuage montre une nette tendance croissante (relation approximativement affine, voire un peu accélérée après 1970), cohérente avec la croissance de la population et de la consommation mondiales sur le XXᵉ siècle.</p>
+<p>Année <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> <span class="math inline">\(\approx1961\)</span>, consommation moyenne <span class="math inline">\(\approx69\,692\)</span> milliers de tonnes : <span class="math inline">\(G(1961\,;\,69\,692)\)</span>. Le nuage montre une nette tendance croissante (relation approximativement affine, voire un peu accélérée après 1970), cohérente avec la croissance de la population et de la consommation mondiales sur le XXᵉ siècle.</p>
 </div>
 </div>
 </div>
@@ -3568,7 +3578,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div id="callout-51" class="callout-51-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(G(4{,}5\,;\,28{,}5)\)</span> (moyenne des 10 points). <span class="math inline">\(G_1=(2\,;\,6)\)</span> (moyenne des 5 premiers), <span class="math inline">\(G_2=(7\,;\,51)\)</span> (moyenne des 5 derniers). <span class="math display">\[a = \frac{51-6}{7-2} = 9, \qquad b = 6 - 9\times2 = -12\]</span> <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y=9x-12\)</span>. Le nuage suit en réalité une <strong>relation parabolique</strong> (<span class="math inline">\(y_i=x_i^2\)</span>, pas une droite) : la droite <span class="math inline">\((G_1G_2)\)</span> n’est ici qu’une approximation grossière, utile pour illustrer que la méthode de Mayer suppose implicitement une tendance affine.</p>
+<p><span class="math inline">\(G(4{,}5\,;\,28{,}5)\)</span> (<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> des 10 points). <span class="math inline">\(G_1=(2\,;\,6)\)</span> (moyenne des 5 premiers), <span class="math inline">\(G_2=(7\,;\,51)\)</span> (moyenne des 5 derniers). <span class="math display">\[a = \frac{51-6}{7-2} = 9, \qquad b = 6 - 9\times2 = -12\]</span> <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y=9x-12\)</span>. Le nuage suit en réalité une <strong>relation parabolique</strong> (<span class="math inline">\(y_i=x_i^2\)</span>, pas une droite) : la droite <span class="math inline">\((G_1G_2)\)</span> n’est ici qu’une approximation grossière, utile pour illustrer que la méthode de Mayer suppose implicitement une tendance affine.</p>
 </div>
 </div>
 </div>
@@ -3638,7 +3648,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWGkgPSBbMiwgMi4zLCAyLjYs
 </div>
 <div id="callout-52" class="callout-52-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(G_1=(2{,}45\,;\,59)\)</span> (moyenne des 4 premières années), <span class="math inline">\(G_2=(3{,}65\,;\,72{,}5)\)</span> (moyenne des 4 dernières). <span class="math display">\[a = \frac{72{,}5-59}{3{,}65-2{,}45} = \frac{13{,}5}{1{,}2} = 11{,}25, \qquad b = 59-11{,}25\times2{,}45 \approx 31{,}44\]</span> <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y\approx11{,}25x+31{,}44\)</span>. Le coefficient directeur positif confirme qu’une hausse des frais de publicité s’accompagne, sur cette période, d’une hausse du chiffre d’affaires.</p>
+<p><span class="math inline">\(G_1=(2{,}45\,;\,59)\)</span> (<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> des 4 premières années), <span class="math inline">\(G_2=(3{,}65\,;\,72{,}5)\)</span> (moyenne des 4 dernières). <span class="math display">\[a = \frac{72{,}5-59}{3{,}65-2{,}45} = \frac{13{,}5}{1{,}2} = 11{,}25, \qquad b = 59-11{,}25\times2{,}45 \approx 31{,}44\]</span> <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y\approx11{,}25x+31{,}44\)</span>. Le coefficient directeur positif confirme qu’une hausse des frais de publicité s’accompagne, sur cette période, d’une hausse du chiffre d’affaires.</p>
 </div>
 </div>
 </div>
@@ -3735,7 +3745,7 @@ Mise en garde
 </div>
 <div id="callout-54" class="callout-54-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(G_1=(9975\,;\,1337{,}5)\)</span> (moyenne de <span class="math inline">\(P_1..P_4\)</span>), <span class="math inline">\(G_2=(24425\,;\,3562{,}5)\)</span> (moyenne de <span class="math inline">\(P_5..P_8\)</span>). <span class="math display">\[a = \frac{3562{,}5-1337{,}5}{24425-9975} = \frac{2225}{14450} \approx 0{,}154, \qquad b = 1337{,}5-0{,}154\times9975 \approx -198{,}4\]</span> On obtient donc <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y\approx0{,}154x-198{,}4\)</span> à partir des valeurs du tableau — et non <span class="math inline">\(y=0{,}13x+159\)</span> comme l’indique le manuel (voir la remarque ci-dessus). Le point moyen global <span class="math inline">\(G(17\,200\,;\,2450)\)</span> vérifie bien l’équation trouvée (<span class="math inline">\(0{,}154\times17\,200-198{,}4\approx2450\)</span>), ce qui confirme que la méthode est correctement appliquée.</p>
+<p><span class="math inline">\(G_1=(9975\,;\,1337{,}5)\)</span> (<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> de <span class="math inline">\(P_1..P_4\)</span>), <span class="math inline">\(G_2=(24425\,;\,3562{,}5)\)</span> (moyenne de <span class="math inline">\(P_5..P_8\)</span>). <span class="math display">\[a = \frac{3562{,}5-1337{,}5}{24425-9975} = \frac{2225}{14450} \approx 0{,}154, \qquad b = 1337{,}5-0{,}154\times9975 \approx -198{,}4\]</span> On obtient donc <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y\approx0{,}154x-198{,}4\)</span> à partir des valeurs du tableau — et non <span class="math inline">\(y=0{,}13x+159\)</span> comme l’indique le manuel (voir la remarque ci-dessus). Le point moyen global <span class="math inline">\(G(17\,200\,;\,2450)\)</span> vérifie bien l’équation trouvée (<span class="math inline">\(0{,}154\times17\,200-198{,}4\approx2450\)</span>), ce qui confirme que la méthode est correctement appliquée.</p>
 </div>
 </div>
 </div>

@@ -467,14 +467,15 @@ function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
   if (GS.cleanups[id]) { try { GS.cleanups[id](); } catch (e) {} }
   GSG.heights[id] = fixedHeight;
   var lastW = -1, lastH = -1;
-  var padding = null;
   var debounceTimer = null;
 
   function applySize() {
-    if (padding === null) {
-      var cs = window.getComputedStyle(outerDiv);
-      padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
-    }
+    // Le padding n'est PAS mis en cache : il change entre l'état normal
+    // et le plein écran (CSS ".ggb-figure:fullscreen"), un cache figé
+    // faussait donc systématiquement la largeur calculée après une
+    // sortie de plein écran (fenêtre qui semblait "rétrécir").
+    var cs = window.getComputedStyle(outerDiv);
+    var padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
     var w = Math.floor(outerDiv.clientWidth - padding);
     var h = GSG.heights[id];
     if (w < 80 || (w === lastW && h === lastH)) return;
@@ -577,13 +578,28 @@ function gsgOnFullscreenChange(id, container) {
   GSG.heights[id] = newHeight;
   var canvas = container.querySelector(".ggb-canvas");
   if (canvas) canvas.style.height = newHeight + "px";
-  if (GSG.applySize[id]) setTimeout(GSG.applySize[id], 60);
+  // Deux tentatives : la transition plein écran (surtout la sortie) peut
+  // prendre un instant avant que clientWidth reflète la mise en page
+  // définitive ; une seule lecture trop précoce donnait une largeur
+  // erronée (fenêtre qui semblait "rétrécir" après la sortie).
+  if (GSG.applySize[id]) {
+    setTimeout(GSG.applySize[id], 80);
+    setTimeout(GSG.applySize[id], 350);
+  }
 }
 
-function gsgApplyAxisLabels(id, api) {
-  var lbl = GSG.axisLabels[id];
-  if (!lbl) return;
-  try { api.setAxisLabels(1, lbl[0] || "", lbl[1] || ""); } catch (e) {}
+// Les titres d'axes natifs de GeoGebra (setAxisLabels) restent ancrés à
+// l'extrémité de l'axe : en zoomant/déplaçant la vue, ce point de
+// repère se retrouve vite AU MILIEU du dessin (par-dessus l'histogramme
+// ou la boîte). On affiche donc plutôt une légende HTML fixe, sous le
+// graphique, indépendante du zoom — comme un titre de figure.
+function gsgCaptionText(lbl) {
+  if (!lbl) return "";
+  var x = lbl[0] || "", y = lbl[1] || "";
+  if (x && y) return "Axe horizontal : " + x + " · Axe vertical : " + y;
+  if (x) return "Axe horizontal : " + x;
+  if (y) return "Axe vertical : " + y;
+  return "";
 }
 
 // Les cellules de texte du tableur (ex. "Centre", "Moyenne"...) restent
@@ -631,7 +647,6 @@ function gsgReset(id) {
   gsgHideCellObjects(api);
   gsgApplyStyle(id, api);
   gsgApplyView(id, api);
-  gsgApplyAxisLabels(id, api);
   gsgApplyToolbar(api);
   var container = document.getElementById(id);
   var ta = container.querySelector(".ggb-textarea");
@@ -653,7 +668,6 @@ function gsgApplyCode(id) {
   gsgHideCellObjects(api);
   gsgApplyStyle(id, api);
   gsgApplyView(id, api);
-  gsgApplyAxisLabels(id, api);
   gsgApplyToolbar(api);
   gsHideKeyboard(container);
 }
@@ -669,6 +683,7 @@ function buildSheetGraph(id, commands, opts) {
   container.classList.add("ggb-figure");
   var baseW = opts.w || 820, baseH = opts.h || 340;
   GSG.baseHeights[id] = baseH;
+  var caption = gsgCaptionText(opts.axisLabels);
   container.innerHTML =
     '<div class="ggb-toolbar">' +
       '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
@@ -679,6 +694,7 @@ function buildSheetGraph(id, commands, opts) {
       '<div class="ggb-placeholder">Tableur + graphique GeoGebra — chargement…</div>' +
       '<div class="ggb-inner"></div>' +
     '</div>' +
+    (caption ? '<p class="ggb-caption">' + caption + '</p>' : '') +
     '<div class="ggb-codepanel" hidden>' +
       '<textarea class="ggb-textarea" spellcheck="false" rows="' + Math.min(Math.max(commands.length, 4), 16) + '"></textarea>' +
       '<button type="button" class="ggb-btn ggb-btn-primary" data-act="apply">▶ Appliquer les modifications</button>' +
@@ -720,7 +736,6 @@ function buildSheetGraph(id, commands, opts) {
         gsgHideCellObjects(api);
         gsgApplyStyle(id, api);
         gsgApplyView(id, api);
-        gsgApplyAxisLabels(id, api);
         gsgApplyToolbar(api);
         gsgMakeResponsive(id, api, container, baseH, function () {
           gsgApplyView(id, api);
@@ -1837,9 +1852,9 @@ buildSheetGraph("gsg-c1-a8", [
 "A1=\"Salaire\"","B1=\"Effectif\"",
 "A2=1","B2=40","A3=1.4","B3=50","A4=2.1","B4=10","A5=2.7","B5=4","A6=5.8","B6=1",
 "D1=\"Moyenne\"","D2=\"Éc. type\"",
-"bp8s1=BoxPlot(2,1,1,1,1.4,1.4,5.8)","ShowLabel(bp8s1,false)",
+"bp8s1=BoxPlot(3.2,1,1,1,1.4,1.4,5.8)","ShowLabel(bp8s1,false)",
 "bp8s2=BoxPlot(0,1,1,1,1.4,1.4,2.7)","ShowLabel(bp8s2,false)"
-], {w: 820, h: 260, view: [0.5,6.3,-1,4], axisLabels: ["Salaire (10³ dinars)", ""]});
+], {w: 820, h: 300, view: [0.5,6.3,-1,5], axisLabels: ["Salaire (10³ dinars)", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
@@ -2012,9 +2027,9 @@ buildSheetGraph("gsg-c1b-a1", [
 "A6=77","B6=55","A7=87","B7=40","A8=127","B8=20","A9=122","B9=20",
 "A10=84","B10=50","A11=88","B11=78","A12=67","B12=157","A13=76","B13=169",
 "D1=\"Moy. V1\"","D2=\"Moy. V2\"","D3=\"Éc. V1\"","D4=\"Éc. V2\"",
-"bpv1=BoxPlot(2,1,A2:A13)","ShowLabel(bpv1,false)",
+"bpv1=BoxPlot(3.2,1,A2:A13)","ShowLabel(bpv1,false)",
 "bpv2=BoxPlot(0,1,B2:B13)","ShowLabel(bpv2,false)"
-], {w: 820, h: 280, view: [10,180,-1,4], axisLabels: ["Précipitations (mm)", ""]});
+], {w: 820, h: 320, view: [10,180,-1,5], axisLabels: ["Précipitations (mm)", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
@@ -3990,9 +4005,9 @@ buildSheetGraph("gsg-ex1", [
 "A2=3","B2=3","A3=4","B3=4","A4=5","B4=5","A5=8","B5=8","A6=9","B6=9",
 "A7=12","B7=12","A8=13","B8=13","A9=15","B9=15","A10=16","B10=16","A11=50",
 "D1=\"Moy. S1\"","D2=\"Moy. S2\"","D3=\"Éc. S1\"","D4=\"Éc. S2\"",
-"bp1=BoxPlot(2,1,A2:A11)","ShowLabel(bp1,false)",
+"bp1=BoxPlot(3.2,1,A2:A11)","ShowLabel(bp1,false)",
 "bp2=BoxPlot(0,1,B2:B10)","ShowLabel(bp2,false)"
-], {w: 820, h: 280, view: [0,53,-1,4], axisLabels: ["Valeurs", ""]});
+], {w: 820, h: 320, view: [0,53,-1,5], axisLabels: ["Valeurs", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-69-contents" aria-controls="callout-69" aria-expanded="false" aria-label="Toggle callout">
@@ -4284,9 +4299,9 @@ buildSheetGraph("gsg-ex3", [
 "A2=256","A3=259","A4=260","A5=260","A6=261","A7=261","A8=261","A9=261","A10=262","A11=262","A12=262","A13=262","A14=263","A15=263","A16=263","A17=264","A18=264","A19=264","A20=264","A21=265","A22=265","A23=265","A24=265","A25=265","A26=266","A27=266","A28=266","A29=266","A30=266","A31=266","A32=267","A33=267","A34=268","A35=269","A36=269","A37=270","A38=270","A39=271","A40=273",
 "B2=260","B3=262","B4=263","B5=264","B6=264","B7=265","B8=266","B9=266","B10=267","B11=268","B12=268","B13=268","B14=269","B15=269","B16=269","B17=269","B18=269","B19=269","B20=270","B21=270","B22=271","B23=271","B24=271","B25=271","B26=272","B27=272","B28=272","B29=273","B30=273","B31=274","B32=276","B33=276","B34=277","B35=277","B36=279","B37=280",
 "D1=\"Moy. M1\"","D2=\"Moy. M2\"",
-"bp1=BoxPlot(2,1,A2:A40)","ShowLabel(bp1,false)",
+"bp1=BoxPlot(3.2,1,A2:A40)","ShowLabel(bp1,false)",
 "bp2=BoxPlot(0,1,B2:B37)","ShowLabel(bp2,false)"
-], {w: 820, h: 280, view: [250,285,-1,4], axisLabels: ["Poids du paquet (g)", ""]});
+], {w: 820, h: 320, view: [250,285,-1,5], axisLabels: ["Poids du paquet (g)", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-74-contents" aria-controls="callout-74" aria-expanded="false" aria-label="Toggle callout">

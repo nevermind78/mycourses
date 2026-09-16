@@ -2310,7 +2310,33 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNFxuY2Vu
 </div>
 <p>Quelle est la population étudiée ? Les deux caractères ? Moyenne et <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> de chacun ?</p>
 </div>
-<p>Construisons le nuage de points et son point moyen <span class="math inline">\(G\)</span> :</p>
+<p>Construisons le nuage de points et son point moyen <span class="math inline">\(G\)</span> (en bleu, plus gros) : les données sont saisies en colonnes <strong>A</strong> et <strong>B</strong>, les points <span class="math inline">\(M_i\)</span> et <span class="math inline">\(G\)</span> se construisent directement depuis ces colonnes. Complétez le résumé numérique :</p>
+<ul>
+<li>en <strong>D1</strong>/<strong>D2</strong>, la moyenne des olives / céréales : <code>=Mean(A2:A11)</code> et <code>=Mean(B2:B11)</code> ;</li>
+<li>en <strong>D3</strong>/<strong>D4</strong>, l’écart type des olives / céréales : <code>=SD(A2:A11)</code> et <code>=SD(B2:B11)</code>.</li>
+</ul>
+<div id="gsg-c2-a1"></div>
+<script>
+buildSheetGraph("gsg-c2-a1", [
+"A1=\"Olives\"","B1=\"Céréales\"",
+"A2=11.6","B2=16","A3=12.8","B3=209.24","A4=18.9","B4=349.1","A5=46.4","B5=79.03","A6=45.2","B6=0.18","A7=140","B7=0.18","A8=84","B8=52.64","A9=75","B9=29.92","A10=18.5","B10=1.11","A11=22.4","B11=0.01",
+"D1=\"Moy. X\"","D2=\"Moy. Y\"","D3=\"Éc. X\"","D4=\"Éc. Y\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
+"G=(Mean(A2:A11),Mean(B2:B11))","SetPointSize(G,6)","ShowLabel(G,false)"
+], {w: 820, h: 340, view: [-5,155,-20,360], style: [["G",11,110,153]]});
+</script>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>💻 Essayer aussi avec Python (Pyodide)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-40" class="callout-40-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div>
 <div id="pyodide-19" class="exercise-cell">
 
@@ -2328,8 +2354,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoib2xpdmVzICAgPSBbMTEuNiwgMTIuOCwgMTguOSwgNDYuNCwgNDUuMiwgMTQwLCA4NCwgNzUsIDE4LjUsIDIyLjRdXG5jZXJlYWxlcyA9IFsxNiwgMjA5LjI0LCAzNDkuMSwgNzkuMDMsIDAuMTgsIDAuMTgsIDUyLjY0LCAyOS45MiwgMS4xMSwgMC4wMV1cbm4gPSBsZW4ob2xpdmVzKVxuXG4jIOKcj++4jyBDYWxjdWxleiBkJ2Fib3JkIGxlcyBtb3llbm5lcyAoY29tbWUgY2ktZGVzc3VzKSwgcHVpcyBsJ8OpY2FydCB0eXBlIGRlXG4jICAgIGNoYXF1ZSBsaXN0ZSBhdmVjIHVuZSBib3VjbGUgZm9yIGFjY3VtdWxhbnQgbGVzIGNhcnLDqXMgZGVzIMOpY2FydHMuIn0=
 </script>
 </div>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2338,7 +2367,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoib2xpdmVzICAgPSBbMTEuNiwg
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-40" class="callout-40-contents callout-collapse collapse">
+<div id="callout-41" class="callout-41-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>La population est l’ensemble des <strong>10 gouvernorats</strong> ; les deux caractères sont <span class="math inline">\(X=\)</span> production d’olives à huile et <span class="math inline">\(Y=\)</span> production de céréales (en milliers de tonnes).</p>
 <p><span class="math inline">\(\bar{X}\approx47{,}48\)</span>, <span class="math inline">\(\sigma_X\approx39{,}29\)</span> ; <span class="math inline">\(\bar{Y}\approx73{,}74\)</span>, <span class="math inline">\(\sigma_Y\approx110{,}20\)</span> — l’<span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écart type</span> de <span class="math inline">\(Y\)</span> est très supérieur à sa propre <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> : la production de céréales est extrêmement dispersée d’un gouvernorat à l’autre (Béja à 349,1 contre Sfax à 0,18). Point moyen : <span class="math inline">\(G(47{,}48\,;\,73{,}74)\)</span>.</p>
@@ -2384,6 +2413,33 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoib2xpdmVzICAgPSBbMTEuNiwg
 </div>
 <p>Placer les points <span class="math inline">\(M_i(x_i;y_i)\)</span>, calculer <span class="math inline">\(\bar{X}\)</span>, <span class="math inline">\(\bar{Y}\)</span>, puis placer <span class="math inline">\(G(\bar{X},\bar{Y})\)</span>.</p>
 </div>
+<p>Les points sont déjà placés depuis les colonnes <strong>A</strong> et <strong>B</strong>, avec <span class="math inline">\(G\)</span> en bleu. Complétez :</p>
+<ul>
+<li>en <strong>D1</strong>, <span class="math inline">\(\bar X\)</span> : <code>=Mean(A2:A11)</code> ;</li>
+<li>en <strong>D2</strong>, <span class="math inline">\(\bar Y\)</span> : <code>=Mean(B2:B11)</code>.</li>
+</ul>
+<div id="gsg-c2-a2"></div>
+<script>
+buildSheetGraph("gsg-c2-a2", [
+"A1=\"xi\"","B1=\"yi\"",
+"A2=5","B2=6","A3=7","B3=7","A4=9","B4=8","A5=9","B5=10","A6=10","B6=11","A7=10","B7=13","A8=11","B8=10","A9=12","B9=13","A10=13","B10=12","A11=14","B11=16",
+"D1=\"X-barre\"","D2=\"Y-barre\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
+"G=(Mean(A2:A11),Mean(B2:B11))","SetPointSize(G,6)","ShowLabel(G,false)"
+], {w: 620, h: 340, view: [3,17,4,18], style: [["G",11,110,153]]});
+</script>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>💻 Essayer aussi avec Python (Pyodide)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-42" class="callout-42-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div>
 <div id="pyodide-21" class="exercise-cell">
 
@@ -2392,8 +2448,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoib2xpdmVzICAgPSBbMTEuNiwg
 eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIucHlwbG90IGFzIHBsdFxuXG54aSA9IFs1LCA3LCA5LCA5LCAxMCwgMTAsIDExLCAxMiwgMTMsIDE0XVxueWkgPSBbNiwgNywgOCwgMTAsIDExLCAxMywgMTAsIDEzLCAxMiwgMTZdXG5uID0gbGVuKHhpKVxuXG5zb21tZV94ID0gMFxuc29tbWVfeSA9IDBcbmZvciBpIGluIHJhbmdlKG4pOlxuICAgIHNvbW1lX3ggPSBzb21tZV94ICsgeGlbaV1cbiAgICBzb21tZV95ID0gc29tbWVfeSArIHlpW2ldXG54X21veSA9IHNvbW1lX3ggLyBuXG55X21veSA9IHNvbW1lX3kgLyBuXG5cbnBsdC5maWd1cmUoZmlnc2l6ZT0oNSwgNCkpXG5wbHQuc2NhdHRlcih4aSwgeWksIGNvbG9yPVwiI2Q2MDA2ZVwiLCBsYWJlbD1cIsOpbMOodmVzXCIpXG5wbHQuc2NhdHRlcihbeF9tb3ldLCBbeV9tb3ldLCBjb2xvcj1cIiMwYjZlOTlcIiwgbWFya2VyPVwiK1wiLCBzPTIwMCwgbGluZXdpZHRocz0zLCBsYWJlbD1cIkdcIilcbnBsdC54bGFiZWwoXCJub3RlIGVuIMOpY29ub21pZVwiKVxucGx0LnlsYWJlbChcIm5vdGUgZW4gbWF0aHNcIilcbnBsdC5sZWdlbmQoKVxucGx0LnNob3coKVxuXG5wcmludChmXCJHID0gKHt4X21veTouMWZ9IDsge3lfbW95Oi4xZn0pXCIpIn0=
 </script>
 </div>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2402,7 +2461,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-41" class="callout-41-contents callout-collapse collapse">
+<div id="callout-43" class="callout-43-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(\bar{X}=\dfrac{5+7+9+9+10+10+11+12+13+14}{10}=10\)</span>, <span class="math inline">\(\bar{Y}=\dfrac{6+7+8+10+11+13+10+13+12+16}{10}=10{,}6\)</span>. Point moyen <span class="math inline">\(G(10\,;\,10{,}6)\)</span>. Le nuage semble globalement croissant : plus la note en économie est élevée, plus la note en maths a tendance à l’être aussi (relation affine approximative).</p>
 </div>
@@ -2439,6 +2498,33 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <p>Construire le nuage, déterminer les <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyennes</span>, le point moyen et les <span class="def" tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données.">écarts types</span>.</p>
 </div>
+<p>Le nuage et le point moyen <span class="math inline">\(G\)</span> sont déjà construits. Complétez :</p>
+<ul>
+<li>en <strong>D1</strong>/<strong>D2</strong>, la moyenne des importations / exportations : <code>=Mean(A2:A7)</code> et <code>=Mean(B2:B7)</code> ;</li>
+<li>en <strong>D3</strong>/<strong>D4</strong>, l’écart type des importations / exportations : <code>=SD(A2:A7)</code> et <code>=SD(B2:B7)</code>.</li>
+</ul>
+<div id="gsg-c2-a3"></div>
+<script>
+buildSheetGraph("gsg-c2-a3", [
+"A1=\"Import\"","B1=\"Export\"",
+"A2=802.5","B2=548.7","A3=670.9","B3=706.8","A4=782.4","B4=628.2","A5=887.6","B5=669.9","A6=940","B6=471.5","A7=917","B7=669.5",
+"D1=\"Moy. X\"","D2=\"Moy. Y\"","D3=\"Éc. X\"","D4=\"Éc. Y\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)",
+"G=(Mean(A2:A7),Mean(B2:B7))","SetPointSize(G,6)","ShowLabel(G,false)"
+], {w: 720, h: 340, view: [630,970,430,750], style: [["G",11,110,153]]});
+</script>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-44-contents" aria-controls="callout-44" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>💻 Essayer aussi avec Python (Pyodide)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-44" class="callout-44-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div>
 <div id="pyodide-22" class="exercise-cell">
 
@@ -2447,8 +2533,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0YXRpb24gPSBbODAyLjUsIDY3MC45LCA3ODIuNCwgODg3LjYsIDk0MCwgOTE3XVxuZXhwb3J0YXRpb24gPSBbNTQ4LjcsIDcwNi44LCA2MjguMiwgNjY5LjksIDQ3MS41LCA2NjkuNV1cbm4gPSBsZW4oaW1wb3J0YXRpb24pXG5cbnNvbW1lX3ggPSAwXG5mb3IgdiBpbiBpbXBvcnRhdGlvbjpcbiAgICBzb21tZV94ID0gc29tbWVfeCArIHZcbnhfbW95ID0gc29tbWVfeCAvIG5cblxuc29tbWVfeSA9IDBcbmZvciB2IGluIGV4cG9ydGF0aW9uOlxuICAgIHNvbW1lX3kgPSBzb21tZV95ICsgdlxueV9tb3kgPSBzb21tZV95IC8gblxuXG4jIOKcj++4jyBDb21wbMOpdGV6IGF2ZWMgbCfDqWNhcnQgdHlwZSBkZSBcImltcG9ydGF0aW9uXCIgcHVpcyBkZSBcImV4cG9ydGF0aW9uXCJcbiMgICAgKGJvdWNsZSBmb3IgYWNjdW11bGFudCBsZXMgY2FycsOpcyBkZXMgw6ljYXJ0cyDDoCBsYSBtb3llbm5lLCBkaXZpc8OpZVxuIyAgICBwYXIgbiwgcHVpcyByYWNpbmUgY2FycsOpZSkuXG4oeF9tb3ksIHlfbW95KSJ9
 </script>
 </div>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2457,7 +2546,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0YXRpb24gPSBbODAy
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-42" class="callout-42-contents callout-collapse collapse">
+<div id="callout-45" class="callout-45-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(\bar{X}=833{,}4\)</span>, <span class="math inline">\(\sigma_X\approx92{,}4\)</span> ; <span class="math inline">\(\bar{Y}\approx615{,}8\)</span>, <span class="math inline">\(\sigma_Y\approx81{,}2\)</span> (en millions de dinars). Point moyen <span class="math inline">\(G(833{,}4\,;\,615{,}8)\)</span> : la Tunisie importe en <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> plus qu’elle n’exporte sur cette période (balance déficitaire).</p>
 </div>
@@ -2466,6 +2555,29 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0YXRpb24gPSBbODAy
 <div class="activite">
 <p><span class="activite-titre">Activité 4</span> Un nuage de points donne la production annuelle (tonnes) d’une entreprise depuis 1995 (année 1995 numérotée 1, etc.). Reconstituer le tableau statistique, la production moyenne et le point moyen.</p>
 </div>
+<p>Reportez en colonne <strong>B</strong> vos propres lectures du graphique du manuel (des valeurs plausibles sont pré-remplies) : le nuage et le point moyen <span class="math inline">\(G\)</span> se mettent à jour automatiquement.</p>
+<div id="gsg-c2-a4"></div>
+<script>
+buildSheetGraph("gsg-c2-a4", [
+"A1=\"Année\"","B1=\"Production\"",
+"A2=1","B2=600","A3=2","B3=700","A4=3","B4=650","A5=4","B5=900","A6=5","B6=800","A7=6","B7=950","A8=7","B8=100","A9=8","B9=510","A10=9","B10=700","A11=10","B11=910",
+"D1=\"Année moy.\"","D2=\"Prod. moy.\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
+"G=(Mean(A2:A11),Mean(B2:B11))","SetPointSize(G,6)","ShowLabel(G,false)"
+], {w: 720, h: 340, view: [0,12,0,1050], style: [["G",11,110,153]]});
+</script>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>💻 Essayer aussi avec Python (Pyodide)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-46" class="callout-46-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div>
 <div id="pyodide-23" class="exercise-cell">
 
@@ -2474,8 +2586,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0YXRpb24gPSBbODAy
 eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNCDigJQgdmFsZXVycyBsdWVzIChhcHByb3hpbWF0aXZlbWVudCkgc3VyIGxlIGdyYXBoaXF1ZSBkdSBtYW51ZWxcbmFubmVlID0gWzEsIDIsIDMsIDQsIDUsIDYsIDcsIDgsIDksIDEwXVxucHJvZHVjdGlvbiA9IFs2MDAsIDcwMCwgNjUwLCA5MDAsIDgwMCwgOTUwLCAxMDAsIDUxMCwgNzAwLCA5MTBdXG5uID0gbGVuKGFubmVlKVxuXG5zb21tZV9hbm5lZSA9IDBcbnNvbW1lX3Byb2QgPSAwXG5mb3IgaSBpbiByYW5nZShuKTpcbiAgICBzb21tZV9hbm5lZSA9IHNvbW1lX2FubmVlICsgYW5uZWVbaV1cbiAgICBzb21tZV9wcm9kID0gc29tbWVfcHJvZCArIHByb2R1Y3Rpb25baV1cblxuYW5uZWVfbW95ID0gc29tbWVfYW5uZWUgLyBuXG5wcm9kdWN0aW9uX21veSA9IHNvbW1lX3Byb2QgLyBuXG4oYW5uZWVfbW95LCBwcm9kdWN0aW9uX21veSkifQ==
 </script>
 </div>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-47-contents" aria-controls="callout-47" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2484,7 +2599,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNCDigJQg
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-43" class="callout-43-contents callout-collapse collapse">
+<div id="callout-47" class="callout-47-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Avec les valeurs lues sur le graphique, la production <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> est <span class="math inline">\(\bar{Y}\approx682\)</span> tonnes, pour une année moyenne <span class="math inline">\(\bar{X}=5{,}5\)</span> (soit entre 1999 et 2000). Le point moyen est donc environ <span class="math inline">\(G(5{,}5\,;\,682)\)</span>. <em>(Les valeurs exactes dépendent de la lecture graphique ; seule la méthode — moyenne des abscisses, moyenne des ordonnées — est à retenir.)</em></p>
 </div>
@@ -2563,6 +2678,36 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNCDigJQg
 </div>
 <p><span class="math inline">\(N_1\)</span> = points <span class="math inline">\(M_1,\dots,M_6\)</span>, <span class="math inline">\(N_2\)</span> = points restants. Calculer <span class="math inline">\(G_1\)</span>, <span class="math inline">\(G_2\)</span>, une équation de <span class="math inline">\((G_1G_2)\)</span>, et expliquer pourquoi cette droite passe par <span class="math inline">\(G\)</span>.</p>
 </div>
+<p>Les 12 points sont déjà placés ; <span class="math inline">\(G_1\)</span> (moyenne des 6 premiers, en orange), <span class="math inline">\(G_2\)</span> (moyenne des 6 derniers, en vert) et la droite <span class="math inline">\((G_1G_2)\)</span> sont déjà construits. Vérifiez qu’elle passe bien par le point moyen global <span class="math inline">\(G\)</span> (en bleu) :</p>
+<ul>
+<li>en <strong>D1</strong>, l’abscisse de <span class="math inline">\(G\)</span> : <code>=Mean(A2:A13)</code> ;</li>
+<li>en <strong>D2</strong>, l’ordonnée de <span class="math inline">\(G\)</span> : <code>=Mean(B2:B13)</code>.</li>
+</ul>
+<div id="gsg-c2-a5"></div>
+<script>
+buildSheetGraph("gsg-c2-a5", [
+"A1=\"IDH\"","B1=\"PNB\"",
+"A2=11","B2=12","A3=32","B3=36","A4=110","B4=122","A5=62","B5=10","A6=8","B6=9","A7=161","B7=171","A8=6","B8=13","A9=3","B9=3","A10=132","B10=140","A11=10","B11=19","A12=112","B12=97","A13=143","B13=114",
+"D1=\"Xg\"","D2=\"Yg\"",
+"M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)","M11=(A12,B12)","ShowLabel(M11,false)","M12=(A13,B13)","ShowLabel(M12,false)",
+"G1=(Mean(A2:A7),Mean(B2:B7))","SetPointSize(G1,6)","ShowLabel(G1,false)",
+"G2=(Mean(A8:A13),Mean(B8:B13))","SetPointSize(G2,6)","ShowLabel(G2,false)",
+"G=(Mean(A2:A13),Mean(B2:B13))","SetPointSize(G,6)","ShowLabel(G,false)",
+"droiteG=Line(G1,G2)"
+], {w: 820, h: 420, view: [-15,180,-15,190], style: [["G1",224,123,0],["G2",76,140,43],["G",11,110,153]]});
+</script>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>💻 Essayer aussi avec Python (Pyodide)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-48" class="callout-48-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div>
 <div id="pyodide-24" class="exercise-cell">
 
@@ -2571,8 +2716,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNCDigJQg
 eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicmFuZ19pZGggPSBbMTEsIDMyLCAxMTAsIDYyLCA4LCAxNjEsIDYsIDMsIDEzMiwgMTAsIDExMiwgMTQzXVxucmFuZ19wbmIgPSBbMTIsIDM2LCAxMjIsIDEwLCA5LCAxNzEsIDEzLCAzLCAxNDAsIDE5LCA5NywgMTE0XVxuXG4jIOKcj++4jyBOMSA9IGxlcyA2IHByZW1pZXJzIHBheXMgOiB1dGlsaXNleiBsZSBkw6ljb3VwYWdlIHBhciBpbmRpY2UsIHBhclxuIyAgICBleGVtcGxlIHJhbmdfaWRoWzA6Nl0gcG91ciBsZXMgNiBwcmVtacOocmVzIHZhbGV1cnMuXG5OMV94ID0gcmFuZ19pZGhbMDo2XVxuTjFfeSA9IHJhbmdfcG5iWzA6Nl1cbk4yX3ggPSByYW5nX2lkaFs2OjEyXVxuTjJfeSA9IHJhbmdfcG5iWzY6MTJdXG5cbmRlZiBtb3llbm5lKGxpc3RlKTpcbiAgICBzb21tZSA9IDBcbiAgICBmb3IgdiBpbiBsaXN0ZTpcbiAgICAgICAgc29tbWUgPSBzb21tZSArIHZcbiAgICByZXR1cm4gc29tbWUgLyBsZW4obGlzdGUpXG5cbkcxID0gKG1veWVubmUoTjFfeCksIG1veWVubmUoTjFfeSkpXG5HMiA9IChtb3llbm5lKE4yX3gpLCBtb3llbm5lKE4yX3kpKVxuXG4jIOKcj++4jyBDYWxjdWxleiBsZSBjb2VmZmljaWVudCBkaXJlY3RldXIgYSA9ICh5RzIgLSB5RzEpIC8gKHhHMiAtIHhHMSksXG4jICAgIHB1aXMgbCdvcmRvbm7DqWUgw6AgbCdvcmlnaW5lIGIgPSB5RzEgLSBhICogeEcxLlxuKEcxLCBHMikifQ==
 </script>
 </div>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-44-contents" aria-controls="callout-44" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-49-contents" aria-controls="callout-49" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2581,7 +2729,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicmFuZ19pZGggPSBbMTEsIDMy
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-44" class="callout-44-contents callout-collapse collapse">
+<div id="callout-49" class="callout-49-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(G_1=(64\,;\,60)\)</span> (<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> des 6 premiers pays), <span class="math inline">\(G_2\approx(67{,}67\,;\,64{,}33)\)</span> (moyenne des 6 derniers). Coefficient directeur : <span class="math display">\[a=\frac{64{,}33-60}{67{,}67-64}\approx1{,}18 \qquad b = 60-1{,}18\times64\approx-15{,}6\]</span> soit <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y\approx1{,}18x-15{,}6\)</span>.</p>
 <p>Le point moyen global est <span class="math inline">\(G(65{,}83\,;\,62{,}17)\)</span>. Comme <span class="math inline">\(\bar X\)</span> (et <span class="math inline">\(\bar Y\)</span>) est la moyenne des 12 valeurs, on a <span class="math inline">\(\bar X = \dfrac{6\times\bar{X}_{N_1}+6\times\bar{X}_{N_2}}{12}=\dfrac{\bar{X}_{N_1}+\bar{X}_{N_2}}{2}\)</span> (car les deux sous-groupes ont le même effectif, 6) : <span class="math inline">\(G\)</span> est donc le <strong>milieu du segment <span class="math inline">\([G_1G_2]\)</span></strong>, ce qui prouve qu’il appartient à la droite <span class="math inline">\((G_1G_2)\)</span>.</p>
@@ -2725,7 +2873,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgMSDigJQg
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2734,7 +2882,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgMSDigJQg
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-46" class="callout-46-contents callout-collapse collapse">
+<div id="callout-51" class="callout-51-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Distribution marginale selon la <strong>taille</strong> :</p>
 <div class="table-scroll-wrap">
@@ -2847,7 +2995,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWCA9IFsxMCwgMzAsIDYwXVxu
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-47-contents" aria-controls="callout-47" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-52-contents" aria-controls="callout-52" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2856,7 +3004,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWCA9IFsxMCwgMzAsIDYwXVxu
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-47" class="callout-47-contents callout-collapse collapse">
+<div id="callout-52" class="callout-52-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(n=10\)</span>. Effectif marginal de <span class="math inline">\(X\)</span> : 2 (pour 10), 3 (pour 30), 5 (pour 60) — fréquences 20 %, 30 %, 50 %. Effectif marginal de <span class="math inline">\(Y\)</span> : 3 ([10;20[), 3 ([20;30[), 4 ([30;35[) — fréquences 30 %, 30 %, 40 %.</p>
 </div>
@@ -2907,7 +3055,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiY2VudHJlc19TID0gWzM1MCwg
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-53-contents" aria-controls="callout-53" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2916,7 +3064,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiY2VudHJlc19TID0gWzM1MCwg
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-48" class="callout-48-contents callout-collapse collapse">
+<div id="callout-53" class="callout-53-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Effectif marginal de <span class="math inline">\(S\)</span> : 170, 110, 20 (<span class="math inline">\(n=300\)</span>). Effectif marginal de <span class="math inline">\(C\)</span> : 270 ouvriers, 30 cadres. <span class="math display">\[\bar{S} = \frac{350\times170+650\times110+900\times20}{300} \approx 496{,}7 \text{ dinars}, \qquad \sigma_S \approx 177{,}9\]</span></p>
 </div>
@@ -2974,7 +3122,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-49-contents" aria-controls="callout-49" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-54-contents" aria-controls="callout-54" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2983,7 +3131,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-49" class="callout-49-contents callout-collapse collapse">
+<div id="callout-54" class="callout-54-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(n=21\)</span> (on retrouve bien l’effectif total de l’énoncé). <span class="math display">\[\bar{X}=\frac{2\times1+2\times3+3\times2+3\times1+4\times1+4\times4+4\times4+5\times2+5\times1+5\times2}{21}\approx3{,}71\]</span> <span class="math display">\[\bar{Y}=\frac{2\times1+3\times3+3\times2+4\times1+2\times1+3\times4+4\times4+2\times2+3\times1+4\times2}{21}\approx3{,}14\]</span> Point moyen <span class="math inline">\(G\approx(3{,}71\,;\,3{,}14)\)</span>.</p>
 </div>
@@ -3039,7 +3187,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWCA9IFsyLCAzLCA0XVxuWV9j
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-50-contents" aria-controls="callout-50" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3048,7 +3196,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWCA9IFsyLCAzLCA0XVxuWV9j
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-50" class="callout-50-contents callout-collapse collapse">
+<div id="callout-55" class="callout-55-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><span class="math inline">\(n_{\text{total}}=100\)</span>. Les voitures avec <span class="math inline">\(x\le3\)</span> et <span class="math inline">\(y\ge20\)</span> correspondent aux cases (2 ; [20;25[)=5, (2 ; [25;30[)=25, (3 ; [20;25[)=20, (3 ; [25;30[)=3, soit <span class="math inline">\(5+25+20+3=53\)</span>. <strong>Proportion <span class="math inline">\(=\dfrac{53}{100}=53\%\)</span>.</strong></li>
@@ -3132,7 +3280,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNyDigJQg
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-56-contents" aria-controls="callout-56" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3141,7 +3289,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBY3Rpdml0w6kgNyDigJQg
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-51" class="callout-51-contents callout-collapse collapse">
+<div id="callout-56" class="callout-56-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Cette activité demande de <strong>relire un graphique</strong> imprimé dans le manuel (un nuage de 100 points pondérés) pour reconstituer le tableau — les effectifs ne peuvent pas être devinés sans l’avoir sous les yeux. La méthode, une fois le tableau rempli, est exactement celle de l’Activité 1 de ce même paragraphe : sommer chaque ligne pour la distribution marginale du poids, chaque colonne pour celle de la taille, puis calculer <span class="math inline">\(\bar{X}\)</span> et <span class="math inline">\(\bar{Y}\)</span> (pondérées par les effectifs) pour obtenir <span class="math inline">\(G\)</span>.</p>
 </div>
@@ -3281,7 +3429,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWCA9IFsyLDEsNCwwLDEsNCwx
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-52-contents" aria-controls="callout-52" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3290,7 +3438,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWCA9IFsyLDEsNCwwLDEsNCwx
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-52" class="callout-52-contents callout-collapse collapse">
+<div id="callout-57" class="callout-57-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Tableau à double entrée obtenu (lignes : <span class="math inline">\(X=0..4\)</span> séances ; colonnes : classes de <span class="math inline">\(Y\)</span>, <span class="math inline">\([0;5[\ ,[5;10[\ ,[10;15[\ ,[15;20[\ ,[20;25[\)</span>) :</p>
 <div class="table-scroll-wrap">
@@ -3400,7 +3548,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfdGljX3NhbGFpcmUi
 </div>
 <div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_tic_salaire">
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-53-contents" aria-controls="callout-53" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-58-contents" aria-controls="callout-58" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3409,7 +3557,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfdGljX3NhbGFpcmUi
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-53" class="callout-53-contents callout-collapse collapse show">
+<div id="callout-58" class="callout-58-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><code>salaire_moyen = numerateur / denominateur</code></p>
 </div>
@@ -3433,7 +3581,7 @@ Astuce
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-60-contents" aria-controls="callout-60" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3442,7 +3590,7 @@ Astuce
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-55" class="callout-55-contents callout-collapse collapse">
+<div id="callout-60" class="callout-60-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Avec les données de départ : numérateur <span class="math inline">\(=170\times300+100\times375+10\times375+20\times450=101\,250\)</span>, dénominateur <span class="math inline">\(=300\)</span>, donc <span class="math display">\[\text{salaire moyen} = \frac{101\,250}{300}=337{,}5 \text{ dinars.}\]</span></p>
 </div>
@@ -3483,7 +3631,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiUzEgPSBbMywgNCwgNSwgOCwg
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-56-contents" aria-controls="callout-56" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-61-contents" aria-controls="callout-61" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3492,7 +3640,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiUzEgPSBbMywgNCwgNSwgOCwg
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-56" class="callout-56-contents callout-collapse collapse">
+<div id="callout-61" class="callout-61-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="table-scroll-wrap">
 <table class="caption-top table">
@@ -3635,7 +3783,7 @@ jspreadsheet(document.getElementById('ex2-spreadsheet'), {
 });
 </script>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-62-contents" aria-controls="callout-62" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3644,7 +3792,7 @@ jspreadsheet(document.getElementById('ex2-spreadsheet'), {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-57" class="callout-57-contents callout-collapse collapse">
+<div id="callout-62" class="callout-62-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="table-scroll-wrap">
 <table class="caption-top table">
@@ -3691,7 +3839,7 @@ jspreadsheet(document.getElementById('ex2-spreadsheet'), {
 <p>Calculer les <span class="def" tabindex="0" data-tip="Valeur qui partage la série ordonnée en quatre groupes de même effectif (Q₁ : premier quart, Q₃ : troisième quart).">quartiles</span> de chaque échantillon, comparer les écarts <span class="def" tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue.">interquartiles</span>, construire les diagrammes en boîte : quelle machine est la plus appropriée ?</p>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-58-contents" aria-controls="callout-58" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-63-contents" aria-controls="callout-63" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3700,7 +3848,7 @@ Mise en garde
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-58" class="callout-58-contents callout-collapse collapse show">
+<div id="callout-63" class="callout-63-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>La liste imprimée pour la machine 1 ne compte que <strong>39</strong> valeurs (le manuel annonce 40 paquets — coquille probable de l’édition papier) ; les calculs ci-dessous se basent sur les 39 valeurs réellement fournies.</p>
 </div>
@@ -3715,7 +3863,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-59-contents" aria-controls="callout-59" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-64-contents" aria-controls="callout-64" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3724,7 +3872,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-59" class="callout-59-contents callout-collapse collapse">
+<div id="callout-64" class="callout-64-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Machine 1 (<span class="math inline">\(n=39\)</span>, non multiple de 4) : <span class="math inline">\(Q_1=262\)</span>, <span class="math inline">\(Q_3=266\)</span>, écart <span class="def" tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue.">interquartile</span> <span class="math inline">\(=4\)</span>. Machine 2 (<span class="math inline">\(n=36\)</span>, multiple de 4) : <span class="math inline">\(Q_1=267\)</span>, <span class="math inline">\(Q_3=272\)</span>, écart interquartile <span class="math inline">\(=5\)</span>.</p>
 <p>La machine 1 a un écart interquartile plus faible : ses paquets sont plus homogènes en poids autour de sa <span class="def" tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif.">médiane</span>. Sa <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> (<span class="math inline">\(\approx264{,}5\)</span> g) est aussi plus proche du réglage visé (265 g) que celle de la machine 2 (<span class="math inline">\(270\)</span> g, qui sur-dose systématiquement). <strong>La machine 1 semble la plus appropriée</strong> pour ce réglage.</p>
@@ -3781,7 +3929,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiY2VudHJlc19YID0gWzcuNSwg
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-60-contents" aria-controls="callout-60" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-65-contents" aria-controls="callout-65" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3790,7 +3938,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiY2VudHJlc19YID0gWzcuNSwg
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-60" class="callout-60-contents callout-collapse collapse">
+<div id="callout-65" class="callout-65-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Effectif marginal de <span class="math inline">\(X\)</span> (salaire) : 86 ([5;10[), 13 ([10;15[), 10 ([15;20[) — <span class="math inline">\(n=109\)</span>. Effectif marginal de <span class="math inline">\(Y\)</span> (ancienneté) : 8, 83, 8, 10. <span class="math display">\[\bar{X} = \frac{7{,}5\times86+12{,}5\times13+17{,}5\times10}{109} \approx 9{,}01 \text{ milliers de dinars}, \qquad \sigma_X \approx 3{,}14\]</span></p>
 </div>
@@ -3872,7 +4020,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-61-contents" aria-controls="callout-61" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-66-contents" aria-controls="callout-66" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3881,7 +4029,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-61" class="callout-61-contents callout-collapse collapse">
+<div id="callout-66" class="callout-66-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Année <span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> <span class="math inline">\(\approx1961\)</span>, consommation moyenne <span class="math inline">\(\approx69\,692\)</span> milliers de tonnes : <span class="math inline">\(G(1961\,;\,69\,692)\)</span>. Le nuage montre une nette tendance croissante (relation approximativement affine, voire un peu accélérée après 1970), cohérente avec la croissance de la population et de la consommation mondiales sur le XXᵉ siècle.</p>
 </div>
@@ -3899,7 +4047,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibl90b3RhbCA9IDQ1MFxuIyDi
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-62-contents" aria-controls="callout-62" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-67-contents" aria-controls="callout-67" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3908,7 +4056,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibl90b3RhbCA9IDQ1MFxuIyDi
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-62" class="callout-62-contents callout-collapse collapse">
+<div id="callout-67" class="callout-67-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(n_{\text{femmes}}=270\)</span>, <span class="math inline">\(n_{\text{hommes}}=180\)</span>. Cadres : 11 hommes, 11 femmes. Agents : 24 hommes, 48 femmes. Employés (le reste) : <span class="math inline">\(180-11-24=145\)</span> hommes, <span class="math inline">\(270-11-48=211\)</span> femmes.</p>
 <div class="table-scroll-wrap">
@@ -4002,7 +4150,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicG9pZHNfYWdlID0gWzAuNTAs
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-63-contents" aria-controls="callout-63" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-68-contents" aria-controls="callout-68" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4011,7 +4159,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicG9pZHNfYWdlID0gWzAuNTAs
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-63" class="callout-63-contents callout-collapse collapse">
+<div id="callout-68" class="callout-68-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Tableau des fréquences globales (en %) :</p>
 <div class="table-scroll-wrap">
@@ -4114,7 +4262,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-64-contents" aria-controls="callout-64" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-69-contents" aria-controls="callout-69" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4123,7 +4271,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-64" class="callout-64-contents callout-collapse collapse">
+<div id="callout-69" class="callout-69-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(G(4{,}5\,;\,28{,}5)\)</span> (<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> des 10 points). <span class="math inline">\(G_1=(2\,;\,6)\)</span> (moyenne des 5 premiers), <span class="math inline">\(G_2=(7\,;\,51)\)</span> (moyenne des 5 derniers). <span class="math display">\[a = \frac{51-6}{7-2} = 9, \qquad b = 6 - 9\times2 = -12\]</span> <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y=9x-12\)</span>. Le nuage suit en réalité une <strong>relation parabolique</strong> (<span class="math inline">\(y_i=x_i^2\)</span>, pas une droite) : la droite <span class="math inline">\((G_1G_2)\)</span> n’est ici qu’une approximation grossière, utile pour illustrer que la méthode de Mayer suppose implicitement une tendance affine.</p>
 </div>
@@ -4184,7 +4332,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWGkgPSBbMiwgMi4zLCAyLjYs
 </script>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-65-contents" aria-controls="callout-65" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-70-contents" aria-controls="callout-70" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4193,7 +4341,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiWGkgPSBbMiwgMi4zLCAyLjYs
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-65" class="callout-65-contents callout-collapse collapse">
+<div id="callout-70" class="callout-70-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(G_1=(2{,}45\,;\,59)\)</span> (<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> des 4 premières années), <span class="math inline">\(G_2=(3{,}65\,;\,72{,}5)\)</span> (moyenne des 4 dernières). <span class="math display">\[a = \frac{72{,}5-59}{3{,}65-2{,}45} = \frac{13{,}5}{1{,}2} = 11{,}25, \qquad b = 59-11{,}25\times2{,}45 \approx 31{,}44\]</span> <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y\approx11{,}25x+31{,}44\)</span>. Le coefficient directeur positif confirme qu’une hausse des frais de publicité s’accompagne, sur cette période, d’une hausse du chiffre d’affaires.</p>
 </div>
@@ -4265,7 +4413,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </script>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-66-contents" aria-controls="callout-66" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-71-contents" aria-controls="callout-71" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4274,14 +4422,14 @@ Mise en garde
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-66" class="callout-66-contents callout-collapse collapse show">
+<div id="callout-71" class="callout-71-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>En reprenant exactement les valeurs imprimées dans le manuel, le calcul ci-dessous ne retombe <strong>pas</strong> sur <span class="math inline">\(y=0{,}13x+159\)</span> : c’est probablement une coquille de l’édition papier (valeur d’une ancienne version du tableau, non mise à jour). La méthode reste la bonne référence ; c’est elle qu’il faut retenir pour l’examen.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-67-contents" aria-controls="callout-67" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-72-contents" aria-controls="callout-72" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4290,7 +4438,7 @@ Mise en garde
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-67" class="callout-67-contents callout-collapse collapse">
+<div id="callout-72" class="callout-72-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(G_1=(9975\,;\,1337{,}5)\)</span> (<span class="def" tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total.">moyenne</span> de <span class="math inline">\(P_1..P_4\)</span>), <span class="math inline">\(G_2=(24425\,;\,3562{,}5)\)</span> (moyenne de <span class="math inline">\(P_5..P_8\)</span>). <span class="math display">\[a = \frac{3562{,}5-1337{,}5}{24425-9975} = \frac{2225}{14450} \approx 0{,}154, \qquad b = 1337{,}5-0{,}154\times9975 \approx -198{,}4\]</span> On obtient donc <span class="math inline">\((G_1G_2)\)</span> : <span class="math inline">\(y\approx0{,}154x-198{,}4\)</span> à partir des valeurs du tableau — et non <span class="math inline">\(y=0{,}13x+159\)</span> comme l’indique le manuel (voir la remarque ci-dessus). Le point moyen global <span class="math inline">\(G(17\,200\,;\,2450)\)</span> vérifie bien l’équation trouvée (<span class="math inline">\(0{,}154\times17\,200-198{,}4\approx2450\)</span>), ce qui confirme que la méthode est correctement appliquée.</p>
 </div>

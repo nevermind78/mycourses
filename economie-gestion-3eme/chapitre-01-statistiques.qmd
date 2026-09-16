@@ -202,16 +202,20 @@ function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
   var lastW = -1, lastH = -1;
   var debounceTimer = null;
 
-  function applySize() {
-    // Le padding n'est PAS mis en cache : il change entre l'état normal
-    // et le plein écran (CSS ".ggb-figure:fullscreen"), un cache figé
-    // faussait donc systématiquement la largeur calculée après une
-    // sortie de plein écran (fenêtre qui semblait "rétrécir").
+  // "force" (utilisé après un changement plein écran) ignore le cache
+  // lastW/lastH : GeoGebra a sa propre détection interne du plein écran
+  // du navigateur et peut redimensionner son canevas de son côté, sans
+  // passer par cette fonction — le cache devient alors trompeur (il
+  // reflète ce qu'on a nous-même demandé, pas la taille réelle actuelle
+  // du canevas GeoGebra), et la sortie de plein écran semble "oublier"
+  // de remettre le dessin à la bonne taille tant que ce cache n'est pas
+  // invalidé.
+  function applySize(force) {
     var cs = window.getComputedStyle(outerDiv);
     var padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
     var w = Math.floor(outerDiv.clientWidth - padding);
     var h = GSG.heights[id];
-    if (w < 80 || (w === lastW && h === lastH)) return;
+    if (w < 80 || (!force && w === lastW && h === lastH)) return;
     lastW = w; lastH = h;
     api.setSize(w, h);
     applyView();
@@ -219,10 +223,10 @@ function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
 
   function scheduleResize() {
     if (debounceTimer) clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(applySize, 120);
+    debounceTimer = setTimeout(function () { applySize(false); }, 120);
   }
 
-  applySize();
+  applySize(true);
   GSG.applySize[id] = applySize;
   window.addEventListener("resize", scheduleResize);
   var ro = null;
@@ -311,13 +315,17 @@ function gsgOnFullscreenChange(id, container) {
   GSG.heights[id] = newHeight;
   var canvas = container.querySelector(".ggb-canvas");
   if (canvas) canvas.style.height = newHeight + "px";
-  // Deux tentatives : la transition plein écran (surtout la sortie) peut
-  // prendre un instant avant que clientWidth reflète la mise en page
-  // définitive ; une seule lecture trop précoce donnait une largeur
-  // erronée (fenêtre qui semblait "rétrécir" après la sortie).
+  // Plusieurs tentatives FORCÉES (voir applySize) : la transition plein
+  // écran (surtout la sortie) peut prendre un instant avant que
+  // clientWidth reflète la mise en page définitive, et GeoGebra a sa
+  // propre détection interne du plein écran qui peut redimensionner son
+  // canevas un peu plus tard de son côté — d'où le rappel final à 900 ms
+  // pour avoir le dernier mot sur la taille réellement appliquée.
   if (GSG.applySize[id]) {
-    setTimeout(GSG.applySize[id], 80);
-    setTimeout(GSG.applySize[id], 350);
+    var resize = GSG.applySize[id];
+    setTimeout(function () { resize(true); }, 80);
+    setTimeout(function () { resize(true); }, 350);
+    setTimeout(function () { resize(true); }, 900);
   }
 }
 

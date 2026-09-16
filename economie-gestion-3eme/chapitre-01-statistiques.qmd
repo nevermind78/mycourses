@@ -189,6 +189,158 @@ function gsMakeResponsive(id, api, outerDiv, fixedHeight) {
     if (ro) ro.disconnect();
   };
 }
+
+// Comme gsMakeResponsive, mais réapplique la fenêtre (setCoordSystem) après
+// chaque redimensionnement : GeoGebra conserve l'échelle pixels/unité (pas
+// la plage de coordonnées) lors d'un setSize, donc réduire la largeur
+// "zoome" sinon involontairement sur la vue Graphique.
+function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
+  if (GS.cleanups[id]) { try { GS.cleanups[id](); } catch (e) {} }
+  var lastW = -1;
+  var padding = null;
+  var debounceTimer = null;
+
+  function applySize() {
+    if (padding === null) {
+      var cs = window.getComputedStyle(outerDiv);
+      padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    }
+    var w = Math.floor(outerDiv.clientWidth - padding);
+    if (w < 80 || w === lastW) return;
+    lastW = w;
+    api.setSize(w, fixedHeight);
+    applyView();
+  }
+
+  function scheduleResize() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applySize, 120);
+  }
+
+  applySize();
+  window.addEventListener("resize", scheduleResize);
+  var ro = null;
+  if (window.ResizeObserver) {
+    ro = new ResizeObserver(scheduleResize);
+    ro.observe(outerDiv);
+  } else {
+    setTimeout(applySize, 300);
+  }
+  GS.cleanups[id] = function () {
+    window.removeEventListener("resize", scheduleResize);
+    if (ro) ro.disconnect();
+  };
+}
+
+// --- Variante "Tableur + Graphique" -----------------------------------
+// Même principe que buildSheet, mais avec la vue Graphique visible à côté
+// du tableur (perspective "SG") : sert à construire des histogrammes,
+// diagrammes en boîte, polygones des effectifs cumulés, etc. directement
+// à partir des données saisies, en plus des calculs de cellules.
+var GSG = { apis: {}, initCmds: {}, views: {}, cleanups: {} };
+
+function gsgApplyView(id, api) {
+  var v = GSG.views[id];
+  if (!v) return;
+  try { api.setCoordSystem(v[0], v[1], v[2], v[3]); } catch (e) {}
+}
+
+function gsgReset(id) {
+  var api = GSG.apis[id];
+  if (!api) return;
+  api.newConstruction();
+  try { api.setPerspective("SG"); } catch (e) {}
+  gsRunCommands(api, GSG.initCmds[id]);
+  gsgApplyView(id, api);
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  if (ta) ta.value = GSG.initCmds[id].join("\n");
+  gsHideKeyboard(container);
+}
+
+function gsgApplyCode(id) {
+  var api = GSG.apis[id];
+  if (!api) return;
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  var lines = ta.value.split("\n")
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return s.length > 0; });
+  api.newConstruction();
+  try { api.setPerspective("SG"); } catch (e) {}
+  gsRunCommands(api, lines);
+  gsgApplyView(id, api);
+  gsHideKeyboard(container);
+}
+
+function buildSheetGraph(id, commands, opts) {
+  opts = opts || {};
+  GSG.initCmds[id] = commands.slice();
+  GSG.views[id] = opts.view || null;
+
+  var container = document.getElementById(id);
+  container.classList.add("ggb-figure");
+  var baseW = opts.w || 820, baseH = opts.h || 340;
+  container.innerHTML =
+    '<div class="ggb-toolbar">' +
+      '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
+      '<button type="button" class="ggb-btn" data-act="code">✏️ Voir / modifier le code</button>' +
+    '</div>' +
+    '<div class="ggb-canvas" style="height:' + baseH + 'px">' +
+      '<div class="ggb-placeholder">Tableur + graphique GeoGebra — chargement…</div>' +
+      '<div class="ggb-inner"></div>' +
+    '</div>' +
+    '<div class="ggb-codepanel" hidden>' +
+      '<textarea class="ggb-textarea" spellcheck="false" rows="' + Math.min(Math.max(commands.length, 4), 16) + '"></textarea>' +
+      '<button type="button" class="ggb-btn ggb-btn-primary" data-act="apply">▶ Appliquer les modifications</button>' +
+    '</div>';
+
+  var ta = container.querySelector(".ggb-textarea");
+  ta.value = commands.join("\n");
+  container.querySelector('[data-act="reset"]').addEventListener("click", function () { gsgReset(id); });
+  container.querySelector('[data-act="apply"]').addEventListener("click", function () { gsgApplyCode(id); });
+  container.querySelector('[data-act="code"]').addEventListener("click", function () {
+    var panel = container.querySelector(".ggb-codepanel");
+    panel.hidden = !panel.hidden;
+  });
+
+  var loaded = false;
+  function loadApplet() {
+    if (loaded) return;
+    loaded = true;
+    var placeholder = container.querySelector(".ggb-placeholder");
+    if (placeholder) placeholder.remove();
+
+    var innerDiv = container.querySelector(".ggb-inner");
+    var canvasId = id + "-inner";
+    innerDiv.id = canvasId;
+
+    var params = {
+      appName: "classic", width: baseW, height: baseH,
+      showToolBar: true, showAlgebraInput: false, showMenuBar: false,
+      showResetIcon: true, perspective: "SG", language: "fr",
+      appletOnLoad: function (api) {
+        GSG.apis[id] = api;
+        gsRunCommands(api, commands);
+        gsgApplyView(id, api);
+        gsgMakeResponsive(id, api, container, baseH, function () { gsgApplyView(id, api); });
+        gsHideKeyboard(container);
+      }
+    };
+    new GGBApplet(params, true).inject(canvasId);
+  }
+
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { loadApplet(); io.disconnect(); }
+      });
+    }, { rootMargin: "600px 0px" });
+    io.observe(container);
+  } else {
+    loadApplet();
+  }
+}
 </script>
 ```
 
@@ -506,6 +658,33 @@ Répartition de 100 ménages selon leurs dépenses mensuelles :
 2. Calculer la [variance]{.def tabindex="0" data-tip="La moyenne des carrés des écarts à la moyenne : mesure la dispersion des valeurs autour de la moyenne."} et l'[écart type]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} de cette série.
 :::
 
+L'histogramme (résumé **visuel**) est déjà construit ci-dessous à partir
+des classes. Complétez maintenant le résumé **numérique** dans le
+tableur :
+
+- en **D1**, l'effectif total : `=Sum(B2:B6)` ;
+- en **D2**, la moyenne (avec les centres de classe) : `=Mean(A2:A6,B2:B6)` ;
+- en **D3**, la variance : `=Variance(A2:A6,B2:B6)` ;
+- en **D4**, l'écart type : `=SD(A2:A6,B2:B6)`.
+
+Pour la médiane (obtenue par interpolation — voir la correction),
+complétez la colonne **C** avec les effectifs cumulés : `=B2` en **C2**,
+puis `=C2+B3` en **C3**, etc.
+
+```{=html}
+<div id="gsg-c1-a1"></div>
+<script>
+buildSheetGraph("gsg-c1-a1", [
+"A1=\"Centre\"","B1=\"Effectif\"",
+"A2=150","B2=15","A3=250","B3=20","A4=350","B4=30","A5=450","B5=20","A6=550","B6=15",
+"C1=\"Cumulés\"","D1=\"Effectif n\"","D2=\"Moyenne\"","D3=\"Variance\"","D4=\"Éc. type\"",
+"hist1=Histogram({100,200,300,400,500,600},{15,20,30,20,15})","ShowLabel(hist1,false)"
+], {w: 820, h: 320, view: [80,650,-3,35]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 Complétez le calcul de la moyenne (remplacez le tiret par la bonne formule), puis cliquez sur **Run Code**.
 
 ```{pyodide}
@@ -591,6 +770,7 @@ variance = somme_carres / n
 ecart_type = variance ** 0.5
 (variance, ecart_type)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -627,6 +807,30 @@ Une machine fabrique une pièce dont le diamètre doit être 5 cm. Sur un échan
 3. Quelle décision prendre : régler la machine ou poursuivre la production ?
 :::
 
+Les 40 mesures sont saisies en colonne **A**. Le diagramme en boîte est
+déjà construit à partir de ces valeurs. Complétez le résumé numérique :
+
+- en **D1**, la moyenne : `=Mean(A2:A41)` ;
+- en **D2**, l'écart type : `=SD(A2:A41)`.
+
+```{=html}
+<div id="gsg-c1-a2"></div>
+<script>
+buildSheetGraph("gsg-c1-a2", [
+"A1=\"Diamètre\"",
+"A2=4.9","A3=5","A4=5.2","A5=4.7","A6=4.8","A7=5.1","A8=4.5","A9=5.2","A10=4.9","A11=4.8",
+"A12=4.9","A13=4.9","A14=4.9","A15=5.3","A16=5.3","A17=4.8","A18=4.8","A19=4.9","A20=5.1","A21=4.8",
+"A22=5.4","A23=4.9","A24=4.9","A25=5","A26=4.8","A27=4.8","A28=5.3","A29=4.8","A30=5.1","A31=5",
+"A32=5.1","A33=4.8","A34=4.7","A35=5","A36=4.9","A37=4.8","A38=4.6","A39=4.7","A40=4.9","A41=4.7",
+"D1=\"Moyenne\"","D2=\"Éc. type\"",
+"bp2=BoxPlot(0,1,A2:A41)","ShowLabel(bp2,false)"
+], {w: 820, h: 260, view: [4.3,5.7,-1,2]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 # Activité 2
 diametres = [4.9,5,5.2,4.7,4.8, 5.1,4.5,5.2,4.9,4.8,
@@ -648,6 +852,7 @@ ecart_type = variance ** 0.5
 
 (moyenne, ecart_type)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -672,6 +877,31 @@ Diamètres (mm) de billes d'acier :
 2. Représenter le polygone des fréquences cumulées croissantes.
 3. Estimer graphiquement la [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."} $M_e$, puis calculer $\bar{X}$ et $\sigma$.
 :::
+
+Le polygone des fréquences cumulées croissantes est déjà tracé, avec un
+repère à l'ordonnée 50 % pour lire graphiquement la médiane. Complétez
+le résumé numérique :
+
+- en **C2:C9**, les fréquences cumulées : `=B2` en **C2**, puis `=C2+B3` en **C3**, etc. ;
+- en **D1**, la moyenne (avec les centres de classe) : `=Mean(A2:A9,B2:B9)` ;
+- en **D2**, l'écart type : `=SD(A2:A9,B2:B9)`.
+
+```{=html}
+<div id="gsg-c1-a3"></div>
+<script>
+buildSheetGraph("gsg-c1-a3", [
+"A1=\"Centre\"","B1=\"Fréq. %\"",
+"A2=48.5","B2=4","A3=49.5","B3=16","A4=50.5","B4=24","A5=51.5","B5=22",
+"A6=52.5","B6=18","A7=53.5","B7=10","A8=54.5","B8=4","A9=55.5","B9=2",
+"C1=\"Cumulées\"","D1=\"Moyenne\"","D2=\"Éc. type\"",
+"poly3=Polyline((48,0),(49,4),(50,20),(51,44),(52,66),(53,84),(54,94),(55,98),(56,100))",
+"rep50=Segment((48,50),(56,50))","SetLineStyle(rep50,1)"
+], {w: 820, h: 300, view: [47.5,56.5,-5,105]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 # Activité 3
@@ -702,6 +932,7 @@ variance = somme_carres / n
 ecart_type = variance ** 0.5
 (moyenne, ecart_type)
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -732,6 +963,30 @@ $\bar{X}\approx51{,}4$ mm et $\sigma\approx1{,}58$ mm.
 Vérifier que $Q_1 \in [200;250[$, puis calculer une valeur approchée de $Q_1$, $M_e$ et $Q_3$ en utilisant l'hypothèse de répartition uniforme dans la classe : $\dfrac{Q_1-200}{12{,}5-9}=\dfrac{250-200}{15-9}$.
 :::
 
+L'histogramme et le diagramme en boîte (avec les valeurs de la
+correction : $Q_1\approx229{,}2$, $M_e=315$, $Q_3\approx384{,}4$) sont
+déjà construits. Complétez la colonne des effectifs cumulés, qui permet
+de repérer la classe de chaque quartile :
+
+- en **C2:C9**, les effectifs cumulés : `=B2` en **C2**, puis `=C2+B3` en **C3**, etc.
+
+```{=html}
+<div id="gsg-c1-a4"></div>
+<script>
+buildSheetGraph("gsg-c1-a4", [
+"A1=\"Classe\"","B1=\"Effectif\"",
+"A2=125","B2=4","A3=175","B3=5","A4=225","B4=6","A5=275","B5=7",
+"A6=325","B6=10","A7=375","B7=8","A8=425","B8=6","A9=475","B9=4",
+"C1=\"Cumulés\"",
+"hist4=Histogram({100,150,200,250,300,350,400,450,500},{4,5,6,7,10,8,6,4})","ShowLabel(hist4,false)",
+"bp4=BoxPlot(-3,2,100,229.2,315,384.4,500)","ShowLabel(bp4,false)"
+], {w: 820, h: 320, view: [80,520,-6,12]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 # Activité 4
 bornes = [100, 150, 200, 250, 300, 350, 400, 450, 500]
@@ -754,6 +1009,7 @@ print("rangs Q1, Me, Q3 :", rang_Q1, rang_Me, rang_Q3)
 #    "effectifs_cumules", puis interpolez comme le suggère l'énoncé pour Q1
 #    (même méthode pour Me et Q3, avec les bonnes bornes de classe).
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -791,6 +1047,37 @@ Soit $n$ l'effectif d'une série rangée par ordre croissant $x_1 \le x_2 \le \d
 - Sinon, $Q_1$ (resp. $Q_3$) est la valeur du caractère dont le rang est immédiatement supérieur à $\dfrac{n}{4}$ (resp. $\dfrac{3n}{4}$).
 :::
 
+Les 60 valeurs sont saisies en colonne **A** ; le diagramme en boîte est
+déjà construit directement à partir de cette colonne (avec les valeurs
+$Q_1=133$ et $Q_3=158$ données par la méthode du cours). Complétez :
+
+- en **D1**, la moyenne : `=Mean(A2:A61)` ;
+- en **D2**, l'écart type : `=SD(A2:A61)`.
+
+::: {.callout-warning collapse="true"}
+## ⚠️ À propos des formules `Q1(...)` / `Q3(...)` du tableur
+Le tableur propose aussi des formules toutes faites `=Q1(A2:A61)` et
+`=Q3(A2:A61)`, mais elles utilisent une méthode d'interpolation
+différente de celle du cours (elles donnent $133{,}5$ et $159$ au lieu
+de $133$ et $158$) : pour rester cohérent avec la **règle des
+quartiles** ci-dessus, mieux vaut calculer $Q_1$ et $Q_3$ « à la main »
+avec les rangs, comme dans l'exercice Python ci-dessous.
+:::
+
+```{=html}
+<div id="gsg-c1-a5"></div>
+<script>
+buildSheetGraph("gsg-c1-a5", [
+"A1=\"Taux\"",
+"A2=105","A3=110","A4=112","A5=112","A6=118","A7=119","A8=120","A9=120","A10=125","A11=126","A12=127","A13=128","A14=130","A15=132","A16=133","A17=134","A18=135","A19=138","A20=138","A21=138","A22=138","A23=141","A24=142","A25=144","A26=145","A27=146","A28=148","A29=148","A30=148","A31=149","A32=150","A33=150","A34=150","A35=151","A36=151","A37=153","A38=153","A39=153","A40=154","A41=154","A42=154","A43=156","A44=156","A45=156","A46=158","A47=160","A48=160","A49=160","A50=163","A51=164","A52=164","A53=165","A54=166","A55=168","A56=168","A57=170","A58=172","A59=172","A60=176","A61=179",
+"D1=\"Moyenne\"","D2=\"Éc. type\"",
+"bp5=BoxPlot(0,1,A2:A61)","ShowLabel(bp5,false)"
+], {w: 820, h: 260, view: [95,190,-1,2]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 Vérifiez ces trois valeurs par le calcul (les rangs Python commencent à **0**, pensez à décaler d'une unité) :
 
 ```{pyodide}
@@ -850,6 +1137,7 @@ plt.xlabel("g/L")
 plt.tight_layout()
 plt.show()
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -874,6 +1162,24 @@ Un diagramme en boîte est fourni (voir manuel, p. 10) sur un axe gradué de 5 �
 2. Calculer l'écart interquartile, puis compléter : *« Au moins ...% des valeurs sont ≤ 15 »*, *« Au moins ...% des valeurs sont ≤ 35 »*.
 :::
 
+Reportez dans la colonne **B** les cinq valeurs lues sur le diagramme du
+manuel (à la place des 0) : le diagramme en boîte ci-dessous se
+redessine automatiquement à partir de vos valeurs — comparez sa forme à
+celle imprimée dans le manuel pour vérifier votre lecture.
+
+```{=html}
+<div id="gsg-c1-a6"></div>
+<script>
+buildSheetGraph("gsg-c1-a6", [
+"A1=\"Min\"","B1=0","A2=\"Q1\"","B2=0","A3=\"Médiane\"","B3=0","A4=\"Q3\"","B4=0","A5=\"Max\"","B5=0",
+"bp6=BoxPlot(0,1,B1,B2,B3,B4,B5)","ShowLabel(bp6,false)"
+], {w: 620, h: 240, view: [0,50,-1,2]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 # Activité 6 — reportez ici les valeurs lues sur le diagramme du manuel
 minimum = None
@@ -884,6 +1190,7 @@ maximum = None
 
 # ✏️ Une fois les valeurs renseignées, calculez l'écart interquartile Q3 - Q1.
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -906,6 +1213,31 @@ pour compléter les phrases.
 
 [Étendue]{.def tabindex="0" data-tip="La différence entre la plus grande et la plus petite valeur de la série (max − min)."}, prime [moyenne]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, quartiles, [médiane]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}, puis représenter la boîte de dispersion.
 :::
+
+L'histogramme et le diagramme en boîte (avec les valeurs de la
+correction) sont déjà construits. Complétez le résumé numérique :
+
+- en **C2:C9**, les effectifs cumulés : `=B2` en **C2**, puis `=C2+B3` en **C3**, etc. ;
+- en **D1**, l'effectif total : `=Sum(B2:B9)` ;
+- en **D2**, la prime moyenne : `=Mean(A2:A9,B2:B9)` ;
+- en **D3**, l'étendue : `=Max(A2:A9)-Min(A2:A9)` (attention, avec les bornes de classes, pas les centres).
+
+```{=html}
+<div id="gsg-c1-a7"></div>
+<script>
+buildSheetGraph("gsg-c1-a7", [
+"A1=\"Centre\"","B1=\"Effectif\"",
+"A2=150","B2=130","A3=200","B3=350","A4=250","B4=210","A5=300","B5=130",
+"A6=350","B6=90","A7=400","B7=50","A8=450","B8=30","A9=500","B9=10",
+"C1=\"Cumulés\"","D1=\"Effectif n\"","D2=\"Moyenne\"","D3=\"Étendue\"",
+"hist7=Histogram({125,175,225,275,325,375,425,475,525},{130,350,210,130,90,50,30,10})","ShowLabel(hist7,false)",
+"bp7=BoxPlot(-60,40,125,192.1,229.8,298.1,525)","ShowLabel(bp7,false)"
+], {w: 820, h: 340, view: [100,550,-110,400]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
 
 ```{pyodide}
 # Activité 7
@@ -934,6 +1266,7 @@ print("effectifs cumulés :", effectifs_cumules)
 # ✏️ Comme à l'Activité 4, calculez les rangs n/4, n/2, 3n/4, repérez leurs
 #    classes dans "effectifs_cumules", puis interpolez Q1, Me et Q3.
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape
@@ -963,6 +1296,29 @@ $Q_1\approx192$ et $Q_3\approx298$, et le trait médian à $M_e\approx230$.
 $S_1$ est cette série ; $S_2$ est $S_1$ privée du salaire le plus élevé. Comparer [moyennes]{.def tabindex="0" data-tip="La somme des valeurs pondérées par leurs effectifs (ou fréquences), divisée par l'effectif total."}, [médianes]{.def tabindex="0" data-tip="La valeur qui partage la série, une fois ordonnée, en deux groupes de même effectif."}, étendues, [écarts types]{.def tabindex="0" data-tip="La racine carrée de la variance : mesure la dispersion des valeurs, dans la même unité que les données."} et écarts [interquartiles]{.def tabindex="0" data-tip="L'écart interquartile est la différence Q₃ − Q₁ entre le troisième et le premier quartile : il mesure la dispersion de la moitié centrale de la série, moins sensible aux valeurs extrêmes que l'étendue."} de $S_1$ et $S_2$ : quels paramètres sont sensibles à la valeur extrême ?
 :::
 
+Les deux diagrammes en boîte (avec les valeurs de la correction) sont
+déjà superposés ci-dessous — $S_1$ en haut, $S_2$ en bas — pour comparer
+visuellement leur dispersion. Complétez le résumé numérique de $S_1$ :
+
+- en **D1**, la moyenne : `=Mean(A2:A6,B2:B6)` ;
+- en **D2**, l'écart type : `=SD(A2:A6,B2:B6)`.
+
+```{=html}
+<div id="gsg-c1-a8"></div>
+<script>
+buildSheetGraph("gsg-c1-a8", [
+"A1=\"Salaire\"","B1=\"Effectif\"",
+"A2=1","B2=40","A3=1.4","B3=50","A4=2.1","B4=10","A5=2.7","B5=4","A6=5.8","B6=1",
+"D1=\"Moyenne\"","D2=\"Éc. type\"",
+"bp8s1=BoxPlot(2,1,1,1,1.4,1.4,5.8)","ShowLabel(bp8s1,false)",
+"bp8s2=BoxPlot(0,1,1,1,1.4,1.4,2.7)","ShowLabel(bp8s2,false)"
+], {w: 820, h: 260, view: [0.5,6.3,-1,4]});
+</script>
+```
+
+::: {.callout-tip collapse="true"}
+## 💻 Essayer aussi avec Python (Pyodide)
+
 ```{pyodide}
 # Activité 8
 salaire = [1, 1.4, 2.1, 2.7, 5.8]
@@ -984,6 +1340,7 @@ print("moyenne S2 :", moyenne_ponderee(salaire, effectif_S2))
 #    salaires de S1 puis de S2 (boucles for + append) pour en déduire
 #    médiane, étendue et quartiles de chaque série.
 ```
+:::
 
 ::: {.callout-note collapse="true"}
 ## ✅ Correction — étape par étape

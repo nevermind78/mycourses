@@ -504,12 +504,30 @@ function gsgMakeResponsive(id, api, outerDiv, fixedHeight, applyView) {
 // du tableur (perspective "SG") : sert à construire des histogrammes,
 // diagrammes en boîte, polygones des effectifs cumulés, etc. directement
 // à partir des données saisies, en plus des calculs de cellules.
-var GSG = { apis: {}, initCmds: {}, views: {}, styles: {}, cleanups: {} };
+var GSG = { apis: {}, initCmds: {}, views: {}, styles: {}, axisLabels: {}, cleanups: {} };
 
 function gsgApplyView(id, api) {
   var v = GSG.views[id];
   if (!v) return;
   try { api.setCoordSystem(v[0], v[1], v[2], v[3]); } catch (e) {}
+}
+
+// La vue Graphique n'a pas d'usage de construction ici (elle affiche
+// seulement le résultat : histogramme, boîte, nuage...) : sans ceci, cliquer
+// dedans fait basculer toute la barre d'outils vers les outils de géométrie
+// (point, droite, cercle...), ce qui n'a pas de sens pour un simple graphique
+// de lecture. On verrouille donc la même barre d'outils "Tableur" (curseur,
+// statistiques, groupement, somme) quelle que soit la vue qui a le focus.
+var GSG_TOOLBAR = "0 || 2020 , 2021 , 2022 || 2001 , 2003 , 2002 , 2004 , 2005 || 2040 , 2041 , 2042 , 2044 , 2043";
+
+function gsgApplyToolbar(api) {
+  try { api.setCustomToolBar(GSG_TOOLBAR); } catch (e) {}
+}
+
+function gsgApplyAxisLabels(id, api) {
+  var lbl = GSG.axisLabels[id];
+  if (!lbl) return;
+  try { api.setAxisLabels(1, lbl[0] || "", lbl[1] || ""); } catch (e) {}
 }
 
 // SetColor(...) via evalCommand ne modifie pas fiablement la couleur des
@@ -533,6 +551,8 @@ function gsgReset(id) {
   gsRunCommands(api, GSG.initCmds[id]);
   gsgApplyStyle(id, api);
   gsgApplyView(id, api);
+  gsgApplyAxisLabels(id, api);
+  gsgApplyToolbar(api);
   var container = document.getElementById(id);
   var ta = container.querySelector(".ggb-textarea");
   if (ta) ta.value = GSG.initCmds[id].join("\n");
@@ -552,6 +572,8 @@ function gsgApplyCode(id) {
   gsRunCommands(api, lines);
   gsgApplyStyle(id, api);
   gsgApplyView(id, api);
+  gsgApplyAxisLabels(id, api);
+  gsgApplyToolbar(api);
   gsHideKeyboard(container);
 }
 
@@ -560,6 +582,7 @@ function buildSheetGraph(id, commands, opts) {
   GSG.initCmds[id] = commands.slice();
   GSG.views[id] = opts.view || null;
   GSG.styles[id] = opts.style || null;
+  GSG.axisLabels[id] = opts.axisLabels || null;
 
   var container = document.getElementById(id);
   container.classList.add("ggb-figure");
@@ -601,12 +624,15 @@ function buildSheetGraph(id, commands, opts) {
     var params = {
       appName: "classic", width: baseW, height: baseH,
       showToolBar: true, showAlgebraInput: false, showMenuBar: false,
-      showResetIcon: true, perspective: "SG", language: "fr",
+      showResetIcon: true, showFullscreenButton: true,
+      perspective: "SG", language: "fr",
       appletOnLoad: function (api) {
         GSG.apis[id] = api;
         gsRunCommands(api, commands);
         gsgApplyStyle(id, api);
         gsgApplyView(id, api);
+        gsgApplyAxisLabels(id, api);
+        gsgApplyToolbar(api);
         gsgMakeResponsive(id, api, container, baseH, function () { gsgApplyView(id, api); });
         gsHideKeyboard(container);
       }
@@ -976,7 +1002,7 @@ buildSheetGraph("gsg-c1-a1", [
 "A2=150","B2=15","A3=250","B3=20","A4=350","B4=30","A5=450","B5=20","A6=550","B6=15",
 "C1=\"Cumulés\"","D1=\"Effectif n\"","D2=\"Moyenne\"","D3=\"Variance\"","D4=\"Éc. type\"",
 "hist1=Histogram({100,200,300,400,500,600},{15,20,30,20,15})","ShowLabel(hist1,false)"
-], {w: 820, h: 320, view: [80,650,-3,35]});
+], {w: 820, h: 320, view: [80,650,-3,35], axisLabels: ["Dépense (dinars)", "Effectif"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
@@ -1114,7 +1140,7 @@ buildSheetGraph("gsg-c1-a2", [
 "A32=5.1","A33=4.8","A34=4.7","A35=5","A36=4.9","A37=4.8","A38=4.6","A39=4.7","A40=4.9","A41=4.7",
 "D1=\"Moyenne\"","D2=\"Éc. type\"",
 "bp2=BoxPlot(0,1,A2:A41)","ShowLabel(bp2,false)"
-], {w: 820, h: 260, view: [4.3,5.7,-1,2]});
+], {w: 820, h: 260, view: [4.3,5.7,-1,2], axisLabels: ["Diamètre (cm)", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
@@ -1225,7 +1251,7 @@ buildSheetGraph("gsg-c1-a3", [
 "C1=\"Cumulées\"","D1=\"Moyenne\"","D2=\"Éc. type\"",
 "poly3=Polyline((48,0),(49,4),(50,20),(51,44),(52,66),(53,84),(54,94),(55,98),(56,100))",
 "rep50=Segment((48,50),(56,50))","SetLineStyle(rep50,1)"
-], {w: 820, h: 300, view: [47.5,56.5,-5,105]});
+], {w: 820, h: 300, view: [47.5,56.5,-5,105], axisLabels: ["Diamètre (mm)", "Fréquence cumulée (%)"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
@@ -1331,7 +1357,7 @@ buildSheetGraph("gsg-c1-a4", [
 "C1=\"Cumulés\"",
 "hist4=Histogram({100,150,200,250,300,350,400,450,500},{4,5,6,7,10,8,6,4})","ShowLabel(hist4,false)",
 "bp4=BoxPlot(-3,2,100,229.2,315,384.4,500)","ShowLabel(bp4,false)"
-], {w: 820, h: 320, view: [80,520,-6,12]});
+], {w: 820, h: 320, view: [80,520,-6,12], axisLabels: ["Chiffre d'affaires (dinars)", "Effectif"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
@@ -1428,7 +1454,7 @@ buildSheetGraph("gsg-c1-a5", [
 "A2=105","A3=110","A4=112","A5=112","A6=118","A7=119","A8=120","A9=120","A10=125","A11=126","A12=127","A13=128","A14=130","A15=132","A16=133","A17=134","A18=135","A19=138","A20=138","A21=138","A22=138","A23=141","A24=142","A25=144","A26=145","A27=146","A28=148","A29=148","A30=148","A31=149","A32=150","A33=150","A34=150","A35=151","A36=151","A37=153","A38=153","A39=153","A40=154","A41=154","A42=154","A43=156","A44=156","A45=156","A46=158","A47=160","A48=160","A49=160","A50=163","A51=164","A52=164","A53=165","A54=166","A55=168","A56=168","A57=170","A58=172","A59=172","A60=176","A61=179",
 "D1=\"Moyenne\"","D2=\"Éc. type\"",
 "bp5=BoxPlot(0,1,A2:A61)","ShowLabel(bp5,false)"
-], {w: 820, h: 260, view: [95,190,-1,2]});
+], {w: 820, h: 260, view: [95,190,-1,2], axisLabels: ["Taux d'hémoglobine (g/L)", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
@@ -1532,7 +1558,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 buildSheetGraph("gsg-c1-a6", [
 "A1=\"Min\"","B1=0","A2=\"Q1\"","B2=0","A3=\"Médiane\"","B3=0","A4=\"Q3\"","B4=0","A5=\"Max\"","B5=0",
 "bp6=BoxPlot(0,1,B1,B2,B3,B4,B5)","ShowLabel(bp6,false)"
-], {w: 620, h: 240, view: [0,50,-1,2]});
+], {w: 620, h: 240, view: [0,50,-1,2], axisLabels: ["Valeur (axe gradué de 5 à 45)", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
@@ -1634,7 +1660,7 @@ buildSheetGraph("gsg-c1-a7", [
 "C1=\"Cumulés\"","D1=\"Effectif n\"","D2=\"Moyenne\"","D3=\"Étendue\"",
 "hist7=Histogram({125,175,225,275,325,375,425,475,525},{130,350,210,130,90,50,30,10})","ShowLabel(hist7,false)",
 "bp7=BoxPlot(-60,40,125,192.1,229.8,298.1,525)","ShowLabel(bp7,false)"
-], {w: 820, h: 340, view: [100,550,-110,400]});
+], {w: 820, h: 340, view: [100,550,-110,400], axisLabels: ["Prime (dinars)", "Effectif"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
@@ -1721,7 +1747,7 @@ buildSheetGraph("gsg-c1-a8", [
 "D1=\"Moyenne\"","D2=\"Éc. type\"",
 "bp8s1=BoxPlot(2,1,1,1,1.4,1.4,5.8)","ShowLabel(bp8s1,false)",
 "bp8s2=BoxPlot(0,1,1,1,1.4,1.4,2.7)","ShowLabel(bp8s2,false)"
-], {w: 820, h: 260, view: [0.5,6.3,-1,4]});
+], {w: 820, h: 260, view: [0.5,6.3,-1,4], axisLabels: ["Salaire (10³ dinars)", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
@@ -1896,7 +1922,7 @@ buildSheetGraph("gsg-c1b-a1", [
 "D1=\"Moy. V1\"","D2=\"Moy. V2\"","D3=\"Éc. V1\"","D4=\"Éc. V2\"",
 "bpv1=BoxPlot(2,1,A2:A13)","ShowLabel(bpv1,false)",
 "bpv2=BoxPlot(0,1,B2:B13)","ShowLabel(bpv2,false)"
-], {w: 820, h: 280, view: [10,180,-1,4]});
+], {w: 820, h: 280, view: [10,180,-1,4], axisLabels: ["Précipitations (mm)", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
@@ -1998,7 +2024,7 @@ buildSheetGraph("gsg-c1b-a2", [
 "A6=15.5","B6=80","A7=16.5","B7=10","A8=17.5","B8=8","A9=18.5","B9=2",
 "D1=\"Moyenne\"","D2=\"Éc. type\"",
 "hist2b=Histogram({11,12,13,14,15,16,17,18,19},{6,14,25,75,80,10,8,2})","ShowLabel(hist2b,false)"
-], {w: 820, h: 300, view: [10.5,19.5,-6,90]});
+], {w: 820, h: 300, view: [10.5,19.5,-6,90], axisLabels: ["Durée de vie (centaines d'heures)", "Effectif"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
@@ -2177,7 +2203,7 @@ buildSheetGraph("gsg-c1b-a4", [
 "E1=\"Moy. H\"","E2=\"Moy. F\"","E3=\"Éc. H\"","E4=\"Éc. F\"",
 "histH=Histogram({0,2,4,6,8},{6,10,22,2})","ShowLabel(histH,false)",
 "histF=Histogram({0,2,4,6,8},{25,10,5,0})","ShowLabel(histF,false)"
-], {w: 820, h: 300, view: [-0.5,8.5,-4,28], style: [["histH",20,90,160,0.35],["histF",224,123,0,0.35]]});
+], {w: 820, h: 300, view: [-0.5,8.5,-4,28], style: [["histH",20,90,160,0.35],["histF",224,123,0,0.35]], axisLabels: ["Rémunération (centaines de dinars)", "Effectif"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
@@ -2323,7 +2349,7 @@ buildSheetGraph("gsg-c2-a1", [
 "D1=\"Moy. X\"","D2=\"Moy. Y\"","D3=\"Éc. X\"","D4=\"Éc. Y\"",
 "M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
 "G=(Mean(A2:A11),Mean(B2:B11))","SetPointSize(G,6)","ShowLabel(G,false)"
-], {w: 820, h: 340, view: [-5,155,-20,360], style: [["G",11,110,153]]});
+], {w: 820, h: 340, view: [-5,155,-20,360], style: [["G",11,110,153]], axisLabels: ["Olives à huile (milliers de tonnes)", "Céréales (milliers de tonnes)"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
@@ -2426,7 +2452,7 @@ buildSheetGraph("gsg-c2-a2", [
 "D1=\"X-barre\"","D2=\"Y-barre\"",
 "M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
 "G=(Mean(A2:A11),Mean(B2:B11))","SetPointSize(G,6)","ShowLabel(G,false)"
-], {w: 620, h: 340, view: [3,17,4,18], style: [["G",11,110,153]]});
+], {w: 620, h: 340, view: [3,17,4,18], style: [["G",11,110,153]], axisLabels: ["Note en économie", "Note en maths"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
@@ -2511,7 +2537,7 @@ buildSheetGraph("gsg-c2-a3", [
 "D1=\"Moy. X\"","D2=\"Moy. Y\"","D3=\"Éc. X\"","D4=\"Éc. Y\"",
 "M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)",
 "G=(Mean(A2:A7),Mean(B2:B7))","SetPointSize(G,6)","ShowLabel(G,false)"
-], {w: 720, h: 340, view: [630,970,430,750], style: [["G",11,110,153]]});
+], {w: 720, h: 340, view: [630,970,430,750], style: [["G",11,110,153]], axisLabels: ["Importation (millions de dinars)", "Exportation (millions de dinars)"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-44-contents" aria-controls="callout-44" aria-expanded="false" aria-label="Toggle callout">
@@ -2564,7 +2590,7 @@ buildSheetGraph("gsg-c2-a4", [
 "D1=\"Année moy.\"","D2=\"Prod. moy.\"",
 "M1=(A2,B2)","ShowLabel(M1,false)","M2=(A3,B3)","ShowLabel(M2,false)","M3=(A4,B4)","ShowLabel(M3,false)","M4=(A5,B5)","ShowLabel(M4,false)","M5=(A6,B6)","ShowLabel(M5,false)","M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
 "G=(Mean(A2:A11),Mean(B2:B11))","SetPointSize(G,6)","ShowLabel(G,false)"
-], {w: 720, h: 340, view: [0,12,0,1050], style: [["G",11,110,153]]});
+], {w: 720, h: 340, view: [0,12,0,1050], style: [["G",11,110,153]], axisLabels: ["Année (rang)", "Production (tonnes)"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
@@ -2694,7 +2720,7 @@ buildSheetGraph("gsg-c2-a5", [
 "G2=(Mean(A8:A13),Mean(B8:B13))","SetPointSize(G2,6)","ShowLabel(G2,false)",
 "G=(Mean(A2:A13),Mean(B2:B13))","SetPointSize(G,6)","ShowLabel(G,false)",
 "droiteG=Line(G1,G2)"
-], {w: 820, h: 420, view: [-15,180,-15,190], style: [["G1",224,123,0],["G2",76,140,43],["G",11,110,153]]});
+], {w: 820, h: 420, view: [-15,180,-15,190], style: [["G1",224,123,0],["G2",76,140,43],["G",11,110,153]], axisLabels: ["Rang IDH", "Rang PNB"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
@@ -3235,7 +3261,7 @@ buildSheetGraph("gsg-c2b-a5", [
 "M9=(A10,B10)","SetPointSize(M9,10)","ShowLabel(M9,false)",
 "M10=(A11,B11)","SetPointSize(M10,12)","ShowLabel(M10,false)",
 "G=(Mean(A2:A11,C2:C11),Mean(B2:B11,C2:C11))","SetPointSize(G,7)","ShowLabel(G,false)"
-], {w: 620, h: 380, view: [1,6,1,5], style: [["G",11,110,153]]});
+], {w: 620, h: 380, view: [1,6,1,5], style: [["G",11,110,153]], axisLabels: ["Nombre de personnes", "Nombre de pièces"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
@@ -3874,7 +3900,7 @@ buildSheetGraph("gsg-ex1", [
 "D1=\"Moy. S1\"","D2=\"Moy. S2\"","D3=\"Éc. S1\"","D4=\"Éc. S2\"",
 "bp1=BoxPlot(2,1,A2:A11)","ShowLabel(bp1,false)",
 "bp2=BoxPlot(0,1,B2:B10)","ShowLabel(bp2,false)"
-], {w: 820, h: 280, view: [0,53,-1,4]});
+], {w: 820, h: 280, view: [0,53,-1,4], axisLabels: ["Valeurs", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-69-contents" aria-controls="callout-69" aria-expanded="false" aria-label="Toggle callout">
@@ -4168,7 +4194,7 @@ buildSheetGraph("gsg-ex3", [
 "D1=\"Moy. M1\"","D2=\"Moy. M2\"",
 "bp1=BoxPlot(2,1,A2:A40)","ShowLabel(bp1,false)",
 "bp2=BoxPlot(0,1,B2:B37)","ShowLabel(bp2,false)"
-], {w: 820, h: 280, view: [250,285,-1,4]});
+], {w: 820, h: 280, view: [250,285,-1,4], axisLabels: ["Poids du paquet (g)", ""]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-74-contents" aria-controls="callout-74" aria-expanded="false" aria-label="Toggle callout">
@@ -4391,7 +4417,7 @@ buildSheetGraph("gsg-ex5", [
 "M6=(A7,B7)","ShowLabel(M6,false)","M7=(A8,B8)","ShowLabel(M7,false)","M8=(A9,B9)","ShowLabel(M8,false)","M9=(A10,B10)","ShowLabel(M9,false)","M10=(A11,B11)","ShowLabel(M10,false)",
 "M11=(A12,B12)","ShowLabel(M11,false)","M12=(A13,B13)","ShowLabel(M12,false)","M13=(A14,B14)","ShowLabel(M13,false)","M14=(A15,B15)","ShowLabel(M14,false)","M15=(A16,B16)","ShowLabel(M15,false)",
 "G=(Mean(A2:A16),Mean(B2:B16))","SetPointSize(G,6)","ShowLabel(G,false)"
-], {w: 820, h: 380, view: [1895,2005,-8000,135000], style: [["G",11,110,153]]});
+], {w: 820, h: 380, view: [1895,2005,-8000,135000], style: [["G",11,110,153]], axisLabels: ["Année", "Consommation (milliers de tonnes)"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-78-contents" aria-controls="callout-78" aria-expanded="false" aria-label="Toggle callout">
@@ -4730,7 +4756,7 @@ buildSheetGraph("gsg-ex8", [
 "G1=(Mean(A2:A6),Mean(B2:B6))","SetPointSize(G1,6)","ShowLabel(G1,false)",
 "G2=(Mean(A7:A11),Mean(B7:B11))","SetPointSize(G2,6)","ShowLabel(G2,false)",
 "droiteG=Line(G1,G2)"
-], {w: 720, h: 420, view: [-1,10,-10,90], style: [["G1",224,123,0],["G2",76,140,43]]});
+], {w: 720, h: 420, view: [-1,10,-10,90], style: [["G1",224,123,0],["G2",76,140,43]], axisLabels: ["xi", "yi"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-84-contents" aria-controls="callout-84" aria-expanded="false" aria-label="Toggle callout">
@@ -4829,7 +4855,7 @@ buildSheetGraph("gsg-ex9", [
 "G1=(Mean(A2:A5),Mean(B2:B5))","SetPointSize(G1,6)","ShowLabel(G1,false)",
 "G2=(Mean(A6:A9),Mean(B6:B9))","SetPointSize(G2,6)","ShowLabel(G2,false)",
 "droiteG=Line(G1,G2)"
-], {w: 620, h: 380, view: [1.7,4.4,45,80], style: [["G1",224,123,0],["G2",76,140,43]]});
+], {w: 620, h: 380, view: [1.7,4.4,45,80], style: [["G1",224,123,0],["G2",76,140,43]], axisLabels: ["Frais de publicité (millions de dinars)", "Chiffre d'affaires"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-86-contents" aria-controls="callout-86" aria-expanded="false" aria-label="Toggle callout">
@@ -4944,7 +4970,7 @@ buildSheetGraph("gsg-ex10", [
 "G2=(Mean(A6:A9),Mean(B6:B9))","SetPointSize(G2,6)","ShowLabel(G2,false)",
 "G=(Mean(A2:A9),Mean(B2:B9))","SetPointSize(G,6)","ShowLabel(G,false)",
 "droiteG=Line(G1,G2)"
-], {w: 720, h: 420, view: [3000,31000,0,4800], style: [["G1",224,123,0],["G2",76,140,43],["G",11,110,153]]});
+], {w: 720, h: 420, view: [3000,31000,0,4800], style: [["G1",224,123,0],["G2",76,140,43],["G",11,110,153]], axisLabels: ["PNB (€/habitant)", "Hôpitaux / million d'habitants"]});
 </script>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-88-contents" aria-controls="callout-88" aria-expanded="false" aria-label="Toggle callout">

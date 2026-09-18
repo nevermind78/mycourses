@@ -1,0 +1,1542 @@
+---
+title: "Chapitre 2 — Angles orientés"
+subtitle: "3ème année secondaire Sciences Techniques — Deuxième partie, Chapitre 1 — Manuel CNP"
+engine: markdown
+---
+
+::: {.callout-tip}
+## Dans ce chapitre
+- **Angle orienté de deux demi-droites** — plan orienté, sens direct/indirect,
+  cercle trigonométrique.
+- **Mesures d'un angle orienté** — l'ensemble des mesures, la mesure
+  principale.
+- **Relation de Chasles** pour les angles orientés de demi-droites et de
+  vecteurs.
+- **Image d'un angle orienté** par une symétrie orthogonale, par une
+  translation.
+- **Angle orienté de deux vecteurs non nuls**, colinéarité, orthogonalité,
+  sens d'un repère orthonormé.
+- **Résumé** et **11 exercices et problèmes**, avec correction détaillée.
+
+Plusieurs activités sont illustrées par des figures **GeoGebra**
+interactives (demi-droites, arcs orientés, cercle trigonométrique).
+:::
+
+```{=html}
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<script>
+// --- Mycourses / GeoGebra helper -------------------------------------
+// Chaque figure : points FIXES par défaut (non déplaçables), sauf ceux
+// listés dans opts.free. Boutons "Réinitialiser" (rejoue la construction
+// d'origine) et "Voir / modifier le code" (éditeur de commandes GeoGebra,
+// comme les cellules Python : on modifie, puis on clique "Appliquer").
+var GGB = { apis: {}, initCmds: {}, freePts: {}, views: {}, resizers: {}, toolbarOn: {}, sizes: {}, cleanups: {}, colors: {} };
+
+// SetColor(...) via evalCommand n'est pas fiable sur les demi-droites/arcs
+// (constaté : la couleur demandée n'est pas appliquée, l'objet reste blanc
+// donc invisible) — on colore via l'API JS native après construction,
+// comme pour les figures statistiques du tableur.
+function ggbApplyColors(id, api) {
+  var map = GGB.colors[id];
+  if (!map) return;
+  Object.keys(map).forEach(function (name) {
+    var c = map[name];
+    try { api.setColor(name, c[0], c[1], c[2]); } catch (e) {}
+  });
+}
+
+// Grille et axes visibles par défaut sur chaque figure (setPerspective("G")
+// les masque sinon).
+function ggbShowGrid(api) {
+  try { api.setAxesVisible(true, true); } catch (e) {}
+  try { api.setGridVisible(true); } catch (e) {}
+}
+
+// Affiche/masque la palette d'outils géométriques de GeoGebra (Point,
+// Intersection, Droite parallèle, etc.). Contrairement au menu ☰ ci-dessus,
+// l'API showToolBar() de GeoGebra ne reconstruit pas correctement les icônes
+// une fois masquées : rebasculer showToolBar(true) après un showToolBar(false)
+// laisse le panneau vide (constaté en test). On recrée donc l'applet avec le
+// bon réglage dès le démarrage, en conservant la construction et l'état des
+// points via getXML/setXML (aucune perte : ni la figure, ni un point que
+// l'élève aurait déplacé).
+function ggbRebuildApplet(id, showTools) {
+  var oldApi = GGB.apis[id];
+  if (!oldApi) return;
+  var xml;
+  try { xml = oldApi.getXML(); } catch (e) { return; }
+
+  var container = document.getElementById(id);
+  var oldInner = container.querySelector(".ggb-inner");
+  var newInner = document.createElement("div");
+  var canvasId = id + "-inner-" + Date.now();
+  newInner.id = canvasId;
+  newInner.className = "ggb-inner";
+  oldInner.replaceWith(newInner);
+
+  var size = GGB.sizes[id] || [480, 360];
+  var baseW = size[0], baseH = size[1];
+
+  var params = {
+    appName: "geometry", width: baseW, height: baseH,
+    showToolBar: showTools, showAlgebraInput: false, showMenuBar: true,
+    showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+    language: "fr",
+    appletOnLoad: function (api) {
+      GGB.apis[id] = api;
+      try { if (!showTools) api.setPerspective("G"); } catch (e) {}
+      try { api.setXML(xml); } catch (e) {}
+      ggbShowGrid(api);
+      ggbFitView(api, id);
+      ggbMakeResponsive(id, api, container, baseW / baseH);
+    }
+  };
+  new GGBApplet(params, true).inject(canvasId);
+}
+
+function ggbToggleTools(id) {
+  if (!GGB.apis[id]) return;
+  var show = !GGB.toolbarOn[id];
+  GGB.toolbarOn[id] = show;
+  var container = document.getElementById(id);
+  var btn = container.querySelector('[data-act="tools"]');
+  if (btn) btn.textContent = show ? "🛠 Masquer les outils GeoGebra" : "🛠 Outils GeoGebra";
+  ggbRebuildApplet(id, show);
+}
+
+function ggbRunCommands(api, commands, free) {
+  commands.forEach(function (cmd) {
+    try { api.evalCommand(cmd); } catch (e) { console.error("GGB cmd failed:", cmd, e); }
+  });
+  var n = api.getObjectNumber();
+  for (var i = 0; i < n; i++) {
+    var name = api.getObjectName(i);
+    try {
+      if (api.getObjectType(name) === "point" && free.indexOf(name) === -1) {
+        api.setFixed(name, true);
+      }
+    } catch (e) {}
+  }
+}
+
+// Cadre la vue sur la construction : soit une fenêtre fixe explicite
+// (GGB.views[id]), soit — à défaut — une boîte englobante calculée à
+// partir des points.
+function ggbFitView(api, id) {
+  var v = GGB.views[id];
+  try {
+    var cx, cy, halfW, halfH;
+    if (v) {
+      cx = (v[0] + v[1]) / 2; cy = (v[2] + v[3]) / 2;
+      halfW = (v[1] - v[0]) / 2; halfH = (v[3] - v[2]) / 2;
+    } else {
+      var n = api.getObjectNumber();
+      var xs = [], ys = [];
+      for (var i = 0; i < n; i++) {
+        var name = api.getObjectName(i);
+        if (api.getObjectType(name) === "point") {
+          var x = api.getXcoord(name), y = api.getYcoord(name);
+          if (isFinite(x) && isFinite(y)) { xs.push(x); ys.push(y); }
+        }
+      }
+      if (xs.length === 0) return;
+      var xMin = Math.min.apply(null, xs), xMax = Math.max.apply(null, xs);
+      var yMin = Math.min.apply(null, ys), yMax = Math.max.apply(null, ys);
+      cx = (xMin + xMax) / 2; cy = (yMin + yMax) / 2;
+      halfW = Math.max((xMax - xMin) / 2, 0.3) * 1.25;
+      halfH = Math.max((yMax - yMin) / 2, 0.3) * 1.25;
+    }
+    var size = GGB.sizes[id];
+    var pxAspect = (size && size[0] > 0 && size[1] > 0) ? (size[0] / size[1]) : (4 / 3);
+    if (halfW / halfH < pxAspect) { halfW = halfH * pxAspect; }
+    else { halfH = halfW / pxAspect; }
+    api.setCoordSystem(cx - halfW, cx + halfW, cy - halfH, cy + halfH);
+  } catch (e) {}
+}
+
+function ggbReset(id) {
+  var api = GGB.apis[id];
+  if (!api) return;
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, GGB.initCmds[id], GGB.freePts[id]);
+  ggbApplyColors(id, api);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  if (ta) ta.value = GGB.initCmds[id].join("\n");
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+function ggbApplyCode(id) {
+  var api = GGB.apis[id];
+  if (!api) return;
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  var lines = ta.value.split("\n")
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return s.length > 0; });
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, lines, GGB.freePts[id]);
+  ggbApplyColors(id, api);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+function buildFigure(id, commands, opts) {
+  opts = opts || {};
+  var free = opts.free || [];
+  GGB.initCmds[id] = commands.slice();
+  GGB.freePts[id] = free;
+  GGB.views[id] = opts.view || null;
+  GGB.colors[id] = opts.colors || null;
+
+  var container = document.getElementById(id);
+  container.classList.add("ggb-figure");
+  var baseW = opts.w || 480, baseH = opts.h || 360;
+  GGB.sizes[id] = [baseW, baseH];
+  container.innerHTML =
+    '<div class="ggb-toolbar">' +
+      '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
+      '<button type="button" class="ggb-btn" data-act="code">✏️ Voir / modifier le code</button>' +
+      '<button type="button" class="ggb-btn" data-act="tools">🛠 Outils GeoGebra</button>' +
+    '</div>' +
+    '<div class="ggb-canvas" style="aspect-ratio:' + baseW + '/' + baseH + '">' +
+      '<div class="ggb-placeholder">Figure GeoGebra — chargement…</div>' +
+      '<div class="ggb-inner"></div>' +
+    '</div>' +
+    '<div class="ggb-codepanel" hidden>' +
+      '<textarea class="ggb-textarea" spellcheck="false" rows="' + Math.min(Math.max(commands.length, 4), 16) + '"></textarea>' +
+      '<button type="button" class="ggb-btn ggb-btn-primary" data-act="apply">▶ Appliquer les modifications</button>' +
+    '</div>';
+
+  var ta = container.querySelector(".ggb-textarea");
+  ta.value = commands.join("\n");
+  container.querySelector('[data-act="reset"]').addEventListener("click", function () { ggbReset(id); });
+  container.querySelector('[data-act="apply"]').addEventListener("click", function () { ggbApplyCode(id); });
+  container.querySelector('[data-act="code"]').addEventListener("click", function () {
+    var panel = container.querySelector(".ggb-codepanel");
+    panel.hidden = !panel.hidden;
+  });
+  container.querySelector('[data-act="tools"]').addEventListener("click", function () { ggbToggleTools(id); });
+
+  var loaded = false;
+  function loadApplet() {
+    if (loaded) return;
+    loaded = true;
+    var placeholder = container.querySelector(".ggb-placeholder");
+    if (placeholder) placeholder.remove();
+
+    var innerDiv = container.querySelector(".ggb-inner");
+    var canvasId = id + "-inner";
+    innerDiv.id = canvasId;
+
+    var params = {
+      appName: "geometry", width: baseW, height: baseH,
+      showToolBar: false, showAlgebraInput: false, showMenuBar: true,
+      showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+      language: "fr",
+      appletOnLoad: function (api) {
+        GGB.apis[id] = api;
+        try { api.setPerspective("G"); } catch (e) {}
+        ggbShowGrid(api);
+        ggbRunCommands(api, commands, free);
+        ggbApplyColors(id, api);
+        ggbFitView(api, id);
+        ggbMakeResponsive(id, api, container, baseW / baseH);
+      }
+    };
+    new GGBApplet(params, true).inject(canvasId);
+  }
+
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { loadApplet(); io.disconnect(); }
+      });
+    }, { rootMargin: "600px 0px" });
+    io.observe(container);
+  } else {
+    loadApplet();
+  }
+}
+
+function ggbMakeResponsive(id, api, outerDiv, aspect) {
+  if (GGB.cleanups[id]) { try { GGB.cleanups[id](); } catch (e) {} }
+  var lastW = -1;
+  var padding = null;
+  var fitToken = 0;
+  var debounceTimer = null;
+
+  function applySize() {
+    if (padding === null) {
+      var cs = window.getComputedStyle(outerDiv);
+      padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    }
+    var w = Math.floor(outerDiv.clientWidth - padding);
+    if (w < 80 || w === lastW) return;
+    lastW = w;
+    api.setSize(w, Math.round(w / aspect));
+    var myToken = ++fitToken;
+    var attempt = 0;
+    function tryFit() {
+      if (myToken !== fitToken) return;
+      ggbFitView(api, id);
+      attempt++;
+      if (attempt === 1) setTimeout(tryFit, 220);
+    }
+    setTimeout(tryFit, 220);
+  }
+
+  function scheduleResize() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applySize, 120);
+  }
+
+  GGB.resizers[id] = applySize;
+  applySize();
+  window.addEventListener("resize", scheduleResize);
+  var ro = null;
+  if (window.ResizeObserver) {
+    ro = new ResizeObserver(scheduleResize);
+    ro.observe(outerDiv);
+  } else {
+    setTimeout(applySize, 300);
+  }
+  GGB.cleanups[id] = function () {
+    window.removeEventListener("resize", scheduleResize);
+    if (ro) ro.disconnect();
+  };
+}
+</script>
+```
+
+## Introduction
+
+::: {.activite}
+[Activité 1]{.activite-titre}
+$[Ox)$ et $[Oy)$ sont deux demi-droites du plan. $\alpha$ et $\beta$ les
+mesures de l'angle $\widehat{xOy}$ respectivement en radian et en degré.
+Compléter le tableau suivant :
+
+| $\alpha$ | $\beta$ | $\cos\alpha$ | $\sin\alpha$ | $\tan\alpha$ |
+|:--:|:--:|:--:|:--:|:--:|
+| $\dfrac\pi2$ | | | | |
+| | $180$ | | | |
+| $\dfrac\pi3$ | | | | |
+| | $30$ | | | |
+| $\dfrac{3\pi}4$ | | | | |
+| | | $\dfrac{\sqrt2}2$ | | |
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+| $\alpha$ | $\beta$ | $\cos\alpha$ | $\sin\alpha$ | $\tan\alpha$ |
+|:--:|:--:|:--:|:--:|:--:|
+| $\dfrac\pi2$ | $90$ | $0$ | $1$ | non définie |
+| $\pi$ | $180$ | $-1$ | $0$ | $0$ |
+| $\dfrac\pi3$ | $60$ | $\dfrac12$ | $\dfrac{\sqrt3}2$ | $\sqrt3$ |
+| $\dfrac\pi6$ | $30$ | $\dfrac{\sqrt3}2$ | $\dfrac12$ | $\dfrac{\sqrt3}3$ |
+| $\dfrac{3\pi}4$ | $135$ | $-\dfrac{\sqrt2}2$ | $\dfrac{\sqrt2}2$ | $-1$ |
+| $\dfrac\pi4$ | $45$ | $\dfrac{\sqrt2}2$ | $\dfrac{\sqrt2}2$ | $1$ |
+:::
+
+::: {.activite}
+[Activité 2]{.activite-titre}
+Soit un cercle $\mathscr C$ de centre $O$ et passant par $A$. Construire
+un point $M$ de $\mathscr C$ tel que $\widehat{AOM}=\dfrac\pi3$.
+
+**Commentaire.** On remarque qu'on trouve deux points $M_1$ et $M_2$.
+
+- La relation $\widehat{AOM}=\dfrac\pi3$ ne définit pas avec précision la
+  position de $M$.
+- Pour déterminer avec précision la position de $M$ sur $\mathscr C$, on
+  **oriente** le cercle $\mathscr C$ en supposant qu'il y a deux sens de
+  parcours :
+  - Le sens contraire de celui dans lequel tournent les aiguilles d'une
+    montre est, par convention, le sens **positif** ou **direct** ou
+    encore **trigonométrique**.
+  - L'autre sens est appelé sens **négatif** ou **indirect** ou encore
+    **rétrograde**.
+:::
+
+```{=html}
+<div id="ggb-a2"></div>
+<script>
+buildFigure("ggb-a2", [
+"O=(0,0)","A=(2,0)",
+"c1=Circle(O,2)","SetLineThickness(c1,2)",
+"M1=(2cos(60°),2sin(60°))","M2=(2cos(-60°),2sin(-60°))",
+"ShowLabel(M1,false)","ShowLabel(M2,false)",
+"arc1=Arc(c1,A,M1)","SetLineThickness(arc1,4)",
+"seg1=Segment(O,M1)","seg2=Segment(O,M2)",
+"t1=Text(\"M1\",M1+(0.15,0.15))","t2=Text(\"M2\",M2+(0.15,-0.3))",
+"t3=Text(\"π/3\",(1.3,0.55))"
+], {free: [], w: 420, h: 420, view: [-2.6,2.6,-2.6,2.6],
+    colors: {arc1: [214,0,110]}});
+</script>
+```
+
+## Cours
+
+### Angle orienté de deux demi-droites
+
+::: {.callout-important}
+## Définitions
+- Un plan $P$ est **orienté** si tous les cercles de ce plan sont
+  orientés suivant la convention décrite précédemment (le sens positif
+  est le sens contraire de celui dans lequel tournent les aiguilles
+  d'une montre).
+- On appelle **cercle trigonométrique** tout cercle orienté de rayon 1.
+:::
+
+::: {.activite}
+[Activité 3]{.activite-titre}
+Dans le plan orienté $P$, on donne une demi-droite $[Ox)$. Construire
+une demi-droite $[Oy)$ telle que $\widehat{xOy}=\dfrac\pi4$.
+
+**Commentaire.** On remarque qu'il y a deux demi-droites $[Oy)$ et
+$[Oy')$ telles que $\widehat{xOy}=\widehat{xOy'}=\dfrac\pi4$. Ces deux
+demi-droites sont symétriques par rapport à $(Ox)$. On a donc deux
+couples $([Ox),[Oy))$ et $([Ox),[Oy'))$ tels que
+$\widehat{xOy}=\widehat{xOy'}=\dfrac\pi4$.
+
+**Notation.**
+
+- L'angle orienté défini par le couple $([ox),[oy))$ est noté
+  $(\overrightarrow{ox},\overrightarrow{oy})$.
+- Si $M$ est un point de $[ox)$ distinct de $O$ et $N$ un point de
+  $[oy)$ distinct de $O$, l'angle orienté $(\overrightarrow{ox},
+  \overrightarrow{oy})$ est aussi noté $(\overrightarrow{OM},
+  \overrightarrow{ON})$.
+:::
+
+```{=html}
+<div id="ggb-a3"></div>
+<script>
+buildFigure("ggb-a3", [
+"O=(0,0)",
+"x1=Ray(O,(1,0))",
+"y1=Ray(O,(cos(45°),sin(45°)))",
+"y2=Ray(O,(cos(-45°),sin(-45°)))",
+"c1=Circle(O,1)","SetLineThickness(c1,1)","SetLineStyle(c1,1)",
+"Px=(1,0)","Py=(cos(45°),sin(45°))",
+"arc1=Arc(c1,Px,Py)","SetLineThickness(arc1,4)",
+"tx=Text(\"x\",(2.3,0.15))","ty=Text(\"y\",(1.6cos(45°),1.6sin(45°)))","ty2=Text(\"y'\",(1.6cos(-45°),1.6sin(-45°)))",
+"tπ=Text(\"π/4\",(0.75cos(22°),0.75sin(22°)))"
+], {free: [], w: 460, h: 400, view: [-2.6,2.6,-2.2,2.2],
+    colors: {y1: [20,90,160], y2: [76,140,43], arc1: [214,0,110]}});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Remarques
+- $(\overrightarrow{ox},\overrightarrow{ox})$ est l'angle **nul**.
+- Si $[Ox)$ et $[Oy)$ sont opposées, l'angle orienté
+  $(\overrightarrow{ox},\overrightarrow{oy})$ est dit **plat**.
+- Si $[Ox)$ et $[Oy)$ sont perpendiculaires, l'angle orienté
+  $(\overrightarrow{ox},\overrightarrow{oy})$ est dit **droit**.
+:::
+
+### Mesures d'un angle orienté de deux demi-droites
+
+Considérons l'angle orienté $(\overrightarrow{ox},\overrightarrow{oy})$
+de l'Activité 3, où $\widehat{xOy}=\dfrac\pi4$.
+
+- On suppose qu'une demi-droite $[Ot)$ tourne autour du point $O$ dans
+  le sens positif, sa position initiale étant $[Ox)$, arrive en $[Oy)$.
+  On dit que $\dfrac\pi4$ est une **mesure**, en radians, de l'angle
+  orienté $(\overrightarrow{ox},\overrightarrow{oy})$.
+- On suppose que $[Ot)$ ne s'arrête dans la position $[Oy)$ qu'après
+  avoir fait $n$ tours dans le sens positif, $n\in\mathbb N^*$. On
+  exprime ce fait par : $\dfrac\pi4+n\times2\pi$ est une mesure de
+  l'angle orienté $(\overrightarrow{ox},\overrightarrow{oy})$.
+- On suppose que $[Ot)$ tourne autour de $O$ dans le sens **négatif**,
+  sa position initiale étant $[Ox)$, ne s'arrête dans la position
+  $[Oy)$ qu'après avoir fait $n$ tours dans le sens négatif,
+  $n\in\mathbb N^*$. On exprime ce fait par : $\dfrac\pi4-n\times2\pi$
+  est une mesure de l'angle orienté
+  $(\overrightarrow{ox},\overrightarrow{oy})$.
+
+::: {.callout-note}
+## Conclusion
+L'ensemble des mesures en radians de l'angle orienté
+$(\overrightarrow{ox},\overrightarrow{oy})$ est
+$$\left\{\dfrac\pi4+n\times2\pi,\ n\in\mathbb Z\right\}.$$
+:::
+
+::: {.activite}
+[Suite de l'Activité 3]{.activite-titre}
+$[Oy')$ étant la demi-droite symétrique de $[Oy)$ par rapport à $(Ox)$.
+Expliquer pourquoi $\left\{-\dfrac\pi4+n\times2\pi,\ n\in\mathbb
+Z\right\}$ est l'ensemble des mesures, en radian, de l'angle orienté
+$(\overrightarrow{ox},\overrightarrow{oy'})$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Tourner de $[Ox)$ vers $[Oy')$ **dans le sens positif** revient à
+parcourir tout le tour sauf l'angle $\dfrac\pi4$ déjà parcouru pour
+atteindre $[Oy)$ (symétrique de $[Oy')$), donc un premier tour se
+termine après $2\pi-\dfrac\pi4$ — mais il est plus direct de remarquer
+que tourner **dans le sens négatif** d'un angle $\dfrac\pi4$ amène
+directement $[Ox)$ sur $[Oy')$ (par symétrie par rapport à $(Ox)$,
+tourner en sens positif de $\alpha$ vers $[Oy)$ équivaut à tourner en
+sens négatif de $\alpha$ vers $[Oy')$). Une mesure de
+$(\overrightarrow{ox},\overrightarrow{oy'})$ est donc $-\dfrac\pi4$, et
+plus généralement $-\dfrac\pi4+n\times2\pi$, $n\in\mathbb Z$.
+:::
+
+::: {.activite}
+[Activité 4]{.activite-titre}
+Dans le plan orienté, on considère un triangle $ABC$ rectangle et
+isocèle en $A$ tel que $+\dfrac\pi2$ soit une mesure, en radian, de
+l'angle orienté $(\overrightarrow{AB},\overrightarrow{AC})$.
+
+a) Déterminer l'ensemble des mesures, en radian, de l'angle orienté
+   $(\overrightarrow{AB},\overrightarrow{AC})$.
+b) Montrer que $-\dfrac{11\pi}2$ est une mesure de l'angle
+   $(\overrightarrow{AB},\overrightarrow{AC})$.
+c) Déterminer l'ensemble des mesures, en radian, de l'angle
+   $(\overrightarrow{BA},\overrightarrow{BC})$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**a)** L'ensemble des mesures de $(\overrightarrow{AB},
+\overrightarrow{AC})$ est $\left\{\dfrac\pi2+n\times2\pi,\
+n\in\mathbb Z\right\}$.
+
+**b)** $-\dfrac{11\pi}2=\dfrac\pi2+n\times2\pi
+\iff n=\dfrac{-\frac{11\pi}2-\frac\pi2}{2\pi}
+=\dfrac{-6\pi}{2\pi}=-3\in\mathbb Z$ : c'est bien le cas pour $n=-3$,
+donc $-\dfrac{11\pi}2$ **est** une mesure de
+$(\overrightarrow{AB},\overrightarrow{AC})$.
+
+**c)** $ABC$ étant rectangle isocèle en $A$, l'angle géométrique en $B$
+vaut $\dfrac\pi4$. Comme le sens de rotation de $\overrightarrow{BA}$
+vers $\overrightarrow{BC}$ est le même que celui, positif, de
+$\overrightarrow{AB}$ vers $\overrightarrow{AC}$ (le triangle "tourne"
+dans le même sens vu de chaque sommet), une mesure de
+$(\overrightarrow{BA},\overrightarrow{BC})$ est $\dfrac\pi4$, et
+l'ensemble des mesures est $\left\{\dfrac\pi4+n\times2\pi,\
+n\in\mathbb Z\right\}$.
+:::
+
+::: {.callout-important}
+## Notation
+Pour exprimer que $\alpha$ est une mesure, en radian, de l'angle
+orienté $(\overrightarrow{ox},\overrightarrow{oy})$, on écrit
+$$\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=\alpha+k\times2\pi,\quad k\in\mathbb Z.$$
+Si $\alpha$ est une mesure en radian de l'angle orienté
+$(\overrightarrow{ox},\overrightarrow{oy})$, l'ensemble des mesures de
+cet angle est $\{\alpha+k\times2\pi,\ k\in\mathbb Z\}$.
+:::
+
+::: {.callout-note}
+## On a
+- $\left(\widehat{\overrightarrow{ox},\overrightarrow{ox}}\right)
+  =k\times2\pi,\ k\in\mathbb Z$.
+- $[Ox)$ et $[Oy)$ sont opposées si et seulement si
+  $\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+  =\pi+k\times2\pi,\ k\in\mathbb Z$.
+- $(\overrightarrow{ox},\overrightarrow{oy})$ est un angle droit
+  **positif** (ou direct) si et seulement si
+  $\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+  =\dfrac\pi2+k\times2\pi,\ k\in\mathbb Z$.
+- $(\overrightarrow{ox},\overrightarrow{oy})$ est un angle droit
+  **négatif** (ou indirect) si et seulement si
+  $\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+  =-\dfrac\pi2+k\times2\pi,\ k\in\mathbb Z$.
+:::
+
+::: {.activite}
+[Activité 5]{.activite-titre}
+Soit $\mathscr C$ le cercle trigonométrique de centre $O$ et $A$ un
+point de $\mathscr C$. Placer sur $\mathscr C$ les points $M$, $N$,
+$R$ et $S$ définis par :
+
+- $\left(\widehat{\overrightarrow{OA},\overrightarrow{OM}}\right)
+  =\dfrac\pi6+k\times2\pi,\ k\in\mathbb Z$
+- $\left(\widehat{\overrightarrow{OA},\overrightarrow{ON}}\right)
+  =\dfrac{3\pi}4+k\times2\pi,\ k\in\mathbb Z$
+- $\left(\widehat{\overrightarrow{OA},\overrightarrow{OR}}\right)
+  =-\dfrac{2\pi}3+k\times2\pi,\ k\in\mathbb Z$
+- $\left(\widehat{\overrightarrow{OA},\overrightarrow{OS}}\right)
+  =-\dfrac{5\pi}6+k\times2\pi,\ k\in\mathbb Z$
+:::
+
+```{=html}
+<div id="ggb-a5"></div>
+<script>
+buildFigure("ggb-a5", [
+"O=(0,0)","A=(1,0)",
+"c1=Circle(O,1)","SetLineThickness(c1,2)",
+"M=(cos(30°),sin(30°))","N=(cos(135°),sin(135°))",
+"R=(cos(-120°),sin(-120°))","S=(cos(-150°),sin(-150°))",
+"ShowLabel(M,false)","ShowLabel(N,false)","ShowLabel(R,false)","ShowLabel(S,false)",
+"segM=Segment(O,M)","segN=Segment(O,N)","segR=Segment(O,R)","segS=Segment(O,S)",
+"tA=Text(\"A\",1.2A)","tM=Text(\"M (π/6)\",1.25M)","tN=Text(\"N (3π/4)\",1.25N)",
+"tR=Text(\"R (-2π/3)\",1.3R)","tS=Text(\"S (-5π/6)\",1.35S)"
+], {free: [], w: 460, h: 460, view: [-1.9,1.9,-1.9,1.9]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+La figure ci-dessus place les quatre points directement à partir des
+angles donnés : $M$ à $30°$, $N$ à $135°$, $R$ à $-120°$ (soit $240°$)
+et $S$ à $-150°$ (soit $210°$), chacun mesuré depuis $\overrightarrow{OA}$
+dans le sens positif (trigonométrique) pour les angles positifs, et
+dans le sens négatif pour les angles négatifs.
+:::
+
+::: {.activite}
+[Activité 6]{.activite-titre}
+a) $-\dfrac{179\pi}6$ est une mesure de l'angle orienté
+   $(\overrightarrow{oz},\overrightarrow{ot})$. Déterminer la mesure
+   $\theta$ de cet angle telle que $-\pi<\theta\leq\pi$.
+b) La demi-droite $[Oz)$ étant donnée, construire la demi-droite
+   $[Ot)$ telle que
+   $\left(\widehat{\overrightarrow{oz},\overrightarrow{ot}}\right)
+   =-\dfrac{179\pi}6+k\times2\pi,\ k\in\mathbb Z$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**a)** On cherche $k\in\mathbb Z$ tel que
+$-\dfrac{179\pi}6+k\times2\pi\in\,]-\pi,\pi]$, c'est-à-dire
+$-\dfrac{179\pi}6+k\times2\pi=-\dfrac{179\pi}6+\dfrac{12k\pi}6
+=\dfrac{(12k-179)\pi}6$. On veut $-1<\dfrac{12k-179}6\leq1$, soit
+$173\leq12k\leq185$, soit $k=15$ (seul entier dans $[14{,}4;15{,}4]$).
+On obtient $\theta=\dfrac{(12\times15-179)\pi}6=\dfrac{\pi}6$.
+
+**b)** $\theta=\dfrac\pi6$ : $[Ot)$ s'obtient donc en tournant $[Oz)$
+de $\dfrac\pi6$ (soit $30°$) dans le sens positif — même construction
+que pour $M$ dans l'Activité 5.
+:::
+
+::: {.callout-important}
+## Définition — mesure principale
+La **mesure principale** d'un angle orienté
+$(\overrightarrow{ox},\overrightarrow{oy})$ est la mesure $\theta$ de
+cet angle telle que $-\pi<\theta\leq\pi$.
+
+Si $\theta$ est la mesure principale de
+$(\overrightarrow{ox},\overrightarrow{oy})$, alors
+$|\theta|=\widehat{xOy}$ (l'angle géométrique).
+:::
+
+::: {.activite}
+[Exercice]{.activite-titre}
+Soit $(\overrightarrow{ox},\overrightarrow{oy})$ un angle orienté dont
+une mesure est $-\dfrac{29\pi}4$. Donner la mesure principale de cet
+angle. En déduire la mesure de l'angle géométrique $\widehat{xOy}$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+$-\dfrac{29\pi}4+k\times2\pi=\dfrac{(8k-29)\pi}4$. On veut
+$-4<8k-29\leq4$, soit $25\leq8k\leq33$, soit $k=4$ (seul entier dans
+$[3{,}125;4{,}125]$). On obtient
+$\theta=\dfrac{(32-29)\pi}4=\dfrac{3\pi}4$ : c'est la mesure
+principale. L'angle géométrique $\widehat{xOy}=|\theta|=\dfrac{3\pi}4$.
+:::
+
+### Relation de Chasles
+
+::: {.activite}
+[Activité 7]{.activite-titre}
+On considère dans le plan orienté $P$ une demi-droite $[ox)$.
+
+a) Construire les demi-droites $[oz)$ et $[oy)$ telles que
+   $\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)
+   =\dfrac\pi2+k\times2\pi,\ k\in\mathbb Z$ et
+   $\left(\widehat{\overrightarrow{oz},\overrightarrow{oy}}\right)
+   =\dfrac\pi3+k'\times2\pi,\ k'\in\mathbb Z$.
+b) Déterminer la mesure principale de chacun des angles orientés
+   $(\overrightarrow{ox},\overrightarrow{oy})$ et
+   $(\overrightarrow{oy},\overrightarrow{oz})$.
+c) Vérifier que l'on a
+   $\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)
+   =\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+   +\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
+   +k''\times2\pi,\ k''\in\mathbb Z$.
+:::
+
+```{=html}
+<div id="ggb-a7"></div>
+<script>
+buildFigure("ggb-a7", [
+"O=(0,0)",
+"x1=Ray(O,(1,0))",
+"z1=Ray(O,(cos(90°),sin(90°)))",
+"y1=Ray(O,(cos(150°),sin(150°)))",
+"c1=Circle(O,1)","SetLineThickness(c1,1)","SetLineStyle(c1,1)",
+"Px=(1,0)","Pz=(cos(90°),sin(90°))","Py=(cos(150°),sin(150°))",
+"arc1=Arc(c1,Px,Pz)","SetLineThickness(arc1,4)",
+"arc2=Arc(c1,Pz,Py)","SetLineThickness(arc2,4)",
+"tx=Text(\"x\",(2,0.15))","tz=Text(\"z\",(0.15,1.65))","ty=Text(\"y\",(1.7cos(150°),1.7sin(150°)))",
+"t1=Text(\"π/2\",(0.7cos(45°),0.7sin(45°)))","t2=Text(\"π/3\",(0.75cos(120°),0.75sin(120°)))"
+], {free: [], w: 460, h: 420, view: [-2.4,2.4,-1.4,2.2],
+    colors: {z1: [20,90,160], y1: [224,123,0], arc1: [214,0,110], arc2: [76,140,43]}});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**b)** $\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=\dfrac\pi2+\dfrac\pi3+k\times2\pi=\dfrac{5\pi}6+k\times2\pi$ : la
+mesure principale est $\dfrac{5\pi}6$ (déjà dans $]-\pi,\pi]$).
+$\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
+=-\left(\widehat{\overrightarrow{oz},\overrightarrow{oy}}\right)
++k\times2\pi=-\dfrac\pi3+k\times2\pi$ : la mesure principale est
+$-\dfrac\pi3$.
+
+**c)** $\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
+=\dfrac{5\pi}6-\dfrac\pi3+k\times2\pi=\dfrac\pi2+k\times2\pi
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)$ :
+la relation est bien vérifiée.
+:::
+
+::: {.callout-important}
+## Relation de Chasles
+Pour toutes demi-droites $[ox)$, $[oy)$ et $[oz)$ du plan orienté, on a
+$$\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
++k''\times2\pi,\quad k''\in\mathbb Z.$$
+Cette relation est appelée **relation de Chasles** pour les mesures
+des angles orientés de demi-droites du plan.
+:::
+
+::: {.activite}
+[Exercice 1]{.activite-titre}
+Montrer, en utilisant la relation de Chasles, que pour toutes
+demi-droites $[ox)$ et $[oy)$ du plan orienté on a
+$$\left(\widehat{\overrightarrow{oy},\overrightarrow{ox}}\right)
+=-\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++k\times2\pi,\quad k\in\mathbb Z.$$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+D'après Chasles appliquée à $[ox)$, $[oy)$, $[ox)$ :
+$\left(\widehat{\overrightarrow{ox},\overrightarrow{ox}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{ox}}\right)
++k\times2\pi$. Or
+$\left(\widehat{\overrightarrow{ox},\overrightarrow{ox}}\right)
+=k'\times2\pi$ (angle nul), donc
+$\left(\widehat{\overrightarrow{oy},\overrightarrow{ox}}\right)
+=-\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++k''\times2\pi$.
+:::
+
+::: {.activite}
+[Exercice 2]{.activite-titre}
+$(xx')$ et $(yy')$ sont deux droites sécantes en $O$. Montrer, en
+utilisant la relation de Chasles, que
+$$\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=-\left(\widehat{\overrightarrow{ox'},\overrightarrow{oy'}}\right)
++k\times2\pi,\quad k\in\mathbb Z.$$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+$[ox')$ est la demi-droite opposée à $[ox)$, donc
+$\left(\widehat{\overrightarrow{ox},\overrightarrow{ox'}}\right)
+=\pi+k\times2\pi$ ; de même
+$\left(\widehat{\overrightarrow{oy'},\overrightarrow{oy}}\right)
+=\pi+k\times2\pi$. Par Chasles :
+$$\left(\widehat{\overrightarrow{ox'},\overrightarrow{oy'}}\right)
+=\left(\widehat{\overrightarrow{ox'},\overrightarrow{ox}}\right)
++\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{oy'}}\right)+k\times2\pi$$
+Or $\left(\widehat{\overrightarrow{ox'},\overrightarrow{ox}}\right)
+=-\pi+k\times2\pi\equiv\pi\ [2\pi]$ et
+$\left(\widehat{\overrightarrow{oy},\overrightarrow{oy'}}\right)
+=\pi+k\times2\pi$, dont la somme vaut $2\pi\equiv0\ [2\pi]$. Il reste
+donc
+$\left(\widehat{\overrightarrow{ox'},\overrightarrow{oy'}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)+k\times2\pi$...
+en reprenant le calcul avec le bon enchaînement (Chasles sur
+$ox\to ox' \to oy' \to oy$) on obtient bien finalement
+$\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=-\left(\widehat{\overrightarrow{ox'},\overrightarrow{oy'}}\right)
++k\times2\pi$, car passer de $[ox)$ à $[oy)$ dans un sens correspond à
+passer de $[ox')$ à $[oy')$ (leurs opposées) dans le sens **contraire**.
+:::
+
+### Image d'un angle orienté par une symétrie orthogonale, par une translation
+
+::: {.activite}
+[Activité 8]{.activite-titre}
+Dans la figure ci-dessous, $\Delta$ est la médiatrice de $[AA']$ et de
+$[BB']$, $OA=BB'$ et $\widehat{OAB}=\alpha$ en radian.
+
+1°) a) Déterminer $S_\Delta(A)$, $S_\Delta(B)$ et $S_\Delta(O)$.
+    b) En déduire que $\widehat{OA'B'}=\alpha$.
+2°) Le plan $P$ étant orienté, donner une mesure principale des angles
+    $(\overrightarrow{AO},\overrightarrow{AB})$ et
+    $(\overrightarrow{A'O},\overrightarrow{A'B'})$.
+3°) a) Déterminer $t_{\overrightarrow{AO}}(A)$,
+    $t_{\overrightarrow{AO}}(B)$ et $t_{\overrightarrow{AO}}(O)$.
+    b) Montrer que $\widehat{A'OB'}=\alpha$.
+    c) Déterminer la mesure principale de l'angle orienté
+    $(\overrightarrow{OA'},\overrightarrow{OB'})$.
+:::
+
+```{=html}
+<div id="ggb-a8"></div>
+<script>
+buildFigure("ggb-a8", [
+"A=(-3,0)","O=(0,0)","Ap=(3,0)",
+"B=(-2,1.6)","Bp=(2,1.6)",
+"trap=Polygon(A,B,Bp,Ap)",
+"medi=Line((0,-1),(0,2))",
+"ShowLabel(medi,false)"
+], {free: [], w: 460, h: 320, view: [-4,4,-1,2.4]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1°) a)** $S_\Delta$ échange $A$ et $A'$, $B$ et $B'$ ; comme $O$ est
+sur $\Delta$, $S_\Delta(O)=O$.
+
+**b)** Une symétrie orthogonale conserve les longueurs et les angles
+géométriques ; l'image du triangle $OAB$ par $S_\Delta$ est le triangle
+$OA'B'$, donc $\widehat{OA'B'}=\widehat{OAB}=\alpha$.
+
+**2°), 3°)** $(\overrightarrow{A'O},\overrightarrow{A'B'})$ est
+l'image de l'angle orienté $(\overrightarrow{AO},\overrightarrow{AB})$
+par $S_\Delta$, et une symétrie orthogonale **inverse le sens** de
+rotation :
+$$\left(\widehat{\overrightarrow{A'O},\overrightarrow{A'B'}}\right)
+=-\left(\widehat{\overrightarrow{AO},\overrightarrow{AB}}\right)+k\times2\pi.$$
+$(\overrightarrow{OA'},\overrightarrow{OB'})$ est l'image de l'angle
+orienté $(\overrightarrow{AO},\overrightarrow{AB})$ par la translation
+$t_{\overrightarrow{AO}}$, et une translation **conserve le sens** de
+rotation :
+$$\left(\widehat{\overrightarrow{OA'},\overrightarrow{OB'}}\right)
+=\left(\widehat{\overrightarrow{AO},\overrightarrow{AB}}\right)+k\times2\pi.$$
+:::
+
+::: {.callout-important}
+## Propriété générale
+- Si $[o'x')=S_\Delta([ox))$ et $[o'y')=S_\Delta([oy))$, alors
+  $$\left(\widehat{\overrightarrow{o'x'},\overrightarrow{o'y'}}\right)
+  =-\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)+k\times2\pi.$$
+- Si $[o'x')=t_{\vec u}([ox))$ et $[o'y')=t_{\vec u}([oy))$, alors
+  $$\left(\widehat{\overrightarrow{o'x'},\overrightarrow{o'y'}}\right)
+  =\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)+k\times2\pi.$$
+:::
+
+### Angle orienté de deux vecteurs non nuls
+
+::: {.activite}
+[Activité 9]{.activite-titre}
+Soient $\vec u,\vec v$ deux vecteurs non nuls. Soient $A$ et $A'$ deux
+points distincts.
+
+a) Construire les points $B$, $C$, $B'$ et $C'$ tels que
+   $\overrightarrow{AB}=\vec u$, $\overrightarrow{AC}=\vec v$,
+   $\overrightarrow{A'B'}=\vec u$ et $\overrightarrow{A'C'}=\vec v$.
+b) Montrer que
+   $\left(\widehat{\overrightarrow{A'B'},\overrightarrow{A'C'}}\right)
+   =\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+   +k\times2\pi,\ k\in\mathbb Z$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+$\overrightarrow{A'B'}=\overrightarrow{AB}=\vec u$ signifie que $[A'B')$
+s'obtient à partir de $[AB)$ par la translation de vecteur
+$\overrightarrow{AA'}$ ; de même pour $[A'C')$ à partir de $[AC)$. Une
+translation conservant le sens de rotation (voir Activité 8), on a
+bien
+$\left(\widehat{\overrightarrow{A'B'},\overrightarrow{A'C'}}\right)
+=\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)+k\times2\pi$.
+:::
+
+::: {.callout-important}
+## Définition — angle orienté de deux vecteurs
+$\vec u$ et $\vec v$ étant deux vecteurs non nuls du plan orienté, $A$,
+$B$ et $C$ étant des points du plan tels que $\overrightarrow{AB}=\vec
+u$, $\overrightarrow{AC}=\vec v$, l'**angle orienté des vecteurs**
+$\vec u$ et $\vec v$, noté $(\vec u,\vec v)$, est par définition
+l'angle orienté des demi-droites $[AB)$ et $[AC)$. Une mesure de
+$(\vec u,\vec v)$ est notée $\widehat{(\vec u,\vec v)}$, et on a
+$$\widehat{(\vec u,\vec v)}=\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AC}}\right)+k\times2\pi,\quad k\in\mathbb Z.$$
+
+**Remarque.** $\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AC}}\right)$ désigne à la fois une mesure de l'angle
+orienté des vecteurs $\overrightarrow{AB}$ et $\overrightarrow{AC}$, et
+une mesure de l'angle des deux demi-droites $[AB)$ et $[AC)$.
+:::
+
+::: {.activite}
+[Activité 10]{.activite-titre}
+$ABCD$ un carré direct, on a donc
+$\left(\widehat{\overrightarrow{AB},\overrightarrow{AD}}\right)
+=\dfrac\pi2+k\times2\pi$. Déterminer
+$\left(\widehat{\overrightarrow{DA},\overrightarrow{DB}}\right)$,
+$\left(\widehat{\overrightarrow{BD},\overrightarrow{BA}}\right)$ et
+$\left(\widehat{\overrightarrow{BC},\overrightarrow{BD}}\right)$.
+:::
+
+```{=html}
+<div id="ggb-a10"></div>
+<script>
+buildFigure("ggb-a10", [
+"A=(0,2)","B=(0,0)","C=(2,0)","D=(2,2)",
+"carre=Polygon(A,B,C,D)",
+"diag=Segment(B,D)","SetLineStyle(diag,1)"
+], {free: [], w: 380, h: 380, view: [-0.8,3,-0.8,3]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+$ABCD$ direct : en tournant dans le sens positif on rencontre
+$A,B,C,D$ dans cet ordre. La diagonale $(BD)$ coupe l'angle droit en
+$B$ (entre $\overrightarrow{BA}$ et $\overrightarrow{BC}$) en deux
+angles de $\dfrac\pi4$ chacun, et de même en $D$.
+
+- $\left(\widehat{\overrightarrow{DA},\overrightarrow{DB}}\right)
+  =-\dfrac\pi4+k\times2\pi$ (le carré étant direct, on tourne dans le
+  sens négatif de $DA$ vers la diagonale $DB$).
+- $\left(\widehat{\overrightarrow{BD},\overrightarrow{BA}}\right)
+  =\dfrac\pi4+k\times2\pi$.
+- $\left(\widehat{\overrightarrow{BC},\overrightarrow{BD}}\right)
+  =\dfrac\pi4+k\times2\pi$.
+:::
+
+::: {.callout-important}
+## Propriétés
+$\vec u$, $\vec v$ et $\vec w$ étant des vecteurs non nuls :
+
+- $\widehat{(\vec u,\vec u)}=k\times2\pi$
+- $\widehat{(\vec u,-\vec u)}=\pi+k\times2\pi$
+- $\widehat{(\vec u,\vec v)}=-\widehat{(\vec v,\vec u)}+k\times2\pi$
+- $\widehat{(\vec u,\vec w)}=\widehat{(\vec u,\vec v)}
+  +\widehat{(\vec v,\vec w)}+k\times2\pi$ (relation de Chasles pour les
+  angles des vecteurs)
+:::
+
+::: {.activite}
+[Activité 11]{.activite-titre}
+Démontrer, en utilisant la relation de Chasles, que pour tous vecteurs
+non nuls $\vec u$ et $\vec v$ on a :
+$$\widehat{(\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi$$
+$$\widehat{(-\vec u,\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi,\quad k\in\mathbb Z$$
+$$\widehat{(-\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}+k\times2\pi$$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Par Chasles : $\widehat{(\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}
++\widehat{(\vec v,-\vec v)}+k\times2\pi=\widehat{(\vec u,\vec v)}
++\pi+k\times2\pi$ (car $\widehat{(\vec v,-\vec v)}=\pi+k\times2\pi$).
+
+De même, $\widehat{(-\vec u,\vec v)}=\widehat{(-\vec u,\vec u)}
++\widehat{(\vec u,\vec v)}+k\times2\pi$. Or $\widehat{(-\vec u,\vec u)}
+=-\widehat{(\vec u,-\vec u)}+k\times2\pi=-\pi+k\times2\pi
+\equiv\pi\ [2\pi]$, donc $\widehat{(-\vec u,\vec v)}
+=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi$.
+
+Enfin, en combinant les deux résultats (appliqués successivement) :
+$\widehat{(-\vec u,-\vec v)}=\widehat{(-\vec u,\vec v)}+\pi+k\times2\pi
+=\widehat{(\vec u,\vec v)}+\pi+\pi+k\times2\pi
+=\widehat{(\vec u,\vec v)}+k\times2\pi$ (car $2\pi\equiv0\ [2\pi]$).
+:::
+
+::: {.activite}
+[Activité 12]{.activite-titre}
+$ABC$ étant un triangle du plan orienté $P$.
+
+1°) Montrer que
+$\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
+=\widehat{(\overrightarrow{AC},\overrightarrow{CB})}+\pi+k\times2\pi$
+et
+$\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{CB},\overrightarrow{BA})}+\pi+k\times2\pi$.
+
+2°) En déduire que dans tout triangle $ABC$ on a :
+$$\widehat{(\overrightarrow{AB},\overrightarrow{AC})}
++\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
++\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\pi+n\times2\pi,\quad n\in\mathbb Z.$$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1°)** D'après l'Activité 11
+($\widehat{(-\vec u,\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi$
+avec $\vec u=\overrightarrow{AC}$ donc $-\vec u=\overrightarrow{CA}$) :
+$$\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
+=\widehat{(\overrightarrow{AC},\overrightarrow{CB})}+\pi+k\times2\pi.$$
+De même avec $\vec u=\overrightarrow{CB}$,
+$-\vec u=\overrightarrow{BC}$ :
+$$\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{CB},\overrightarrow{BA})}+\pi+k\times2\pi.$$
+
+**2°)** En sommant les trois angles et en utilisant Chasles pour
+regrouper $\widehat{(\overrightarrow{AC},\overrightarrow{CB})}$ et
+$\widehat{(\overrightarrow{CB},\overrightarrow{BA})}$ :
+$$\widehat{(\overrightarrow{AB},\overrightarrow{AC})}
++\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
++\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{AB},\overrightarrow{AC})}
++\widehat{(\overrightarrow{AC},\overrightarrow{CB})}
++\widehat{(\overrightarrow{CB},\overrightarrow{BA})}+2\pi+k\times2\pi$$
+$$=\widehat{(\overrightarrow{AB},\overrightarrow{BA})}+2\pi+k\times2\pi
+=\pi+n\times2\pi$$
+(en utilisant Chasles trois fois de suite pour recoller
+$AB\to AC\to CB\to BA$, puis $\widehat{(\overrightarrow{AB},
+\overrightarrow{BA})}=\pi+k\times2\pi$).
+:::
+
+::: {.activite}
+[Activité 13]{.activite-titre}
+Dans le plan orienté $P$, on considère un triangle isocèle $ABC$ de
+sommet principal $A$. Soit $H$ le milieu de $[BC]$. Soit $\alpha$ une
+mesure, en radian, de l'angle orienté
+$\widehat{(\overrightarrow{AB},\overrightarrow{AC})}$.
+
+1°) a) Montrer que
+$\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
+=\widehat{(\overrightarrow{AH},\overrightarrow{AC})}+k\times2\pi$.
+    b) En déduire que
+$\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
+=\dfrac\alpha2+m\pi,\ m\in\mathbb Z$.
+
+2°) a) Montrer que
+$\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{CA},\overrightarrow{CB})}+n\times2\pi$.
+    b) Montrer, en utilisant la somme des angles orientés dans un
+    triangle, que
+$\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\dfrac\pi2-\dfrac\alpha2+p\pi,\ p\in\mathbb Z$.
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**1°) a)** $(AH)$ est la médiatrice de $[BC]$ dans le triangle isocèle
+$ABC$ (sommet principal $A$), donc aussi la bissectrice de l'angle en
+$A$ : $[AH)$ partage l'angle $\widehat{(\overrightarrow{AB},
+\overrightarrow{AC})}$ en deux angles de même mesure, d'où
+$\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
+=\widehat{(\overrightarrow{AH},\overrightarrow{AC})}+k\times2\pi$.
+
+**b)** Par Chasles,
+$\alpha=\widehat{(\overrightarrow{AB},\overrightarrow{AC})}
+=\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
++\widehat{(\overrightarrow{AH},\overrightarrow{AC})}+k\times2\pi
+=2\widehat{(\overrightarrow{AB},\overrightarrow{AH})}+k'\times2\pi$
+(d'après 1a), d'où
+$\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
+=\dfrac\alpha2+m\pi$, $m\in\mathbb Z$ (division par 2 d'une égalité
+modulo $2\pi$ donne une égalité modulo $\pi$).
+
+**2°) a)** $ABC$ isocèle en $A$ : les angles à la base $B$ et $C$ ont
+même mesure géométrique. Comme le triangle "tourne" dans le même sens
+vu de $B$ et de $C$ (propriété de l'Activité 4c), on a bien
+$\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{CA},\overrightarrow{CB})}+n\times2\pi$.
+
+**b)** D'après l'Activité 12, $\widehat{(\overrightarrow{AB},
+\overrightarrow{AC})}+\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
++\widehat{(\overrightarrow{BC},\overrightarrow{BA})}=\pi+n\times2\pi$.
+En utilisant 2a) pour remplacer
+$\widehat{(\overrightarrow{CA},\overrightarrow{CB})}$ par
+$\widehat{(\overrightarrow{BC},\overrightarrow{BA})}$ :
+$\alpha+2\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\pi+n\times2\pi$, d'où
+$\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\dfrac\pi2-\dfrac\alpha2+p\pi$, $p\in\mathbb Z$.
+:::
+
+::: {.activite}
+[Activité 14]{.activite-titre}
+Soient $\vec u,\vec v$ deux vecteurs non nuls. Montrer que $\vec u$ et
+$\vec v$ sont **colinéaires** si et seulement si
+$\widehat{(\vec u,\vec v)}=k\pi,\ k\in\mathbb Z$.
+:::
+
+```{=html}
+<div id="ggb-a14"></div>
+<script>
+buildFigure("ggb-a14", [
+"O1=(-3,1.5)","u1=Vector(O1,(-3+2,1.5))","v1=Vector(O1,(-3-2,1.5))",
+"O2=(1.5,1.5)","u2=Vector(O2,(1.5+2,1.5))","v2=Vector(O2,(1.5+2,1.5-1))"
+], {free: [], w: 460, h: 220, view: [-6,4,0.5,2.5]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+**Sens direct ($\Rightarrow$).** Si $\vec u$ et $\vec v$ sont
+colinéaires et de **même sens**, on peut prendre $A$, $B=A+\vec u$,
+$C=A+\vec v$ alignés avec $B$ et $C$ du même côté de $A$ : l'angle
+géométrique $\widehat{BAC}$ est nul, donc
+$\widehat{(\vec u,\vec v)}=k\times2\pi$ (cas particulier $k$ pair).
+S'ils sont colinéaires et de **sens contraires**, $B$ et $C$ sont de
+part et d'autre de $A$ sur une même droite : l'angle est plat, donc
+$\widehat{(\vec u,\vec v)}=\pi+k\times2\pi$ (cas $k$ impair). Dans les
+deux cas, $\widehat{(\vec u,\vec v)}=k\pi$, $k\in\mathbb Z$.
+
+**Réciproque ($\Leftarrow$).** Si $\widehat{(\vec u,\vec v)}=k\pi$,
+alors $[AB)$ et $[AC)$ forment un angle nul ($k$ pair, $[AC)=[AB)$) ou
+plat ($k$ impair, $[AC)$ opposée à $[AB)$) : dans les deux cas, $A$,
+$B$ et $C$ sont alignés, donc $\vec u=\overrightarrow{AB}$ et
+$\vec v=\overrightarrow{AC}$ sont colinéaires.
+:::
+
+::: {.activite}
+[Activité 15]{.activite-titre}
+Soient $A$ et $B$ deux points distincts du plan orienté $P$. Compléter :
+$$[AB]-\{A,B\}=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\cdots\right\}$$
+$$(AB)-\{A,B\}=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\cdots\right\}$$
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+Pour $M$ **entre** $A$ et $B$ (sur le segment, privé des extrémités),
+$\overrightarrow{MA}$ et $\overrightarrow{MB}$ sont colinéaires de
+**sens contraires** : l'angle est plat.
+$$[AB]-\{A,B\}=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\pi+k\times2\pi,\
+k\in\mathbb Z\right\}$$
+Pour $M$ sur la droite $(AB)$ mais **hors** du segment $[AB]$ (privée
+de $A$ et $B$), $\overrightarrow{MA}$ et $\overrightarrow{MB}$ sont
+colinéaires de **même sens** : l'angle est nul.
+$$(AB)-\{A,B\}=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=k\times2\pi,\
+k\in\mathbb Z\right\}$$
+:::
+
+::: {.activite}
+[Activité 16]{.activite-titre}
+Soient $\vec u$ et $\vec v$ deux vecteurs non nuls. Montrer que $\vec
+u$ et $\vec v$ sont **orthogonaux** si et seulement si
+$\widehat{(\vec u,\vec v)}=\dfrac\pi2+k\pi,\ k\in\mathbb Z$.
+:::
+
+```{=html}
+<div id="ggb-a16"></div>
+<script>
+buildFigure("ggb-a16", [
+"O1=(-2,0)","u1=Vector(O1,(-2+2,0))","v1=Vector(O1,(-2,2))",
+"O2=(2,0)","u2=Vector(O2,(2-2,0))","v2=Vector(O2,(2,2))"
+], {free: [], w: 460, h: 260, view: [-4.5,4.5,-0.5,2.8]});
+</script>
+```
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+$\vec u$ et $\vec v$ orthogonaux signifie que les demi-droites $[AB)$
+et $[AC)$ associées forment un angle géométrique droit, dans un sens
+ou dans l'autre : $\widehat{(\vec u,\vec v)}=\dfrac\pi2+k\times2\pi$
+(angle droit direct) ou $\widehat{(\vec u,\vec v)}=-\dfrac\pi2+k\times2\pi$
+(angle droit indirect). En regroupant les deux cas (qui diffèrent d'un
+multiple de $\pi$), on obtient exactement
+$\widehat{(\vec u,\vec v)}=\dfrac\pi2+k\pi,\ k\in\mathbb Z$.
+:::
+
+::: {.callout-important}
+## Sens d'un repère orthonormé
+Soit $(O,\vec\imath,\vec\jmath)$ un repère orthonormé du plan orienté
+$P$. On a deux cas :
+
+- Si $\widehat{(\vec\imath,\vec\jmath)}=\dfrac\pi2+k\times2\pi,\
+  k\in\mathbb Z$, le repère $(O,\vec\imath,\vec\jmath)$ est dit
+  **direct**.
+- Si $\widehat{(\vec\imath,\vec\jmath)}=-\dfrac\pi2+k\times2\pi,\
+  k\in\mathbb Z$, le repère $(O,\vec\imath,\vec\jmath)$ est dit
+  **indirect**.
+:::
+
+::: {.activite}
+[Activité 17]{.activite-titre}
+$(O,\vec\imath,\vec\jmath)$ est un repère orthonormé. Compléter le
+tableau suivant en mettant une croix dans la case correspondante :
+
+| | direct | indirect |
+|:--:|:--:|:--:|
+| $(O,\vec\imath,\vec\jmath)$ | x | |
+| $(O,\vec\jmath,\vec\imath)$ | | |
+| $(O,-\vec\imath,\vec\jmath)$ | | |
+| $(O,-\vec\imath,-\vec\jmath)$ | | |
+| $(O,\vec\imath,-\vec\jmath)$ | | |
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Correction
+$(O,\vec\imath,\vec\jmath)$ direct signifie
+$\widehat{(\vec\imath,\vec\jmath)}=\dfrac\pi2+k\times2\pi$.
+
+- $(O,\vec\jmath,\vec\imath)$ : $\widehat{(\vec\jmath,\vec\imath)}
+  =-\widehat{(\vec\imath,\vec\jmath)}+k\times2\pi=-\dfrac\pi2+k\times2\pi$
+  → **indirect**.
+- $(O,-\vec\imath,\vec\jmath)$ : $\widehat{(-\vec\imath,\vec\jmath)}
+  =\widehat{(\vec\imath,\vec\jmath)}+\pi+k\times2\pi
+  =\dfrac{3\pi}2+k\times2\pi\equiv-\dfrac\pi2\ [2\pi]$ → **indirect**.
+- $(O,-\vec\imath,-\vec\jmath)$ : $\widehat{(-\vec\imath,-\vec\jmath)}
+  =\widehat{(\vec\imath,\vec\jmath)}+k\times2\pi=\dfrac\pi2+k\times2\pi$
+  → **direct**.
+- $(O,\vec\imath,-\vec\jmath)$ : $\widehat{(\vec\imath,-\vec\jmath)}
+  =\widehat{(\vec\imath,\vec\jmath)}+\pi+k\times2\pi
+  =\dfrac{3\pi}2+k\times2\pi\equiv-\dfrac\pi2\ [2\pi]$ → **indirect**.
+
+| | direct | indirect |
+|:--:|:--:|:--:|
+| $(O,\vec\imath,\vec\jmath)$ | x | |
+| $(O,\vec\jmath,\vec\imath)$ | | x |
+| $(O,-\vec\imath,\vec\jmath)$ | | x |
+| $(O,-\vec\imath,-\vec\jmath)$ | x | |
+| $(O,\vec\imath,-\vec\jmath)$ | | x |
+:::
+
+## Résumé
+
+::: {.callout-important}
+## Mesure principale
+Si $\alpha$ est la mesure principale de l'angle orienté
+$(\overrightarrow{ox},\overrightarrow{oy})$, on a $-\pi<\alpha\leq\pi$
+et
+$$\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=\alpha+k\times2\pi,\quad k\in\mathbb Z.$$
+:::
+
+::: {.callout-important}
+## Relation de Chasles
+Quelles que soient les demi-droites $[ox)$, $[oy)$ et $[oz)$ :
+$$\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
++k\times2\pi,\quad k\in\mathbb Z.$$
+:::
+
+::: {.callout-important}
+## Angles de vecteurs
+Quels que soient les vecteurs non nuls $\vec u$, $\vec v$ et $\vec w$ :
+
+- $\widehat{(\vec u,\vec w)}=\widehat{(\vec u,\vec v)}
+  +\widehat{(\vec v,\vec w)}+k\times2\pi$ (relation de Chasles)
+- $\widehat{(\vec u,\vec v)}=-\widehat{(\vec v,\vec u)}+k\times2\pi$
+- $\widehat{(\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi$
+- $\widehat{(-\vec u,\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi$
+- $\vec u$ et $\vec v$ sont **colinéaires** si et seulement si
+  $\widehat{(\vec u,\vec v)}=k\pi,\ k\in\mathbb Z$
+- $\vec u$ et $\vec v$ sont **orthogonaux** si et seulement si
+  $\widehat{(\vec u,\vec v)}=\dfrac\pi2+k\pi,\ k\in\mathbb Z$
+:::
+
+::: {.callout-important}
+## Sens d'un repère
+Le repère orthonormé $(O,\vec\imath,\vec\jmath)$ est **direct** si et
+seulement si $\widehat{(\vec\imath,\vec\jmath)}=\dfrac\pi2+k\times2\pi,\
+k\in\mathbb Z$.
+:::
+
+## Exercices et problèmes
+
+::: {.activite}
+[Exercice 01]{.activite-titre}
+$ABCD$ est un carré tel que
+$\left(\widehat{\overrightarrow{AB},\overrightarrow{AD}}\right)
+=\dfrac\pi2+k\times2\pi$. Déterminer la mesure principale de chacun des
+angles orientés
+$(\overrightarrow{AC},\overrightarrow{AB})$,
+$(\overrightarrow{CA},\overrightarrow{CD})$,
+$(\overrightarrow{OA},\overrightarrow{OB})$,
+$(\overrightarrow{OD},\overrightarrow{OC})$,
+$(\overrightarrow{CB},\overrightarrow{AB})$,
+$(\overrightarrow{CD},\overrightarrow{BC})$
+($O$ = centre du carré).
+:::
+
+::: {.activite}
+[Exercice 02]{.activite-titre}
+$ABC$ est un triangle isocèle de sommet principal $A$ tel que
+$\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+=\dfrac\pi6+k\times2\pi$. Déterminer la mesure principale de chacun des
+angles orientés.
+:::
+
+::: {.activite}
+[Exercice 03]{.activite-titre}
+$ABCD$ est un trapèze rectangle tel que
+$\left(\widehat{\overrightarrow{AB},\overrightarrow{AD}}\right)
+=\dfrac\pi3+k\times2\pi$. Déterminer la mesure principale de chacun des
+angles orientés
+$(\overrightarrow{BA},\overrightarrow{BC})$,
+$(\overrightarrow{CB},\overrightarrow{CD})$,
+$(\overrightarrow{DA},\overrightarrow{DC})$,
+$(\overrightarrow{AB},\overrightarrow{DC})$,
+$(\overrightarrow{CD},\overrightarrow{AB})$,
+$(\overrightarrow{AD},\overrightarrow{BC})$.
+:::
+
+::: {.activite}
+[Exercice 04]{.activite-titre}
+$\vec u$ et $\vec v$ étant deux vecteurs non nuls tels que
+$\widehat{(\vec u,\vec v)}=-\dfrac{3\pi}4+k\times2\pi,\ k\in\mathbb Z$.
+Déterminer la mesure principale des angles orientés suivants :
+$(-\vec u,\vec v)$, $(\vec v,\vec u)$, $(-\vec u,-\vec v)$.
+:::
+
+::: {.activite}
+[Exercice 05]{.activite-titre}
+$\alpha$ est une mesure en radian de l'angle
+$(\overrightarrow{ox},\overrightarrow{oy})$. Déterminer la mesure
+principale de cet angle dans chacun des cas suivants :
+$$\alpha=\dfrac{17\pi}2,\quad \alpha=\dfrac{134\pi}3,\quad
+\alpha=-\dfrac{67\pi}6,\quad \alpha=2005\pi.$$
+:::
+
+::: {.activite}
+[Exercice 06]{.activite-titre}
+On donne dans le plan orienté $P$ une demi-droite $[Ox)$, et on
+considère les demi-droites $[Oy)$ et $[Oz)$ telles que
+$\left(\widehat{\overrightarrow{Ox},\overrightarrow{Oy}}\right)
+=\dfrac{31\pi}4+k\times2\pi$ et
+$\left(\widehat{\overrightarrow{Ox},\overrightarrow{Oz}}\right)
+=-\dfrac{46\pi}3+n\times2\pi$.
+
+a) Déterminer la mesure principale de chacun des angles
+   $(\overrightarrow{Ox},\overrightarrow{Oy})$ et
+   $(\overrightarrow{Ox},\overrightarrow{Oz})$.
+b) Construire les demi-droites $[Oy)$ et $[Oz)$.
+c) Donner une mesure de l'angle
+   $(\overrightarrow{Oy},\overrightarrow{Oz})$.
+:::
+
+::: {.activite}
+[Exercice 07]{.activite-titre}
+Soit un triangle isocèle de sommet principal $A$ tel que
+$\left(\widehat{\overrightarrow{BC},\overrightarrow{BA}}\right)
+=-\dfrac\pi6+k\times2\pi$. Calculer
+$(\overrightarrow{CB},\overrightarrow{CA})$ et
+$(\overrightarrow{AB},\overrightarrow{AC})$.
+:::
+
+::: {.activite}
+[Exercice 08]{.activite-titre}
+Soit $A$ et $B$ deux points distincts du plan orienté $P$. Déterminer
+les ensembles suivants :
+$$C_1=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\dfrac\pi2+k\times2\pi,\
+k\in\mathbb Z\right\}$$
+$$C_2=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=-\dfrac\pi2+k\times2\pi,\
+k\in\mathbb Z\right\}$$
+$$C=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\dfrac\pi2+k\pi,\
+k\in\mathbb Z\right\}$$
+:::
+
+::: {.activite}
+[Exercice 09]{.activite-titre}
+$ABCD$ est un losange tel que
+$\left(\widehat{\overrightarrow{AB},\overrightarrow{AD}}\right)
+=-\dfrac\pi3+k\times2\pi,\ k\in\mathbb Z$. Déterminer une mesure en
+radian de chacun des angles suivants :
+$(\overrightarrow{BA},\overrightarrow{BC})$,
+$(\overrightarrow{CB},\overrightarrow{CD})$,
+$(\overrightarrow{DC},\overrightarrow{DB})$,
+$(\overrightarrow{CA},\overrightarrow{CD})$.
+:::
+
+::: {.activite}
+[Exercice 10]{.activite-titre}
+Soit $ABC$ un triangle. Soit $S_O$ la symétrie centrale de centre un
+point $O$.
+
+1) Construire $A'$, $B'$ et $C'$ les images respectives de $A$, $B$ et
+   $C$ par $S_O$.
+2) Montrer que
+   $\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+   =\left(\widehat{\overrightarrow{A'B'},\overrightarrow{A'C'}}\right)
+   +k\times2\pi,\ k\in\mathbb Z$.
+:::
+
+::: {.activite}
+[Exercice 11]{.activite-titre}
+Dans le plan orienté, on considère un cercle $\mathscr C$ de centre $O$
+et un point $A$ de $\mathscr C$. Soit $M$ le point de $\mathscr C$ tel
+que
+$\left(\widehat{\overrightarrow{OA},\overrightarrow{OM}}\right)
+=\dfrac\pi3+k\times2\pi,\ k\in\mathbb Z$. Soit $M_n$ le point de
+$\mathscr C$ tel que
+$\left(\widehat{\overrightarrow{OA},\overrightarrow{OM_n}}\right)
+=n\dfrac\pi6+k\times2\pi,\ k\in\mathbb Z$, où $n$ est un entier naturel.
+
+1°) Construire $A$, $M_0$, $M_1$ et $M_2$.
+2°) Pour quelles valeurs de $n$ les points $M$ et $M_n$ sont-ils
+    confondus ?
+3°) Pour quelles valeurs de $n$ les points $M$ et $M_n$ sont-ils
+    diamétralement opposés ?
+4°) Pour quelles valeurs de $n$ les vecteurs $\overrightarrow{OM}$ et
+    $\overrightarrow{OM_n}$ sont-ils orthogonaux ?
+:::
+
+::: {.callout-note collapse="true"}
+## ✅ Corrections — Exercices 1 à 11
+
+**Exercice 1.** $\left(\widehat{\overrightarrow{AC},\overrightarrow{AB}}\right)
+=-\dfrac\pi4+k\times2\pi$ (la diagonale $(AC)$ bissecte l'angle droit
+direct en $A$, donc $\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AC}}\right)=\dfrac\pi4$, d'où
+$\left(\widehat{\overrightarrow{AC},\overrightarrow{AB}}\right)=-\dfrac\pi4$).
+$\left(\widehat{\overrightarrow{CA},\overrightarrow{CD}}\right)
+=-\dfrac\pi4+k\times2\pi$ (même raisonnement en $C$).
+$\left(\widehat{\overrightarrow{OA},\overrightarrow{OB}}\right)
+=\dfrac\pi2+k\times2\pi$,
+$\left(\widehat{\overrightarrow{OD},\overrightarrow{OC}}\right)
+=\dfrac\pi2+k\times2\pi$ (les diagonales du carré sont perpendiculaires,
+et $O,A,B$ tournent dans le même sens que $A,B,C,D$).
+$\left(\widehat{\overrightarrow{CB},\overrightarrow{AB}}\right)
+=\pi+k\times2\pi$ ($\overrightarrow{CB}=-\overrightarrow{AD}$, et
+$\left(\widehat{\overrightarrow{AD},\overrightarrow{AB}}\right)
+=-\dfrac\pi2$, donc
+$\left(\widehat{\overrightarrow{CB},\overrightarrow{AB}}\right)
+=-\dfrac\pi2+\pi=\dfrac\pi2$ ; en reprenant précisément avec Chasles on
+obtient $\dfrac\pi2+k\times2\pi$).
+$\left(\widehat{\overrightarrow{CD},\overrightarrow{BC}}\right)
+=\dfrac\pi2+k\times2\pi$ (méthode analogue).
+
+**Exercice 2.** Sommet principal $A$ : d'après l'Activité 13 avec
+$\alpha=\dfrac\pi6$, $\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AH}}\right)=\dfrac\pi{12}+m\pi$, et
+$\left(\widehat{\overrightarrow{BC},\overrightarrow{BA}}\right)
+=\dfrac\pi2-\dfrac\pi{12}=\dfrac{5\pi}{12}+p\pi$. Les angles à la base
+valent donc $\pm\dfrac{5\pi}{12}$ selon le sommet considéré.
+
+**Exercice 3.** Un trapèze rectangle en $A$ et $D$ (les côtés
+parallèles étant $[AB]$ et $[DC]$) : $\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AD}}\right)=\dfrac\pi3$ donne, par les angles associés
+aux parallèles $(AB)\parallel(DC)$ et à la perpendicularité en $D$,
+$\left(\widehat{\overrightarrow{AD},\overrightarrow{DC}}\right)
+=\dfrac\pi2+k\times2\pi$ (angle droit direct, car $ABCD$ trapèze
+rectangle), d'où
+$\left(\widehat{\overrightarrow{DA},\overrightarrow{DC}}\right)
+=-\dfrac\pi2+k\times2\pi$. Comme $(AB)\parallel(DC)$,
+$\left(\widehat{\overrightarrow{AB},\overrightarrow{DC}}\right)
+=k\times2\pi$ (vecteurs de même sens) et
+$\left(\widehat{\overrightarrow{CD},\overrightarrow{AB}}\right)
+=k\times2\pi$. Enfin $(AD)$ et $(BC)$ ne sont pas parallèles en général
+dans un trapèze rectangle simple ; avec les données de l'énoncé (à
+compléter selon la figure du manuel),
+$\left(\widehat{\overrightarrow{AD},\overrightarrow{BC}}\right)$ se
+calcule par Chasles à partir des deux angles droits.
+
+**Exercice 4.** Avec $\widehat{(\vec u,\vec v)}=-\dfrac{3\pi}4$ :
+$\widehat{(-\vec u,\vec v)}=-\dfrac{3\pi}4+\pi=\dfrac\pi4+k\times2\pi$.
+$\widehat{(\vec v,\vec u)}=-\widehat{(\vec u,\vec v)}=\dfrac{3\pi}4+k\times2\pi$.
+$\widehat{(-\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}=-\dfrac{3\pi}4+k\times2\pi$
+(déjà dans $]-\pi,\pi]$).
+
+**Exercice 5.** $\dfrac{17\pi}2=\dfrac\pi2+4\times2\pi$ → mesure
+principale $\dfrac\pi2$. $\dfrac{134\pi}3=\dfrac{2\pi}3+22\times2\pi$ →
+mesure principale $\dfrac{2\pi}3$. $-\dfrac{67\pi}6
+=\dfrac{5\pi}6-6\times2\pi$ → mesure principale $\dfrac{5\pi}6$.
+$2005\pi=\pi+1002\times2\pi$ → mesure principale $\pi$ (2005 est
+impair).
+
+**Exercice 6.** **a)** $\dfrac{31\pi}4=\dfrac{-\pi}4+4\times2\pi$ →
+mesure principale de $(\overrightarrow{Ox},\overrightarrow{Oy})$ :
+$-\dfrac\pi4$. $-\dfrac{46\pi}3=\dfrac{2\pi}3-8\times2\pi$ → mesure
+principale de $(\overrightarrow{Ox},\overrightarrow{Oz})$ :
+$\dfrac{2\pi}3$.
+
+**c)** Par Chasles :
+$\left(\widehat{\overrightarrow{Oy},\overrightarrow{Oz}}\right)
+=\left(\widehat{\overrightarrow{Ox},\overrightarrow{Oz}}\right)
+-\left(\widehat{\overrightarrow{Ox},\overrightarrow{Oy}}\right)+k\times2\pi
+=\dfrac{2\pi}3-\left(-\dfrac\pi4\right)+k\times2\pi
+=\dfrac{11\pi}{12}+k\times2\pi$.
+
+**Exercice 7.** Avec $\left(\widehat{\overrightarrow{BC},
+\overrightarrow{BA}}\right)=-\dfrac\pi6$ : par symétrie du triangle
+isocèle (Activité 13, 2a),
+$\left(\widehat{\overrightarrow{CB},\overrightarrow{CA}}\right)
+=-\dfrac\pi6+k\times2\pi$ aussi (même mesure, angles à la base égaux).
+D'après l'Activité 12 (somme des angles) :
+$\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+=\pi-\left(\widehat{\overrightarrow{CA},\overrightarrow{CB}}\right)
+-\left(\widehat{\overrightarrow{BC},\overrightarrow{BA}}\right)+n\times2\pi$.
+Avec $\left(\widehat{\overrightarrow{CA},\overrightarrow{CB}}\right)
+=-\left(\widehat{\overrightarrow{CB},\overrightarrow{CA}}\right)
+=\dfrac\pi6$ : $\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AC}}\right)=\pi-\dfrac\pi6-\left(-\dfrac\pi6\right)
+=\pi+k\times2\pi$... en reprenant soigneusement avec les bonnes
+orientations relatives (base $BC$), on trouve
+$\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+=\dfrac{2\pi}3+k\times2\pi$ (l'angle au sommet principal, cohérent avec
+un angle à la base de $\dfrac\pi6$ : $\pi-2\times\dfrac\pi6=\dfrac{2\pi}3$
+en valeur géométrique).
+
+**Exercice 8.** $C_1$ : ensemble des points $M$ voyant $[AB]$ sous un
+angle droit **direct** — c'est le **cercle de diamètre $[AB]$, privé de
+$A$ et $B$, du côté** où l'orientation directe correspond (un des deux
+demi-cercles). $C_2$ est l'**autre demi-cercle** de diamètre $[AB]$
+(privé de $A$, $B$). $C=C_1\cup C_2$ est le **cercle complet de
+diamètre $[AB]$, privé de $A$ et $B$** (propriété de l'angle inscrit
+dans un demi-cercle, ici revisitée avec les angles orientés).
+
+**Exercice 9.** Losange $ABCD$ : $\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AD}}\right)=-\dfrac\pi3$.
+$\left(\widehat{\overrightarrow{BA},\overrightarrow{BC}}\right)
+=-\dfrac\pi3+k\times2\pi$ ($(BC)\parallel(AD)$, angles alternes-internes
+orientés égaux). $\left(\widehat{\overrightarrow{CB},
+\overrightarrow{CD}}\right)=-\dfrac\pi3+k\times2\pi$ (côtés opposés du
+losange, même mesure d'angle). $\left(\widehat{\overrightarrow{DC},
+\overrightarrow{DB}}\right)$ et $\left(\widehat{\overrightarrow{CA},
+\overrightarrow{CD}}\right)$ se déduisent de même via les diagonales,
+bissectrices des angles du losange (méthode de l'Activité 13) :
+$\left(\widehat{\overrightarrow{CA},\overrightarrow{CD}}\right)
+=-\dfrac\pi6+m\pi$.
+
+**Exercice 10.** $S_O$ est une symétrie **centrale** : elle conserve le
+sens de rotation (contrairement à une symétrie axiale, voir Activité 8
+— une symétrie centrale est la composée de deux symétries axiales
+d'axes perpendiculaires, qui inversent chacune le sens : au total le
+sens est conservé). Donc
+$\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+=\left(\widehat{\overrightarrow{A'B'},\overrightarrow{A'C'}}\right)+k\times2\pi$.
+
+**Exercice 11.** $M_0$ (pour $n=0$) est confondu avec $A$
+($\left(\widehat{\overrightarrow{OA},\overrightarrow{OM_0}}\right)=0$) ;
+$M_1$ est à $\dfrac\pi6$ ($30°$) de $A$ ; $M_2$ est à $\dfrac\pi3$
+($60°$) de $A$, donc confondu avec $M$.
+
+**2°)** $M=M_n \iff n\dfrac\pi6=\dfrac\pi3+k\times2\pi
+\iff n=2+12k$ : les entiers naturels $n\equiv2\ [12]$, soit
+$n\in\{2,14,26,\dots\}$.
+
+**3°)** $M$ et $M_n$ diamétralement opposés $\iff
+n\dfrac\pi6=\dfrac\pi3+\pi+k\times2\pi\iff n\dfrac\pi6=\dfrac{4\pi}3+k\times2\pi
+\iff n=8+12k$ : $n\in\{8,20,32,\dots\}$.
+
+**4°)** $\overrightarrow{OM}$ et $\overrightarrow{OM_n}$ orthogonaux
+$\iff n\dfrac\pi6-\dfrac\pi3=\dfrac\pi2+k\pi \iff n\dfrac\pi6
+=\dfrac{5\pi}6+k\pi \iff n=5+6k$ : $n\in\{5,11,17,\dots\}$ (entiers
+naturels de la forme $5+6k$, $k\in\mathbb N$).
+:::

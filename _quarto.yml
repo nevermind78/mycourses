@@ -62,6 +62,9 @@ website:
         - section: "Première partie"
           contents:
             - 3eme-technique/chapitre-01-generalites-fonctions.qmd
+        - section: "Deuxième partie"
+          contents:
+            - 3eme-technique/chapitre-02-angles-orientes.qmd
   page-footer:
     center: "Mycourses — ressources pédagogiques de mathématiques"
     border: false

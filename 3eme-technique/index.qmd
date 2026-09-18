@@ -18,9 +18,22 @@ subtitle: "Mathématiques — Manuel scolaire (Centre National Pédagogique, Tun
 | 9 | Probabilités | à venir |
 | 10 | Statistiques | à venir |
 
+## Sommaire — Deuxième partie
+
+| Chapitre | Titre | Statut |
+|:--:|---|:--:|
+| 1 | [Angles orientés](chapitre-02-angles-orientes.qmd) | ✅ en ligne |
+| 2 | Formules trigonométriques | à venir |
+| 3 | Equations et inéquations trigonométriques | à venir |
+| 4 | Produit scalaire dans le plan | à venir |
+| 5 | Nombres complexes | à venir |
+| 6 | Vecteurs de l'espace — Repère cartésien de l'espace | à venir |
+
 ::: {.callout-note}
 ## Géométrie dynamique
-Le chapitre 1 (Généralités sur les fonctions) utilise des constructions
-**GeoGebra** interactives pour illustrer les courbes représentatives et les
-propriétés des fonctions (parité, périodicité, variations, extremums...).
+Le chapitre 1 (Généralités sur les fonctions) et le chapitre 1 de la
+deuxième partie (Angles orientés) utilisent des constructions
+**GeoGebra** interactives pour illustrer les courbes représentatives, les
+propriétés des fonctions (parité, périodicité, variations, extremums...)
+et les angles orientés (demi-droites, arcs, cercle trigonométrique...).
 :::

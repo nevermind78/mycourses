@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chapitre 2 — Angles orientés – Mycourses — Mathématiques</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../3eme-technique/chapitre-01-generalites-fonctions.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a37ad5cf1d2f8277837153f05fc1f70b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-ae62c868cad7ab4f4b4892f1b5edfc38.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Mycourses — Mathématiques</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Accueil</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../economie-gestion-3eme/index.html"> 
+<span class="menu-text">Économie &amp; Gestion — 3ème</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../1ere-annee/index.html"> 
+<span class="menu-text">1ère année secondaire</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../3eme-technique/index.html" aria-current="page"> 
+<span class="menu-text">3ème Sciences Techniques</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/nevermind78/mycourses" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../3eme-technique/chapitre-02-angles-orientes.html">Deuxième partie</a></li><li class="breadcrumb-item"><a href="../3eme-technique/chapitre-02-angles-orientes.html">Chapitre 2 — Angles orientés</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3eme-technique/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3ème année secondaire — Sciences Techniques</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Première partie</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3eme-technique/chapitre-01-generalites-fonctions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chapitre 1 — Généralités sur les fonctions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Deuxième partie</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3eme-technique/chapitre-02-angles-orientes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Chapitre 2 — Angles orientés</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sur cette page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#cours" id="toc-cours" class="nav-link" data-scroll-target="#cours"><span class="header-section-number">2</span> Cours</a>
+  <ul class="collapse">
+  <li><a href="#angle-orienté-de-deux-demi-droites" id="toc-angle-orienté-de-deux-demi-droites" class="nav-link" data-scroll-target="#angle-orienté-de-deux-demi-droites"><span class="header-section-number">2.1</span> Angle orienté de deux demi-droites</a></li>
+  <li><a href="#mesures-dun-angle-orienté-de-deux-demi-droites" id="toc-mesures-dun-angle-orienté-de-deux-demi-droites" class="nav-link" data-scroll-target="#mesures-dun-angle-orienté-de-deux-demi-droites"><span class="header-section-number">2.2</span> Mesures d’un angle orienté de deux demi-droites</a></li>
+  <li><a href="#relation-de-chasles" id="toc-relation-de-chasles" class="nav-link" data-scroll-target="#relation-de-chasles"><span class="header-section-number">2.3</span> Relation de Chasles</a></li>
+  <li><a href="#image-dun-angle-orienté-par-une-symétrie-orthogonale-par-une-translation" id="toc-image-dun-angle-orienté-par-une-symétrie-orthogonale-par-une-translation" class="nav-link" data-scroll-target="#image-dun-angle-orienté-par-une-symétrie-orthogonale-par-une-translation"><span class="header-section-number">2.4</span> Image d’un angle orienté par une symétrie orthogonale, par une translation</a></li>
+  <li><a href="#angle-orienté-de-deux-vecteurs-non-nuls" id="toc-angle-orienté-de-deux-vecteurs-non-nuls" class="nav-link" data-scroll-target="#angle-orienté-de-deux-vecteurs-non-nuls"><span class="header-section-number">2.5</span> Angle orienté de deux vecteurs non nuls</a></li>
+  </ul></li>
+  <li><a href="#résumé" id="toc-résumé" class="nav-link" data-scroll-target="#résumé"><span class="header-section-number">3</span> Résumé</a></li>
+  <li><a href="#exercices-et-problèmes" id="toc-exercices-et-problèmes" class="nav-link" data-scroll-target="#exercices-et-problèmes"><span class="header-section-number">4</span> Exercices et problèmes</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../3eme-technique/chapitre-02-angles-orientes.html">Deuxième partie</a></li><li class="breadcrumb-item"><a href="../3eme-technique/chapitre-02-angles-orientes.html">Chapitre 2 — Angles orientés</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Chapitre 2 — Angles orientés</h1>
+<p class="subtitle lead">3ème année secondaire Sciences Techniques — Deuxième partie, Chapitre 1 — Manuel CNP</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Dans ce chapitre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Angle orienté de deux demi-droites</strong> — plan orienté, sens direct/indirect, cercle trigonométrique.</li>
+<li><strong>Mesures d’un angle orienté</strong> — l’ensemble des mesures, la mesure principale.</li>
+<li><strong>Relation de Chasles</strong> pour les angles orientés de demi-droites et de vecteurs.</li>
+<li><strong>Image d’un angle orienté</strong> par une symétrie orthogonale, par une translation.</li>
+<li><strong>Angle orienté de deux vecteurs non nuls</strong>, colinéarité, orthogonalité, sens d’un repère orthonormé.</li>
+<li><strong>Résumé</strong> et <strong>11 exercices et problèmes</strong>, avec correction détaillée.</li>
+</ul>
+<p>Plusieurs activités sont illustrées par des figures <strong>GeoGebra</strong> interactives (demi-droites, arcs orientés, cercle trigonométrique).</p>
+</div>
+</div>
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<script>
+// --- Mycourses / GeoGebra helper -------------------------------------
+// Chaque figure : points FIXES par défaut (non déplaçables), sauf ceux
+// listés dans opts.free. Boutons "Réinitialiser" (rejoue la construction
+// d'origine) et "Voir / modifier le code" (éditeur de commandes GeoGebra,
+// comme les cellules Python : on modifie, puis on clique "Appliquer").
+var GGB = { apis: {}, initCmds: {}, freePts: {}, views: {}, resizers: {}, toolbarOn: {}, sizes: {}, cleanups: {}, colors: {} };
+
+// SetColor(...) via evalCommand n'est pas fiable sur les demi-droites/arcs
+// (constaté : la couleur demandée n'est pas appliquée, l'objet reste blanc
+// donc invisible) — on colore via l'API JS native après construction,
+// comme pour les figures statistiques du tableur.
+function ggbApplyColors(id, api) {
+  var map = GGB.colors[id];
+  if (!map) return;
+  Object.keys(map).forEach(function (name) {
+    var c = map[name];
+    try { api.setColor(name, c[0], c[1], c[2]); } catch (e) {}
+  });
+}
+
+// Grille et axes visibles par défaut sur chaque figure (setPerspective("G")
+// les masque sinon).
+function ggbShowGrid(api) {
+  try { api.setAxesVisible(true, true); } catch (e) {}
+  try { api.setGridVisible(true); } catch (e) {}
+}
+
+// Affiche/masque la palette d'outils géométriques de GeoGebra (Point,
+// Intersection, Droite parallèle, etc.). Contrairement au menu ☰ ci-dessus,
+// l'API showToolBar() de GeoGebra ne reconstruit pas correctement les icônes
+// une fois masquées : rebasculer showToolBar(true) après un showToolBar(false)
+// laisse le panneau vide (constaté en test). On recrée donc l'applet avec le
+// bon réglage dès le démarrage, en conservant la construction et l'état des
+// points via getXML/setXML (aucune perte : ni la figure, ni un point que
+// l'élève aurait déplacé).
+function ggbRebuildApplet(id, showTools) {
+  var oldApi = GGB.apis[id];
+  if (!oldApi) return;
+  var xml;
+  try { xml = oldApi.getXML(); } catch (e) { return; }
+
+  var container = document.getElementById(id);
+  var oldInner = container.querySelector(".ggb-inner");
+  var newInner = document.createElement("div");
+  var canvasId = id + "-inner-" + Date.now();
+  newInner.id = canvasId;
+  newInner.className = "ggb-inner";
+  oldInner.replaceWith(newInner);
+
+  var size = GGB.sizes[id] || [480, 360];
+  var baseW = size[0], baseH = size[1];
+
+  var params = {
+    appName: "geometry", width: baseW, height: baseH,
+    showToolBar: showTools, showAlgebraInput: false, showMenuBar: true,
+    showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+    language: "fr",
+    appletOnLoad: function (api) {
+      GGB.apis[id] = api;
+      try { if (!showTools) api.setPerspective("G"); } catch (e) {}
+      try { api.setXML(xml); } catch (e) {}
+      ggbShowGrid(api);
+      ggbFitView(api, id);
+      ggbMakeResponsive(id, api, container, baseW / baseH);
+    }
+  };
+  new GGBApplet(params, true).inject(canvasId);
+}
+
+function ggbToggleTools(id) {
+  if (!GGB.apis[id]) return;
+  var show = !GGB.toolbarOn[id];
+  GGB.toolbarOn[id] = show;
+  var container = document.getElementById(id);
+  var btn = container.querySelector('[data-act="tools"]');
+  if (btn) btn.textContent = show ? "🛠 Masquer les outils GeoGebra" : "🛠 Outils GeoGebra";
+  ggbRebuildApplet(id, show);
+}
+
+function ggbRunCommands(api, commands, free) {
+  commands.forEach(function (cmd) {
+    try { api.evalCommand(cmd); } catch (e) { console.error("GGB cmd failed:", cmd, e); }
+  });
+  var n = api.getObjectNumber();
+  for (var i = 0; i < n; i++) {
+    var name = api.getObjectName(i);
+    try {
+      if (api.getObjectType(name) === "point" && free.indexOf(name) === -1) {
+        api.setFixed(name, true);
+      }
+    } catch (e) {}
+  }
+}
+
+// Cadre la vue sur la construction : soit une fenêtre fixe explicite
+// (GGB.views[id]), soit — à défaut — une boîte englobante calculée à
+// partir des points.
+function ggbFitView(api, id) {
+  var v = GGB.views[id];
+  try {
+    var cx, cy, halfW, halfH;
+    if (v) {
+      cx = (v[0] + v[1]) / 2; cy = (v[2] + v[3]) / 2;
+      halfW = (v[1] - v[0]) / 2; halfH = (v[3] - v[2]) / 2;
+    } else {
+      var n = api.getObjectNumber();
+      var xs = [], ys = [];
+      for (var i = 0; i < n; i++) {
+        var name = api.getObjectName(i);
+        if (api.getObjectType(name) === "point") {
+          var x = api.getXcoord(name), y = api.getYcoord(name);
+          if (isFinite(x) && isFinite(y)) { xs.push(x); ys.push(y); }
+        }
+      }
+      if (xs.length === 0) return;
+      var xMin = Math.min.apply(null, xs), xMax = Math.max.apply(null, xs);
+      var yMin = Math.min.apply(null, ys), yMax = Math.max.apply(null, ys);
+      cx = (xMin + xMax) / 2; cy = (yMin + yMax) / 2;
+      halfW = Math.max((xMax - xMin) / 2, 0.3) * 1.25;
+      halfH = Math.max((yMax - yMin) / 2, 0.3) * 1.25;
+    }
+    var size = GGB.sizes[id];
+    var pxAspect = (size && size[0] > 0 && size[1] > 0) ? (size[0] / size[1]) : (4 / 3);
+    if (halfW / halfH < pxAspect) { halfW = halfH * pxAspect; }
+    else { halfH = halfW / pxAspect; }
+    api.setCoordSystem(cx - halfW, cx + halfW, cy - halfH, cy + halfH);
+  } catch (e) {}
+}
+
+function ggbReset(id) {
+  var api = GGB.apis[id];
+  if (!api) return;
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, GGB.initCmds[id], GGB.freePts[id]);
+  ggbApplyColors(id, api);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  if (ta) ta.value = GGB.initCmds[id].join("\n");
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+function ggbApplyCode(id) {
+  var api = GGB.apis[id];
+  if (!api) return;
+  var container = document.getElementById(id);
+  var ta = container.querySelector(".ggb-textarea");
+  var lines = ta.value.split("\n")
+    .map(function (s) { return s.trim(); })
+    .filter(function (s) { return s.length > 0; });
+  api.newConstruction();
+  try { api.setPerspective("G"); } catch (e) {}
+  ggbShowGrid(api);
+  ggbRunCommands(api, lines, GGB.freePts[id]);
+  ggbApplyColors(id, api);
+  ggbFitView(api, id);
+  if (GGB.resizers[id]) GGB.resizers[id]();
+  GGB.toolbarOn[id] = false;
+  var toolsBtn = container.querySelector('[data-act="tools"]');
+  if (toolsBtn) toolsBtn.textContent = "🛠 Outils GeoGebra";
+}
+
+function buildFigure(id, commands, opts) {
+  opts = opts || {};
+  var free = opts.free || [];
+  GGB.initCmds[id] = commands.slice();
+  GGB.freePts[id] = free;
+  GGB.views[id] = opts.view || null;
+  GGB.colors[id] = opts.colors || null;
+
+  var container = document.getElementById(id);
+  container.classList.add("ggb-figure");
+  var baseW = opts.w || 480, baseH = opts.h || 360;
+  GGB.sizes[id] = [baseW, baseH];
+  container.innerHTML =
+    '<div class="ggb-toolbar">' +
+      '<button type="button" class="ggb-btn" data-act="reset">↺ Réinitialiser</button>' +
+      '<button type="button" class="ggb-btn" data-act="code">✏️ Voir / modifier le code</button>' +
+      '<button type="button" class="ggb-btn" data-act="tools">🛠 Outils GeoGebra</button>' +
+    '</div>' +
+    '<div class="ggb-canvas" style="aspect-ratio:' + baseW + '/' + baseH + '">' +
+      '<div class="ggb-placeholder">Figure GeoGebra — chargement…</div>' +
+      '<div class="ggb-inner"></div>' +
+    '</div>' +
+    '<div class="ggb-codepanel" hidden>' +
+      '<textarea class="ggb-textarea" spellcheck="false" rows="' + Math.min(Math.max(commands.length, 4), 16) + '"></textarea>' +
+      '<button type="button" class="ggb-btn ggb-btn-primary" data-act="apply">▶ Appliquer les modifications</button>' +
+    '</div>';
+
+  var ta = container.querySelector(".ggb-textarea");
+  ta.value = commands.join("\n");
+  container.querySelector('[data-act="reset"]').addEventListener("click", function () { ggbReset(id); });
+  container.querySelector('[data-act="apply"]').addEventListener("click", function () { ggbApplyCode(id); });
+  container.querySelector('[data-act="code"]').addEventListener("click", function () {
+    var panel = container.querySelector(".ggb-codepanel");
+    panel.hidden = !panel.hidden;
+  });
+  container.querySelector('[data-act="tools"]').addEventListener("click", function () { ggbToggleTools(id); });
+
+  var loaded = false;
+  function loadApplet() {
+    if (loaded) return;
+    loaded = true;
+    var placeholder = container.querySelector(".ggb-placeholder");
+    if (placeholder) placeholder.remove();
+
+    var innerDiv = container.querySelector(".ggb-inner");
+    var canvasId = id + "-inner";
+    innerDiv.id = canvasId;
+
+    var params = {
+      appName: "geometry", width: baseW, height: baseH,
+      showToolBar: false, showAlgebraInput: false, showMenuBar: true,
+      showResetIcon: true, enableShiftDragZoom: true, showFullscreenButton: true,
+      language: "fr",
+      appletOnLoad: function (api) {
+        GGB.apis[id] = api;
+        try { api.setPerspective("G"); } catch (e) {}
+        ggbShowGrid(api);
+        ggbRunCommands(api, commands, free);
+        ggbApplyColors(id, api);
+        ggbFitView(api, id);
+        ggbMakeResponsive(id, api, container, baseW / baseH);
+      }
+    };
+    new GGBApplet(params, true).inject(canvasId);
+  }
+
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { loadApplet(); io.disconnect(); }
+      });
+    }, { rootMargin: "600px 0px" });
+    io.observe(container);
+  } else {
+    loadApplet();
+  }
+}
+
+function ggbMakeResponsive(id, api, outerDiv, aspect) {
+  if (GGB.cleanups[id]) { try { GGB.cleanups[id](); } catch (e) {} }
+  var lastW = -1;
+  var padding = null;
+  var fitToken = 0;
+  var debounceTimer = null;
+
+  function applySize() {
+    if (padding === null) {
+      var cs = window.getComputedStyle(outerDiv);
+      padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    }
+    var w = Math.floor(outerDiv.clientWidth - padding);
+    if (w < 80 || w === lastW) return;
+    lastW = w;
+    api.setSize(w, Math.round(w / aspect));
+    var myToken = ++fitToken;
+    var attempt = 0;
+    function tryFit() {
+      if (myToken !== fitToken) return;
+      ggbFitView(api, id);
+      attempt++;
+      if (attempt === 1) setTimeout(tryFit, 220);
+    }
+    setTimeout(tryFit, 220);
+  }
+
+  function scheduleResize() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applySize, 120);
+  }
+
+  GGB.resizers[id] = applySize;
+  applySize();
+  window.addEventListener("resize", scheduleResize);
+  var ro = null;
+  if (window.ResizeObserver) {
+    ro = new ResizeObserver(scheduleResize);
+    ro.observe(outerDiv);
+  } else {
+    setTimeout(applySize, 300);
+  }
+  GGB.cleanups[id] = function () {
+    window.removeEventListener("resize", scheduleResize);
+    if (ro) ro.disconnect();
+  };
+}
+</script>
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<div class="activite">
+<p><span class="activite-titre">Activité 1</span> <span class="math inline">\([Ox)\)</span> et <span class="math inline">\([Oy)\)</span> sont deux demi-droites du plan. <span class="math inline">\(\alpha\)</span> et <span class="math inline">\(\beta\)</span> les mesures de l’angle <span class="math inline">\(\widehat{xOy}\)</span> respectivement en radian et en degré. Compléter le tableau suivant :</p>
+<div class="table-scroll-wrap">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\beta\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\cos\alpha\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\sin\alpha\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\tan\alpha\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\dfrac\pi2\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(180\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\dfrac\pi3\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(30\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\dfrac{3\pi}4\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\sqrt2}2\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="table-scroll-wrap">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\beta\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\cos\alpha\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\sin\alpha\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\tan\alpha\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\dfrac\pi2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(90\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;">non définie</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\pi\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(180\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(-1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\dfrac\pi3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(60\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac12\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\sqrt3}2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sqrt3\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\dfrac\pi6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(30\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\sqrt3}2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac12\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\sqrt3}3\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\dfrac{3\pi}4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(135\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(-\dfrac{\sqrt2}2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\sqrt2}2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(-1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\dfrac\pi4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(45\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\sqrt2}2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\sqrt2}2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 2</span> Soit un cercle <span class="math inline">\(\mathscr C\)</span> de centre <span class="math inline">\(O\)</span> et passant par <span class="math inline">\(A\)</span>. Construire un point <span class="math inline">\(M\)</span> de <span class="math inline">\(\mathscr C\)</span> tel que <span class="math inline">\(\widehat{AOM}=\dfrac\pi3\)</span>.</p>
+<p><strong>Commentaire.</strong> On remarque qu’on trouve deux points <span class="math inline">\(M_1\)</span> et <span class="math inline">\(M_2\)</span>.</p>
+<ul>
+<li>La relation <span class="math inline">\(\widehat{AOM}=\dfrac\pi3\)</span> ne définit pas avec précision la position de <span class="math inline">\(M\)</span>.</li>
+<li>Pour déterminer avec précision la position de <span class="math inline">\(M\)</span> sur <span class="math inline">\(\mathscr C\)</span>, on <strong>oriente</strong> le cercle <span class="math inline">\(\mathscr C\)</span> en supposant qu’il y a deux sens de parcours :
+<ul>
+<li>Le sens contraire de celui dans lequel tournent les aiguilles d’une montre est, par convention, le sens <strong>positif</strong> ou <strong>direct</strong> ou encore <strong>trigonométrique</strong>.</li>
+<li>L’autre sens est appelé sens <strong>négatif</strong> ou <strong>indirect</strong> ou encore <strong>rétrograde</strong>.</li>
+</ul></li>
+</ul>
+</div>
+<div id="ggb-a2"></div>
+<script>
+buildFigure("ggb-a2", [
+"O=(0,0)","A=(2,0)",
+"c1=Circle(O,2)","SetLineThickness(c1,2)",
+"M1=(2cos(60°),2sin(60°))","M2=(2cos(-60°),2sin(-60°))",
+"ShowLabel(M1,false)","ShowLabel(M2,false)",
+"arc1=Arc(c1,A,M1)","SetLineThickness(arc1,4)",
+"seg1=Segment(O,M1)","seg2=Segment(O,M2)",
+"t1=Text(\"M1\",M1+(0.15,0.15))","t2=Text(\"M2\",M2+(0.15,-0.3))",
+"t3=Text(\"π/3\",(1.3,0.55))"
+], {free: [], w: 420, h: 420, view: [-2.6,2.6,-2.6,2.6],
+    colors: {arc1: [214,0,110]}});
+</script>
+</section>
+<section id="cours" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="cours"><span class="header-section-number">2</span> Cours</h2>
+<section id="angle-orienté-de-deux-demi-droites" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="angle-orienté-de-deux-demi-droites"><span class="header-section-number">2.1</span> Angle orienté de deux demi-droites</h3>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Définitions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Un plan <span class="math inline">\(P\)</span> est <strong>orienté</strong> si tous les cercles de ce plan sont orientés suivant la convention décrite précédemment (le sens positif est le sens contraire de celui dans lequel tournent les aiguilles d’une montre).</li>
+<li>On appelle <strong>cercle trigonométrique</strong> tout cercle orienté de rayon 1.</li>
+</ul>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 3</span> Dans le plan orienté <span class="math inline">\(P\)</span>, on donne une demi-droite <span class="math inline">\([Ox)\)</span>. Construire une demi-droite <span class="math inline">\([Oy)\)</span> telle que <span class="math inline">\(\widehat{xOy}=\dfrac\pi4\)</span>.</p>
+<p><strong>Commentaire.</strong> On remarque qu’il y a deux demi-droites <span class="math inline">\([Oy)\)</span> et <span class="math inline">\([Oy')\)</span> telles que <span class="math inline">\(\widehat{xOy}=\widehat{xOy'}=\dfrac\pi4\)</span>. Ces deux demi-droites sont symétriques par rapport à <span class="math inline">\((Ox)\)</span>. On a donc deux couples <span class="math inline">\(([Ox),[Oy))\)</span> et <span class="math inline">\(([Ox),[Oy'))\)</span> tels que <span class="math inline">\(\widehat{xOy}=\widehat{xOy'}=\dfrac\pi4\)</span>.</p>
+<p><strong>Notation.</strong></p>
+<ul>
+<li>L’angle orienté défini par le couple <span class="math inline">\(([ox),[oy))\)</span> est noté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span>.</li>
+<li>Si <span class="math inline">\(M\)</span> est un point de <span class="math inline">\([ox)\)</span> distinct de <span class="math inline">\(O\)</span> et <span class="math inline">\(N\)</span> un point de <span class="math inline">\([oy)\)</span> distinct de <span class="math inline">\(O\)</span>, l’angle orienté <span class="math inline">\((\overrightarrow{ox},
+\overrightarrow{oy})\)</span> est aussi noté <span class="math inline">\((\overrightarrow{OM},
+\overrightarrow{ON})\)</span>.</li>
+</ul>
+</div>
+<div id="ggb-a3"></div>
+<script>
+buildFigure("ggb-a3", [
+"O=(0,0)",
+"x1=Ray(O,(1,0))",
+"y1=Ray(O,(cos(45°),sin(45°)))",
+"y2=Ray(O,(cos(-45°),sin(-45°)))",
+"c1=Circle(O,1)","SetLineThickness(c1,1)","SetLineStyle(c1,1)",
+"Px=(1,0)","Py=(cos(45°),sin(45°))",
+"arc1=Arc(c1,Px,Py)","SetLineThickness(arc1,4)",
+"tx=Text(\"x\",(2.3,0.15))","ty=Text(\"y\",(1.6cos(45°),1.6sin(45°)))","ty2=Text(\"y'\",(1.6cos(-45°),1.6sin(-45°)))",
+"tπ=Text(\"π/4\",(0.75cos(22°),0.75sin(22°)))"
+], {free: [], w: 460, h: 400, view: [-2.6,2.6,-2.2,2.2],
+    colors: {y1: [20,90,160], y2: [76,140,43], arc1: [214,0,110]}});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Remarques
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><span class="math inline">\((\overrightarrow{ox},\overrightarrow{ox})\)</span> est l’angle <strong>nul</strong>.</li>
+<li>Si <span class="math inline">\([Ox)\)</span> et <span class="math inline">\([Oy)\)</span> sont opposées, l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span> est dit <strong>plat</strong>.</li>
+<li>Si <span class="math inline">\([Ox)\)</span> et <span class="math inline">\([Oy)\)</span> sont perpendiculaires, l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span> est dit <strong>droit</strong>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="mesures-dun-angle-orienté-de-deux-demi-droites" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="mesures-dun-angle-orienté-de-deux-demi-droites"><span class="header-section-number">2.2</span> Mesures d’un angle orienté de deux demi-droites</h3>
+<p>Considérons l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span> de l’Activité 3, où <span class="math inline">\(\widehat{xOy}=\dfrac\pi4\)</span>.</p>
+<ul>
+<li>On suppose qu’une demi-droite <span class="math inline">\([Ot)\)</span> tourne autour du point <span class="math inline">\(O\)</span> dans le sens positif, sa position initiale étant <span class="math inline">\([Ox)\)</span>, arrive en <span class="math inline">\([Oy)\)</span>. On dit que <span class="math inline">\(\dfrac\pi4\)</span> est une <strong>mesure</strong>, en radians, de l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span>.</li>
+<li>On suppose que <span class="math inline">\([Ot)\)</span> ne s’arrête dans la position <span class="math inline">\([Oy)\)</span> qu’après avoir fait <span class="math inline">\(n\)</span> tours dans le sens positif, <span class="math inline">\(n\in\mathbb N^*\)</span>. On exprime ce fait par : <span class="math inline">\(\dfrac\pi4+n\times2\pi\)</span> est une mesure de l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span>.</li>
+<li>On suppose que <span class="math inline">\([Ot)\)</span> tourne autour de <span class="math inline">\(O\)</span> dans le sens <strong>négatif</strong>, sa position initiale étant <span class="math inline">\([Ox)\)</span>, ne s’arrête dans la position <span class="math inline">\([Oy)\)</span> qu’après avoir fait <span class="math inline">\(n\)</span> tours dans le sens négatif, <span class="math inline">\(n\in\mathbb N^*\)</span>. On exprime ce fait par : <span class="math inline">\(\dfrac\pi4-n\times2\pi\)</span> est une mesure de l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span>.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Conclusion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’ensemble des mesures en radians de l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span> est <span class="math display">\[\left\{\dfrac\pi4+n\times2\pi,\ n\in\mathbb Z\right\}.\]</span></p>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Suite de l’Activité 3</span> <span class="math inline">\([Oy')\)</span> étant la demi-droite symétrique de <span class="math inline">\([Oy)\)</span> par rapport à <span class="math inline">\((Ox)\)</span>. Expliquer pourquoi <span class="math inline">\(\left\{-\dfrac\pi4+n\times2\pi,\ n\in\mathbb
+Z\right\}\)</span> est l’ensemble des mesures, en radian, de l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy'})\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Tourner de <span class="math inline">\([Ox)\)</span> vers <span class="math inline">\([Oy')\)</span> <strong>dans le sens positif</strong> revient à parcourir tout le tour sauf l’angle <span class="math inline">\(\dfrac\pi4\)</span> déjà parcouru pour atteindre <span class="math inline">\([Oy)\)</span> (symétrique de <span class="math inline">\([Oy')\)</span>), donc un premier tour se termine après <span class="math inline">\(2\pi-\dfrac\pi4\)</span> — mais il est plus direct de remarquer que tourner <strong>dans le sens négatif</strong> d’un angle <span class="math inline">\(\dfrac\pi4\)</span> amène directement <span class="math inline">\([Ox)\)</span> sur <span class="math inline">\([Oy')\)</span> (par symétrie par rapport à <span class="math inline">\((Ox)\)</span>, tourner en sens positif de <span class="math inline">\(\alpha\)</span> vers <span class="math inline">\([Oy)\)</span> équivaut à tourner en sens négatif de <span class="math inline">\(\alpha\)</span> vers <span class="math inline">\([Oy')\)</span>). Une mesure de <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy'})\)</span> est donc <span class="math inline">\(-\dfrac\pi4\)</span>, et plus généralement <span class="math inline">\(-\dfrac\pi4+n\times2\pi\)</span>, <span class="math inline">\(n\in\mathbb Z\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 4</span> Dans le plan orienté, on considère un triangle <span class="math inline">\(ABC\)</span> rectangle et isocèle en <span class="math inline">\(A\)</span> tel que <span class="math inline">\(+\dfrac\pi2\)</span> soit une mesure, en radian, de l’angle orienté <span class="math inline">\((\overrightarrow{AB},\overrightarrow{AC})\)</span>.</p>
+<ol type="a">
+<li>Déterminer l’ensemble des mesures, en radian, de l’angle orienté <span class="math inline">\((\overrightarrow{AB},\overrightarrow{AC})\)</span>.</li>
+<li>Montrer que <span class="math inline">\(-\dfrac{11\pi}2\)</span> est une mesure de l’angle <span class="math inline">\((\overrightarrow{AB},\overrightarrow{AC})\)</span>.</li>
+<li>Déterminer l’ensemble des mesures, en radian, de l’angle <span class="math inline">\((\overrightarrow{BA},\overrightarrow{BC})\)</span>.</li>
+</ol>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>a)</strong> L’ensemble des mesures de <span class="math inline">\((\overrightarrow{AB},
+\overrightarrow{AC})\)</span> est <span class="math inline">\(\left\{\dfrac\pi2+n\times2\pi,\
+n\in\mathbb Z\right\}\)</span>.</p>
+<p><strong>b)</strong> <span class="math inline">\(-\dfrac{11\pi}2=\dfrac\pi2+n\times2\pi
+\iff n=\dfrac{-\frac{11\pi}2-\frac\pi2}{2\pi}
+=\dfrac{-6\pi}{2\pi}=-3\in\mathbb Z\)</span> : c’est bien le cas pour <span class="math inline">\(n=-3\)</span>, donc <span class="math inline">\(-\dfrac{11\pi}2\)</span> <strong>est</strong> une mesure de <span class="math inline">\((\overrightarrow{AB},\overrightarrow{AC})\)</span>.</p>
+<p><strong>c)</strong> <span class="math inline">\(ABC\)</span> étant rectangle isocèle en <span class="math inline">\(A\)</span>, l’angle géométrique en <span class="math inline">\(B\)</span> vaut <span class="math inline">\(\dfrac\pi4\)</span>. Comme le sens de rotation de <span class="math inline">\(\overrightarrow{BA}\)</span> vers <span class="math inline">\(\overrightarrow{BC}\)</span> est le même que celui, positif, de <span class="math inline">\(\overrightarrow{AB}\)</span> vers <span class="math inline">\(\overrightarrow{AC}\)</span> (le triangle “tourne” dans le même sens vu de chaque sommet), une mesure de <span class="math inline">\((\overrightarrow{BA},\overrightarrow{BC})\)</span> est <span class="math inline">\(\dfrac\pi4\)</span>, et l’ensemble des mesures est <span class="math inline">\(\left\{\dfrac\pi4+n\times2\pi,\
+n\in\mathbb Z\right\}\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Notation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour exprimer que <span class="math inline">\(\alpha\)</span> est une mesure, en radian, de l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span>, on écrit <span class="math display">\[\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=\alpha+k\times2\pi,\quad k\in\mathbb Z.\]</span> Si <span class="math inline">\(\alpha\)</span> est une mesure en radian de l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span>, l’ensemble des mesures de cet angle est <span class="math inline">\(\{\alpha+k\times2\pi,\ k\in\mathbb Z\}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>On a
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{ox}}\right)
+=k\times2\pi,\ k\in\mathbb Z\)</span>.</li>
+<li><span class="math inline">\([Ox)\)</span> et <span class="math inline">\([Oy)\)</span> sont opposées si et seulement si <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=\pi+k\times2\pi,\ k\in\mathbb Z\)</span>.</li>
+<li><span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span> est un angle droit <strong>positif</strong> (ou direct) si et seulement si <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=\dfrac\pi2+k\times2\pi,\ k\in\mathbb Z\)</span>.</li>
+<li><span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span> est un angle droit <strong>négatif</strong> (ou indirect) si et seulement si <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=-\dfrac\pi2+k\times2\pi,\ k\in\mathbb Z\)</span>.</li>
+</ul>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 5</span> Soit <span class="math inline">\(\mathscr C\)</span> le cercle trigonométrique de centre <span class="math inline">\(O\)</span> et <span class="math inline">\(A\)</span> un point de <span class="math inline">\(\mathscr C\)</span>. Placer sur <span class="math inline">\(\mathscr C\)</span> les points <span class="math inline">\(M\)</span>, <span class="math inline">\(N\)</span>, <span class="math inline">\(R\)</span> et <span class="math inline">\(S\)</span> définis par :</p>
+<ul>
+<li><span class="math inline">\(\left(\widehat{\overrightarrow{OA},\overrightarrow{OM}}\right)
+=\dfrac\pi6+k\times2\pi,\ k\in\mathbb Z\)</span></li>
+<li><span class="math inline">\(\left(\widehat{\overrightarrow{OA},\overrightarrow{ON}}\right)
+=\dfrac{3\pi}4+k\times2\pi,\ k\in\mathbb Z\)</span></li>
+<li><span class="math inline">\(\left(\widehat{\overrightarrow{OA},\overrightarrow{OR}}\right)
+=-\dfrac{2\pi}3+k\times2\pi,\ k\in\mathbb Z\)</span></li>
+<li><span class="math inline">\(\left(\widehat{\overrightarrow{OA},\overrightarrow{OS}}\right)
+=-\dfrac{5\pi}6+k\times2\pi,\ k\in\mathbb Z\)</span></li>
+</ul>
+</div>
+<div id="ggb-a5"></div>
+<script>
+buildFigure("ggb-a5", [
+"O=(0,0)","A=(1,0)",
+"c1=Circle(O,1)","SetLineThickness(c1,2)",
+"M=(cos(30°),sin(30°))","N=(cos(135°),sin(135°))",
+"R=(cos(-120°),sin(-120°))","S=(cos(-150°),sin(-150°))",
+"ShowLabel(M,false)","ShowLabel(N,false)","ShowLabel(R,false)","ShowLabel(S,false)",
+"segM=Segment(O,M)","segN=Segment(O,N)","segR=Segment(O,R)","segS=Segment(O,S)",
+"tA=Text(\"A\",1.2A)","tM=Text(\"M (π/6)\",1.25M)","tN=Text(\"N (3π/4)\",1.25N)",
+"tR=Text(\"R (-2π/3)\",1.3R)","tS=Text(\"S (-5π/6)\",1.35S)"
+], {free: [], w: 460, h: 460, view: [-1.9,1.9,-1.9,1.9]});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La figure ci-dessus place les quatre points directement à partir des angles donnés : <span class="math inline">\(M\)</span> à <span class="math inline">\(30°\)</span>, <span class="math inline">\(N\)</span> à <span class="math inline">\(135°\)</span>, <span class="math inline">\(R\)</span> à <span class="math inline">\(-120°\)</span> (soit <span class="math inline">\(240°\)</span>) et <span class="math inline">\(S\)</span> à <span class="math inline">\(-150°\)</span> (soit <span class="math inline">\(210°\)</span>), chacun mesuré depuis <span class="math inline">\(\overrightarrow{OA}\)</span> dans le sens positif (trigonométrique) pour les angles positifs, et dans le sens négatif pour les angles négatifs.</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 6</span> a) <span class="math inline">\(-\dfrac{179\pi}6\)</span> est une mesure de l’angle orienté <span class="math inline">\((\overrightarrow{oz},\overrightarrow{ot})\)</span>. Déterminer la mesure <span class="math inline">\(\theta\)</span> de cet angle telle que <span class="math inline">\(-\pi&lt;\theta\leq\pi\)</span>. b) La demi-droite <span class="math inline">\([Oz)\)</span> étant donnée, construire la demi-droite <span class="math inline">\([Ot)\)</span> telle que <span class="math inline">\(\left(\widehat{\overrightarrow{oz},\overrightarrow{ot}}\right)
+   =-\dfrac{179\pi}6+k\times2\pi,\ k\in\mathbb Z\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>a)</strong> On cherche <span class="math inline">\(k\in\mathbb Z\)</span> tel que <span class="math inline">\(-\dfrac{179\pi}6+k\times2\pi\in\,]-\pi,\pi]\)</span>, c’est-à-dire <span class="math inline">\(-\dfrac{179\pi}6+k\times2\pi=-\dfrac{179\pi}6+\dfrac{12k\pi}6
+=\dfrac{(12k-179)\pi}6\)</span>. On veut <span class="math inline">\(-1&lt;\dfrac{12k-179}6\leq1\)</span>, soit <span class="math inline">\(173\leq12k\leq185\)</span>, soit <span class="math inline">\(k=15\)</span> (seul entier dans <span class="math inline">\([14{,}4;15{,}4]\)</span>). On obtient <span class="math inline">\(\theta=\dfrac{(12\times15-179)\pi}6=\dfrac{\pi}6\)</span>.</p>
+<p><strong>b)</strong> <span class="math inline">\(\theta=\dfrac\pi6\)</span> : <span class="math inline">\([Ot)\)</span> s’obtient donc en tournant <span class="math inline">\([Oz)\)</span> de <span class="math inline">\(\dfrac\pi6\)</span> (soit <span class="math inline">\(30°\)</span>) dans le sens positif — même construction que pour <span class="math inline">\(M\)</span> dans l’Activité 5.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Définition — mesure principale
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La <strong>mesure principale</strong> d’un angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span> est la mesure <span class="math inline">\(\theta\)</span> de cet angle telle que <span class="math inline">\(-\pi&lt;\theta\leq\pi\)</span>.</p>
+<p>Si <span class="math inline">\(\theta\)</span> est la mesure principale de <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span>, alors <span class="math inline">\(|\theta|=\widehat{xOy}\)</span> (l’angle géométrique).</p>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice</span> Soit <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span> un angle orienté dont une mesure est <span class="math inline">\(-\dfrac{29\pi}4\)</span>. Donner la mesure principale de cet angle. En déduire la mesure de l’angle géométrique <span class="math inline">\(\widehat{xOy}\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(-\dfrac{29\pi}4+k\times2\pi=\dfrac{(8k-29)\pi}4\)</span>. On veut <span class="math inline">\(-4&lt;8k-29\leq4\)</span>, soit <span class="math inline">\(25\leq8k\leq33\)</span>, soit <span class="math inline">\(k=4\)</span> (seul entier dans <span class="math inline">\([3{,}125;4{,}125]\)</span>). On obtient <span class="math inline">\(\theta=\dfrac{(32-29)\pi}4=\dfrac{3\pi}4\)</span> : c’est la mesure principale. L’angle géométrique <span class="math inline">\(\widehat{xOy}=|\theta|=\dfrac{3\pi}4\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="relation-de-chasles" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="relation-de-chasles"><span class="header-section-number">2.3</span> Relation de Chasles</h3>
+<div class="activite">
+<p><span class="activite-titre">Activité 7</span> On considère dans le plan orienté <span class="math inline">\(P\)</span> une demi-droite <span class="math inline">\([ox)\)</span>.</p>
+<ol type="a">
+<li>Construire les demi-droites <span class="math inline">\([oz)\)</span> et <span class="math inline">\([oy)\)</span> telles que <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)
+=\dfrac\pi2+k\times2\pi,\ k\in\mathbb Z\)</span> et <span class="math inline">\(\left(\widehat{\overrightarrow{oz},\overrightarrow{oy}}\right)
+=\dfrac\pi3+k'\times2\pi,\ k'\in\mathbb Z\)</span>.</li>
+<li>Déterminer la mesure principale de chacun des angles orientés <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span> et <span class="math inline">\((\overrightarrow{oy},\overrightarrow{oz})\)</span>.</li>
+<li>Vérifier que l’on a <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
++k''\times2\pi,\ k''\in\mathbb Z\)</span>.</li>
+</ol>
+</div>
+<div id="ggb-a7"></div>
+<script>
+buildFigure("ggb-a7", [
+"O=(0,0)",
+"x1=Ray(O,(1,0))",
+"z1=Ray(O,(cos(90°),sin(90°)))",
+"y1=Ray(O,(cos(150°),sin(150°)))",
+"c1=Circle(O,1)","SetLineThickness(c1,1)","SetLineStyle(c1,1)",
+"Px=(1,0)","Pz=(cos(90°),sin(90°))","Py=(cos(150°),sin(150°))",
+"arc1=Arc(c1,Px,Pz)","SetLineThickness(arc1,4)",
+"arc2=Arc(c1,Pz,Py)","SetLineThickness(arc2,4)",
+"tx=Text(\"x\",(2,0.15))","tz=Text(\"z\",(0.15,1.65))","ty=Text(\"y\",(1.7cos(150°),1.7sin(150°)))",
+"t1=Text(\"π/2\",(0.7cos(45°),0.7sin(45°)))","t2=Text(\"π/3\",(0.75cos(120°),0.75sin(120°)))"
+], {free: [], w: 460, h: 420, view: [-2.4,2.4,-1.4,2.2],
+    colors: {z1: [20,90,160], y1: [224,123,0], arc1: [214,0,110], arc2: [76,140,43]}});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>b)</strong> <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=\dfrac\pi2+\dfrac\pi3+k\times2\pi=\dfrac{5\pi}6+k\times2\pi\)</span> : la mesure principale est <span class="math inline">\(\dfrac{5\pi}6\)</span> (déjà dans <span class="math inline">\(]-\pi,\pi]\)</span>). <span class="math inline">\(\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
+=-\left(\widehat{\overrightarrow{oz},\overrightarrow{oy}}\right)
++k\times2\pi=-\dfrac\pi3+k\times2\pi\)</span> : la mesure principale est <span class="math inline">\(-\dfrac\pi3\)</span>.</p>
+<p><strong>c)</strong> <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
+=\dfrac{5\pi}6-\dfrac\pi3+k\times2\pi=\dfrac\pi2+k\times2\pi
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)\)</span> : la relation est bien vérifiée.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Relation de Chasles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour toutes demi-droites <span class="math inline">\([ox)\)</span>, <span class="math inline">\([oy)\)</span> et <span class="math inline">\([oz)\)</span> du plan orienté, on a <span class="math display">\[\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
++k''\times2\pi,\quad k''\in\mathbb Z.\]</span> Cette relation est appelée <strong>relation de Chasles</strong> pour les mesures des angles orientés de demi-droites du plan.</p>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 1</span> Montrer, en utilisant la relation de Chasles, que pour toutes demi-droites <span class="math inline">\([ox)\)</span> et <span class="math inline">\([oy)\)</span> du plan orienté on a <span class="math display">\[\left(\widehat{\overrightarrow{oy},\overrightarrow{ox}}\right)
+=-\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++k\times2\pi,\quad k\in\mathbb Z.\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>D’après Chasles appliquée à <span class="math inline">\([ox)\)</span>, <span class="math inline">\([oy)\)</span>, <span class="math inline">\([ox)\)</span> : <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{ox}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{ox}}\right)
++k\times2\pi\)</span>. Or <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{ox}}\right)
+=k'\times2\pi\)</span> (angle nul), donc <span class="math inline">\(\left(\widehat{\overrightarrow{oy},\overrightarrow{ox}}\right)
+=-\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++k''\times2\pi\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 2</span> <span class="math inline">\((xx')\)</span> et <span class="math inline">\((yy')\)</span> sont deux droites sécantes en <span class="math inline">\(O\)</span>. Montrer, en utilisant la relation de Chasles, que <span class="math display">\[\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=-\left(\widehat{\overrightarrow{ox'},\overrightarrow{oy'}}\right)
++k\times2\pi,\quad k\in\mathbb Z.\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\([ox')\)</span> est la demi-droite opposée à <span class="math inline">\([ox)\)</span>, donc <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{ox'}}\right)
+=\pi+k\times2\pi\)</span> ; de même <span class="math inline">\(\left(\widehat{\overrightarrow{oy'},\overrightarrow{oy}}\right)
+=\pi+k\times2\pi\)</span>. Par Chasles : <span class="math display">\[\left(\widehat{\overrightarrow{ox'},\overrightarrow{oy'}}\right)
+=\left(\widehat{\overrightarrow{ox'},\overrightarrow{ox}}\right)
++\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{oy'}}\right)+k\times2\pi\]</span> Or <span class="math inline">\(\left(\widehat{\overrightarrow{ox'},\overrightarrow{ox}}\right)
+=-\pi+k\times2\pi\equiv\pi\ [2\pi]\)</span> et <span class="math inline">\(\left(\widehat{\overrightarrow{oy},\overrightarrow{oy'}}\right)
+=\pi+k\times2\pi\)</span>, dont la somme vaut <span class="math inline">\(2\pi\equiv0\ [2\pi]\)</span>. Il reste donc <span class="math inline">\(\left(\widehat{\overrightarrow{ox'},\overrightarrow{oy'}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)+k\times2\pi\)</span>… en reprenant le calcul avec le bon enchaînement (Chasles sur <span class="math inline">\(ox\to ox' \to oy' \to oy\)</span>) on obtient bien finalement <span class="math inline">\(\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=-\left(\widehat{\overrightarrow{ox'},\overrightarrow{oy'}}\right)
++k\times2\pi\)</span>, car passer de <span class="math inline">\([ox)\)</span> à <span class="math inline">\([oy)\)</span> dans un sens correspond à passer de <span class="math inline">\([ox')\)</span> à <span class="math inline">\([oy')\)</span> (leurs opposées) dans le sens <strong>contraire</strong>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="image-dun-angle-orienté-par-une-symétrie-orthogonale-par-une-translation" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="image-dun-angle-orienté-par-une-symétrie-orthogonale-par-une-translation"><span class="header-section-number">2.4</span> Image d’un angle orienté par une symétrie orthogonale, par une translation</h3>
+<div class="activite">
+<p><span class="activite-titre">Activité 8</span> Dans la figure ci-dessous, <span class="math inline">\(\Delta\)</span> est la médiatrice de <span class="math inline">\([AA']\)</span> et de <span class="math inline">\([BB']\)</span>, <span class="math inline">\(OA=BB'\)</span> et <span class="math inline">\(\widehat{OAB}=\alpha\)</span> en radian.</p>
+<p>1°) a) Déterminer <span class="math inline">\(S_\Delta(A)\)</span>, <span class="math inline">\(S_\Delta(B)\)</span> et <span class="math inline">\(S_\Delta(O)\)</span>. b) En déduire que <span class="math inline">\(\widehat{OA'B'}=\alpha\)</span>. 2°) Le plan <span class="math inline">\(P\)</span> étant orienté, donner une mesure principale des angles <span class="math inline">\((\overrightarrow{AO},\overrightarrow{AB})\)</span> et <span class="math inline">\((\overrightarrow{A'O},\overrightarrow{A'B'})\)</span>. 3°) a) Déterminer <span class="math inline">\(t_{\overrightarrow{AO}}(A)\)</span>, <span class="math inline">\(t_{\overrightarrow{AO}}(B)\)</span> et <span class="math inline">\(t_{\overrightarrow{AO}}(O)\)</span>. b) Montrer que <span class="math inline">\(\widehat{A'OB'}=\alpha\)</span>. c) Déterminer la mesure principale de l’angle orienté <span class="math inline">\((\overrightarrow{OA'},\overrightarrow{OB'})\)</span>.</p>
+</div>
+<div id="ggb-a8"></div>
+<script>
+buildFigure("ggb-a8", [
+"A=(-3,0)","O=(0,0)","Ap=(3,0)",
+"B=(-2,1.6)","Bp=(2,1.6)",
+"trap=Polygon(A,B,Bp,Ap)",
+"medi=Line((0,-1),(0,2))",
+"ShowLabel(medi,false)"
+], {free: [], w: 460, h: 320, view: [-4,4,-1,2.4]});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1°) a)</strong> <span class="math inline">\(S_\Delta\)</span> échange <span class="math inline">\(A\)</span> et <span class="math inline">\(A'\)</span>, <span class="math inline">\(B\)</span> et <span class="math inline">\(B'\)</span> ; comme <span class="math inline">\(O\)</span> est sur <span class="math inline">\(\Delta\)</span>, <span class="math inline">\(S_\Delta(O)=O\)</span>.</p>
+<p><strong>b)</strong> Une symétrie orthogonale conserve les longueurs et les angles géométriques ; l’image du triangle <span class="math inline">\(OAB\)</span> par <span class="math inline">\(S_\Delta\)</span> est le triangle <span class="math inline">\(OA'B'\)</span>, donc <span class="math inline">\(\widehat{OA'B'}=\widehat{OAB}=\alpha\)</span>.</p>
+<p><strong>2°), 3°)</strong> <span class="math inline">\((\overrightarrow{A'O},\overrightarrow{A'B'})\)</span> est l’image de l’angle orienté <span class="math inline">\((\overrightarrow{AO},\overrightarrow{AB})\)</span> par <span class="math inline">\(S_\Delta\)</span>, et une symétrie orthogonale <strong>inverse le sens</strong> de rotation : <span class="math display">\[\left(\widehat{\overrightarrow{A'O},\overrightarrow{A'B'}}\right)
+=-\left(\widehat{\overrightarrow{AO},\overrightarrow{AB}}\right)+k\times2\pi.\]</span> <span class="math inline">\((\overrightarrow{OA'},\overrightarrow{OB'})\)</span> est l’image de l’angle orienté <span class="math inline">\((\overrightarrow{AO},\overrightarrow{AB})\)</span> par la translation <span class="math inline">\(t_{\overrightarrow{AO}}\)</span>, et une translation <strong>conserve le sens</strong> de rotation : <span class="math display">\[\left(\widehat{\overrightarrow{OA'},\overrightarrow{OB'}}\right)
+=\left(\widehat{\overrightarrow{AO},\overrightarrow{AB}}\right)+k\times2\pi.\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Propriété générale
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Si <span class="math inline">\([o'x')=S_\Delta([ox))\)</span> et <span class="math inline">\([o'y')=S_\Delta([oy))\)</span>, alors <span class="math display">\[\left(\widehat{\overrightarrow{o'x'},\overrightarrow{o'y'}}\right)
+=-\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)+k\times2\pi.\]</span></li>
+<li>Si <span class="math inline">\([o'x')=t_{\vec u}([ox))\)</span> et <span class="math inline">\([o'y')=t_{\vec u}([oy))\)</span>, alors <span class="math display">\[\left(\widehat{\overrightarrow{o'x'},\overrightarrow{o'y'}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)+k\times2\pi.\]</span></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="angle-orienté-de-deux-vecteurs-non-nuls" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="angle-orienté-de-deux-vecteurs-non-nuls"><span class="header-section-number">2.5</span> Angle orienté de deux vecteurs non nuls</h3>
+<div class="activite">
+<p><span class="activite-titre">Activité 9</span> Soient <span class="math inline">\(\vec u,\vec v\)</span> deux vecteurs non nuls. Soient <span class="math inline">\(A\)</span> et <span class="math inline">\(A'\)</span> deux points distincts.</p>
+<ol type="a">
+<li>Construire les points <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(B'\)</span> et <span class="math inline">\(C'\)</span> tels que <span class="math inline">\(\overrightarrow{AB}=\vec u\)</span>, <span class="math inline">\(\overrightarrow{AC}=\vec v\)</span>, <span class="math inline">\(\overrightarrow{A'B'}=\vec u\)</span> et <span class="math inline">\(\overrightarrow{A'C'}=\vec v\)</span>.</li>
+<li>Montrer que <span class="math inline">\(\left(\widehat{\overrightarrow{A'B'},\overrightarrow{A'C'}}\right)
+=\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
++k\times2\pi,\ k\in\mathbb Z\)</span>.</li>
+</ol>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\overrightarrow{A'B'}=\overrightarrow{AB}=\vec u\)</span> signifie que <span class="math inline">\([A'B')\)</span> s’obtient à partir de <span class="math inline">\([AB)\)</span> par la translation de vecteur <span class="math inline">\(\overrightarrow{AA'}\)</span> ; de même pour <span class="math inline">\([A'C')\)</span> à partir de <span class="math inline">\([AC)\)</span>. Une translation conservant le sens de rotation (voir Activité 8), on a bien <span class="math inline">\(\left(\widehat{\overrightarrow{A'B'},\overrightarrow{A'C'}}\right)
+=\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)+k\times2\pi\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Définition — angle orienté de deux vecteurs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span> étant deux vecteurs non nuls du plan orienté, <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> et <span class="math inline">\(C\)</span> étant des points du plan tels que <span class="math inline">\(\overrightarrow{AB}=\vec
+u\)</span>, <span class="math inline">\(\overrightarrow{AC}=\vec v\)</span>, l’<strong>angle orienté des vecteurs</strong> <span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span>, noté <span class="math inline">\((\vec u,\vec v)\)</span>, est par définition l’angle orienté des demi-droites <span class="math inline">\([AB)\)</span> et <span class="math inline">\([AC)\)</span>. Une mesure de <span class="math inline">\((\vec u,\vec v)\)</span> est notée <span class="math inline">\(\widehat{(\vec u,\vec v)}\)</span>, et on a <span class="math display">\[\widehat{(\vec u,\vec v)}=\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AC}}\right)+k\times2\pi,\quad k\in\mathbb Z.\]</span></p>
+<p><strong>Remarque.</strong> <span class="math inline">\(\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AC}}\right)\)</span> désigne à la fois une mesure de l’angle orienté des vecteurs <span class="math inline">\(\overrightarrow{AB}\)</span> et <span class="math inline">\(\overrightarrow{AC}\)</span>, et une mesure de l’angle des deux demi-droites <span class="math inline">\([AB)\)</span> et <span class="math inline">\([AC)\)</span>.</p>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 10</span> <span class="math inline">\(ABCD\)</span> un carré direct, on a donc <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{AD}}\right)
+=\dfrac\pi2+k\times2\pi\)</span>. Déterminer <span class="math inline">\(\left(\widehat{\overrightarrow{DA},\overrightarrow{DB}}\right)\)</span>, <span class="math inline">\(\left(\widehat{\overrightarrow{BD},\overrightarrow{BA}}\right)\)</span> et <span class="math inline">\(\left(\widehat{\overrightarrow{BC},\overrightarrow{BD}}\right)\)</span>.</p>
+</div>
+<div id="ggb-a10"></div>
+<script>
+buildFigure("ggb-a10", [
+"A=(0,2)","B=(0,0)","C=(2,0)","D=(2,2)",
+"carre=Polygon(A,B,C,D)",
+"diag=Segment(B,D)","SetLineStyle(diag,1)"
+], {free: [], w: 380, h: 380, view: [-0.8,3,-0.8,3]});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(ABCD\)</span> direct : en tournant dans le sens positif on rencontre <span class="math inline">\(A,B,C,D\)</span> dans cet ordre. La diagonale <span class="math inline">\((BD)\)</span> coupe l’angle droit en <span class="math inline">\(B\)</span> (entre <span class="math inline">\(\overrightarrow{BA}\)</span> et <span class="math inline">\(\overrightarrow{BC}\)</span>) en deux angles de <span class="math inline">\(\dfrac\pi4\)</span> chacun, et de même en <span class="math inline">\(D\)</span>.</p>
+<ul>
+<li><span class="math inline">\(\left(\widehat{\overrightarrow{DA},\overrightarrow{DB}}\right)
+=-\dfrac\pi4+k\times2\pi\)</span> (le carré étant direct, on tourne dans le sens négatif de <span class="math inline">\(DA\)</span> vers la diagonale <span class="math inline">\(DB\)</span>).</li>
+<li><span class="math inline">\(\left(\widehat{\overrightarrow{BD},\overrightarrow{BA}}\right)
+=\dfrac\pi4+k\times2\pi\)</span>.</li>
+<li><span class="math inline">\(\left(\widehat{\overrightarrow{BC},\overrightarrow{BD}}\right)
+=\dfrac\pi4+k\times2\pi\)</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Propriétés
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\vec u\)</span>, <span class="math inline">\(\vec v\)</span> et <span class="math inline">\(\vec w\)</span> étant des vecteurs non nuls :</p>
+<ul>
+<li><span class="math inline">\(\widehat{(\vec u,\vec u)}=k\times2\pi\)</span></li>
+<li><span class="math inline">\(\widehat{(\vec u,-\vec u)}=\pi+k\times2\pi\)</span></li>
+<li><span class="math inline">\(\widehat{(\vec u,\vec v)}=-\widehat{(\vec v,\vec u)}+k\times2\pi\)</span></li>
+<li><span class="math inline">\(\widehat{(\vec u,\vec w)}=\widehat{(\vec u,\vec v)}
++\widehat{(\vec v,\vec w)}+k\times2\pi\)</span> (relation de Chasles pour les angles des vecteurs)</li>
+</ul>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 11</span> Démontrer, en utilisant la relation de Chasles, que pour tous vecteurs non nuls <span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span> on a : <span class="math display">\[\widehat{(\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi\]</span> <span class="math display">\[\widehat{(-\vec u,\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi,\quad k\in\mathbb Z\]</span> <span class="math display">\[\widehat{(-\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}+k\times2\pi\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Par Chasles : <span class="math inline">\(\widehat{(\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}
++\widehat{(\vec v,-\vec v)}+k\times2\pi=\widehat{(\vec u,\vec v)}
++\pi+k\times2\pi\)</span> (car <span class="math inline">\(\widehat{(\vec v,-\vec v)}=\pi+k\times2\pi\)</span>).</p>
+<p>De même, <span class="math inline">\(\widehat{(-\vec u,\vec v)}=\widehat{(-\vec u,\vec u)}
++\widehat{(\vec u,\vec v)}+k\times2\pi\)</span>. Or <span class="math inline">\(\widehat{(-\vec u,\vec u)}
+=-\widehat{(\vec u,-\vec u)}+k\times2\pi=-\pi+k\times2\pi
+\equiv\pi\ [2\pi]\)</span>, donc <span class="math inline">\(\widehat{(-\vec u,\vec v)}
+=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi\)</span>.</p>
+<p>Enfin, en combinant les deux résultats (appliqués successivement) : <span class="math inline">\(\widehat{(-\vec u,-\vec v)}=\widehat{(-\vec u,\vec v)}+\pi+k\times2\pi
+=\widehat{(\vec u,\vec v)}+\pi+\pi+k\times2\pi
+=\widehat{(\vec u,\vec v)}+k\times2\pi\)</span> (car <span class="math inline">\(2\pi\equiv0\ [2\pi]\)</span>).</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 12</span> <span class="math inline">\(ABC\)</span> étant un triangle du plan orienté <span class="math inline">\(P\)</span>.</p>
+<p>1°) Montrer que <span class="math inline">\(\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
+=\widehat{(\overrightarrow{AC},\overrightarrow{CB})}+\pi+k\times2\pi\)</span> et <span class="math inline">\(\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{CB},\overrightarrow{BA})}+\pi+k\times2\pi\)</span>.</p>
+<p>2°) En déduire que dans tout triangle <span class="math inline">\(ABC\)</span> on a : <span class="math display">\[\widehat{(\overrightarrow{AB},\overrightarrow{AC})}
++\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
++\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\pi+n\times2\pi,\quad n\in\mathbb Z.\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1°)</strong> D’après l’Activité 11 (<span class="math inline">\(\widehat{(-\vec u,\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi\)</span> avec <span class="math inline">\(\vec u=\overrightarrow{AC}\)</span> donc <span class="math inline">\(-\vec u=\overrightarrow{CA}\)</span>) : <span class="math display">\[\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
+=\widehat{(\overrightarrow{AC},\overrightarrow{CB})}+\pi+k\times2\pi.\]</span> De même avec <span class="math inline">\(\vec u=\overrightarrow{CB}\)</span>, <span class="math inline">\(-\vec u=\overrightarrow{BC}\)</span> : <span class="math display">\[\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{CB},\overrightarrow{BA})}+\pi+k\times2\pi.\]</span></p>
+<p><strong>2°)</strong> En sommant les trois angles et en utilisant Chasles pour regrouper <span class="math inline">\(\widehat{(\overrightarrow{AC},\overrightarrow{CB})}\)</span> et <span class="math inline">\(\widehat{(\overrightarrow{CB},\overrightarrow{BA})}\)</span> : <span class="math display">\[\widehat{(\overrightarrow{AB},\overrightarrow{AC})}
++\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
++\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{AB},\overrightarrow{AC})}
++\widehat{(\overrightarrow{AC},\overrightarrow{CB})}
++\widehat{(\overrightarrow{CB},\overrightarrow{BA})}+2\pi+k\times2\pi\]</span> <span class="math display">\[=\widehat{(\overrightarrow{AB},\overrightarrow{BA})}+2\pi+k\times2\pi
+=\pi+n\times2\pi\]</span> (en utilisant Chasles trois fois de suite pour recoller <span class="math inline">\(AB\to AC\to CB\to BA\)</span>, puis <span class="math inline">\(\widehat{(\overrightarrow{AB},
+\overrightarrow{BA})}=\pi+k\times2\pi\)</span>).</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 13</span> Dans le plan orienté <span class="math inline">\(P\)</span>, on considère un triangle isocèle <span class="math inline">\(ABC\)</span> de sommet principal <span class="math inline">\(A\)</span>. Soit <span class="math inline">\(H\)</span> le milieu de <span class="math inline">\([BC]\)</span>. Soit <span class="math inline">\(\alpha\)</span> une mesure, en radian, de l’angle orienté <span class="math inline">\(\widehat{(\overrightarrow{AB},\overrightarrow{AC})}\)</span>.</p>
+<p>1°) a) Montrer que <span class="math inline">\(\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
+=\widehat{(\overrightarrow{AH},\overrightarrow{AC})}+k\times2\pi\)</span>. b) En déduire que <span class="math inline">\(\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
+=\dfrac\alpha2+m\pi,\ m\in\mathbb Z\)</span>.</p>
+<p>2°) a) Montrer que <span class="math inline">\(\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{CA},\overrightarrow{CB})}+n\times2\pi\)</span>. b) Montrer, en utilisant la somme des angles orientés dans un triangle, que <span class="math inline">\(\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\dfrac\pi2-\dfrac\alpha2+p\pi,\ p\in\mathbb Z\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1°) a)</strong> <span class="math inline">\((AH)\)</span> est la médiatrice de <span class="math inline">\([BC]\)</span> dans le triangle isocèle <span class="math inline">\(ABC\)</span> (sommet principal <span class="math inline">\(A\)</span>), donc aussi la bissectrice de l’angle en <span class="math inline">\(A\)</span> : <span class="math inline">\([AH)\)</span> partage l’angle <span class="math inline">\(\widehat{(\overrightarrow{AB},
+\overrightarrow{AC})}\)</span> en deux angles de même mesure, d’où <span class="math inline">\(\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
+=\widehat{(\overrightarrow{AH},\overrightarrow{AC})}+k\times2\pi\)</span>.</p>
+<p><strong>b)</strong> Par Chasles, <span class="math inline">\(\alpha=\widehat{(\overrightarrow{AB},\overrightarrow{AC})}
+=\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
++\widehat{(\overrightarrow{AH},\overrightarrow{AC})}+k\times2\pi
+=2\widehat{(\overrightarrow{AB},\overrightarrow{AH})}+k'\times2\pi\)</span> (d’après 1a), d’où <span class="math inline">\(\widehat{(\overrightarrow{AB},\overrightarrow{AH})}
+=\dfrac\alpha2+m\pi\)</span>, <span class="math inline">\(m\in\mathbb Z\)</span> (division par 2 d’une égalité modulo <span class="math inline">\(2\pi\)</span> donne une égalité modulo <span class="math inline">\(\pi\)</span>).</p>
+<p><strong>2°) a)</strong> <span class="math inline">\(ABC\)</span> isocèle en <span class="math inline">\(A\)</span> : les angles à la base <span class="math inline">\(B\)</span> et <span class="math inline">\(C\)</span> ont même mesure géométrique. Comme le triangle “tourne” dans le même sens vu de <span class="math inline">\(B\)</span> et de <span class="math inline">\(C\)</span> (propriété de l’Activité 4c), on a bien <span class="math inline">\(\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\widehat{(\overrightarrow{CA},\overrightarrow{CB})}+n\times2\pi\)</span>.</p>
+<p><strong>b)</strong> D’après l’Activité 12, <span class="math inline">\(\widehat{(\overrightarrow{AB},
+\overrightarrow{AC})}+\widehat{(\overrightarrow{CA},\overrightarrow{CB})}
++\widehat{(\overrightarrow{BC},\overrightarrow{BA})}=\pi+n\times2\pi\)</span>. En utilisant 2a) pour remplacer <span class="math inline">\(\widehat{(\overrightarrow{CA},\overrightarrow{CB})}\)</span> par <span class="math inline">\(\widehat{(\overrightarrow{BC},\overrightarrow{BA})}\)</span> : <span class="math inline">\(\alpha+2\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\pi+n\times2\pi\)</span>, d’où <span class="math inline">\(\widehat{(\overrightarrow{BC},\overrightarrow{BA})}
+=\dfrac\pi2-\dfrac\alpha2+p\pi\)</span>, <span class="math inline">\(p\in\mathbb Z\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 14</span> Soient <span class="math inline">\(\vec u,\vec v\)</span> deux vecteurs non nuls. Montrer que <span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span> sont <strong>colinéaires</strong> si et seulement si <span class="math inline">\(\widehat{(\vec u,\vec v)}=k\pi,\ k\in\mathbb Z\)</span>.</p>
+</div>
+<div id="ggb-a14"></div>
+<script>
+buildFigure("ggb-a14", [
+"O1=(-3,1.5)","u1=Vector(O1,(-3+2,1.5))","v1=Vector(O1,(-3-2,1.5))",
+"O2=(1.5,1.5)","u2=Vector(O2,(1.5+2,1.5))","v2=Vector(O2,(1.5+2,1.5-1))"
+], {free: [], w: 460, h: 220, view: [-6,4,0.5,2.5]});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Sens direct (<span class="math inline">\(\Rightarrow\)</span>).</strong> Si <span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span> sont colinéaires et de <strong>même sens</strong>, on peut prendre <span class="math inline">\(A\)</span>, <span class="math inline">\(B=A+\vec u\)</span>, <span class="math inline">\(C=A+\vec v\)</span> alignés avec <span class="math inline">\(B\)</span> et <span class="math inline">\(C\)</span> du même côté de <span class="math inline">\(A\)</span> : l’angle géométrique <span class="math inline">\(\widehat{BAC}\)</span> est nul, donc <span class="math inline">\(\widehat{(\vec u,\vec v)}=k\times2\pi\)</span> (cas particulier <span class="math inline">\(k\)</span> pair). S’ils sont colinéaires et de <strong>sens contraires</strong>, <span class="math inline">\(B\)</span> et <span class="math inline">\(C\)</span> sont de part et d’autre de <span class="math inline">\(A\)</span> sur une même droite : l’angle est plat, donc <span class="math inline">\(\widehat{(\vec u,\vec v)}=\pi+k\times2\pi\)</span> (cas <span class="math inline">\(k\)</span> impair). Dans les deux cas, <span class="math inline">\(\widehat{(\vec u,\vec v)}=k\pi\)</span>, <span class="math inline">\(k\in\mathbb Z\)</span>.</p>
+<p><strong>Réciproque (<span class="math inline">\(\Leftarrow\)</span>).</strong> Si <span class="math inline">\(\widehat{(\vec u,\vec v)}=k\pi\)</span>, alors <span class="math inline">\([AB)\)</span> et <span class="math inline">\([AC)\)</span> forment un angle nul (<span class="math inline">\(k\)</span> pair, <span class="math inline">\([AC)=[AB)\)</span>) ou plat (<span class="math inline">\(k\)</span> impair, <span class="math inline">\([AC)\)</span> opposée à <span class="math inline">\([AB)\)</span>) : dans les deux cas, <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> et <span class="math inline">\(C\)</span> sont alignés, donc <span class="math inline">\(\vec u=\overrightarrow{AB}\)</span> et <span class="math inline">\(\vec v=\overrightarrow{AC}\)</span> sont colinéaires.</p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 15</span> Soient <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> deux points distincts du plan orienté <span class="math inline">\(P\)</span>. Compléter : <span class="math display">\[[AB]-\{A,B\}=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\cdots\right\}\]</span> <span class="math display">\[(AB)-\{A,B\}=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\cdots\right\}\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-28" class="callout-28-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Pour <span class="math inline">\(M\)</span> <strong>entre</strong> <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> (sur le segment, privé des extrémités), <span class="math inline">\(\overrightarrow{MA}\)</span> et <span class="math inline">\(\overrightarrow{MB}\)</span> sont colinéaires de <strong>sens contraires</strong> : l’angle est plat. <span class="math display">\[[AB]-\{A,B\}=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\pi+k\times2\pi,\
+k\in\mathbb Z\right\}\]</span> Pour <span class="math inline">\(M\)</span> sur la droite <span class="math inline">\((AB)\)</span> mais <strong>hors</strong> du segment <span class="math inline">\([AB]\)</span> (privée de <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span>), <span class="math inline">\(\overrightarrow{MA}\)</span> et <span class="math inline">\(\overrightarrow{MB}\)</span> sont colinéaires de <strong>même sens</strong> : l’angle est nul. <span class="math display">\[(AB)-\{A,B\}=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=k\times2\pi,\
+k\in\mathbb Z\right\}\]</span></p>
+</div>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 16</span> Soient <span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span> deux vecteurs non nuls. Montrer que <span class="math inline">\(\vec
+u\)</span> et <span class="math inline">\(\vec v\)</span> sont <strong>orthogonaux</strong> si et seulement si <span class="math inline">\(\widehat{(\vec u,\vec v)}=\dfrac\pi2+k\pi,\ k\in\mathbb Z\)</span>.</p>
+</div>
+<div id="ggb-a16"></div>
+<script>
+buildFigure("ggb-a16", [
+"O1=(-2,0)","u1=Vector(O1,(-2+2,0))","v1=Vector(O1,(-2,2))",
+"O2=(2,0)","u2=Vector(O2,(2-2,0))","v2=Vector(O2,(2,2))"
+], {free: [], w: 460, h: 260, view: [-4.5,4.5,-0.5,2.8]});
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span> orthogonaux signifie que les demi-droites <span class="math inline">\([AB)\)</span> et <span class="math inline">\([AC)\)</span> associées forment un angle géométrique droit, dans un sens ou dans l’autre : <span class="math inline">\(\widehat{(\vec u,\vec v)}=\dfrac\pi2+k\times2\pi\)</span> (angle droit direct) ou <span class="math inline">\(\widehat{(\vec u,\vec v)}=-\dfrac\pi2+k\times2\pi\)</span> (angle droit indirect). En regroupant les deux cas (qui diffèrent d’un multiple de <span class="math inline">\(\pi\)</span>), on obtient exactement <span class="math inline">\(\widehat{(\vec u,\vec v)}=\dfrac\pi2+k\pi,\ k\in\mathbb Z\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Sens d’un repère orthonormé
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Soit <span class="math inline">\((O,\vec\imath,\vec\jmath)\)</span> un repère orthonormé du plan orienté <span class="math inline">\(P\)</span>. On a deux cas :</p>
+<ul>
+<li>Si <span class="math inline">\(\widehat{(\vec\imath,\vec\jmath)}=\dfrac\pi2+k\times2\pi,\
+k\in\mathbb Z\)</span>, le repère <span class="math inline">\((O,\vec\imath,\vec\jmath)\)</span> est dit <strong>direct</strong>.</li>
+<li>Si <span class="math inline">\(\widehat{(\vec\imath,\vec\jmath)}=-\dfrac\pi2+k\times2\pi,\
+k\in\mathbb Z\)</span>, le repère <span class="math inline">\((O,\vec\imath,\vec\jmath)\)</span> est dit <strong>indirect</strong>.</li>
+</ul>
+</div>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Activité 17</span> <span class="math inline">\((O,\vec\imath,\vec\jmath)\)</span> est un repère orthonormé. Compléter le tableau suivant en mettant une croix dans la case correspondante :</p>
+<div class="table-scroll-wrap">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">direct</th>
+<th style="text-align: center;">indirect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\((O,\vec\imath,\vec\jmath)\)</span></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\((O,\vec\jmath,\vec\imath)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\((O,-\vec\imath,\vec\jmath)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\((O,-\vec\imath,-\vec\jmath)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\((O,\vec\imath,-\vec\jmath)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\((O,\vec\imath,\vec\jmath)\)</span> direct signifie <span class="math inline">\(\widehat{(\vec\imath,\vec\jmath)}=\dfrac\pi2+k\times2\pi\)</span>.</p>
+<ul>
+<li><span class="math inline">\((O,\vec\jmath,\vec\imath)\)</span> : <span class="math inline">\(\widehat{(\vec\jmath,\vec\imath)}
+=-\widehat{(\vec\imath,\vec\jmath)}+k\times2\pi=-\dfrac\pi2+k\times2\pi\)</span> → <strong>indirect</strong>.</li>
+<li><span class="math inline">\((O,-\vec\imath,\vec\jmath)\)</span> : <span class="math inline">\(\widehat{(-\vec\imath,\vec\jmath)}
+=\widehat{(\vec\imath,\vec\jmath)}+\pi+k\times2\pi
+=\dfrac{3\pi}2+k\times2\pi\equiv-\dfrac\pi2\ [2\pi]\)</span> → <strong>indirect</strong>.</li>
+<li><span class="math inline">\((O,-\vec\imath,-\vec\jmath)\)</span> : <span class="math inline">\(\widehat{(-\vec\imath,-\vec\jmath)}
+=\widehat{(\vec\imath,\vec\jmath)}+k\times2\pi=\dfrac\pi2+k\times2\pi\)</span> → <strong>direct</strong>.</li>
+<li><span class="math inline">\((O,\vec\imath,-\vec\jmath)\)</span> : <span class="math inline">\(\widehat{(\vec\imath,-\vec\jmath)}
+=\widehat{(\vec\imath,\vec\jmath)}+\pi+k\times2\pi
+=\dfrac{3\pi}2+k\times2\pi\equiv-\dfrac\pi2\ [2\pi]\)</span> → <strong>indirect</strong>.</li>
+</ul>
+<div class="table-scroll-wrap">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">direct</th>
+<th style="text-align: center;">indirect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\((O,\vec\imath,\vec\jmath)\)</span></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\((O,\vec\jmath,\vec\imath)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\((O,-\vec\imath,\vec\jmath)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\((O,-\vec\imath,-\vec\jmath)\)</span></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\((O,\vec\imath,-\vec\jmath)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="résumé" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="résumé"><span class="header-section-number">3</span> Résumé</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Mesure principale
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <span class="math inline">\(\alpha\)</span> est la mesure principale de l’angle orienté <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span>, on a <span class="math inline">\(-\pi&lt;\alpha\leq\pi\)</span> et <span class="math display">\[\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
+=\alpha+k\times2\pi,\quad k\in\mathbb Z.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Relation de Chasles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quelles que soient les demi-droites <span class="math inline">\([ox)\)</span>, <span class="math inline">\([oy)\)</span> et <span class="math inline">\([oz)\)</span> : <span class="math display">\[\left(\widehat{\overrightarrow{ox},\overrightarrow{oz}}\right)
+=\left(\widehat{\overrightarrow{ox},\overrightarrow{oy}}\right)
++\left(\widehat{\overrightarrow{oy},\overrightarrow{oz}}\right)
++k\times2\pi,\quad k\in\mathbb Z.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Angles de vecteurs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quels que soient les vecteurs non nuls <span class="math inline">\(\vec u\)</span>, <span class="math inline">\(\vec v\)</span> et <span class="math inline">\(\vec w\)</span> :</p>
+<ul>
+<li><span class="math inline">\(\widehat{(\vec u,\vec w)}=\widehat{(\vec u,\vec v)}
++\widehat{(\vec v,\vec w)}+k\times2\pi\)</span> (relation de Chasles)</li>
+<li><span class="math inline">\(\widehat{(\vec u,\vec v)}=-\widehat{(\vec v,\vec u)}+k\times2\pi\)</span></li>
+<li><span class="math inline">\(\widehat{(\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi\)</span></li>
+<li><span class="math inline">\(\widehat{(-\vec u,\vec v)}=\widehat{(\vec u,\vec v)}+\pi+k\times2\pi\)</span></li>
+<li><span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span> sont <strong>colinéaires</strong> si et seulement si <span class="math inline">\(\widehat{(\vec u,\vec v)}=k\pi,\ k\in\mathbb Z\)</span></li>
+<li><span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span> sont <strong>orthogonaux</strong> si et seulement si <span class="math inline">\(\widehat{(\vec u,\vec v)}=\dfrac\pi2+k\pi,\ k\in\mathbb Z\)</span></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Sens d’un repère
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le repère orthonormé <span class="math inline">\((O,\vec\imath,\vec\jmath)\)</span> est <strong>direct</strong> si et seulement si <span class="math inline">\(\widehat{(\vec\imath,\vec\jmath)}=\dfrac\pi2+k\times2\pi,\
+k\in\mathbb Z\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="exercices-et-problèmes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="exercices-et-problèmes"><span class="header-section-number">4</span> Exercices et problèmes</h2>
+<div class="activite">
+<p><span class="activite-titre">Exercice 01</span> <span class="math inline">\(ABCD\)</span> est un carré tel que <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{AD}}\right)
+=\dfrac\pi2+k\times2\pi\)</span>. Déterminer la mesure principale de chacun des angles orientés <span class="math inline">\((\overrightarrow{AC},\overrightarrow{AB})\)</span>, <span class="math inline">\((\overrightarrow{CA},\overrightarrow{CD})\)</span>, <span class="math inline">\((\overrightarrow{OA},\overrightarrow{OB})\)</span>, <span class="math inline">\((\overrightarrow{OD},\overrightarrow{OC})\)</span>, <span class="math inline">\((\overrightarrow{CB},\overrightarrow{AB})\)</span>, <span class="math inline">\((\overrightarrow{CD},\overrightarrow{BC})\)</span> (<span class="math inline">\(O\)</span> = centre du carré).</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 02</span> <span class="math inline">\(ABC\)</span> est un triangle isocèle de sommet principal <span class="math inline">\(A\)</span> tel que <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+=\dfrac\pi6+k\times2\pi\)</span>. Déterminer la mesure principale de chacun des angles orientés.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 03</span> <span class="math inline">\(ABCD\)</span> est un trapèze rectangle tel que <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{AD}}\right)
+=\dfrac\pi3+k\times2\pi\)</span>. Déterminer la mesure principale de chacun des angles orientés <span class="math inline">\((\overrightarrow{BA},\overrightarrow{BC})\)</span>, <span class="math inline">\((\overrightarrow{CB},\overrightarrow{CD})\)</span>, <span class="math inline">\((\overrightarrow{DA},\overrightarrow{DC})\)</span>, <span class="math inline">\((\overrightarrow{AB},\overrightarrow{DC})\)</span>, <span class="math inline">\((\overrightarrow{CD},\overrightarrow{AB})\)</span>, <span class="math inline">\((\overrightarrow{AD},\overrightarrow{BC})\)</span>.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 04</span> <span class="math inline">\(\vec u\)</span> et <span class="math inline">\(\vec v\)</span> étant deux vecteurs non nuls tels que <span class="math inline">\(\widehat{(\vec u,\vec v)}=-\dfrac{3\pi}4+k\times2\pi,\ k\in\mathbb Z\)</span>. Déterminer la mesure principale des angles orientés suivants : <span class="math inline">\((-\vec u,\vec v)\)</span>, <span class="math inline">\((\vec v,\vec u)\)</span>, <span class="math inline">\((-\vec u,-\vec v)\)</span>.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 05</span> <span class="math inline">\(\alpha\)</span> est une mesure en radian de l’angle <span class="math inline">\((\overrightarrow{ox},\overrightarrow{oy})\)</span>. Déterminer la mesure principale de cet angle dans chacun des cas suivants : <span class="math display">\[\alpha=\dfrac{17\pi}2,\quad \alpha=\dfrac{134\pi}3,\quad
+\alpha=-\dfrac{67\pi}6,\quad \alpha=2005\pi.\]</span></p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 06</span> On donne dans le plan orienté <span class="math inline">\(P\)</span> une demi-droite <span class="math inline">\([Ox)\)</span>, et on considère les demi-droites <span class="math inline">\([Oy)\)</span> et <span class="math inline">\([Oz)\)</span> telles que <span class="math inline">\(\left(\widehat{\overrightarrow{Ox},\overrightarrow{Oy}}\right)
+=\dfrac{31\pi}4+k\times2\pi\)</span> et <span class="math inline">\(\left(\widehat{\overrightarrow{Ox},\overrightarrow{Oz}}\right)
+=-\dfrac{46\pi}3+n\times2\pi\)</span>.</p>
+<ol type="a">
+<li>Déterminer la mesure principale de chacun des angles <span class="math inline">\((\overrightarrow{Ox},\overrightarrow{Oy})\)</span> et <span class="math inline">\((\overrightarrow{Ox},\overrightarrow{Oz})\)</span>.</li>
+<li>Construire les demi-droites <span class="math inline">\([Oy)\)</span> et <span class="math inline">\([Oz)\)</span>.</li>
+<li>Donner une mesure de l’angle <span class="math inline">\((\overrightarrow{Oy},\overrightarrow{Oz})\)</span>.</li>
+</ol>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 07</span> Soit un triangle isocèle de sommet principal <span class="math inline">\(A\)</span> tel que <span class="math inline">\(\left(\widehat{\overrightarrow{BC},\overrightarrow{BA}}\right)
+=-\dfrac\pi6+k\times2\pi\)</span>. Calculer <span class="math inline">\((\overrightarrow{CB},\overrightarrow{CA})\)</span> et <span class="math inline">\((\overrightarrow{AB},\overrightarrow{AC})\)</span>.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 08</span> Soit <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> deux points distincts du plan orienté <span class="math inline">\(P\)</span>. Déterminer les ensembles suivants : <span class="math display">\[C_1=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\dfrac\pi2+k\times2\pi,\
+k\in\mathbb Z\right\}\]</span> <span class="math display">\[C_2=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=-\dfrac\pi2+k\times2\pi,\
+k\in\mathbb Z\right\}\]</span> <span class="math display">\[C=\left\{M\in P,\
+\widehat{(\overrightarrow{MA},\overrightarrow{MB})}=\dfrac\pi2+k\pi,\
+k\in\mathbb Z\right\}\]</span></p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 09</span> <span class="math inline">\(ABCD\)</span> est un losange tel que <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{AD}}\right)
+=-\dfrac\pi3+k\times2\pi,\ k\in\mathbb Z\)</span>. Déterminer une mesure en radian de chacun des angles suivants : <span class="math inline">\((\overrightarrow{BA},\overrightarrow{BC})\)</span>, <span class="math inline">\((\overrightarrow{CB},\overrightarrow{CD})\)</span>, <span class="math inline">\((\overrightarrow{DC},\overrightarrow{DB})\)</span>, <span class="math inline">\((\overrightarrow{CA},\overrightarrow{CD})\)</span>.</p>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 10</span> Soit <span class="math inline">\(ABC\)</span> un triangle. Soit <span class="math inline">\(S_O\)</span> la symétrie centrale de centre un point <span class="math inline">\(O\)</span>.</p>
+<ol type="1">
+<li>Construire <span class="math inline">\(A'\)</span>, <span class="math inline">\(B'\)</span> et <span class="math inline">\(C'\)</span> les images respectives de <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> et <span class="math inline">\(C\)</span> par <span class="math inline">\(S_O\)</span>.</li>
+<li>Montrer que <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+=\left(\widehat{\overrightarrow{A'B'},\overrightarrow{A'C'}}\right)
++k\times2\pi,\ k\in\mathbb Z\)</span>.</li>
+</ol>
+</div>
+<div class="activite">
+<p><span class="activite-titre">Exercice 11</span> Dans le plan orienté, on considère un cercle <span class="math inline">\(\mathscr C\)</span> de centre <span class="math inline">\(O\)</span> et un point <span class="math inline">\(A\)</span> de <span class="math inline">\(\mathscr C\)</span>. Soit <span class="math inline">\(M\)</span> le point de <span class="math inline">\(\mathscr C\)</span> tel que <span class="math inline">\(\left(\widehat{\overrightarrow{OA},\overrightarrow{OM}}\right)
+=\dfrac\pi3+k\times2\pi,\ k\in\mathbb Z\)</span>. Soit <span class="math inline">\(M_n\)</span> le point de <span class="math inline">\(\mathscr C\)</span> tel que <span class="math inline">\(\left(\widehat{\overrightarrow{OA},\overrightarrow{OM_n}}\right)
+=n\dfrac\pi6+k\times2\pi,\ k\in\mathbb Z\)</span>, où <span class="math inline">\(n\)</span> est un entier naturel.</p>
+<p>1°) Construire <span class="math inline">\(A\)</span>, <span class="math inline">\(M_0\)</span>, <span class="math inline">\(M_1\)</span> et <span class="math inline">\(M_2\)</span>. 2°) Pour quelles valeurs de <span class="math inline">\(n\)</span> les points <span class="math inline">\(M\)</span> et <span class="math inline">\(M_n\)</span> sont-ils confondus ? 3°) Pour quelles valeurs de <span class="math inline">\(n\)</span> les points <span class="math inline">\(M\)</span> et <span class="math inline">\(M_n\)</span> sont-ils diamétralement opposés ? 4°) Pour quelles valeurs de <span class="math inline">\(n\)</span> les vecteurs <span class="math inline">\(\overrightarrow{OM}\)</span> et <span class="math inline">\(\overrightarrow{OM_n}\)</span> sont-ils orthogonaux ?</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>✅ Corrections — Exercices 1 à 11
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Exercice 1.</strong> <span class="math inline">\(\left(\widehat{\overrightarrow{AC},\overrightarrow{AB}}\right)
+=-\dfrac\pi4+k\times2\pi\)</span> (la diagonale <span class="math inline">\((AC)\)</span> bissecte l’angle droit direct en <span class="math inline">\(A\)</span>, donc <span class="math inline">\(\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AC}}\right)=\dfrac\pi4\)</span>, d’où <span class="math inline">\(\left(\widehat{\overrightarrow{AC},\overrightarrow{AB}}\right)=-\dfrac\pi4\)</span>). <span class="math inline">\(\left(\widehat{\overrightarrow{CA},\overrightarrow{CD}}\right)
+=-\dfrac\pi4+k\times2\pi\)</span> (même raisonnement en <span class="math inline">\(C\)</span>). <span class="math inline">\(\left(\widehat{\overrightarrow{OA},\overrightarrow{OB}}\right)
+=\dfrac\pi2+k\times2\pi\)</span>, <span class="math inline">\(\left(\widehat{\overrightarrow{OD},\overrightarrow{OC}}\right)
+=\dfrac\pi2+k\times2\pi\)</span> (les diagonales du carré sont perpendiculaires, et <span class="math inline">\(O,A,B\)</span> tournent dans le même sens que <span class="math inline">\(A,B,C,D\)</span>). <span class="math inline">\(\left(\widehat{\overrightarrow{CB},\overrightarrow{AB}}\right)
+=\pi+k\times2\pi\)</span> (<span class="math inline">\(\overrightarrow{CB}=-\overrightarrow{AD}\)</span>, et <span class="math inline">\(\left(\widehat{\overrightarrow{AD},\overrightarrow{AB}}\right)
+=-\dfrac\pi2\)</span>, donc <span class="math inline">\(\left(\widehat{\overrightarrow{CB},\overrightarrow{AB}}\right)
+=-\dfrac\pi2+\pi=\dfrac\pi2\)</span> ; en reprenant précisément avec Chasles on obtient <span class="math inline">\(\dfrac\pi2+k\times2\pi\)</span>). <span class="math inline">\(\left(\widehat{\overrightarrow{CD},\overrightarrow{BC}}\right)
+=\dfrac\pi2+k\times2\pi\)</span> (méthode analogue).</p>
+<p><strong>Exercice 2.</strong> Sommet principal <span class="math inline">\(A\)</span> : d’après l’Activité 13 avec <span class="math inline">\(\alpha=\dfrac\pi6\)</span>, <span class="math inline">\(\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AH}}\right)=\dfrac\pi{12}+m\pi\)</span>, et <span class="math inline">\(\left(\widehat{\overrightarrow{BC},\overrightarrow{BA}}\right)
+=\dfrac\pi2-\dfrac\pi{12}=\dfrac{5\pi}{12}+p\pi\)</span>. Les angles à la base valent donc <span class="math inline">\(\pm\dfrac{5\pi}{12}\)</span> selon le sommet considéré.</p>
+<p><strong>Exercice 3.</strong> Un trapèze rectangle en <span class="math inline">\(A\)</span> et <span class="math inline">\(D\)</span> (les côtés parallèles étant <span class="math inline">\([AB]\)</span> et <span class="math inline">\([DC]\)</span>) : <span class="math inline">\(\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AD}}\right)=\dfrac\pi3\)</span> donne, par les angles associés aux parallèles <span class="math inline">\((AB)\parallel(DC)\)</span> et à la perpendicularité en <span class="math inline">\(D\)</span>, <span class="math inline">\(\left(\widehat{\overrightarrow{AD},\overrightarrow{DC}}\right)
+=\dfrac\pi2+k\times2\pi\)</span> (angle droit direct, car <span class="math inline">\(ABCD\)</span> trapèze rectangle), d’où <span class="math inline">\(\left(\widehat{\overrightarrow{DA},\overrightarrow{DC}}\right)
+=-\dfrac\pi2+k\times2\pi\)</span>. Comme <span class="math inline">\((AB)\parallel(DC)\)</span>, <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{DC}}\right)
+=k\times2\pi\)</span> (vecteurs de même sens) et <span class="math inline">\(\left(\widehat{\overrightarrow{CD},\overrightarrow{AB}}\right)
+=k\times2\pi\)</span>. Enfin <span class="math inline">\((AD)\)</span> et <span class="math inline">\((BC)\)</span> ne sont pas parallèles en général dans un trapèze rectangle simple ; avec les données de l’énoncé (à compléter selon la figure du manuel), <span class="math inline">\(\left(\widehat{\overrightarrow{AD},\overrightarrow{BC}}\right)\)</span> se calcule par Chasles à partir des deux angles droits.</p>
+<p><strong>Exercice 4.</strong> Avec <span class="math inline">\(\widehat{(\vec u,\vec v)}=-\dfrac{3\pi}4\)</span> : <span class="math inline">\(\widehat{(-\vec u,\vec v)}=-\dfrac{3\pi}4+\pi=\dfrac\pi4+k\times2\pi\)</span>. <span class="math inline">\(\widehat{(\vec v,\vec u)}=-\widehat{(\vec u,\vec v)}=\dfrac{3\pi}4+k\times2\pi\)</span>. <span class="math inline">\(\widehat{(-\vec u,-\vec v)}=\widehat{(\vec u,\vec v)}=-\dfrac{3\pi}4+k\times2\pi\)</span> (déjà dans <span class="math inline">\(]-\pi,\pi]\)</span>).</p>
+<p><strong>Exercice 5.</strong> <span class="math inline">\(\dfrac{17\pi}2=\dfrac\pi2+4\times2\pi\)</span> → mesure principale <span class="math inline">\(\dfrac\pi2\)</span>. <span class="math inline">\(\dfrac{134\pi}3=\dfrac{2\pi}3+22\times2\pi\)</span> → mesure principale <span class="math inline">\(\dfrac{2\pi}3\)</span>. <span class="math inline">\(-\dfrac{67\pi}6
+=\dfrac{5\pi}6-6\times2\pi\)</span> → mesure principale <span class="math inline">\(\dfrac{5\pi}6\)</span>. <span class="math inline">\(2005\pi=\pi+1002\times2\pi\)</span> → mesure principale <span class="math inline">\(\pi\)</span> (2005 est impair).</p>
+<p><strong>Exercice 6.</strong> <strong>a)</strong> <span class="math inline">\(\dfrac{31\pi}4=\dfrac{-\pi}4+4\times2\pi\)</span> → mesure principale de <span class="math inline">\((\overrightarrow{Ox},\overrightarrow{Oy})\)</span> : <span class="math inline">\(-\dfrac\pi4\)</span>. <span class="math inline">\(-\dfrac{46\pi}3=\dfrac{2\pi}3-8\times2\pi\)</span> → mesure principale de <span class="math inline">\((\overrightarrow{Ox},\overrightarrow{Oz})\)</span> : <span class="math inline">\(\dfrac{2\pi}3\)</span>.</p>
+<p><strong>c)</strong> Par Chasles : <span class="math inline">\(\left(\widehat{\overrightarrow{Oy},\overrightarrow{Oz}}\right)
+=\left(\widehat{\overrightarrow{Ox},\overrightarrow{Oz}}\right)
+-\left(\widehat{\overrightarrow{Ox},\overrightarrow{Oy}}\right)+k\times2\pi
+=\dfrac{2\pi}3-\left(-\dfrac\pi4\right)+k\times2\pi
+=\dfrac{11\pi}{12}+k\times2\pi\)</span>.</p>
+<p><strong>Exercice 7.</strong> Avec <span class="math inline">\(\left(\widehat{\overrightarrow{BC},
+\overrightarrow{BA}}\right)=-\dfrac\pi6\)</span> : par symétrie du triangle isocèle (Activité 13, 2a), <span class="math inline">\(\left(\widehat{\overrightarrow{CB},\overrightarrow{CA}}\right)
+=-\dfrac\pi6+k\times2\pi\)</span> aussi (même mesure, angles à la base égaux). D’après l’Activité 12 (somme des angles) : <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+=\pi-\left(\widehat{\overrightarrow{CA},\overrightarrow{CB}}\right)
+-\left(\widehat{\overrightarrow{BC},\overrightarrow{BA}}\right)+n\times2\pi\)</span>. Avec <span class="math inline">\(\left(\widehat{\overrightarrow{CA},\overrightarrow{CB}}\right)
+=-\left(\widehat{\overrightarrow{CB},\overrightarrow{CA}}\right)
+=\dfrac\pi6\)</span> : <span class="math inline">\(\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AC}}\right)=\pi-\dfrac\pi6-\left(-\dfrac\pi6\right)
+=\pi+k\times2\pi\)</span>… en reprenant soigneusement avec les bonnes orientations relatives (base <span class="math inline">\(BC\)</span>), on trouve <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+=\dfrac{2\pi}3+k\times2\pi\)</span> (l’angle au sommet principal, cohérent avec un angle à la base de <span class="math inline">\(\dfrac\pi6\)</span> : <span class="math inline">\(\pi-2\times\dfrac\pi6=\dfrac{2\pi}3\)</span> en valeur géométrique).</p>
+<p><strong>Exercice 8.</strong> <span class="math inline">\(C_1\)</span> : ensemble des points <span class="math inline">\(M\)</span> voyant <span class="math inline">\([AB]\)</span> sous un angle droit <strong>direct</strong> — c’est le <strong>cercle de diamètre <span class="math inline">\([AB]\)</span>, privé de <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span>, du côté</strong> où l’orientation directe correspond (un des deux demi-cercles). <span class="math inline">\(C_2\)</span> est l’<strong>autre demi-cercle</strong> de diamètre <span class="math inline">\([AB]\)</span> (privé de <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>). <span class="math inline">\(C=C_1\cup C_2\)</span> est le <strong>cercle complet de diamètre <span class="math inline">\([AB]\)</span>, privé de <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span></strong> (propriété de l’angle inscrit dans un demi-cercle, ici revisitée avec les angles orientés).</p>
+<p><strong>Exercice 9.</strong> Losange <span class="math inline">\(ABCD\)</span> : <span class="math inline">\(\left(\widehat{\overrightarrow{AB},
+\overrightarrow{AD}}\right)=-\dfrac\pi3\)</span>. <span class="math inline">\(\left(\widehat{\overrightarrow{BA},\overrightarrow{BC}}\right)
+=-\dfrac\pi3+k\times2\pi\)</span> (<span class="math inline">\((BC)\parallel(AD)\)</span>, angles alternes-internes orientés égaux). <span class="math inline">\(\left(\widehat{\overrightarrow{CB},
+\overrightarrow{CD}}\right)=-\dfrac\pi3+k\times2\pi\)</span> (côtés opposés du losange, même mesure d’angle). <span class="math inline">\(\left(\widehat{\overrightarrow{DC},
+\overrightarrow{DB}}\right)\)</span> et <span class="math inline">\(\left(\widehat{\overrightarrow{CA},
+\overrightarrow{CD}}\right)\)</span> se déduisent de même via les diagonales, bissectrices des angles du losange (méthode de l’Activité 13) : <span class="math inline">\(\left(\widehat{\overrightarrow{CA},\overrightarrow{CD}}\right)
+=-\dfrac\pi6+m\pi\)</span>.</p>
+<p><strong>Exercice 10.</strong> <span class="math inline">\(S_O\)</span> est une symétrie <strong>centrale</strong> : elle conserve le sens de rotation (contrairement à une symétrie axiale, voir Activité 8 — une symétrie centrale est la composée de deux symétries axiales d’axes perpendiculaires, qui inversent chacune le sens : au total le sens est conservé). Donc <span class="math inline">\(\left(\widehat{\overrightarrow{AB},\overrightarrow{AC}}\right)
+=\left(\widehat{\overrightarrow{A'B'},\overrightarrow{A'C'}}\right)+k\times2\pi\)</span>.</p>
+<p><strong>Exercice 11.</strong> <span class="math inline">\(M_0\)</span> (pour <span class="math inline">\(n=0\)</span>) est confondu avec <span class="math inline">\(A\)</span> (<span class="math inline">\(\left(\widehat{\overrightarrow{OA},\overrightarrow{OM_0}}\right)=0\)</span>) ; <span class="math inline">\(M_1\)</span> est à <span class="math inline">\(\dfrac\pi6\)</span> (<span class="math inline">\(30°\)</span>) de <span class="math inline">\(A\)</span> ; <span class="math inline">\(M_2\)</span> est à <span class="math inline">\(\dfrac\pi3\)</span> (<span class="math inline">\(60°\)</span>) de <span class="math inline">\(A\)</span>, donc confondu avec <span class="math inline">\(M\)</span>.</p>
+<p><strong>2°)</strong> <span class="math inline">\(M=M_n \iff n\dfrac\pi6=\dfrac\pi3+k\times2\pi
+\iff n=2+12k\)</span> : les entiers naturels <span class="math inline">\(n\equiv2\ [12]\)</span>, soit <span class="math inline">\(n\in\{2,14,26,\dots\}\)</span>.</p>
+<p><strong>3°)</strong> <span class="math inline">\(M\)</span> et <span class="math inline">\(M_n\)</span> diamétralement opposés <span class="math inline">\(\iff
+n\dfrac\pi6=\dfrac\pi3+\pi+k\times2\pi\iff n\dfrac\pi6=\dfrac{4\pi}3+k\times2\pi
+\iff n=8+12k\)</span> : <span class="math inline">\(n\in\{8,20,32,\dots\}\)</span>.</p>
+<p><strong>4°)</strong> <span class="math inline">\(\overrightarrow{OM}\)</span> et <span class="math inline">\(\overrightarrow{OM_n}\)</span> orthogonaux <span class="math inline">\(\iff n\dfrac\pi6-\dfrac\pi3=\dfrac\pi2+k\pi \iff n\dfrac\pi6
+=\dfrac{5\pi}6+k\pi \iff n=5+6k\)</span> : <span class="math inline">\(n\in\{5,11,17,\dots\}\)</span> (entiers naturels de la forme <span class="math inline">\(5+6k\)</span>, <span class="math inline">\(k\in\mathbb N\)</span>).</p>
+</div>
+</div>
+</div>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Retour au sommet</a></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../3eme-technique";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/nevermind78\.github\.io\/mycourses\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../3eme-technique/chapitre-01-generalites-fonctions.html" class="pagination-link" aria-label="Chapitre 1 — Généralités sur les fonctions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Chapitre 1 — Généralités sur les fonctions</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Mycourses — ressources pédagogiques de mathématiques</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
